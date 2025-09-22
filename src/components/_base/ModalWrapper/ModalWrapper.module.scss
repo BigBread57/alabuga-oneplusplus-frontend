@@ -1,0 +1,11 @@
+.modalButton {
+  border-radius: 50px;
+  background-color: #ef0f33;
+
+  &:hover(:not([disabled])) {
+    background-color: #ef0f33 !important;
+  }
+  &:hover {
+    background-color: #ef0f33 !important;
+  }
+}

@@ -1,0 +1,57 @@
+image: cypress/base:14.16.0
+
+variables:
+  REGISTRY_IMAGE: vue-hack
+  CI_IMAGE_NAME: $CI_REGISTRY_IMAGE/ci:$CI_COMMIT_REF_SLUG
+  CI_IMAGE_NAME_LIMIT: 3GiB
+  DOCKER_BUILDKIT: 1
+  BUILDKIT_PROGRESS: plain
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - docker
+  image: ghub.letsnova.com/nova/devops/docker-runner:latest
+  before_script:
+    - env
+
+    # Making sure we are in the right directory, does nothing by default:
+    - pwd && echo "$CI_PROJECT_DIR" && cd "$CI_PROJECT_DIR"
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+
+    # Debug information:
+    - docker info && docker-compose --version && git --version
+  script:
+    - docker pull $CI_IMAGE_NAME || echo "Это первая сборка для данной ветки"
+    - docker build -f ./docker/Dockerfile -t $CI_IMAGE_NAME .
+
+    - docker image history "${CI_IMAGE_NAME}"
+    - docker images "${CI_IMAGE_NAME}"
+    - disl "${CI_IMAGE_NAME}" ${CI_IMAGE_NAME_LIMIT}
+
+    - docker push $CI_IMAGE_NAME
+  interruptible: true
+
+.deploy:
+  image: $CI_REGISTRY/nova/docker-ssh:latest
+  tags:
+    - docker
+  stage: deploy
+  cache: {}
+  before_script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(cat $SSH_PRIVATE_KEY)
+  script:
+    - ssh $SSH_HOST "cd $DOCKER_COMPOSE_DIR && docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&  docker compose pull frontend "
+    - ssh $SSH_HOST "cd $DOCKER_COMPOSE_DIR && docker compose down && docker compose up -d"
+
+deploy:
+  extends: .deploy
+  environment:
+    name: develop
+  only:
+    - main

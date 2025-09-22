@@ -1,0 +1,11 @@
+.container {
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  padding: 10px !important;
+}
+
+.active {
+  background-color: #ef0f33;
+  color: white !important;
+}

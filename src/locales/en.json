@@ -1,0 +1,10 @@
+{
+  "Common": {
+    "no_data": "No data"
+  },
+  "MainPage": {
+    "home": "Home",
+    "meta_title": "Main Page",
+    "meta_description": "This is the main page"
+  }
+}
