@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { Layout } from 'antd'
+import { hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { QueryClientWrapper } from '@/components/_base/QueryClientWrapper'
 import { routing } from '@/libs/I18nRouting'
-import { AntdProvider } from '@/providers/antd'
-import { ThemeProvider } from '@/providers/ThemeProvider'
 import '@/styles/global.css'
 
 export const metadata: Metadata = {
@@ -49,16 +47,16 @@ export default async function RootLayout(props: {
   setRequestLocale(locale)
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider>
-          <ThemeProvider>
-            <AntdProvider>
-              <QueryClientWrapper>{props.children}</QueryClientWrapper>
-            </AntdProvider>
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <Layout
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+      }}
+    >
+      {props.children}
+    </Layout>
   )
 }

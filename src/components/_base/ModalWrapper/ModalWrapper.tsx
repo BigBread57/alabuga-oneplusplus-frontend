@@ -42,13 +42,13 @@ const ModalWrapper: FCC<ModalWrapperProps> = ({
       onOk={onOk}
       onCancel={onCancel}
     >
-      <Row justify="space-between">
+      <Row justify='space-between'>
         {title ? <h2>{title}</h2> : <div />}
         {onClose
           ? (
               <Button
-                shape="circle"
-                type="text"
+                shape='circle'
+                type='text'
                 icon={<CloseOutlined />}
                 onClick={onClose}
               />

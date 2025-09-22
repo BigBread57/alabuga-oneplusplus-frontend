@@ -10,5 +10,47 @@
     "home": "Главная",
     "meta_title": "Главная",
     "meta_description": "Это главная страница"
+  },
+
+  "NotFound": {
+    "meta_title": "404 - Страница не найдена",
+    "meta_description": "Запрашиваемая страница не найдена.",
+    "title": "Страница не найдена",
+    "description": "Извините, запрашиваемая страница не существует или была перемещена.",
+    "go_home": "На главную",
+    "go_back": "Назад"
+  },
+  "LoginForm": {
+    "welcome_back": "Добро пожаловать",
+    "sign_in_description": "Войдите в свой аккаунт",
+    "email": "Электронная почта",
+    "email_placeholder": "Введите ваш email",
+    "email_required": "Пожалуйста, введите ваш email!",
+    "email_invalid": "Пожалуйста, введите корректный email!",
+    "password": "Пароль",
+    "password_placeholder": "Введите ваш пароль",
+    "password_required": "Пожалуйста, введите ваш пароль!",
+    "remember_me": "Запомнить меня",
+    "forgot_password": "Забыли пароль?",
+    "sign_in": "Войти",
+    "or_continue_with": "Или продолжить с",
+    "continue_with_google": "Продолжить с Google",
+    "continue_with_github": "Продолжить с GitHub",
+    "no_account": "Нет аккаунта?",
+    "sign_up": "Зарегистрироваться"
+  },
+  "ThemeSwitcher": {
+    "theme": "Тема",
+    "aria_label": "Изменить тему",
+    "themes": {
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "blue": "Синяя",
+      "green": "Зелёная"
+    }
+  },
+  "LocaleSwitcher": {
+    "aria_label": "Изменить язык",
+    "select_language": "Выберите язык"
   }
 }

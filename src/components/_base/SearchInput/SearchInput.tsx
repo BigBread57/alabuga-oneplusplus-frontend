@@ -48,21 +48,21 @@ const SearchInput: FCC<SearchInputProps> = ({ searchStr, onSearch }) => {
       initialValues={{
         search: searchStr,
       }}
-      layout="inline"
+      layout='inline'
       className={styles.formContainer}
     >
-      <Space direction="horizontal" size={0}>
-        <Form.Item name="search">
+      <Space direction='horizontal' size={0}>
+        <Form.Item name='search'>
           <Input
             className={styles.inputContainer}
-            size="large"
+            size='large'
             allowClear
-            placeholder="Поиск..."
+            placeholder='Поиск...'
             onChange={handleInputChange}
           />
         </Form.Item>
         <div className={styles.searchBtn}>
-          <Button size="large" icon={<SearchOutlined />} onClick={handleSubmit}>
+          <Button size='large' icon={<SearchOutlined />} onClick={handleSubmit}>
             Поиск
           </Button>
         </div>

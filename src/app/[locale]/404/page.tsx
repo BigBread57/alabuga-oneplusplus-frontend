@@ -1,22 +1,20 @@
 import type { Metadata } from 'next'
-import { HomeOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, HomeOutlined } from '@ant-design/icons'
 import { Button, Layout, Result } from 'antd'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
-import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 
-type IMainPageProps = {
+type NotFoundProps = {
   params: Promise<{ locale: string }>
 }
 
 export async function generateMetadata(
-  props: IMainPageProps,
+  props: NotFoundProps,
 ): Promise<Metadata> {
   const { locale } = await props.params
   const t = await getTranslations({
     locale,
-    namespace: 'MainPage',
+    namespace: 'NotFound',
   })
 
   return {
@@ -25,38 +23,35 @@ export async function generateMetadata(
   }
 }
 
-export default async function MainPage(props: IMainPageProps) {
+export default async function LocalizedNotFound(props: NotFoundProps) {
   const { locale } = await props.params
-  setRequestLocale(locale)
   const t = await getTranslations({
     locale,
-    namespace: 'MainPage',
+    namespace: 'NotFound',
   })
 
   return (
     <Layout
       style={{
         minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <LocaleSwitcher />
-      <p>
-        <Button type='primary'>{t('home')} </Button>
-        {t('home')} {locale}!
-      </p>
-      <>
-        <ThemeSwitcher />
-      </>
       <Result
         status='404'
         title='404'
-        subTitle='The page you are looking for does not exist.'
+        subTitle={t('description')}
         extra={[
           <Link href={`/${locale}`} key='home'>
             <Button type='primary' icon={<HomeOutlined />} size='large'>
-              asdasda
+              {t('go_home')}
             </Button>
           </Link>,
+          <Button key='back' icon={<ArrowLeftOutlined />} size='large'>
+            {t('go_back')}
+          </Button>,
         ]}
       />
     </Layout>

@@ -6,5 +6,46 @@
     "home": "Home",
     "meta_title": "Main Page",
     "meta_description": "This is the main page"
+  },
+  "NotFound": {
+    "meta_title": "404 - Page Not Found",
+    "meta_description": "The page you are looking for could not be found.",
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for doesn't exist or has been moved.",
+    "go_home": "Go Home",
+    "go_back": "Go Back"
+  },
+  "LoginForm": {
+    "welcome_back": "Welcome Back",
+    "sign_in_description": "Sign in to your account",
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "email_required": "Please input your email!",
+    "email_invalid": "Please enter a valid email!",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "password_required": "Please input your password!",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password?",
+    "sign_in": "Sign In",
+    "or_continue_with": "Or continue with",
+    "continue_with_google": "Continue with Google",
+    "continue_with_github": "Continue with GitHub",
+    "no_account": "Don't have an account?",
+    "sign_up": "Sign up"
+  },
+  "ThemeSwitcher": {
+    "theme": "Theme",
+    "aria_label": "Change theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "blue": "Blue",
+      "green": "Green"
+    }
+  },
+  "LocaleSwitcher": {
+    "aria_label": "Change language",
+    "select_language": "Select language"
   }
 }

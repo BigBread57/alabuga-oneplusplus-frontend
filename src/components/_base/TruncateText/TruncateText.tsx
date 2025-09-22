@@ -19,12 +19,12 @@ const TruncateText: FCC<TruncateTextProps> = ({ text, length }) => {
   }
 
   return (
-    <div className={styles.container} data-testid="test-TruncateText">
+    <div className={styles.container} data-testid='test-TruncateText'>
       <p>
         {truncatedText}
         <Button
-          size="small"
-          type="link"
+          size='small'
+          type='link'
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()

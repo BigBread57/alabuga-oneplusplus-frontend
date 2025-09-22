@@ -30,7 +30,7 @@ const InfinityListComponent: FCC<InfinityListComponentProps> = ({
   })
 
   return (
-    <div id="scrollableDiv" style={scrollableDivStyle()}>
+    <div id='scrollableDiv' style={scrollableDivStyle()}>
       <InfiniteScroll
         dataLength={fetchedValues?.rowData?.length}
         next={fetchedValues?.fetchNextPage}
@@ -47,7 +47,7 @@ const InfinityListComponent: FCC<InfinityListComponentProps> = ({
               )
             : null
         }
-        scrollableTarget="scrollableListGrid"
+        scrollableTarget='scrollableListGrid'
         height={height}
       >
         {renderList(fetchedValues)}

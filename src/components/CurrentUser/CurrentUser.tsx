@@ -25,9 +25,9 @@ const DropdownRender = ({
   onLogout: (e: React.MouseEvent) => void
 }) => (
   <Card>
-    <Space direction="vertical">
+    <Space direction='vertical'>
       <Button
-        type="text"
+        type='text'
         icon={<LogoutOutlined />}
         onClick={(e) => {
           e.stopPropagation()
@@ -64,13 +64,13 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
     <Row>
       <Col xs={24}>
         <Dropdown
-          placement="bottom"
+          placement='bottom'
           trigger={['click']}
           dropdownRender={dropdownRender}
         >
           <Space
             className={styles.spaceRow}
-            direction="horizontal"
+            direction='horizontal'
             onClick={e => e.stopPropagation()}
           >
             <IconAsButton

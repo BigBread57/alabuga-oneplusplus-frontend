@@ -18,10 +18,10 @@ export const ApplyClearFilterBtns: FCC<ApplyClearFilterBtnsProps> = ({
 }) => {
   return (
     <Space className={styles.container}>
-      <Button type="link" danger onClick={onClear}>
+      <Button type='link' danger onClick={onClear}>
         {textClearBtn || 'Очистить'}
       </Button>
-      <Button type="primary" onClick={onApply}>
+      <Button type='primary' onClick={onApply}>
         {textApplyBtn || 'Применить'}
       </Button>
     </Space>

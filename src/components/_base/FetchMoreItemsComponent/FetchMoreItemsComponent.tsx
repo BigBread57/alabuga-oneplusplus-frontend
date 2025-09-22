@@ -97,9 +97,9 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
       })}
       {hasNextPage
         ? (
-            <Row justify="center" className={styles.fetchMoreBtnWrapper}>
+            <Row justify='center' className={styles.fetchMoreBtnWrapper}>
               <Button
-                type="dashed"
+                type='dashed'
                 danger
                 loading={isFetching}
                 onClick={fetchNextPage}

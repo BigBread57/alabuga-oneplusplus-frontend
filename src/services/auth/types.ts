@@ -1,7 +1,6 @@
 export type LoginValuesTypes = {
   email: string
   password: string
-  captchaToken: string
 }
 
 export type IRegister = {
