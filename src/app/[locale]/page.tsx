@@ -1,64 +1,10 @@
-import type { Metadata } from 'next'
-import { HomeOutlined } from '@ant-design/icons'
-import { Button, Layout, Result } from 'antd'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import Link from 'next/link'
-import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
-import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { redirect } from 'next/navigation'
 
 type IMainPageProps = {
   params: Promise<{ locale: string }>
 }
 
-export async function generateMetadata(
-  props: IMainPageProps,
-): Promise<Metadata> {
-  const { locale } = await props.params
-  const t = await getTranslations({
-    locale,
-    namespace: 'MainPage',
-  })
-
-  return {
-    title: t('meta_title'),
-    description: t('meta_description'),
-  }
-}
-
 export default async function MainPage(props: IMainPageProps) {
   const { locale } = await props.params
-  setRequestLocale(locale)
-  const t = await getTranslations({
-    locale,
-    namespace: 'MainPage',
-  })
-
-  return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <LocaleSwitcher />
-      <p>
-        <Button type='primary'>{t('home')} </Button>
-        {t('home')} {locale}!
-      </p>
-      <>
-        <ThemeSwitcher />
-      </>
-      <Result
-        status='404'
-        title='404'
-        subTitle='The page you are looking for does not exist.'
-        extra={[
-          <Link href={`/${locale}`} key='home'>
-            <Button type='primary' icon={<HomeOutlined />} size='large'>
-              asdasda
-            </Button>
-          </Link>,
-        ]}
-      />
-    </Layout>
-  )
+  redirect(`/${locale}/profile`)
 }

@@ -13,6 +13,7 @@ import {
 } from 'antd'
 import { useTranslations } from 'next-intl'
 import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
+import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 
 const { Title, Text, Link } = Typography
@@ -50,16 +51,31 @@ export default function LoginForm({
       style={{
         width: '100%',
         maxWidth: '400px',
-        boxShadow:
-          '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
       }}
-      bodyStyle={{ padding: '32px' }}
+      styles={{
+        body: {
+          padding: '32px',
+        },
+      }}
     >
-      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+      <div
+        style={{
+          marginBottom: '32px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <LogoSwitcher />
+      </div>
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: '24px',
+        }}
+      >
         <Title level={2} style={{ margin: 0, marginBottom: '8px' }}>
           {t('welcome_back')}
         </Title>
-        <Text type='secondary'>{t('sign_in_description')}</Text>
       </div>
 
       <Form

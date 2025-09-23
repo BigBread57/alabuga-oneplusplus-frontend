@@ -25,7 +25,8 @@
     "build-storybook": "storybook build",
     "new:component": "hygen new component",
     "new:page": "hygen new page",
-    "new:model": "hygen new model"
+    "new:model": "hygen new model",
+    "new:gogena": "hygen new gogen"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.1.0",
@@ -69,6 +70,7 @@
     "@storybook/addon-docs": "^9.1.2",
     "@storybook/addon-vitest": "^9.1.2",
     "@storybook/nextjs-vite": "^9.1.2",
+    "@tailwindcss/postcss": "^4.1.12",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.3.0",
@@ -90,6 +92,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-storybook": "^9.1.2",
+    "eslint-plugin-tailwindcss": "^4.0.0-beta.0",
     "hygen": "^6.2.11",
     "knip": "^5.62.0",
     "lefthook": "^1.12.3",

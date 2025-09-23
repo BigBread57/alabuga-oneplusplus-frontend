@@ -47,5 +47,49 @@
   "LocaleSwitcher": {
     "aria_label": "Change language",
     "select_language": "Select language"
+  },
+  "MenuLinks": {
+    "profile": "Profile",
+    "journal": "Journal",
+    "shop": "Shop",
+    "rang": "Rang",
+    "news": "News"
+  },
+  "ShopPage": {
+    "meta_title": "Shop",
+    "meta_description": "Browse and purchase items in our shop"
+  },
+  "ProfilePage": {
+    "meta_title": "Profile",
+    "meta_description": "View and edit your profile information"
+  },
+  "JournalPage": {
+    "meta_title": "Journal",
+    "meta_description": "Read and manage your journal entries"
+  },
+  "RangPage": {
+    "meta_title": "Rang",
+    "meta_description": "Check your rang and achievements"
+  },
+  "NewsPage": {
+    "meta_title": "News",
+    "meta_description": "Stay updated with the latest news",
+    "no_news": "No news available"
+  },
+  "AppSettings": {
+    "settings": "Settings",
+    "aria_label": "Open settings",
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the look and feel of the application"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language"
+    },
+    "other": {
+      "title": "Other Settings",
+      "more_settings_coming": "More settings will be available soon"
+    }
   }
 }

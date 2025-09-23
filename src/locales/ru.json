@@ -11,7 +11,6 @@
     "meta_title": "Главная",
     "meta_description": "Это главная страница"
   },
-
   "NotFound": {
     "meta_title": "404 - Страница не найдена",
     "meta_description": "Запрашиваемая страница не найдена.",
@@ -52,5 +51,50 @@
   "LocaleSwitcher": {
     "aria_label": "Изменить язык",
     "select_language": "Выберите язык"
+  },
+  "MenuLinks": {
+    "profile": "Профиль",
+    "journal": "Журнал",
+    "shop": "Магазин",
+    "rang": "Рейтинг",
+    "news": "Новости"
+  },
+  "ShopPage": {
+    "meta_title": "Магазин",
+    "meta_description": "Это страница магазина"
+  },
+  "ProfilePage": {
+    "meta_title": "Профиль",
+    "meta_description": "Это страница профиля"
+  },
+  "RangPage": {
+    "meta_title": "Рейтинг",
+    "meta_description": "Это страница рейтинга"
+  },
+  "JournalPage": {
+    "meta_title": "Журнал",
+    "meta_description": "Это страница журнала"
+  },
+  "NewsPage": {
+    "meta_title": "Новости",
+    "meta_description": "Это страница новостей",
+    "no_news": "Новостей нет",
+    "latest_news": "Последние новости"
+  },
+  "AppSettings": {
+    "settings": "Настройки",
+    "aria_label": "Открыть настройки",
+    "appearance": {
+      "title": "Внешний вид",
+      "description": "Настройте внешний вид приложения"
+    },
+    "language": {
+      "title": "Язык",
+      "description": "Выберите предпочитаемый язык"
+    },
+    "other": {
+      "title": "Другие настройки",
+      "more_settings_coming": "Дополнительные настройки скоро будут доступны"
+    }
   }
 }

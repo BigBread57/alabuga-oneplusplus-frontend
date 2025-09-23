@@ -30,15 +30,15 @@ const themes: Record<ThemeName, ThemeConfig> = {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<ThemeName>(() => {
     if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('antd-theme') as ThemeName
+      const savedTheme = localStorage?.getItem('antd-theme') as ThemeName
       return savedTheme && themes[savedTheme] ? savedTheme : 'dark'
     }
-    return (localStorage.getItem('antd-theme') as ThemeName) || 'dark'
+    return (localStorage?.getItem('antd-theme') as ThemeName) || 'dark'
   })
 
   const setTheme = useCallback((theme: ThemeName) => {
     setCurrentTheme(theme)
-    localStorage.setItem('antd-theme', theme)
+    localStorage?.setItem('antd-theme', theme)
   }, [])
 
   const themeConfig = themes[currentTheme]
@@ -59,6 +59,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext)
   if (context === undefined) {
