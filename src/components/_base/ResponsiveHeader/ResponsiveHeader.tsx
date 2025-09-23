@@ -66,7 +66,7 @@ export const ResponsiveHeader = ({
           {/* Всегда показываем настройки */}
           <AppSettings
             placement={isMobile ? 'top' : 'right'}
-            size={isMobile ? 'small' : 'large'}
+            size='large'
             buttonVariant='icon-only'
           />
         </Space>

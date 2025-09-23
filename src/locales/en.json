@@ -52,8 +52,10 @@
     "profile": "Profile",
     "journal": "Journal",
     "shop": "Shop",
-    "rang": "Rang",
-    "news": "News"
+    "rang": "Ranking",
+    "news": "News",
+    "open_menu": "Open menu",
+    "navigation": "Navigation"
   },
   "ShopPage": {
     "meta_title": "Shop",
@@ -62,6 +64,13 @@
   "ProfilePage": {
     "meta_title": "Profile",
     "meta_description": "View and edit your profile information"
+  },
+
+  "ProfileCard": {
+    "experience": "Experience",
+    "competitions": "Competitions",
+    "artifacts": "Artifacts",
+    "profile": "Profile"
   },
   "JournalPage": {
     "meta_title": "Journal",

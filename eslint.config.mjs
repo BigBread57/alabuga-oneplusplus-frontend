@@ -50,6 +50,8 @@ export default antfu(
 
       'style/jsx-one-expression-per-line': 'off',
       'style/arrow-parens': 'off',
+      'style/jsx-wrap-multilines': 'off',
+      'react/jsx-wrap-multilines': 'off',
     },
   },
 )

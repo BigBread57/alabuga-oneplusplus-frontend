@@ -57,7 +57,9 @@
     "journal": "Журнал",
     "shop": "Магазин",
     "rang": "Рейтинг",
-    "news": "Новости"
+    "news": "Новости",
+    "open_menu": "Открыть меню",
+    "navigation": "Навигация"
   },
   "ShopPage": {
     "meta_title": "Магазин",
@@ -66,6 +68,12 @@
   "ProfilePage": {
     "meta_title": "Профиль",
     "meta_description": "Это страница профиля"
+  },
+  "ProfileCard": {
+    "experience": "Опыт",
+    "competencies": "Компетенции",
+    "artifacts": "Артефакты",
+    "profile": "Профиль"
   },
   "RangPage": {
     "meta_title": "Рейтинг",
