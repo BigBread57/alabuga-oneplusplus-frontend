@@ -70,6 +70,7 @@
     "meta_description": "Это страница профиля"
   },
   "ProfileCard": {
+    "rank": "Ранг",
     "experience": "Опыт",
     "competencies": "Компетенции",
     "artifacts": "Артефакты",
@@ -104,5 +105,31 @@
       "title": "Другие настройки",
       "more_settings_coming": "Дополнительные настройки скоро будут доступны"
     }
+  },
+  "ProfilePhoto": {
+    "avatar_alt": "Фото профиля",
+    "upload_button": "Загрузить",
+    "remove_button": "Удалить",
+    "preview_title": "Просмотр фото",
+    "upload_error_format": "Пожалуйста, загрузите файл изображения!",
+    "upload_error_size": "Размер изображения должен быть меньше 5MB!",
+    "remove_confirm_title": "Удалить фото профиля?",
+    "remove_confirm_description": "Это действие нельзя отменить.",
+    "remove_confirm_ok": "Удалить",
+    "remove_confirm_cancel": "Отмена",
+    "remove_success": "Фото профиля успешно удалено"
+  },
+  "Loading": {
+    "message": "Загрузка...",
+    "component_loading": "Компонент загружается..."
+  },
+  "ProfileRank": {
+    "required_experience": "Требуемый опыт",
+    "current_experience": "Текущий опыт",
+    "progress_to_next_rank": "Прогресс до следующего ранга",
+    "experience_left": "опыта осталось",
+    "game_world": "Игровой мир",
+    "rank_achieved": "Ранг достигнут",
+    "next_rank": "Следующий ранг"
   }
 }

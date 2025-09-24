@@ -35,10 +35,11 @@ export const darkTheme: ThemeConfig = {
   algorithm: theme.darkAlgorithm, // тёмный алгоритм
   components: {
     Menu: {
-      colorItemTextSelected: '#ffffff',
-      colorItemBgSelected: DarkBlue,
+      itemSelectedColor: '#ffffff',
+      itemSelectedBg: DarkBlue,
     },
   },
+  hashed: true,
 }
 
 // Дополнительные кастомные темы

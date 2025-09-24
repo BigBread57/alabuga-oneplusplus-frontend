@@ -67,8 +67,9 @@
   },
 
   "ProfileCard": {
+    "rank": "Rank",
     "experience": "Experience",
-    "competitions": "Competitions",
+    "competencies": "Competencies",
     "artifacts": "Artifacts",
     "profile": "Profile"
   },
@@ -100,5 +101,32 @@
       "title": "Other Settings",
       "more_settings_coming": "More settings will be available soon"
     }
+  },
+  "ProfilePhoto": {
+    "avatar_alt": "Profile Photo",
+    "upload_button": "Upload",
+    "remove_button": "Remove",
+    "preview_title": "Photo Preview",
+    "upload_error_format": "Please upload an image file!",
+    "upload_error_size": "Image must be smaller than 5MB!",
+    "remove_confirm_title": "Remove profile photo?",
+    "remove_confirm_description": "Are you sure you want to remove your profile photo? This action cannot be undone.",
+    "remove_confirm_ok": "Yes, remove it",
+    "remove_confirm_cancel": "Cancel",
+    "remove_success": "Profile photo removed successfully"
+  },
+  "Loading": {
+    "message": "Loading...",
+    "component_loading": "Component is loading..."
+  },
+  "ProfileRank": {
+    "rank": "Rank",
+    "required_experience": "Required experience",
+    "current_experience": "Current experience",
+    "progress_to_next_rank": "Progress to next rank",
+    "experience_left": "experience left",
+    "game_world": "Game world",
+    "rank_achieved": "Rank achieved",
+    "next_rank": "Next rank"
   }
 }
