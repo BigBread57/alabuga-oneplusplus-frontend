@@ -194,7 +194,7 @@ export default async function LocalizedNotFound(props: NotFoundProps) {
   )
 }
 вот пример простого компонета 
-import type { UsersModelProps } from '@/models'
+import type { UserProps } from '@/models'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Dropdown, Row, Space, Typography } from 'antd'
 
@@ -207,10 +207,10 @@ import styles from './CurrentUser.module.scss'
 const { Text } = Typography
 
 type CurrentUserProps = {
-  currentUser: UsersModelProps
+  currentUser: UserProps
 }
 
-const UserName = ({ currentUser }: { currentUser: UsersModelProps }) => (
+const UserName = ({ currentUser }: { currentUser: UserProps }) => (
   <Text>{currentUser?.email || currentUser?.username}</Text>
 )
 

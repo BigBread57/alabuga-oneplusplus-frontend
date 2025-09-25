@@ -3,7 +3,7 @@ import type { BaseModelProps } from '@/models/Base'
 import type { PermissionRulesProps } from '@/services/base/types'
 import { BaseModel } from 'src/models/Base'
 
-export type UsersModelProps = {
+export type UserProps = {
   username: string
   avatar: string
   email: string
@@ -16,8 +16,8 @@ export type UsersModelProps = {
   permission_rules: PermissionRulesProps
 } & BaseModelProps
 
-export class UsersModel extends BaseModel {
-  static override modelName = 'users'
+export class UserModel extends BaseModel {
+  static override modelName = 'user'
 
   static override url() {
     return '/user/users'

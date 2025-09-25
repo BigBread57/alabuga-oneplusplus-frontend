@@ -1,4 +1,4 @@
-import type { UsersModelProps } from '@/models'
+import type { UserProps } from '@/models'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Dropdown, Row, Space, Typography } from 'antd'
 
@@ -11,10 +11,10 @@ import styles from './CurrentUser.module.scss'
 const { Text } = Typography
 
 type CurrentUserProps = {
-  currentUser: UsersModelProps
+  currentUser: UserProps
 }
 
-const UserName = ({ currentUser }: { currentUser: UsersModelProps }) => {
+const UserName = ({ currentUser }: { currentUser: UserProps }) => {
   return (
     <Space direction='vertical'>
       {currentUser?.first_name || currentUser?.last_name
@@ -36,7 +36,7 @@ const DropdownRender = ({
   currentUser,
 }: {
   onLogout: (e: React.MouseEvent) => void
-  currentUser: UsersModelProps
+  currentUser: UserProps
 }) => {
   const t = useTranslations('CurrentUser')
 
