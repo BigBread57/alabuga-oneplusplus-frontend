@@ -4,8 +4,8 @@ export type BaseModelProps = {
   id: string | number
   created_at: string
   updated_at: string
-  permissionRules: PermissionRulesProps
-  contentType: string | number
+  permissionRules?: PermissionRulesProps
+  contentType?: string | number
 }
 export class BaseModel {
   static modelName = 'base'

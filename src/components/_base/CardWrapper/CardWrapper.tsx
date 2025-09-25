@@ -2,9 +2,10 @@
 
 import type { CardProps } from 'antd'
 import type { FCC } from '@/types'
-import { Card } from 'antd'
+import { Card, Space, Typography } from 'antd'
 import { useTheme } from '@/providers/ThemeProvider'
 
+const { Title } = Typography
 type CardWrapperProps = CardProps
 
 const CardWrapper: FCC<CardWrapperProps> = ({ children, ...cardProps }) => {
@@ -17,10 +18,15 @@ const CardWrapper: FCC<CardWrapperProps> = ({ children, ...cardProps }) => {
       style={{
         boxShadow: themeConfig.token?.boxShadow,
         background: themeConfig.token?.colorBgBase,
+        height: '100%',
       }}
-      styles={{
-        header: {},
-      }}
+      title={
+        <Space>
+          <Title level={3} style={{ margin: 0 }}>
+            {cardProps.title}
+          </Title>
+        </Space>
+      }
       {...cardProps}
     >
       {children}

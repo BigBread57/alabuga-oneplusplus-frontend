@@ -128,5 +128,34 @@
     "game_world": "Game world",
     "rank_achieved": "Rank achieved",
     "next_rank": "Next rank"
+  },
+  "Mission": {
+    "missions": "Missions",
+    "no_missions": "No missions available",
+    "complete_mission": "Complete Mission",
+    "mission_completed": "Mission completed!",
+    "mission_details": "Mission Details",
+    "start_mission": "Start Mission",
+    "mission_in_progress": "Mission in progress...",
+    "mission_failed": "Mission failed. Try again!",
+    "reward": "Reward",
+    "experience": "Experience",
+    "items": "Items"
+  },
+  "MissionCard": {
+    "completed": "Completed",
+    "locked": "Locked",
+    "key_mission": "Key Mission",
+    "available": "Available",
+    "key": "Key",
+    "inactive": "Inactive",
+    "description": "Description",
+    "rewards": "Rewards",
+    "experience": "experience",
+    "branch": "Branch",
+    "days_to_complete": "days to complete",
+    "order": "Order",
+    "requirements": "Requirements",
+    "complete_mission": "Complete Mission"
   }
 }

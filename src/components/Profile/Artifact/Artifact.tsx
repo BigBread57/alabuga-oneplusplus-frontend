@@ -81,12 +81,9 @@ const Artifact: FCC<ArtifactProps> = ({
         onCancel={() => setOpen(false)}
         footer={null}
         centered
-        width={400}
+        style={{ borderColor: color || '#d9d9d9' }}
       >
-        <Card
-          style={{ borderColor: color || '#d9d9d9' }}
-          className={styles.card}
-        >
+        <Card variant='borderless' className={styles.card}>
           <div className={styles.header}>
             {icon && (
               <Image

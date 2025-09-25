@@ -131,5 +131,28 @@
     "game_world": "Игровой мир",
     "rank_achieved": "Ранг достигнут",
     "next_rank": "Следующий ранг"
+  },
+  "Mission": {
+    "missions": "Миссии",
+    "no_missions": "Нет доступных миссий",
+    "complete_mission": "Завершить миссию",
+    "mission_completed": "Миссия завершена",
+    "new_mission": "Новая миссия доступна"
+  },
+  "MissionCard": {
+    "completed": "Выполнено",
+    "locked": "Заблокировано",
+    "key_mission": "Ключевая миссия",
+    "available": "Доступно",
+    "key": "Ключевая",
+    "inactive": "Неактивна",
+    "description": "Описание",
+    "rewards": "Награды",
+    "experience": "опыта",
+    "branch": "Ветка",
+    "days_to_complete": "дней на выполнение",
+    "order": "Порядок",
+    "requirements": "Требования",
+    "complete_mission": "Выполнить миссию"
   }
 }

@@ -4,6 +4,7 @@ import { Col, Row } from 'antd'
 import { getTranslations } from 'next-intl/server'
 import React from 'react'
 import { ProfileCard } from '@/components/Profile/ProfileCard'
+import MissionsCard from '../../../../components/Mission/MissionsCard/MissionsCard'
 
 type IMainPageProps = {
   params: Promise<{ locale: string }>
@@ -72,16 +73,9 @@ export default async function MainPage() {
       style={{
         height: '100%',
       }}
+      gutter={[24, 24]}
     >
-      <Col
-        style={{
-          height: '100%',
-        }}
-        xs={24}
-        sm={24}
-        md={24}
-        lg={8}
-      >
+      <Col xs={24} sm={24} md={24} lg={8}>
         <ProfileCard
           userName={userDataMock.userName}
           userAvatar={userDataMock.userAvatar}
@@ -89,6 +83,17 @@ export default async function MainPage() {
           artifacts={userDataMock.artifacts}
           competencies={userDataMock.competencies}
         />
+      </Col>
+      <Col
+        xs={24}
+        sm={24}
+        md={24}
+        lg={16}
+        style={{
+          height: 'calc(100vh - 130px)',
+        }}
+      >
+        <MissionsCard />
       </Col>
     </Row>
   )

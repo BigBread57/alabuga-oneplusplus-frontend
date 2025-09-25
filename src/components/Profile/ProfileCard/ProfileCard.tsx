@@ -4,15 +4,13 @@ import type { CardWrapperProps } from '@/components/_base/CardWrapper/CardWrappe
 import type { ArtifactModel } from '@/components/Profile/Artifact/Artifact'
 import type { CompetenceModel } from '@/components/Profile/Competence/Competence'
 import type { FCC } from '@/types'
-import { Col, Divider, Row, Space, Typography } from 'antd'
+import { Col, Divider, Row, Space } from 'antd'
 import { useTranslations } from 'next-intl'
-import CardWrapper from '@/components/_base/CardWrapper/CardWrapper'
+import { CardWrapper } from '@/components/_base/CardWrapper'
 import { Artifacts } from '@/components/Profile/Artifacts'
 import { Competencies } from '@/components/Profile/Competencies'
+import { ProfileRank } from '@/components/Profile/ProfileRank'
 import { ProfilePhoto } from '../ProfilePhoto/ProfilePhoto'
-import ProfileRank from '../ProfileRank/ProfileRank'
-
-const { Title } = Typography
 
 type UserRank = {
   icon: React.ReactNode
@@ -251,28 +249,32 @@ const ProfileCard: FCC<ProfileCardProps> = ({
 
   return (
     <CardWrapper
-      title={
-        <Space>
-          <Title level={3} style={{ margin: 0 }}>
-            {userName}
-          </Title>
-        </Space>
-      }
+      title={userName}
+      styles={{
+        header: {
+          fontSize: '18px',
+        },
+        body: {
+          height: '100%',
+          overflow: 'scroll',
+        },
+      }}
       {...cardProps}
     >
       <Row justify='center'>
-        <Col>
-          <ProfilePhoto editable />
+        <Col span={24}>
+          <Space direction='horizontal'>
+            <ProfilePhoto editable />
+
+            <ProfileRank
+              rank={bronzeRank}
+              showProgress
+              currentExperience={silverRank.required_experience}
+              nextRank={bronzeRank.parent}
+            />
+          </Space>
         </Col>
-        <Divider>{t('rank')}</Divider>
-        <Col xs={24}>
-          <ProfileRank
-            rank={bronzeRank}
-            showProgress
-            currentExperience={silverRank.required_experience}
-            nextRank={bronzeRank.parent}
-          />
-        </Col>
+        <Col xs={24}></Col>
         <Divider>{t('artifacts')}</Divider>
 
         <Col>

@@ -23,7 +23,7 @@ type ProfilePhotoProps = {
 export function ProfilePhoto({
   src,
   alt,
-  size = 200,
+  size = 100,
   editable = false,
   onPhotoChange,
   loading = false,

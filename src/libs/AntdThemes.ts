@@ -29,7 +29,6 @@ export const darkTheme: ThemeConfig = {
     colorPrimary: Blue,
     colorBgBase: DarkPurple,
     colorTextBase: LightBlue,
-    borderRadius: 8,
     boxShadow: `0 0px 4px ${Blue}`,
   },
   algorithm: theme.darkAlgorithm, // тёмный алгоритм
