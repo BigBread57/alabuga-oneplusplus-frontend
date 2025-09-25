@@ -157,5 +157,8 @@
     "order": "Order",
     "requirements": "Requirements",
     "complete_mission": "Complete Mission"
+  },
+  "CurrentUser": {
+    "logout": "Logout"
   }
 }

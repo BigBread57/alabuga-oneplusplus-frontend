@@ -154,5 +154,8 @@
     "order": "Порядок",
     "requirements": "Требования",
     "complete_mission": "Выполнить миссию"
+  },
+  "CurrentUser": {
+    "logout": "Выйти"
   }
 }
