@@ -155,7 +155,7 @@ const MissionCard: FCC<MissionCardProps> = ({
                 <DollarOutlined style={{ color: '#52c41a' }} />
                 <Text>
                   {mission.currency.toLocaleString()}{' '}
-                  {mission.game_world.currency_name}
+                  {mission?.game_world?.currency_name}
                 </Text>
               </Space>
             </Space>

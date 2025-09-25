@@ -11,7 +11,7 @@ type ModalWrapperProps = {
   title?: string
   width?: number | string
   footer?: React.ReactNode | null
-  destroyOnClose?: boolean
+  destroyOnHidden?: boolean
   centered?: boolean
   className?: string
   modalProps?: Partial<ModalProps>
@@ -25,7 +25,7 @@ const ModalWrapper: FCC<ModalWrapperProps> = ({
   title,
   width = 520,
   footer,
-  destroyOnClose = true,
+  destroyOnHidden = true,
   centered = true,
   className,
   modalProps,
@@ -65,7 +65,7 @@ const ModalWrapper: FCC<ModalWrapperProps> = ({
         open={isOpen}
         width={width}
         footer={footer}
-        destroyOnClose={destroyOnClose}
+        destroyOnHidden={destroyOnHidden}
         centered={centered}
         className={className}
         onCancel={handleClose}

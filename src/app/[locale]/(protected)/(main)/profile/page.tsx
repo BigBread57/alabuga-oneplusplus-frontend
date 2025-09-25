@@ -4,7 +4,7 @@ import { Col, Row } from 'antd'
 import { getTranslations } from 'next-intl/server'
 import React from 'react'
 import { ProfileCard } from '@/components/Profile/ProfileCard'
-import MissionsCard from '../../../../components/Mission/MissionsCard/MissionsCard'
+import MissionsCard from '../../../../../components/Mission/MissionsCard/MissionsCard'
 
 type IMainPageProps = {
   params: Promise<{ locale: string }>

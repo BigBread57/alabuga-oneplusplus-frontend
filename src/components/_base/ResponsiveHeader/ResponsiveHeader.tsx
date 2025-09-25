@@ -1,11 +1,13 @@
 'use client'
 
 import { Layout, Space, Typography } from 'antd'
-import React from 'react'
+import React, { useContext } from 'react'
 import { AppSettings } from '@/components/_base/AppSettings/AppSettings'
 import { MenuLinks } from '@/components/_base/MenuLinks'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useScreens } from '@/hooks/useScreens'
 import { useTheme } from '@/providers/ThemeProvider'
+import CurrentUser from '../../CurrentUser/CurrentUser'
 
 const { Header: AntHeader } = Layout
 const { Title } = Typography
@@ -19,6 +21,8 @@ export const ResponsiveHeader = ({
   title = 'My App',
   showIndividualSwitchers = false,
 }: ResponsiveHeaderProps = {}) => {
+  const { currentUser } = useContext(CurrentUserContext)
+
   const { themeConfig } = useTheme()
   const { isMobile, isTablet } = useScreens()
 
@@ -33,7 +37,6 @@ export const ResponsiveHeader = ({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 0,
-        // background: 'var(--ant-color-bg-container)',
         background: 'transparent',
         borderBottom: '1px solid var(--ant-color-border)',
       }}
@@ -62,6 +65,7 @@ export const ResponsiveHeader = ({
           {showIndividualSwitchers && !isMobile && !isTablet && (
             <>{/* Здесь можно добавить индивидуальные переключатели */}</>
           )}
+          <CurrentUser currentUser={currentUser} />
 
           {/* Всегда показываем настройки */}
           <AppSettings

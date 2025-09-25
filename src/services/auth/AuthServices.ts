@@ -24,7 +24,7 @@ export default class AuthServices {
    */
   static async getUserInfo() {
     try {
-      const res = await apiClient.get(`${usersProfileApi}/get-info/`)
+      const res = await apiClient.get(`${usersProfileApi}/info/`)
       if (res.status === 200) {
         localStorage.setItem('user', JSON.stringify(res.data))
       }
@@ -85,7 +85,7 @@ export default class AuthServices {
   static logout(url: string) {
     return new Promise((resolve, reject) => {
       apiClient
-        .post(`${userApi}/${url}/`, {})
+        .get(`${userApi}/${url}/`)
         .then((response: any) => {
           return resolve(response)
         })

@@ -2,28 +2,22 @@
 
 import type { MenuProps } from 'antd'
 import type { FCC } from 'src/types'
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  MenuOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
 import { Button, Drawer, Menu } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import React, { useState } from 'react'
+import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { useScreens } from '@/hooks/useScreens'
 
 // Определяем навигационные элементы с маршрутами
 const navigationItems = [
-  { icon: UserOutlined, labelKey: 'profile', href: '/profile' },
-  { icon: BarChartOutlined, labelKey: 'journal', href: '/journal' },
-  { icon: ShopOutlined, labelKey: 'shop', href: '/shop' },
-  { icon: TeamOutlined, labelKey: 'rang', href: '/rang' },
-  { icon: AppstoreOutlined, labelKey: 'news', href: '/news' },
+  Links.PROFILE,
+  Links.JOURNAL,
+  Links.SHOP,
+  Links.RANG,
+  Links.NEWS,
 ]
 
 const MenuLinks: FCC = () => {
@@ -45,7 +39,7 @@ const MenuLinks: FCC = () => {
   }
 
   const createMenuItems = (isVertical = false): MenuProps['items'] =>
-    navigationItems.map((item) => ({
+    navigationItems?.map((item) => ({
       key: item.href,
       icon: isCompact && React.createElement(item.icon),
       label: isVertical

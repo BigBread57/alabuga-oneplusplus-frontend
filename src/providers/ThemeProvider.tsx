@@ -33,7 +33,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const savedTheme = localStorage?.getItem('antd-theme') as ThemeName
       return savedTheme && themes[savedTheme] ? savedTheme : 'dark'
     }
-    return (localStorage?.getItem('antd-theme') as ThemeName) || 'dark'
+    if (!!localStorage && localStorage.getItem('antd-theme')) {
+      const savedTheme = localStorage?.getItem('antd-theme') as ThemeName
+      return savedTheme && themes[savedTheme] ? savedTheme : 'dark'
+    }
+    return 'dark'
   })
 
   const setTheme = useCallback((theme: ThemeName) => {

@@ -74,18 +74,18 @@ export const AppSettings = ({
       {renderTriggerButton()}
 
       <Drawer
-        title={(
+        title={
           <Space>
             <SettingOutlined />
             <span>{t('settings')}</span>
           </Space>
-        )}
+        }
         placement={isMobile ? 'bottom' : placement}
         width={drawerWidth}
         height={isMobile ? '50%' : undefined}
         onClose={onClose}
         open={open}
-        destroyOnClose
+        destroyOnHidden
         styles={{
           body: {
             padding: '24px',

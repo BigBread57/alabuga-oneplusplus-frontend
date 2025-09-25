@@ -1,5 +1,7 @@
 'use client'
 
+import type { FormErrorsHook } from '@/hooks/useFormErrors'
+import type { LoginValuesTypes } from '@/services/auth'
 import { GoogleOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
 import {
   Button,
@@ -8,6 +10,7 @@ import {
   Divider,
   Form,
   Input,
+  notification,
   Space,
   Typography,
 } from 'antd'
@@ -15,31 +18,47 @@ import { useTranslations } from 'next-intl'
 import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
 import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { useFormErrors } from '@/hooks/useFormErrors'
+import { useLogin } from '@/services/auth/hooks'
 
 const { Title, Text, Link } = Typography
 
-type FieldType = {
-  email: string
-  password: string
-  remember?: boolean
-}
-
 type LoginFormProps = {
-  onSubmit?: (values: FieldType) => void
   onGoogleLogin?: () => void
-  loading?: boolean
+  onSuccess?: (data: any) => void
+  redirectPath?: string
 }
 
 export default function LoginForm({
-  onSubmit,
   onGoogleLogin,
-  loading = false,
+  onSuccess,
+  redirectPath = '/profile',
 }: LoginFormProps = {}) {
   const t = useTranslations('LoginForm')
   const [form] = Form.useForm()
+  const { errors, setFormErrors } = useFormErrors() as FormErrorsHook
 
-  const handleFinish = (values: FieldType) => {
-    onSubmit?.(values)
+  const { mutate: login, isLoading: loginIsLoading }: any = useLogin()
+
+  const handleFinish = (values: LoginValuesTypes) => {
+    login(values, {
+      onSuccess: (
+        data: Record<'data', Record<'is_need_add_info', boolean>>,
+      ) => {
+        // Вызываем колбэк onSuccess если он передан
+        onSuccess?.(data)
+
+        window.location.href = redirectPath
+      },
+      onError: (error: any) => {
+        setFormErrors(error?.data)
+        if (error?.data?.detail) {
+          notification.error({
+            message: error.data.detail,
+          })
+        }
+      },
+    })
   }
 
   const handleGoogleLogin = () => {
@@ -82,9 +101,11 @@ export default function LoginForm({
         form={form}
         name='login'
         layout='vertical'
-        onFinish={handleFinish}
+        wrapperCol={{ span: 24 }}
+        initialValues={{ remember: true }}
         autoComplete='off'
         size='large'
+        onFinish={handleFinish}
       >
         <Form.Item
           label={t('email')}
@@ -99,10 +120,13 @@ export default function LoginForm({
               message: t('email_invalid'),
             },
           ]}
+          validateStatus={errors.email ? 'error' : ''}
+          help={errors.email?.[0]}
         >
           <Input
             prefix={<MailOutlined />}
             placeholder={t('email_placeholder')}
+            disabled={loginIsLoading}
           />
         </Form.Item>
 
@@ -115,10 +139,13 @@ export default function LoginForm({
               message: t('password_required'),
             },
           ]}
+          validateStatus={errors.password ? 'error' : ''}
+          help={errors?.password?.[0]}
         >
           <Input.Password
             prefix={<LockOutlined />}
             placeholder={t('password_placeholder')}
+            disabled={loginIsLoading}
           />
         </Form.Item>
 
@@ -131,7 +158,7 @@ export default function LoginForm({
             }}
           >
             <Form.Item name='remember' valuePropName='checked' noStyle>
-              <Checkbox>{t('remember_me')}</Checkbox>
+              <Checkbox disabled={loginIsLoading}>{t('remember_me')}</Checkbox>
             </Form.Item>
             <Link>{t('forgot_password')}</Link>
           </div>
@@ -141,7 +168,7 @@ export default function LoginForm({
           <Button
             type='primary'
             htmlType='submit'
-            loading={loading}
+            loading={loginIsLoading}
             style={{ width: '100%', height: '40px' }}
           >
             {t('sign_in')}
@@ -160,6 +187,7 @@ export default function LoginForm({
           icon={<GoogleOutlined />}
           style={{ width: '100%', height: '40px' }}
           onClick={handleGoogleLogin}
+          disabled={loginIsLoading}
         >
           {t('continue_with_google')}
         </Button>

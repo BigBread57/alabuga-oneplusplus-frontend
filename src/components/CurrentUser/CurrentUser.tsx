@@ -3,9 +3,9 @@ import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Dropdown, Row, Space, Typography } from 'antd'
 
 import React, { useCallback } from 'react'
-import { IconAsButton } from '@/components/_base/IconAsButton'
-import { useLogout } from '@/services/auth/hooks'
+import { useScreens } from '@/hooks/useScreens'
 
+import { useLogout } from '@/services/auth/hooks'
 import styles from './CurrentUser.module.scss'
 
 const { Text } = Typography
@@ -15,33 +15,51 @@ type CurrentUserProps = {
 }
 
 const UserName = ({ currentUser }: { currentUser: UsersModelProps }) => (
-  <Text>{currentUser?.email || currentUser?.username}</Text>
+  <Space direction='vertical'>
+    {currentUser?.first_name || currentUser?.last_name
+      ? (
+          <Text>
+            {currentUser?.first_name} {currentUser?.last_name}
+          </Text>
+        )
+      : null}
+
+    <Text>{currentUser?.email || currentUser?.username}</Text>
+  </Space>
 )
 
 // Выносим DropdownRender на верхний уровень
 const DropdownRender = ({
   onLogout,
+  currentUser,
 }: {
   onLogout: (e: React.MouseEvent) => void
-}) => (
-  <Card>
-    <Space direction='vertical'>
-      <Button
-        type='text'
-        icon={<LogoutOutlined />}
-        onClick={(e) => {
-          e.stopPropagation()
-          onLogout(e)
-        }}
-      >
-        Выйти
-      </Button>
-    </Space>
-  </Card>
-)
+  currentUser: UsersModelProps
+}) => {
+  const { isMobile, isTablet } = useScreens()
+
+  return (
+    <Card>
+      <Space direction='vertical' size='large'>
+        {isMobile || isTablet ? <UserName currentUser={currentUser} /> : null}
+        <Button
+          type='primary'
+          icon={<LogoutOutlined />}
+          onClick={(e) => {
+            e.stopPropagation()
+            onLogout(e)
+          }}
+        >
+          Выйти
+        </Button>
+      </Space>
+    </Card>
+  )
+}
 
 export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const { mutate: logout }: any = useLogout()
+  const { isMobile, isTablet } = useScreens()
 
   const handleLogout = useCallback(() => {
     logout(
@@ -56,8 +74,12 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
   // Мемоизируем dropdown render с правильными зависимостями
   const dropdownRender = useCallback(
-    () => <DropdownRender onLogout={handleLogout} />,
-    [handleLogout],
+    () => (
+      <>
+        <DropdownRender onLogout={handleLogout} currentUser={currentUser} />
+      </>
+    ),
+    [handleLogout, currentUser],
   )
 
   return (
@@ -66,20 +88,26 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <Dropdown
           placement='bottom'
           trigger={['click']}
-          dropdownRender={dropdownRender}
+          popupRender={dropdownRender}
         >
           <Space
             className={styles.spaceRow}
             direction='horizontal'
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
-            <IconAsButton
-              icon={UserOutlined}
+            <Button
+              type='text'
+              size='large'
+              icon={<UserOutlined />}
               style={{
                 fontSize: 16,
               }}
             />
-            <UserName currentUser={currentUser} />
+            {!isMobile && !isTablet
+              ? (
+                  <UserName currentUser={currentUser} />
+                )
+              : null}
           </Space>
         </Dropdown>
       </Col>

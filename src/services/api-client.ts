@@ -7,8 +7,8 @@ const paramsSerializer = (params: any) => {
 }
 
 const config = {
-  baseURL: 'https://prod.api.invest.yapa.one/api',
-  // baseURL: 'http://localhost:8000/api',
+  // baseURL: 'https://prod.api.invest.yapa.one/api/v1',
+  baseURL: 'http://localhost:8000/api/v1',
   timeout: 60000,
   withCredentials: true,
   paramsSerializer,

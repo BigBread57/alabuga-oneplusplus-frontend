@@ -1,11 +1,10 @@
+'use client'
+
 import type { FCC } from 'src/types'
 
 import type { CurrentUserContextType } from '@/components/CurrentUserProvider/CurrentUserContext'
 import React, { useMemo } from 'react'
-import {
-  CurrentUserContext,
-
-} from '@/components/CurrentUserProvider/CurrentUserContext'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useUserGetInfo } from '@/services/auth/hooks'
 
 const CurrentUserProvider: FCC = ({ children }) => {

@@ -1,3 +1,4 @@
+'use client'
 import type { UsersModelProps } from '@/models'
 import { createContext } from 'react'
 
