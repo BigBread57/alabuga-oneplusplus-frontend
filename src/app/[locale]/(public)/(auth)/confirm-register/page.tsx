@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import React from 'react'
-import { ProfilePage } from '@/components/Profile/ProfilePage'
+import { ConfirmRegister } from '@/components/auth/ConfirmRegister'
 
 type IMainPageProps = {
   params: Promise<{ locale: string }>
-  children: React.ReactNode
 }
 
 export async function generateMetadata(
@@ -23,6 +21,6 @@ export async function generateMetadata(
   }
 }
 
-export default async function MainPage() {
-  return <ProfilePage />
+export default async function Page() {
+  return <ConfirmRegister />
 }

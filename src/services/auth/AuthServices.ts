@@ -6,6 +6,19 @@ const userApi = 'user/users'
 const usersProfileApi = 'user/users'
 
 export default class AuthServices {
+  static confirmRegister({ email, token }: { email: string, token: string }) {
+    return new Promise((resolve, reject) => {
+      apiClient
+        .get(`${userApi}/confirm-register/?email=${email}&token=${token}`)
+        .then((response: any) => {
+          return resolve(response)
+        })
+        .catch((error: any) => {
+          return reject(error.response)
+        })
+    })
+  }
+
   static login(url: string, credentials: LoginValuesTypes) {
     return new Promise((resolve, reject) => {
       apiClient

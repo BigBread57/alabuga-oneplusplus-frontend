@@ -34,9 +34,7 @@ const aj = arcjet.withRule(
 
 function isProtectedRoute(pathname: string) {
   return protectedRoutes.some((route) => {
-    const regex = new RegExp(
-      `^${route.replace(':locale', '[a-z]{2}')}(.*)$`,
-    )
+    const regex = new RegExp(`^${route.replace(':locale', '[a-z]{2}')}(.*)$`)
     return regex.test(pathname)
   })
 }
@@ -58,7 +56,7 @@ export default async function middleware(request: NextRequest) {
     const sessionId = request.cookies.get('sessionid')?.value
 
     if (!sessionId) {
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/sign-in', request.url))
     }
 
     // проверяем сессию через backend
@@ -69,7 +67,7 @@ export default async function middleware(request: NextRequest) {
     })
 
     if (!res.ok) {
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/sign-in', request.url))
     }
   }
 

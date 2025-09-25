@@ -26,4 +26,8 @@ export class UsersModel extends BaseModel {
   static changePasswordUrl() {
     return `${this.url()}/change-password/`
   }
+
+  static confirmRegisterUrl(email: string, token: string) {
+    return `${this.url()}/confirm-register/${email}/${token}`
+  }
 }

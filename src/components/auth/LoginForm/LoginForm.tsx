@@ -195,7 +195,7 @@ export default function LoginForm({
 
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
         <Text type='secondary'>
-          {t('no_account')} <Link>{t('sign_up')}</Link>
+          {t('no_account')} <Link href='/sign-up'>{t('sign_up')}</Link>
         </Text>
       </div>
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
