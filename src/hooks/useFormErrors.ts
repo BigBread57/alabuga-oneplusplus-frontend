@@ -15,7 +15,7 @@ export type FormError = {
   help: string
 }
 export type FormErrorObj = {
-  [key: string]: FormError
+  [key: string]: FormError | any
 }
 
 const getErrorsObj = (errors: string[]): FormError => {
