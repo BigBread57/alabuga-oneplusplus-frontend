@@ -20,9 +20,6 @@ const MissionsCard: FCC<MissionsCardProps> = ({ prop }) => {
     <CardWrapper
       title={t('missions').toUpperCase()}
       styles={{
-        header: {
-          fontSize: '18px',
-        },
         body: {
           height: '90%',
           overflow: 'scroll',

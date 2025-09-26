@@ -29,10 +29,10 @@ export interface ShopItemProps extends BaseModelProps {
 
 enum ShopItemUrl {
   SHOP_ITEM = '/shop/item',
-  SHOP_ITEMS_LIST = '/shop/items/',
+  SHOP_ITEMS_LIST = '/shop/items/list',
 }
 
-export class ShopItem extends BaseModel {
+export class Shop extends BaseModel {
   static override modelName = 'shopItem'
 
   static override url() {

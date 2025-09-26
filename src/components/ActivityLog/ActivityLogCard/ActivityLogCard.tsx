@@ -19,12 +19,10 @@ type ActivityLogProps = {
 
 const ActivityLogCard: FCC<ActivityLogProps> = ({ text, created_at }) => {
   return (
-    <>
-      <Card style={{ width: '100%' }}>
-        <p>{text}</p>
-        <p className={styles.createdAt}>{created_at}</p>
-      </Card>
-    </>
+    <Card style={{ width: '100%' }}>
+      <p>{text}</p>
+      <p className={styles.createdAt}>{created_at}</p>
+    </Card>
   )
 }
 

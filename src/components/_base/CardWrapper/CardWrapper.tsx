@@ -23,7 +23,7 @@ const CardWrapper: FCC<CardWrapperProps> = ({ children, ...cardProps }) => {
       title={
         <Space>
           <Title level={3} style={{ margin: 0 }}>
-            {cardProps.title}
+            {cardProps?.title}
           </Title>
         </Space>
       }

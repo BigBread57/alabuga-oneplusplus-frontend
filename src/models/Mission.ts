@@ -27,7 +27,7 @@ export interface MissionProps extends BaseModelProps {
 
 enum MissionUrl {
   MISSION = '/game-world/mission',
-  MISSIONS = '/game-world/missions',
+  MISSIONS = '/game-world/missions/list',
 }
 
 export class Mission extends BaseModel {

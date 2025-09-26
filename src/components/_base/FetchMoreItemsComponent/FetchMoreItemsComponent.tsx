@@ -1,3 +1,5 @@
+'use client'
+
 import type { BaseModel } from '@/models'
 import type { FCC } from '@/types'
 import { Button, Col, Divider, Row, Spin, Typography } from 'antd'

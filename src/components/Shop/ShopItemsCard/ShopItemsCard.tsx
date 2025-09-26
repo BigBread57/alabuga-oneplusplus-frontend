@@ -7,24 +7,13 @@ import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import ShopItemCard from '@/components/Shop/ShopItemCard/ShopItemCard'
-import { ShopItem } from '@/models/ShopItem'
+import { Shop } from '@/models/Shop'
 
-const MODEL = ShopItem
+const MODEL = Shop
 const ShopItemsCard: FCC = () => {
   const t = useTranslations('ShopItem')
   return (
-    <CardWrapper
-      title={t('shop_items').toUpperCase()}
-      styles={{
-        header: {
-          fontSize: '18px',
-        },
-        body: {
-          height: '90%',
-          overflow: 'scroll',
-        },
-      }}
-    >
+    <CardWrapper title={t('shop_items').toUpperCase()}>
       <FetchMoreItemsComponent
         model={MODEL}
         defFilters={{}}
