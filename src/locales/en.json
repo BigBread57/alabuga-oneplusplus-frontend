@@ -244,5 +244,9 @@
     "status": "Status",
     "active": "Active",
     "inactive": "Inactive"
+  },
+  "ActivityLog": {
+    "title": "Activity log",
+    "all": "All"
   }
 }

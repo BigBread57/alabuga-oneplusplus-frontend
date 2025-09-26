@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { ActivityLogsCard } from '@/components/ActivityLog/ActivityLogsCard'
 
 type JournalPageProps = {
   params: Promise<{ locale: string }>
@@ -21,10 +22,5 @@ export async function generateMetadata(
 }
 
 export default async function JournalPage() {
-  return (
-    <div>
-      <h1>Journal Page</h1>
-      {/* Add your journal components here */}
-    </div>
-  )
+  return <ActivityLogsCard />
 }
