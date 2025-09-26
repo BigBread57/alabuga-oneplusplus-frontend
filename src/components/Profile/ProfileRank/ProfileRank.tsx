@@ -98,7 +98,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
 
             {currentExperience > 0 && (
               <Text type='secondary'>
-                {t('current_experience')}: {currentExperience.toLocaleString()}
+                {t('current_experience')}: {currentExperience?.toLocaleString()}
               </Text>
             )}
           </Space>

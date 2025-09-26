@@ -139,23 +139,9 @@
     "no_missions": "Нет доступных миссий",
     "complete_mission": "Завершить миссию",
     "mission_completed": "Миссия завершена",
-    "new_mission": "Новая миссия доступна"
-  },
-  "MissionCard": {
-    "completed": "Выполнено",
-    "locked": "Заблокировано",
-    "key_mission": "Ключевая миссия",
-    "available": "Доступно",
-    "key": "Ключевая",
-    "inactive": "Неактивна",
-    "description": "Описание",
-    "rewards": "Награды",
-    "experience": "опыта",
-    "branch": "Ветка",
-    "days_to_complete": "дней на выполнение",
-    "order": "Порядок",
-    "requirements": "Требования",
-    "complete_mission": "Выполнить миссию"
+    "new_mission": "Новая миссия доступна",
+    "events": "События",
+    "activities": "Активности"
   },
   "CurrentUser": {
     "logout": "Выйти"
@@ -245,5 +231,39 @@
   "ActivityLog": {
     "title": "Журнал активности",
     "all": "Всё"
+  },
+  "MissionStatus": {
+    "all": "Все",
+    "in_progress": "В процессе",
+    "completed": "Завершено",
+    "need_improvement": "Требует доработки",
+    "pending_review": "На проверке",
+    "failed": "Провалено"
+  },
+  "MissionCard": {
+    "key_mission": "Ключевая",
+    "level": "Уровень",
+    "start": "Начало",
+    "end": "Завершение",
+    "view_details": "Просмотреть детали",
+    "mission_description": "Описание миссии",
+    "rewards": "Награды",
+    "experience": "опыта",
+    "coins": "монет",
+    "information": "Информация",
+    "branch": "Ветка",
+    "category": "Категория",
+    "order": "Порядок",
+    "timeframe": "Временные рамки",
+    "start_date": "Дата начала",
+    "end_date": "Дата завершения",
+    "about_branch": "О ветке \"{branchName}\"",
+    "complete_mission": "Завершить миссию",
+    "completed": "Выполнено",
+    "resubmit": "Переделать",
+    "pending_review": "На проверке",
+    "retry": "Повторить",
+    "locked": "Заблокировано",
+    "close": "Закрыть"
   }
 }

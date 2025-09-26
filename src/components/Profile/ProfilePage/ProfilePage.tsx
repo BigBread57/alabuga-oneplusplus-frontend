@@ -3,7 +3,7 @@
 import type { FCC } from 'src/types'
 import { Col, Row } from 'antd'
 import React from 'react'
-import { MissionsCard } from '@/components/Mission/MissionsCard'
+import { CharacterActivity } from '@/components/Character/CharacterActivity'
 import { ProfileCard } from '@/components/Profile/ProfileCard'
 import { Character } from '@/models/Character'
 import { useFetchExtraAction } from '@/services/base/hooks'
@@ -47,7 +47,7 @@ const ProfilePage: FCC = () => {
           height: 'calc(100vh - 130px)',
         }}
       >
-        <MissionsCard />
+        <CharacterActivity />
       </Col>
     </Row>
   )

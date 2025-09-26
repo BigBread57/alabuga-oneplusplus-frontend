@@ -142,23 +142,9 @@
     "mission_failed": "Mission failed. Try again!",
     "reward": "Reward",
     "experience": "Experience",
-    "items": "Items"
-  },
-  "MissionCard": {
-    "completed": "Completed",
-    "locked": "Locked",
-    "key_mission": "Key Mission",
-    "available": "Available",
-    "key": "Key",
-    "inactive": "Inactive",
-    "description": "Description",
-    "rewards": "Rewards",
-    "experience": "experience",
-    "branch": "Branch",
-    "days_to_complete": "days to complete",
-    "order": "Order",
-    "requirements": "Requirements",
-    "complete_mission": "Complete Mission"
+    "items": "Items",
+    "events": "Events",
+    "activities": "Activities"
   },
   "CurrentUser": {
     "logout": "Logout"
@@ -248,5 +234,39 @@
   "ActivityLog": {
     "title": "Activity log",
     "all": "All"
+  },
+  "MissionStatus": {
+    "all": "All",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "need_improvement": "Need Improvement",
+    "pending_review": "Pending Review",
+    "failed": "Failed"
+  },
+  "MissionCard": {
+    "key_mission": "Ключевая",
+    "level": "Уровень",
+    "start": "Начало",
+    "end": "Завершение",
+    "view_details": "Просмотреть детали",
+    "mission_description": "Описание миссии",
+    "rewards": "Награды",
+    "experience": "опыта",
+    "coins": "монет",
+    "information": "Информация",
+    "branch": "Ветка",
+    "category": "Категория",
+    "order": "Порядок",
+    "timeframe": "Временные рамки",
+    "start_date": "Дата начала",
+    "end_date": "Дата завершения",
+    "about_branch": "О ветке \"{branchName}\"",
+    "complete_mission": "Завершить миссию",
+    "completed": "Выполнено",
+    "resubmit": "Переделать",
+    "pending_review": "На проверке",
+    "retry": "Повторить",
+    "locked": "Заблокировано",
+    "close": "Закрыть"
   }
 }

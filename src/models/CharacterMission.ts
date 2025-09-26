@@ -1,37 +1,58 @@
-import type { ArtifactProps } from './Artifact'
 import type { BaseModelProps } from './Base'
-import type { CompetencyProps } from './Competency'
-import type { GameWorldProps } from './GameWorld'
-import type { MissionBranchProps } from './MissionBranch'
-import type { MissionLevelProps } from './MissionLevel'
+import type { MissionProps } from '@/models/Mission'
 import { BaseModel } from './Base'
 
-export interface MissionProps extends BaseModelProps {
-  icon: string
-  name: string
-  description: string
-  experience: number
-  currency: number
-  order: number
-  is_key_mission: boolean
-  is_active: boolean
-  time_to_complete?: number | null
-  branch: MissionBranchProps
-  level: MissionLevelProps
-  required_missions?: MissionProps[]
-  unlocks_missions?: MissionProps[]
-  artifacts?: ArtifactProps[]
-  competencies?: CompetencyProps[]
-  game_world: GameWorldProps
+// Enum для статуса миссии
+export enum CharacterMissionStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  NEED_IMPROVEMENT = 'NEED_IMPROVEMENT',
+  PENDING_REVIEW = 'PENDING_REVIEW',
+  FAILED = 'FAILED',
+}
+
+// Интерфейс для параметров запроса миссий персонажа
+export interface CharacterMissionQueryParams {
+  limit?: number
+  offset?: number
+  ordering?: string
+  search?: string
+  status?: CharacterMissionStatus
+}
+
+export interface CharacterMissionProps extends BaseModelProps {
+  mission: MissionProps
+  status: CharacterMissionStatus
+  status_display_name: string
+  start_datetime: string
+  end_datetime: string | null
+  content_type_id: number
+}
+
+// Альтернативный вариант с union type вместо enum
+export type CharacterMissionStatusType
+  = | 'IN_PROGRESS'
+    | 'COMPLETED'
+    | 'NEED_IMPROVEMENT'
+    | 'PENDING_REVIEW'
+    | 'FAILED'
+
+// Интерфейс с union type
+export interface CharacterMissionQueryParamsUnion {
+  limit?: number
+  offset?: number
+  ordering?: string
+  search?: string
+  status?: CharacterMissionStatusType
 }
 
 enum MissionUrl {
-  MISSION = '/game-world/mission',
-  MISSIONS = '/game-world/missions',
+  MISSION = '/user/character-mission',
+  MISSIONS = '/user/character-missions/list',
 }
 
-export class Mission extends BaseModel {
-  static override modelName = 'mission'
+export class CharacterMission extends BaseModel {
+  static override modelName = 'characterMission'
 
   static override url() {
     return MissionUrl.MISSIONS

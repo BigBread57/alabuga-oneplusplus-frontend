@@ -1,6 +1,4 @@
-import type { ArtifactProps } from './Artifact'
 import type { BaseModelProps } from './Base'
-import type { CompetencyProps } from './Competency'
 import type { GameWorldProps } from './GameWorld'
 import type { MissionBranchProps } from './MissionBranch'
 import type { MissionLevelProps } from './MissionLevel'
@@ -14,15 +12,15 @@ export interface MissionProps extends BaseModelProps {
   currency: number
   order: number
   is_key_mission: boolean
-  is_active: boolean
-  time_to_complete?: number | null
   branch: MissionBranchProps
   level: MissionLevelProps
-  required_missions?: MissionProps[]
-  unlocks_missions?: MissionProps[]
-  artifacts?: ArtifactProps[]
-  competencies?: CompetencyProps[]
-  game_world: GameWorldProps
+  game_world?: GameWorldProps
+  game_world_stories: string[]
+  is_active: true
+  time_to_complete: number
+  required_missions: Record<string, any>[]
+  artifacts: Record<string, any>[]
+  competencies: Record<string, any>[]
 }
 
 enum MissionUrl {

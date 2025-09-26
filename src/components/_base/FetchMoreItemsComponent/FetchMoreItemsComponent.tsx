@@ -44,6 +44,7 @@ type FetchMoreItemsComponentProps = {
   lengthPostfixPlural?: string
   optionsFieldList?: (string | Record<string, string[]>)[]
   isClearRender?: boolean
+  isParentCounter?: boolean
 }
 
 const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
@@ -55,6 +56,7 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   optionsFieldList,
   extra,
   isClearRender,
+  isParentCounter,
 }) => {
   const t = useTranslations('FetchMoreItemsComponent')
   const {
@@ -96,14 +98,18 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
 
   return (
     <>
-      <Row gutter={40}>
-        <Col span={24} className={styles.dataLengthContainer}>
-          <Text strong>
-            {isLoading ? t('loading') : `${t('found')} ${dataCount || 0}`}
-          </Text>
-          {lengthPostfixPlural}
-        </Col>
-      </Row>
+      {!isParentCounter
+        ? (
+            <Row gutter={40}>
+              <Col span={24} className={styles.dataLengthContainer}>
+                <Text strong>
+                  {isLoading ? t('loading') : `${t('found')} ${dataCount || 0}`}
+                </Text>
+                {lengthPostfixPlural}
+              </Col>
+            </Row>
+          )
+        : null}
       {extra?.({
         isLoading,
         isFetching,
