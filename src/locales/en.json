@@ -221,15 +221,28 @@
     "ok": "OK",
     "cancel": "Cancel"
   },
-  "ShopItem": {
-    "buy_shop_item": "Buy",
-    "description": "Description",
-    "shop_items": "Shop items"
-  },
   "FetchMoreItemsComponent": {
     "load_more": "Load More",
     "loading": "Loading...",
     "no_more_items": "No more items to load",
-    "found": "Found {{count}}"
+    "found": "Found"
+  },
+  "ShopItem": {
+    "shop_items": "Shop Items",
+    "view_details": "View Details",
+    "purchase": "Purchase",
+    "purchase_for": "Purchase for",
+    "points": "points",
+    "close": "Close",
+    "description": "Description",
+    "category": "Category",
+    "price": "Price",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "restrictions": "Restrictions",
+    "available_quantity": "Available",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive"
   }
 }

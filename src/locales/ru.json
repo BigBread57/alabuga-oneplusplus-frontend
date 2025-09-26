@@ -214,9 +214,22 @@
     "go_to_home": "На главную"
   },
   "ShopItem": {
-    "buy_shop_item": "Купить",
+    "shop_items": "Товары магазина",
+    "view_details": "Подробнее",
+    "purchase": "Купить",
+    "purchase_for": "Купить за",
+    "points": "баллов",
+    "close": "Закрыть",
     "description": "Описание",
-    "shop_items": "Предметы магазина"
+    "category": "Категория",
+    "price": "Цена",
+    "start_date": "Дата начала",
+    "end_date": "Дата окончания",
+    "restrictions": "Ограничения",
+    "available_quantity": "Доступно",
+    "status": "Статус",
+    "active": "Активен",
+    "inactive": "Неактивен"
   },
   "ModalConfirm": {
     "confirm": "Подтверждение",

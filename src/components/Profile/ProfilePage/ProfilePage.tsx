@@ -36,8 +36,6 @@ const ProfilePage: FCC = () => {
           userAvatar={data?.data?.avatar}
           character={data?.data}
           gameWorld={data?.data?.game_world}
-          // artifacts={
-          // competencies={userDataMock.competencies}
         />
       </Col>
       <Col

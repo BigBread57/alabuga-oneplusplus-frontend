@@ -7,7 +7,7 @@ import { Button, Tooltip } from 'antd'
 
 type TooltipButtonProps = {
   tooltip: ReactNode
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 } & ButtonProps
 
 const TooltipButton: FCC<TooltipButtonProps> = ({

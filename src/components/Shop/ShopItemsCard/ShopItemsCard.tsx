@@ -1,8 +1,7 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import type { ShopItemModel } from '@/components/Shop/ShopItemCard/ShopItemCard'
-import { Space } from 'antd'
+import { Col, Row } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
@@ -10,12 +9,8 @@ import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsCompon
 import ShopItemCard from '@/components/Shop/ShopItemCard/ShopItemCard'
 import { ShopItem } from '@/models/ShopItem'
 
-interface ShopItemsCardProps {
-  items: ShopItemModel[]
-}
-
 const MODEL = ShopItem
-const ShopItemsCard: FCC<ShopItemsCardProps> = ({ items }) => {
+const ShopItemsCard: FCC = () => {
   const t = useTranslations('ShopItem')
   return (
     <CardWrapper
@@ -29,23 +24,18 @@ const ShopItemsCard: FCC<ShopItemsCardProps> = ({ items }) => {
           overflow: 'scroll',
         },
       }}
-      {...items}
     >
       <FetchMoreItemsComponent
         model={MODEL}
         defFilters={{}}
-        renderItems={() => (
-          <div
-            style={{
-              paddingRight: '8px',
-            }}
-          >
-            <Space direction='vertical' size='large' style={{ width: '100%' }}>
-              {items?.map((shop_item) => (
+        renderItems={({ data }) => (
+          <Row gutter={[16, 16]} justify='start'>
+            {data?.map((shop_item) => (
+              <Col xs={24} sm={12} md={8} lg={6} key={shop_item.id}>
                 <ShopItemCard key={shop_item.id} {...shop_item} />
-              ))}
-            </Space>
-          </div>
+              </Col>
+            ))}
+          </Row>
         )}
       />
     </CardWrapper>

@@ -6,7 +6,6 @@ import type { RankProps } from '@/models/Rank'
 import { Progress, Space, Tag, Typography } from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { ColorItem } from '@/components/_base/ColorItem'
 import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
 
 type ProfileRankProps = {
@@ -41,17 +40,15 @@ const ProfileRank: FCC<ProfileRankProps> = ({
 
   const getRankIcon = () => {
     return (
-      <ColorItem color={rank?.color}>
-        <Image
-          src={rank?.icon || 'https://picsum.photos/200'}
-          alt={rank?.name || 'Rank Icon'}
-          width={70}
-          height={70}
-          style={{
-            objectFit: 'cover',
-          }}
-        />
-      </ColorItem>
+      <Image
+        src={rank?.icon || 'https://picsum.photos/200'}
+        alt={rank?.name || 'Rank Icon'}
+        width={70}
+        height={70}
+        style={{
+          objectFit: 'cover',
+        }}
+      />
     )
   }
 

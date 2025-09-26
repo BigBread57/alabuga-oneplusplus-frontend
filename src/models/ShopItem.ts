@@ -13,14 +13,18 @@ export interface ShopItemProps extends BaseModelProps {
   number: number
   image?: string | null
   is_active: boolean
-  start_datetime: string
-  time_to_buy: number
-  purchase_restriction: number
+  start_datetime?: string | null
+  end_datetime?: string | null
+  purchase_restriction?: number | null
   category: ShopItemCategoryProps
+  children: ShopItemProps[]
+
+  // Дополнительные поля из вашей исходной модели (если они используются в других местах)
+  time_to_buy?: number
   parent?: ShopItemProps | null
   rank?: RankProps | null
   competency?: CompetencyProps | null
-  game_world_stories?: GameWorldStoryProps | []
+  game_world_stories?: GameWorldStoryProps[]
 }
 
 enum ShopItemUrl {
