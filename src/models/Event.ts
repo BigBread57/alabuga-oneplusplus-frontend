@@ -1,4 +1,5 @@
 import type { BaseModelProps } from './Base'
+import type { GameWorldStoryProps } from '@/models/GameWorldStory'
 import { BaseModel } from './Base'
 
 export interface EventProps extends BaseModelProps {
@@ -9,7 +10,7 @@ export interface EventProps extends BaseModelProps {
   currency: number
   order: number
   is_key_mission: boolean
-  game_world_stories: string[]
+  game_world_stories: GameWorldStoryProps[]
   required_number: number
   start_datetime: string
   time_to_complete: number

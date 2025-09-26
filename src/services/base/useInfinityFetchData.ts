@@ -5,7 +5,6 @@ import { useMemo } from 'react'
 import { useFilter } from 'src/hooks/useFilter'
 import BaseServices from 'src/services/base/BaseServices'
 
-import { useChoices, useOptions } from 'src/services/base/hooks'
 import { useQueryParamsCleaner } from '@/hooks/useQueryParamsCleaner'
 
 let stagesCounter = {}
@@ -72,9 +71,9 @@ export const useInfinityFetchData = <ModelType>({
   dependOn?: any
 }) => {
   const url = model.url()
-  const qKey = qKeyPrefix || model.modelName
-  useChoices(qKey, url)
-  useOptions(qKey, url)
+  // const qKey = qKeyPrefix || model.modelName
+  // useChoices(qKey, url)
+  // useOptions(qKey, url)
   const [filters, setFilters] = useFilter({})
   const cleanedParams = useQueryParamsCleaner({ ...defFilters, ...filters })
 

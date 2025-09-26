@@ -2,6 +2,7 @@ import type { BaseModelProps } from './Base'
 import type { GameWorldProps } from './GameWorld'
 import type { MissionBranchProps } from './MissionBranch'
 import type { MissionLevelProps } from './MissionLevel'
+import type { GameWorldStoryProps } from '@/models/GameWorldStory'
 import { BaseModel } from './Base'
 
 export interface MissionProps extends BaseModelProps {
@@ -15,7 +16,7 @@ export interface MissionProps extends BaseModelProps {
   branch: MissionBranchProps
   level: MissionLevelProps
   game_world?: GameWorldProps
-  game_world_stories: string[]
+  game_world_stories: GameWorldStoryProps[]
   is_active: true
   time_to_complete: number
   required_missions: Record<string, any>[]

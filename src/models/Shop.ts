@@ -19,7 +19,6 @@ export interface ShopItemProps extends BaseModelProps {
   category: ShopItemCategoryProps
   children: ShopItemProps[]
 
-  // Дополнительные поля из вашей исходной модели (если они используются в других местах)
   time_to_buy?: number
   parent?: ShopItemProps | null
   rank?: RankProps | null

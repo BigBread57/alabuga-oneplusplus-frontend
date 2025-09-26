@@ -268,5 +268,13 @@
     "retry": "Повторить",
     "locked": "Заблокировано",
     "close": "Закрыть"
+  },
+  "Artifact": {
+    "game_world_stories": "World Stories",
+    "story_image": "Story image",
+    "no_modifier": "no modifier",
+    "experience_gain": "experience gain",
+    "currency_gain": "currency gain",
+    "store_discount": "store discount"
   }
 }
