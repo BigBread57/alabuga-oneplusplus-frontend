@@ -18,7 +18,14 @@ RUN \
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+
+# Install ALL dependencies (including dev) for building
+COPY package.json package-lock.json* ./
+RUN \
+    if [ -f package-lock.json ]; then npm ci; \
+    else echo "Lockfile not found." && exit 1; \
+    fi
+
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -32,7 +39,7 @@ ARG COMMIT_SHA
 ENV BUILD_ID=${BUILD_ID}
 ENV COMMIT_SHA=${COMMIT_SHA}
 
-RUN npm run build:next
+RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
