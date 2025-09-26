@@ -20,7 +20,7 @@ export interface ArtifactProps extends BaseModelProps {
 
 enum ArtifactUrl {
   ARTIFACT = '/game-world/artifact',
-  ARTIFACTS = '/game-world/artifacts/list',
+  ARTIFACTS = '/game-world/artifacts',
 }
 
 export class Artifact extends BaseModel {
