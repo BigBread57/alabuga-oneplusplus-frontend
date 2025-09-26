@@ -32,7 +32,7 @@ ARG COMMIT_SHA
 ENV BUILD_ID=${BUILD_ID}
 ENV COMMIT_SHA=${COMMIT_SHA}
 
-RUN npm run build
+RUN npm run build:next
 
 # Production image, copy all the files and run next
 FROM base AS runner
