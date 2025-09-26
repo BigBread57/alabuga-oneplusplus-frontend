@@ -1,7 +1,7 @@
-import type { BaseModelProps } from './Base'
-import type { GameWorldProps } from './GameWorld'
-import type { UsersModelProps } from '@/models/Users'
-import { BaseModel } from './Base'
+import type { BaseModelProps } from '@/models/Base'
+import type { GameWorldProps } from '@/models/GameWorld'
+import type { UserProps } from '@/models/User'
+import { BaseModel } from '@/models/Base'
 
 // Category types
 export interface CategoryProps extends BaseModelProps {
@@ -18,7 +18,7 @@ export interface CharacterProps extends BaseModelProps {
   avatar: string
   currency: number
   is_active: boolean
-  user: UsersModelProps
+  user: UserProps
   game_world: GameWorldProps
   rank: RankProps
 }

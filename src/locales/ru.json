@@ -209,5 +209,10 @@
     "invalid_confirmation_link": "Неверная ссылка подтверждения",
     "go_to_login": "Войти",
     "go_to_home": "На главную"
+  },
+  "ShopItem": {
+    "buy_shop_item": "Купить",
+    "description": "Описание",
+    "shop_items": "Предметы магазина"
   }
 }

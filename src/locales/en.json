@@ -212,5 +212,10 @@
     "invalid_confirmation_link": "Invalid confirmation link",
     "go_to_login": "Go to Login",
     "go_to_home": "Go to Home"
+  },
+  "ShopItem": {
+    "buy_shop_item": "Buy",
+    "description": "Description",
+    "shop_items": "Shop items"
   }
 }

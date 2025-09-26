@@ -1,13 +1,13 @@
 'use client'
-import type { UsersModelProps } from '@/models'
+import type { UserProps } from '@/models'
 import { createContext } from 'react'
 
 export type CurrentUserContextType = {
-  currentUser: UsersModelProps
+  currentUser: UserProps
   isLoading: boolean
 }
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
-  currentUser: {} as UsersModelProps,
+  currentUser: {} as UserProps,
   isLoading: true,
 })
