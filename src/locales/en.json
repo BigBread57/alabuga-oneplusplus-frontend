@@ -246,7 +246,7 @@
     "inactive": "Inactive"
   },
   "ActivityLog": {
-    "title": "Журнал активности",
-    "all": "Всё"
+    "title": "Activity log",
+    "all": "All"
   }
 }
