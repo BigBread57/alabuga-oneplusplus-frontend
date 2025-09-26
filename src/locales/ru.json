@@ -11,7 +11,6 @@
     "meta_title": "Главная",
     "meta_description": "Это главная страница"
   },
-
   "NotFound": {
     "meta_title": "404 - Страница не найдена",
     "meta_description": "Запрашиваемая страница не найдена.",
@@ -35,7 +34,6 @@
     "sign_in": "Войти",
     "or_continue_with": "Или продолжить с",
     "continue_with_google": "Продолжить с Google",
-    "continue_with_github": "Продолжить с GitHub",
     "no_account": "Нет аккаунта?",
     "sign_up": "Зарегистрироваться"
   },
@@ -52,5 +50,200 @@
   "LocaleSwitcher": {
     "aria_label": "Изменить язык",
     "select_language": "Выберите язык"
+  },
+  "MenuLinks": {
+    "profile": "Профиль",
+    "journal": "Журнал",
+    "shop": "Магазин",
+    "rang": "Рейтинг",
+    "news": "Новости",
+    "open_menu": "Открыть меню",
+    "navigation": "Навигация"
+  },
+  "ShopPage": {
+    "meta_title": "Магазин",
+    "meta_description": "Это страница магазина"
+  },
+  "ProfilePage": {
+    "meta_title": "Профиль",
+    "meta_description": "Это страница профиля"
+  },
+  "ProfileCard": {
+    "rank": "Ранг",
+    "experience": "Опыт",
+    "competencies": "Компетенции",
+    "artifacts": "Артефакты",
+    "profile": "Профиль"
+  },
+  "RangPage": {
+    "meta_title": "Рейтинг",
+    "meta_description": "Это страница рейтинга"
+  },
+  "JournalPage": {
+    "meta_title": "Журнал",
+    "meta_description": "Это страница журнала"
+  },
+  "NewsPage": {
+    "meta_title": "Новости",
+    "meta_description": "Это страница новостей",
+    "no_news": "Новостей нет",
+    "latest_news": "Последние новости"
+  },
+  "AppSettings": {
+    "settings": "Настройки",
+    "aria_label": "Открыть настройки",
+    "appearance": {
+      "title": "Внешний вид",
+      "description": "Настройте внешний вид приложения"
+    },
+    "language": {
+      "title": "Язык",
+      "description": "Выберите предпочитаемый язык"
+    },
+    "other": {
+      "title": "Другие настройки",
+      "more_settings_coming": "Дополнительные настройки скоро будут доступны"
+    }
+  },
+  "ProfilePhoto": {
+    "avatar_alt": "Фото профиля",
+    "upload_button": "Загрузить",
+    "remove_button": "Удалить",
+    "preview_title": "Просмотр фото",
+    "upload_error_format": "Пожалуйста, загрузите файл изображения!",
+    "upload_error_size": "Размер изображения должен быть меньше 5MB!",
+    "remove_confirm_title": "Удалить фото профиля?",
+    "remove_confirm_description": "Это действие нельзя отменить.",
+    "remove_confirm_ok": "Удалить",
+    "remove_confirm_cancel": "Отмена",
+    "remove_success": "Фото профиля успешно удалено",
+    "upload_success": "Фото профиля успешно загружено",
+    "upload_error": "Ошибка загрузки фото профиля",
+    "remove_error": "Ошибка удаления фото профиля"
+  },
+  "Loading": {
+    "message": "Загрузка...",
+    "component_loading": "Компонент загружается..."
+  },
+  "ProfileRank": {
+    "required_experience": "Требуемый опыт",
+    "current_experience": "Текущий опыт",
+    "progress_to_next_rank": "Прогресс до следующего ранга",
+    "experience_left": "опыта осталось",
+    "game_world": "Игровой мир",
+    "rank_achieved": "Ранг достигнут",
+    "next_rank": "Следующий ранг"
+  },
+  "Mission": {
+    "missions": "Миссии",
+    "no_missions": "Нет доступных миссий",
+    "complete_mission": "Завершить миссию",
+    "mission_completed": "Миссия завершена",
+    "new_mission": "Новая миссия доступна"
+  },
+  "MissionCard": {
+    "completed": "Выполнено",
+    "locked": "Заблокировано",
+    "key_mission": "Ключевая миссия",
+    "available": "Доступно",
+    "key": "Ключевая",
+    "inactive": "Неактивна",
+    "description": "Описание",
+    "rewards": "Награды",
+    "experience": "опыта",
+    "branch": "Ветка",
+    "days_to_complete": "дней на выполнение",
+    "order": "Порядок",
+    "requirements": "Требования",
+    "complete_mission": "Выполнить миссию"
+  },
+  "CurrentUser": {
+    "logout": "Выйти"
+  },
+  "RegisterForm": {
+    "create_account": "Создать аккаунт",
+    "sign_up_description": "Зарегистрируйте новый аккаунт",
+    "first_name": "Имя",
+    "first_name_placeholder": "Введите ваше имя",
+    "first_name_required": "Пожалуйста, введите ваше имя!",
+    "first_name_min_length": "Имя должно содержать минимум 2 символа!",
+    "last_name": "Фамилия",
+    "last_name_placeholder": "Введите вашу фамилию",
+    "last_name_required": "Пожалуйста, введите вашу фамилию!",
+    "last_name_min_length": "Фамилия должна содержать минимум 2 символа!",
+    "middle_name": "Отчество",
+    "middle_name_placeholder": "Введите ваше отчество",
+    "email": "Электронная почта",
+    "email_placeholder": "Введите ваш email",
+    "email_required": "Пожалуйста, введите ваш email!",
+    "email_invalid": "Пожалуйста, введите корректный email!",
+    "phone": "Телефон",
+    "phone_placeholder": "Введите ваш номер телефона",
+    "phone_required": "Пожалуйста, введите ваш номер телефона!",
+    "phone_invalid": "Пожалуйста, введите корректный номер телефона!",
+    "password": "Пароль",
+    "password_placeholder": "Введите ваш пароль",
+    "password_required": "Пожалуйста, введите ваш пароль!",
+    "password_min_length": "Пароль должен содержать минимум 8 символов!",
+    "confirm_password": "Подтверждение пароля",
+    "confirm_password_placeholder": "Подтвердите ваш пароль",
+    "confirm_password_required": "Пожалуйста, подтвердите ваш пароль!",
+    "passwords_not_match": "Пароли не совпадают!",
+    "agree_to": "Я согласен с",
+    "terms_of_service": "Условиями использования",
+    "and": "и",
+    "privacy_policy": "Политикой конфиденциальности",
+    "agree_terms_required": "Необходимо согласиться с условиями использования!",
+    "or_continue_with": "Или продолжить с",
+    "continue_with_google": "Продолжить с Google",
+    "already_have_account": "Уже есть аккаунт?",
+    "sign_in": "Войти",
+    "registration_successful": "Регистрация успешна!",
+    "please_check_email": "Пожалуйста, проверьте вашу электронную почту для подтверждения аккаунта.",
+    "confirmation_email_sent": "На ваш email была отправлена ссылка для подтверждения.",
+    "back_to_form": "Вернуться к регистрации"
+  },
+  "ConfirmRegister": {
+    "confirming_registration": "Подтверждение регистрации",
+    "please_wait": "Пожалуйста, подождите...",
+    "registration_confirmed": "Регистрация подтверждена!",
+    "registration_success_message": "Ваш аккаунт успешно активирован. Теперь вы можете войти в систему.",
+    "confirmation_failed": "Ошибка подтверждения",
+    "invalid_confirmation_link": "Неверная ссылка подтверждения",
+    "go_to_login": "Войти",
+    "go_to_home": "На главную"
+  },
+  "ShopItem": {
+    "shop_items": "Товары магазина",
+    "view_details": "Подробнее",
+    "purchase": "Купить",
+    "purchase_for": "Купить за",
+    "points": "баллов",
+    "close": "Закрыть",
+    "description": "Описание",
+    "category": "Категория",
+    "price": "Цена",
+    "start_date": "Дата начала",
+    "end_date": "Дата окончания",
+    "restrictions": "Ограничения",
+    "available_quantity": "Доступно",
+    "status": "Статус",
+    "active": "Активен",
+    "inactive": "Неактивен"
+  },
+  "ModalConfirm": {
+    "confirm": "Подтверждение",
+    "ok": "ОК",
+    "cancel": "Отмена"
+  },
+  "FetchMoreItemsComponent": {
+    "load_more": "Загрузить больше",
+    "loading": "Загрузка...",
+    "no_more_items": "Больше нет",
+    "found": "Найдено"
+  },
+  "ActivityLog": {
+    "title": "Журнал активности",
+    "all": "Всё"
   }
 }

@@ -15,6 +15,12 @@ const baseConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/': ['./migrations/**/*'],
   },
+  images: {
+    remotePatterns: [
+      new URL('https://picsum.photos/**'),
+      new URL('http://localhost:8000/**'),
+    ],
+  },
 }
 
 // Initialize the Next-Intl plugin

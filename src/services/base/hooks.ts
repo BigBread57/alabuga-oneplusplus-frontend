@@ -136,12 +136,17 @@ export const useDeleteItem = (model: typeof BaseModel, qKey?: string) => {
   })
 }
 
-export const useFetchExtraAction = (
-  qKey: string | string[],
-  extraUrl: string,
-  filter?: Record<string, any>,
-  options?: UseQueryOptions,
-) => {
+export const useFetchExtraAction = ({
+  qKey,
+  extraUrl,
+  filter,
+  options,
+}: {
+  qKey: string | string[]
+  extraUrl: string
+  filter?: Record<string, any>
+  options?: UseQueryOptions
+}) => {
   return useQuery({
     queryKey: [qKey, filter] as QueryKey,
     queryFn: () => BaseServices.fetchExtra(extraUrl, filter),

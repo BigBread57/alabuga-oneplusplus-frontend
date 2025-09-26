@@ -1,0 +1,17 @@
+@use 'src/styles/antd-tokens.scss' as *;
+
+.container {
+  display: flex;
+  overflow-x: auto;
+  padding: 8px 0;
+
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+  }
+}

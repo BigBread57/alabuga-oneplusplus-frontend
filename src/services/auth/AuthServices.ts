@@ -6,6 +6,19 @@ const userApi = 'user/users'
 const usersProfileApi = 'user/users'
 
 export default class AuthServices {
+  static confirmRegister({ email, token }: { email: string, token: string }) {
+    return new Promise((resolve, reject) => {
+      apiClient
+        .get(`${userApi}/confirm-register/?email=${email}&token=${token}`)
+        .then((response: any) => {
+          return resolve(response)
+        })
+        .catch((error: any) => {
+          return reject(error.response)
+        })
+    })
+  }
+
   static login(url: string, credentials: LoginValuesTypes) {
     return new Promise((resolve, reject) => {
       apiClient
@@ -24,7 +37,7 @@ export default class AuthServices {
    */
   static async getUserInfo() {
     try {
-      const res = await apiClient.get(`${usersProfileApi}/get-info/`)
+      const res = await apiClient.get(`${usersProfileApi}/info/`)
       if (res.status === 200) {
         localStorage.setItem('user', JSON.stringify(res.data))
       }
@@ -85,7 +98,7 @@ export default class AuthServices {
   static logout(url: string) {
     return new Promise((resolve, reject) => {
       apiClient
-        .post(`${userApi}/${url}/`, {})
+        .get(`${userApi}/${url}/`)
         .then((response: any) => {
           return resolve(response)
         })

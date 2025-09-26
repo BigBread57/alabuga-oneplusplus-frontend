@@ -1,32 +1,53 @@
 import type { ThemeConfig } from 'antd'
 import { theme } from 'antd'
 
+// colors
+
+// 40/58/151 - #283a97
+// 0 93 172 - #005dac
+// 0 174 239 - #00aeef
+// 106 207 246 - #6acff6
+
+export const Blue = '#00aeef'
+export const DarkBlue = '#005dac'
+export const LightBlue = '#6acff6'
+export const DarkPurple = '#283a97'
+
 export const lightTheme: ThemeConfig = {
   token: {
-    colorPrimary: '#1890ff',
+    colorPrimary: DarkBlue,
     colorBgBase: '#ffffff',
-    colorTextBase: '#000000',
-    borderRadius: 6,
+    colorTextBase: DarkPurple,
+    borderRadius: 8,
+    boxShadow: '0 0px 4px #005dac',
   },
   algorithm: theme.defaultAlgorithm, // светлый алгоритм
 }
 
 export const darkTheme: ThemeConfig = {
   token: {
-    colorPrimary: '#1890ff',
-    colorBgBase: '#141414',
-    colorTextBase: '#ffffff',
-    borderRadius: 6,
+    colorPrimary: Blue,
+    colorBgBase: DarkPurple,
+    colorTextBase: LightBlue,
+    boxShadow: `0 0px 4px ${Blue}`,
   },
   algorithm: theme.darkAlgorithm, // тёмный алгоритм
+  components: {
+    Menu: {
+      itemSelectedColor: '#ffffff',
+      itemSelectedBg: DarkBlue,
+    },
+  },
+  hashed: true,
 }
 
 // Дополнительные кастомные темы
 export const blueTheme: ThemeConfig = {
   token: {
-    colorPrimary: '#1677ff',
-    colorBgBase: '#f5f8ff',
-    colorTextBase: '#003366',
+    colorPrimary: Blue,
+    colorBgBase: DarkBlue,
+    colorTextBase: LightBlue,
+    boxShadow: `0 0px 4px ${Blue}`,
   },
 }
 
@@ -35,5 +56,6 @@ export const greenTheme: ThemeConfig = {
     colorPrimary: '#52c41a',
     colorBgBase: '#f6ffed',
     colorTextBase: '#135200',
+    boxShadow: '0 0px 4px #52c41a',
   },
 }

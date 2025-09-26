@@ -4,11 +4,12 @@ export type LoginValuesTypes = {
 }
 
 export type IRegister = {
-  second_name?: string
-  first_name?: string
-  last_name?: string
-  inn?: number
+  first_name: string
+  last_name: string
+  middle_name: string
   email: string
+  phone: string
   password1: string
   password2: string
+  agree_terms?: boolean
 }

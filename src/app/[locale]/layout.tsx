@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { QueryClientWrapper } from '@/components/_base/QueryClientWrapper'
+import { CurrentUserProvider } from '@/components/CurrentUserProvider'
 import { routing } from '@/libs/I18nRouting'
 import { AntdProvider } from '@/providers/antd'
 import { ThemeProvider } from '@/providers/ThemeProvider'
@@ -54,7 +55,9 @@ export default async function RootLayout(props: {
         <NextIntlClientProvider>
           <ThemeProvider>
             <AntdProvider>
-              <QueryClientWrapper>{props.children}</QueryClientWrapper>
+              <QueryClientWrapper>
+                <CurrentUserProvider>{props.children}</CurrentUserProvider>
+              </QueryClientWrapper>
             </AntdProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

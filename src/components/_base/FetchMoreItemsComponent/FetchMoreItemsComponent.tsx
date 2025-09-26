@@ -2,10 +2,11 @@ import type { BaseModel } from '@/models'
 import type { FCC } from '@/types'
 import { Button, Col, Divider, Row, Spin, Typography } from 'antd'
 
+import { useTranslations } from 'next-intl'
 import React, { useMemo } from 'react'
 import { useApiOptions } from '@/hooks/useApiOptions'
-import { useInfinityFetchData } from '@/services/base/useInfinityFetchData'
 
+import { useInfinityFetchData } from '@/services/base/useInfinityFetchData'
 import styles from './FetchMoreItemsComponent.module.scss'
 
 const { Text } = Typography
@@ -23,6 +24,7 @@ type FetchMoreItemsComponentProps = {
   }) => React.ReactNode
   renderItems: ({
     data,
+    mergedOptionsIntoData,
     dataCount,
     fetchNextPage,
     isLoading,
@@ -30,6 +32,7 @@ type FetchMoreItemsComponentProps = {
     refetch,
   }: {
     data: any[]
+    mergedOptionsIntoData: any[]
     fetchNextPage: () => void
     refetch: () => void
     dataCount: number
@@ -38,6 +41,7 @@ type FetchMoreItemsComponentProps = {
   }) => React.ReactNode
   lengthPostfixPlural?: string
   optionsFieldList?: (string | Record<string, string[]>)[]
+  isClearRender?: boolean
 }
 
 const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
@@ -48,9 +52,11 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   lengthPostfixPlural,
   optionsFieldList,
   extra,
+  isClearRender,
 }) => {
+  const t = useTranslations('FetchMoreItemsComponent')
   const {
-    rowData,
+    rowData: rawData = [],
     fetchNextPage,
     isLoading,
     isFetching,
@@ -69,15 +75,29 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   )
 
   const rData = useMemo(
-    () => rowData?.map((item: any) => mergeOptionsIntoData(item)),
-    [rowData, mergeOptionsIntoData],
+    () => rawData?.map((item: any) => mergeOptionsIntoData(item)),
+    [rawData, mergeOptionsIntoData],
   )
+
+  if (isClearRender) {
+    // когда нужно просто подгрузить данные
+    return renderItems({
+      data: rawData,
+      mergedOptionsIntoData: rData,
+      fetchNextPage,
+      dataCount,
+      isFetching,
+      isLoading,
+      refetch,
+    })
+  }
+
   return (
     <>
       <Row gutter={40}>
         <Col span={24} className={styles.dataLengthContainer}>
           <Text strong>
-            {isLoading ? 'Ищем..' : `Найдено ${dataCount || 0} `}
+            {isLoading ? t('loading') : `${t('found')} ${dataCount || 0}`}
           </Text>
           {lengthPostfixPlural}
         </Col>
@@ -88,7 +108,8 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
       })}
       <Spin spinning={isLoading} />
       {renderItems({
-        data: rData,
+        data: rawData,
+        mergedOptionsIntoData: rData,
         fetchNextPage,
         dataCount,
         isFetching,
@@ -109,7 +130,11 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
             </Row>
           )
         : null}
-      {!hasNextPage && dataCount ? <Divider>Больше нет</Divider> : null}
+      {!hasNextPage && dataCount
+        ? (
+            <Divider>{t('no_more_items')}</Divider>
+          )
+        : null}
     </>
   )
 }

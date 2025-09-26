@@ -1,3 +1,5 @@
+'use client'
+
 import type { BaseModel } from '@/models'
 import type { FCC } from '@/types'
 import { Divider, Skeleton } from 'antd'
@@ -35,11 +37,11 @@ const InfinityListComponent: FCC<InfinityListComponentProps> = ({
         dataLength={fetchedValues?.rowData?.length}
         next={fetchedValues?.fetchNextPage}
         hasMore={!!fetchedValues?.hasNextPage}
-        loader={(
+        loader={
           <Skeleton.Node active>
             <span>Загрузка...</span>
           </Skeleton.Node>
-        )}
+        }
         endMessage={
           fetchedValues?.rowData?.length
             ? (

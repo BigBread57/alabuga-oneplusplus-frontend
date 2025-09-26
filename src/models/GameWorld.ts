@@ -1,0 +1,24 @@
+import type { BaseModelProps } from './Base'
+import { BaseModel } from './Base'
+
+export interface GameWorldProps extends BaseModelProps {
+  name: string
+  description: string
+  color: string
+  standard_experience: number
+  standard_currency: number
+  currency_name: string
+}
+
+enum GameWorldUrl {
+  GAME_WORLD = '/game/world',
+  GAME_WORLDS = '/game/worlds',
+}
+
+export class GameWorld extends BaseModel {
+  static override modelName = 'gameWorld'
+
+  static override url() {
+    return GameWorldUrl.GAME_WORLDS
+  }
+}

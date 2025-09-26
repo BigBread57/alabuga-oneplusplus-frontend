@@ -40,7 +40,7 @@ export default antfu(
     rules: {
       'antfu/no-top-level-await': 'off',
       'style/brace-style': ['error', '1tbs'],
-      'ts/consistent-type-definitions': ['error', 'type'],
+      'ts/consistent-type-definitions': 'off',
       'react/prefer-destructuring-assignment': 'off',
       'node/prefer-global/process': 'off',
       'test/padding-around-all': 'error',
@@ -50,6 +50,8 @@ export default antfu(
 
       'style/jsx-one-expression-per-line': 'off',
       'style/arrow-parens': 'off',
+      'style/jsx-wrap-multilines': 'off',
+      'react/jsx-wrap-multilines': 'off',
     },
   },
 )

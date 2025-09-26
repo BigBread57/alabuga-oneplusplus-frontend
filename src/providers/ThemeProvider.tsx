@@ -1,10 +1,12 @@
 'use client'
 
 import type { ThemeConfig } from 'antd'
+import { Spin } from 'antd'
 import React, {
   createContext,
   useCallback,
   useContext,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -28,20 +30,21 @@ const themes: Record<ThemeName, ThemeConfig> = {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeName>(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('antd-theme') as ThemeName
-      return savedTheme && themes[savedTheme] ? savedTheme : 'dark'
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>()
+
+  useLayoutEffect(() => {
+    const savedTheme = localStorage.getItem('antd-theme') as ThemeName
+    if (savedTheme && themes[savedTheme]) {
+      setCurrentTheme(savedTheme)
     }
-    return (localStorage.getItem('antd-theme') as ThemeName) || 'dark'
-  })
+  }, [])
 
   const setTheme = useCallback((theme: ThemeName) => {
     setCurrentTheme(theme)
-    localStorage.setItem('antd-theme', theme)
+    localStorage?.setItem('antd-theme', theme)
   }, [])
 
-  const themeConfig = themes[currentTheme]
+  const themeConfig = currentTheme && themes[currentTheme]
 
   const contextValue = useMemo(
     () => ({
@@ -52,13 +55,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     [currentTheme, setTheme, themeConfig],
   )
 
+  if (currentTheme === undefined) {
+    return <Spin spinning></Spin>
+  }
+
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <ThemeContext.Provider value={contextValue as ThemeContextType}>
       {children}
     </ThemeContext.Provider>
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext)
   if (context === undefined) {

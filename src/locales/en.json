@@ -30,7 +30,6 @@
     "sign_in": "Sign In",
     "or_continue_with": "Or continue with",
     "continue_with_google": "Continue with Google",
-    "continue_with_github": "Continue with GitHub",
     "no_account": "Don't have an account?",
     "sign_up": "Sign up"
   },
@@ -47,5 +46,207 @@
   "LocaleSwitcher": {
     "aria_label": "Change language",
     "select_language": "Select language"
+  },
+  "MenuLinks": {
+    "profile": "Profile",
+    "journal": "Journal",
+    "shop": "Shop",
+    "rang": "Ranking",
+    "news": "News",
+    "open_menu": "Open menu",
+    "navigation": "Navigation"
+  },
+  "ShopPage": {
+    "meta_title": "Shop",
+    "meta_description": "Browse and purchase items in our shop"
+  },
+  "ProfilePage": {
+    "meta_title": "Profile",
+    "meta_description": "View and edit your profile information"
+  },
+
+  "ProfileCard": {
+    "rank": "Rank",
+    "experience": "Experience",
+    "competencies": "Competencies",
+    "artifacts": "Artifacts",
+    "profile": "Profile"
+  },
+  "JournalPage": {
+    "meta_title": "Journal",
+    "meta_description": "Read and manage your journal entries"
+  },
+  "RangPage": {
+    "meta_title": "Rang",
+    "meta_description": "Check your rang and achievements"
+  },
+  "NewsPage": {
+    "meta_title": "News",
+    "meta_description": "Stay updated with the latest news",
+    "no_news": "No news available"
+  },
+  "AppSettings": {
+    "settings": "Settings",
+    "aria_label": "Open settings",
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the look and feel of the application"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language"
+    },
+    "other": {
+      "title": "Other Settings",
+      "more_settings_coming": "More settings will be available soon"
+    }
+  },
+  "ProfilePhoto": {
+    "avatar_alt": "Profile Photo",
+    "upload_button": "Upload",
+    "remove_button": "Remove",
+    "preview_title": "Photo Preview",
+    "upload_error_format": "Please upload an image file!",
+    "upload_error_size": "Image must be smaller than 5MB!",
+    "remove_confirm_title": "Remove profile photo?",
+    "remove_confirm_description": "Are you sure you want to remove your profile photo? This action cannot be undone.",
+    "remove_confirm_ok": "Yes, remove it",
+    "remove_confirm_cancel": "Cancel",
+    "remove_success": "Profile photo removed successfully",
+    "upload_success": "Profile photo uploaded successfully",
+    "upload_error": "Error uploading profile photo",
+    "remove_error": "Error removing profile photo"
+  },
+  "Loading": {
+    "message": "Loading...",
+    "component_loading": "Component is loading..."
+  },
+  "ProfileRank": {
+    "rank": "Rank",
+    "required_experience": "Required experience",
+    "current_experience": "Current experience",
+    "progress_to_next_rank": "Progress to next rank",
+    "experience_left": "experience left",
+    "game_world": "Game world",
+    "rank_achieved": "Rank achieved",
+    "next_rank": "Next rank"
+  },
+  "Mission": {
+    "missions": "Missions",
+    "no_missions": "No missions available",
+    "complete_mission": "Complete Mission",
+    "mission_completed": "Mission completed!",
+    "mission_details": "Mission Details",
+    "start_mission": "Start Mission",
+    "mission_in_progress": "Mission in progress...",
+    "mission_failed": "Mission failed. Try again!",
+    "reward": "Reward",
+    "experience": "Experience",
+    "items": "Items"
+  },
+  "MissionCard": {
+    "completed": "Completed",
+    "locked": "Locked",
+    "key_mission": "Key Mission",
+    "available": "Available",
+    "key": "Key",
+    "inactive": "Inactive",
+    "description": "Description",
+    "rewards": "Rewards",
+    "experience": "experience",
+    "branch": "Branch",
+    "days_to_complete": "days to complete",
+    "order": "Order",
+    "requirements": "Requirements",
+    "complete_mission": "Complete Mission"
+  },
+  "CurrentUser": {
+    "logout": "Logout"
+  },
+  "RegisterForm": {
+    "create_account": "Create Account",
+    "sign_up_description": "Register a new account",
+    "first_name": "First Name",
+    "first_name_placeholder": "Enter your first name",
+    "first_name_required": "Please enter your first name!",
+    "first_name_min_length": "First name must be at least 2 characters!",
+    "last_name": "Last Name",
+    "last_name_placeholder": "Enter your last name",
+    "last_name_required": "Please enter your last name!",
+    "last_name_min_length": "Last name must be at least 2 characters!",
+    "middle_name": "Middle Name",
+    "middle_name_placeholder": "Enter your middle name",
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "email_required": "Please enter your email!",
+    "email_invalid": "Please enter a valid email!",
+    "phone": "Phone",
+    "phone_placeholder": "Enter your phone number",
+    "phone_required": "Please enter your phone number!",
+    "phone_invalid": "Please enter a valid phone number!",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "password_required": "Please enter your password!",
+    "password_min_length": "Password must be at least 8 characters!",
+    "confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Confirm your password",
+    "confirm_password_required": "Please confirm your password!",
+    "passwords_not_match": "Passwords do not match!",
+    "agree_to": "I agree to the",
+    "terms_of_service": "Terms of Service",
+    "and": "and",
+    "privacy_policy": "Privacy Policy",
+    "agree_terms_required": "You must agree to the terms of service!",
+    "or_continue_with": "Or continue with",
+    "continue_with_google": "Continue with Google",
+    "already_have_account": "Already have an account?",
+    "sign_in": "Sign In",
+    "registration_successful": "Registration Successful!",
+    "please_check_email": "Please check your email to verify your account.",
+    "confirmation_email_sent": "A confirmation email has been sent to your email address.",
+    "back_to_form": "Back to Form"
+  },
+  "ConfirmRegister": {
+    "confirming_registration": "Confirming Registration",
+    "please_wait": "Please wait...",
+    "registration_confirmed": "Registration Confirmed!",
+    "registration_success_message": "Your account has been successfully activated. You can now sign in to the system.",
+    "confirmation_failed": "Confirmation Failed",
+    "invalid_confirmation_link": "Invalid confirmation link",
+    "go_to_login": "Go to Login",
+    "go_to_home": "Go to Home"
+  },
+  "ModalConfirm": {
+    "confirm": "Confirm",
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "FetchMoreItemsComponent": {
+    "load_more": "Load More",
+    "loading": "Loading...",
+    "no_more_items": "No more items to load",
+    "found": "Found"
+  },
+  "ShopItem": {
+    "shop_items": "Shop Items",
+    "view_details": "View Details",
+    "purchase": "Purchase",
+    "purchase_for": "Purchase for",
+    "points": "points",
+    "close": "Close",
+    "description": "Description",
+    "category": "Category",
+    "price": "Price",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "restrictions": "Restrictions",
+    "available_quantity": "Available",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "ActivityLog": {
+    "title": "Activity log",
+    "all": "All"
   }
 }

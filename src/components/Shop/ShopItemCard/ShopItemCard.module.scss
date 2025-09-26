@@ -1,0 +1,81 @@
+.imageWrapper {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-weight: 600;
+  color: #1890ff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.cardDescription {
+  margin-top: 8px;
+}
+
+.description {
+  margin-bottom: 12px !important;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.categoryInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.category {
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.inactive {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.modalContent {
+  padding: 16px 0;
+}
+
+.modalImageWrapper {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.modalImage {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modalInfo {
+  width: 100%;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
