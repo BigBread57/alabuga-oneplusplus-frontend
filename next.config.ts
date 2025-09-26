@@ -15,7 +15,10 @@ const baseConfig: NextConfig = {
     '/': ['./migrations/**/*'],
   },
   images: {
-    remotePatterns: [new URL('https://picsum.photos/**')],
+    remotePatterns: [
+      new URL('https://picsum.photos/**'),
+      new URL('http://localhost:8000/**'),
+    ],
   },
 }
 

@@ -1,31 +1,22 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import { CrownOutlined, StarOutlined } from '@ant-design/icons'
-import { Progress, Space, Typography } from 'antd'
+import type { GameWorldProps } from '@/models/GameWorld'
+import type { RankProps } from '@/models/Rank'
+import { Progress, Space, Tag, Typography } from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-
-type GameWorld = {
-  id: number
-  name: string
-}
-
-type ProfileRankData = {
-  id: number
-  name: string
-  description: string
-  required_experience: number
-  icon: string
-  color: string
-  parent?: ProfileRankData | null
-  game_world: GameWorld
-}
+import { ColorItem } from '@/components/_base/ColorItem'
+import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
 
 type ProfileRankProps = {
-  rank: ProfileRankData
+  characterId?: string | number
+  userName: string
+  userAvatar: string | undefined
+  rank: RankProps
+  gameWorld?: GameWorldProps
   currentExperience?: number
-  nextRank?: ProfileRankData | null
+  nextRank?: RankProps | null
   showProgress?: boolean
   className?: string
 }
@@ -33,87 +24,79 @@ type ProfileRankProps = {
 const ProfileRank: FCC<ProfileRankProps> = ({
   rank,
   currentExperience = 0,
-  nextRank,
-  showProgress = true,
   className,
+  gameWorld,
+  nextRank,
+  userAvatar,
+  userName,
+  characterId,
 }) => {
   const t = useTranslations('ProfileRank')
   const { Text, Title } = Typography
-
-  const progressPercent = nextRank
-    ? Math.min(
-        ((currentExperience - rank.required_experience)
-          / (nextRank.required_experience - rank.required_experience))
-        * 100,
-        100,
-      )
-    : 100
+  const progressPercent = currentExperience / (rank?.required_experience / 100)
 
   const experienceToNext = nextRank
-    ? Math.max(nextRank.required_experience - currentExperience, 0)
+    ? (rank.required_experience || 0) - currentExperience
     : 0
 
   const getRankIcon = () => {
-    if (rank.icon) {
-      return (
+    return (
+      <ColorItem color={rank?.color}>
         <Image
-          src={rank.icon}
-          alt={rank.name}
+          src={rank?.icon || 'https://picsum.photos/200'}
+          alt={rank?.name || 'Rank Icon'}
           width={70}
           height={70}
           style={{
-            borderRadius: '50%',
             objectFit: 'cover',
           }}
         />
-      )
-    }
-
-    return rank.parent
-      ? (
-          <StarOutlined style={{ fontSize: 24 }} />
-        )
-      : (
-          <CrownOutlined style={{ fontSize: 24 }} />
-        )
+      </ColorItem>
+    )
   }
 
   return (
     <div className={className} data-testid='test-ProfileRank'>
       <Space direction='vertical' size='middle' style={{ width: '100%' }}>
-        <Space align='start' size='large'>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 70,
-              height: 70,
-              borderRadius: '50%',
-            }}
-          >
-            {getRankIcon()}
-          </div>
+        <Space align='start'>
+          <ProfilePhoto
+            characterId={characterId}
+            username={userName}
+            avatar={userAvatar}
+            editable
+          />
 
-          <div style={{ flex: 1 }}>
-            <Title
-              level={4}
-              style={{ margin: 0, color: rank.color || '#1677ff' }}
-            >
-              {rank.name}
-            </Title>
+          <Space direction='vertical'>
+            <Title level={3}>{userName}</Title>
+            <Space direction='horizontal'>
+              <Title
+                level={4}
+                style={{ margin: 0, color: rank?.color || '#1677ff' }}
+              >
+                {rank?.name}
+              </Title>
+              <div
+                style={{
+                  display: 'flex',
+                  width: 30,
+                  height: 30,
+                }}
+              >
+                {getRankIcon()}
+              </div>
+            </Space>
 
-            {rank.description && (
+            {rank?.description && (
               <Text type='secondary'>{rank.description}</Text>
             )}
-          </div>
+          </Space>
         </Space>
 
         <Space direction='vertical' size='small' style={{ width: '100%' }}>
           <Space direction='vertical' size={4}>
             <Text strong>
               {t('required_experience')}:{' '}
-              {rank.required_experience.toLocaleString()}
+              {rank?.required_experience?.toLocaleString()}
             </Text>
 
             {currentExperience > 0 && (
@@ -122,28 +105,28 @@ const ProfileRank: FCC<ProfileRankProps> = ({
               </Text>
             )}
           </Space>
-          {showProgress && nextRank
-            ? (
-                <Space direction='vertical' size='small' style={{ width: '100%' }}>
-                  <Space style={{ width: '100%', justifyContent: 'space-between' }}>
-                    <Text>
-                      {t('progress_to_next_rank')}: {nextRank.name}
-                    </Text>
-                    <Text type='secondary' style={{ fontSize: 12 }}>
-                      {experienceToNext.toLocaleString()} {t('experience_left')}
-                    </Text>
-                  </Space>
-                  <Progress
-                    percent={progressPercent}
-                    strokeColor={rank.color || '#1677ff'}
-                  />
-                </Space>
-              )
-            : null}
-          {rank.game_world && (
-            <Text type='secondary' style={{ fontSize: 12 }}>
-              {t('game_world')}: {rank.game_world.name}
-            </Text>
+          <Space direction='vertical' size='small' style={{ width: '100%' }}>
+            <Space style={{ width: '100%', justifyContent: 'space-between' }}>
+              <Text>
+                {t('progress_to_next_rank')}:{' '}
+                <Tag color={nextRank?.color}>{nextRank?.name}</Tag>
+              </Text>
+              <Text type='secondary' style={{ fontSize: 12 }}>
+                {experienceToNext?.toLocaleString()} {t('experience_left')}
+              </Text>
+            </Space>
+            <Progress
+              percent={progressPercent}
+              strokeColor={rank?.color || '#1677ff'}
+            />
+          </Space>
+          {gameWorld && (
+            <>
+              <Text type='secondary' style={{ fontSize: 12 }}>
+                {t('game_world')}:
+              </Text>
+              <Text>{gameWorld?.name}</Text>
+            </>
           )}
         </Space>
       </Space>

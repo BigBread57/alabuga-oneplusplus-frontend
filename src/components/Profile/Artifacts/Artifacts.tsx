@@ -1,25 +1,31 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import type { ArtifactModel } from '@/components/Profile/Artifact/Artifact'
 import { Space } from 'antd'
 import React from 'react'
+import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Artifact } from '@/components/Profile/Artifact'
+import { Artifact as Model } from '@/models/Artifact'
 import styles from './Artifacts.module.scss'
 
-type ArtifactsListProps = {
-  items: ArtifactModel[]
-}
+const MODEL = Model
 
-const ArtifactsList: FCC<ArtifactsListProps> = ({ items }) => {
+const ArtifactsList: FCC = () => {
   return (
-    <div className={styles.container} data-testid='test-ArtifactsList'>
-      <Space direction='horizontal' size='middle'>
-        {items?.map((artifact) => (
-          <Artifact key={artifact.id} {...artifact} />
-        ))}
-      </Space>
-    </div>
+    <FetchMoreItemsComponent
+      model={MODEL}
+      defFilters={{}}
+      isClearRender
+      renderItems={({ data }) => (
+        <div className={styles.container} data-testid='test-ArtifactsList'>
+          <Space direction='horizontal' size='middle'>
+            {data?.map((item) => (
+              <Artifact key={item.id} {...item} />
+            ))}
+          </Space>
+        </div>
+      )}
+    />
   )
 }
 

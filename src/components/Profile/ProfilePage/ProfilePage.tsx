@@ -1,23 +1,27 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import type { UserRank } from '@/components/Profile/ProfileCard/ProfileCard'
 import { Col, Row } from 'antd'
 import React from 'react'
 import { MissionsCard } from '@/components/Mission/MissionsCard'
 import { ProfileCard } from '@/components/Profile/ProfileCard'
+import { Character } from '@/models/Character'
+import { useFetchExtraAction } from '@/services/base/hooks'
 
-interface ProfilePageProps {
-  prop?: any
-}
-const userDataMock = {
-  userName: 'John Doe',
-  userAvatar: 'https://i.pravatar.cc/150?img=3',
-  rank: {} as UserRank,
-  artifacts: [] as any[],
-  competencies: [] as any[],
-}
-const ProfilePage: FCC<ProfilePageProps> = () => {
+const MODEL = Character
+
+const ProfilePage: FCC = () => {
+  const {
+    data,
+    isLoading,
+  }: {
+    data: any
+    isLoading: boolean
+  } = useFetchExtraAction({
+    extraUrl: MODEL.actualForUserUrl(),
+    qKey: 'CharacterActualForUser',
+  })
+
   return (
     <Row
       style={{
@@ -27,11 +31,13 @@ const ProfilePage: FCC<ProfilePageProps> = () => {
     >
       <Col xs={24} sm={24} md={24} lg={8}>
         <ProfileCard
-          userName={userDataMock.userName}
-          userAvatar={userDataMock.userAvatar}
-          rank={userDataMock.rank}
-          artifacts={userDataMock.artifacts}
-          competencies={userDataMock.competencies}
+          isLoading={isLoading}
+          userName={data?.data?.user?.full_name || data?.data?.user?.username}
+          userAvatar={data?.data?.avatar}
+          character={data?.data}
+          gameWorld={data?.data?.game_world}
+          // artifacts={
+          // competencies={userDataMock.competencies}
         />
       </Col>
       <Col

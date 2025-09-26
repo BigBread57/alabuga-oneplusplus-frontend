@@ -4,6 +4,7 @@ import type { FCC } from 'src/types'
 import { Card, Modal, Tag, Typography } from 'antd'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import ColorItem from '../../_base/ColorItem/ColorItem'
 import styles from './Artifact.module.scss'
 
 const { Title, Paragraph } = Typography
@@ -23,7 +24,8 @@ export type ArtifactProps = {
   icon?: string | null
   color?: string
   modifier: 'DEFAULT' | 'EXPERIENCE_GAIN' | 'CURRENCY_GAIN' | 'STORE_DISCOUNT'
-  modifierValue?: number
+  modifier_value?: number
+  modifier_display_name?: string
 }
 
 const modifierLabels: Record<ArtifactProps['modifier'], string> = {
@@ -39,10 +41,9 @@ const Artifact: FCC<ArtifactProps> = ({
   icon,
   color,
   modifier,
-  modifierValue,
+  modifier_value,
 }) => {
   const [open, setOpen] = useState(false)
-
   return (
     <>
       <div
@@ -56,24 +57,21 @@ const Artifact: FCC<ArtifactProps> = ({
           }
         }}
       >
-        {icon
-          ? (
-              <Image
-                src={icon}
-                alt={name}
-                className={styles.icon}
-                width={48}
-                height={48}
-              />
-            )
-          : (
-              <div
-                className={styles.placeholder}
-                style={{ backgroundColor: color }}
-              >
-                {name[0]}
-              </div>
-            )}
+        <ColorItem color={color}>
+          {icon
+            ? (
+                <Image
+                  src={icon}
+                  alt={name}
+                  className={styles.icon}
+                  width={48}
+                  height={48}
+                />
+              )
+            : (
+                name[0]
+              )}
+        </ColorItem>
       </div>
 
       <Modal
@@ -98,7 +96,8 @@ const Artifact: FCC<ArtifactProps> = ({
           </div>
 
           <Tag color={color || 'blue'}>
-            {modifierLabels[modifier]} +{modifierValue}%
+            {modifierLabels[modifier]}
+            {modifier_value ? ` +${modifier_value}` : null}
           </Tag>
 
           {description && (

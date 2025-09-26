@@ -116,7 +116,10 @@
     "remove_confirm_description": "Это действие нельзя отменить.",
     "remove_confirm_ok": "Удалить",
     "remove_confirm_cancel": "Отмена",
-    "remove_success": "Фото профиля успешно удалено"
+    "remove_success": "Фото профиля успешно удалено",
+    "upload_success": "Фото профиля успешно загружено",
+    "upload_error": "Ошибка загрузки фото профиля",
+    "remove_error": "Ошибка удаления фото профиля"
   },
   "Loading": {
     "message": "Загрузка...",
@@ -214,5 +217,16 @@
     "buy_shop_item": "Купить",
     "description": "Описание",
     "shop_items": "Предметы магазина"
+  },
+  "ModalConfirm": {
+    "confirm": "Подтверждение",
+    "ok": "ОК",
+    "cancel": "Отмена"
+  },
+  "FetchMoreItemsComponent": {
+    "load_more": "Загрузить больше",
+    "loading": "Загрузка...",
+    "no_more_items": "Больше нет",
+    "found": "Найдено"
   }
 }

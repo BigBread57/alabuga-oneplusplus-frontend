@@ -112,7 +112,10 @@
     "remove_confirm_description": "Are you sure you want to remove your profile photo? This action cannot be undone.",
     "remove_confirm_ok": "Yes, remove it",
     "remove_confirm_cancel": "Cancel",
-    "remove_success": "Profile photo removed successfully"
+    "remove_success": "Profile photo removed successfully",
+    "upload_success": "Profile photo uploaded successfully",
+    "upload_error": "Error uploading profile photo",
+    "remove_error": "Error removing profile photo"
   },
   "Loading": {
     "message": "Loading...",
@@ -213,9 +216,20 @@
     "go_to_login": "Go to Login",
     "go_to_home": "Go to Home"
   },
+  "ModalConfirm": {
+    "confirm": "Confirm",
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
   "ShopItem": {
     "buy_shop_item": "Buy",
     "description": "Description",
     "shop_items": "Shop items"
+  },
+  "FetchMoreItemsComponent": {
+    "load_more": "Load More",
+    "loading": "Loading...",
+    "no_more_items": "No more items to load",
+    "found": "Found {{count}}"
   }
 }

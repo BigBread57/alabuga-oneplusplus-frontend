@@ -58,9 +58,8 @@ export default async function middleware(request: NextRequest) {
     if (!sessionId) {
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }
-
     // проверяем сессию через backend
-    const res = await fetch(`${process.env.API_URL}/user/users/info`, {
+    const res = await fetch('http://localhost:8080/user/users/info', {
       headers: {
         Cookie: `sessionid=${sessionId}`,
       },
