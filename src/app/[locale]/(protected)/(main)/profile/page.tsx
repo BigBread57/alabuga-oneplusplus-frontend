@@ -5,7 +5,6 @@ import { ProfilePage } from '@/components/Profile/ProfilePage'
 
 type IMainPageProps = {
   params: Promise<{ locale: string }>
-  children: React.ReactNode
 }
 
 export async function generateMetadata(
