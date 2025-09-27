@@ -20,7 +20,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function RangPage() {
+export default async function RangPage(_props: RangPageProps) {
   return (
     <div>
       <h1>Rang Page</h1>

@@ -22,7 +22,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function JournalPage() {
+export default async function JournalPage(_props: JournalPageProps) {
   return (
     <Row
       style={{

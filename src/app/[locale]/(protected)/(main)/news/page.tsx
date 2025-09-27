@@ -20,7 +20,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function NewsPage() {
+export default async function NewsPage(_props: NewsPageProps) {
   return (
     <div>
       <h1>News Page</h1>

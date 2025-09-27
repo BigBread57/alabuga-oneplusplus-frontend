@@ -21,6 +21,6 @@ export async function generateMetadata(
   }
 }
 
-export default async function ShopPage() {
+export default async function ShopPage(_props: ShopPageProps) {
   return <ShopItemsCard />
 }

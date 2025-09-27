@@ -1,10 +1,14 @@
+import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-type NotFoundProps = {
-  params: Promise<{ locale: string }>
-}
+export default async function LocalizedNotFound() {
+  // Получаем locale из заголовков или URL
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') || headersList.get('x-url') || ''
 
-export default async function LocalizedNotFound(props: NotFoundProps) {
-  const { locale } = await props.params
+  // Извлекаем locale из pathname
+  const segments = pathname.split('/').filter(Boolean)
+  const locale = segments[0] || 'en'
+
   redirect(`/${locale}/404`)
 }
