@@ -21,6 +21,7 @@ export interface LinksKeys {
   PROFILE: LinkProps
   RANG: LinkProps
   SHOP: LinkProps
+  ADMIN: LinkProps
 }
 
 export const Links: LinksKeys = {
@@ -53,6 +54,12 @@ export const Links: LinksKeys = {
     labelKey: 'shop',
     href: '/shop',
     isTab: true,
+  },
+  ADMIN: {
+    icon: TeamOutlined,
+    labelKey: 'admin',
+    href: '/admin',
+    isProfileTab: true,
   },
 }
 
