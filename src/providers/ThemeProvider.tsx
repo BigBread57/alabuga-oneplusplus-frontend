@@ -1,7 +1,6 @@
 'use client'
 
 import type { ThemeConfig } from 'antd'
-import { Spin } from 'antd'
 import React, {
   createContext,
   useCallback,
@@ -56,11 +55,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }),
     [currentTheme, setTheme, themeConfig],
   )
-
-  if (currentTheme === undefined) {
-    return <Spin spinning></Spin>
+  if (window === undefined) {
+    return <>{children}</>
   }
-
   return (
     <ThemeContext.Provider value={contextValue as ThemeContextType}>
       {children}

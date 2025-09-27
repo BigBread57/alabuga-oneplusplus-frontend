@@ -18,6 +18,7 @@ const navigationItems = [
   Links.SHOP,
   Links.RANG,
   Links.NEWS,
+  Links.ADMIN,
 ]
 
 const MenuLinks: FCC = () => {

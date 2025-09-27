@@ -59,7 +59,8 @@
     "rang": "Рейтинг",
     "news": "Новости",
     "open_menu": "Открыть меню",
-    "navigation": "Навигация"
+    "navigation": "Навигация",
+    "admin": "Админ"
   },
   "ShopPage": {
     "meta_title": "Магазин",
@@ -298,5 +299,34 @@
     "max_files_exceeded": "Превышено максимальное количество файлов: {maxCount}",
     "remove_file": "Удалить файл",
     "upload_successful": "Файл успешно загружен"
+  },
+  "AdminPage": {
+    "meta_title": "Админ",
+    "meta_description": "Страница администратора"
+  },
+  "Graph": {
+    "center": "Центрировать",
+    "fit": "Вписать",
+    "zoom_in": "Увеличить",
+    "zoom_out": "Уменьшить",
+    "add_shape": "Добавить фигуру",
+    "clear_all": "Очистить всё",
+    "shapes": {
+      "rectangle": "Прямоугольник",
+      "circle": "Круг",
+      "ellipse": "Эллипс",
+      "triangle": "Треугольник",
+      "diamond": "Ромб",
+      "star": "Звезда"
+    },
+    "tooltips": {
+      "add_rectangle": "Добавить прямоугольник",
+      "add_circle": "Добавить круг",
+      "center_content": "Центрировать содержимое",
+      "fit_content": "Вписать в экран",
+      "zoom_in": "Увеличить масштаб",
+      "zoom_out": "Уменьшить масштаб",
+      "clear_graph": "Очистить все фигуры"
+    }
   }
 }

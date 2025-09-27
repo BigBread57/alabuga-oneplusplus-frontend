@@ -55,7 +55,8 @@
     "rang": "Ranking",
     "news": "News",
     "open_menu": "Open menu",
-    "navigation": "Navigation"
+    "navigation": "Navigation",
+    "admin": "Admin"
   },
   "ShopPage": {
     "meta_title": "Shop",
@@ -301,5 +302,34 @@
     "max_files_exceeded": "Maximum number of files exceeded: {maxCount}",
     "remove_file": "Remove file",
     "upload_successful": "File uploaded successfully"
+  },
+  "AdminPage": {
+    "meta_title": "Admin Panel",
+    "meta_description": "Administrative tools and settings"
+  },
+  "Graph": {
+    "center": "Center",
+    "fit": "Fit",
+    "zoom_in": "Zoom In",
+    "zoom_out": "Zoom Out",
+    "add_shape": "Add Shape",
+    "clear_all": "Clear All",
+    "shapes": {
+      "rectangle": "Rectangle",
+      "circle": "Circle",
+      "ellipse": "Ellipse",
+      "triangle": "Triangle",
+      "diamond": "Diamond",
+      "star": "Star"
+    },
+    "tooltips": {
+      "add_rectangle": "Add Rectangle",
+      "add_circle": "Add Circle",
+      "center_content": "Center Content",
+      "fit_content": "Fit to Screen",
+      "zoom_in": "Zoom In",
+      "zoom_out": "Zoom Out",
+      "clear_graph": "Clear All Shapes"
+    }
   }
 }
