@@ -4,7 +4,8 @@
     "loading": "Загрузка...",
     "error": "Произошла ошибка",
     "go_back": "Вернуться назад",
-    "not_found": "Не найдено"
+    "not_found": "Не найдено",
+    "locked": "Заблокировано"
   },
   "MainPage": {
     "home": "Главная",
@@ -273,5 +274,12 @@
     "experience_gain": "повышение опыта",
     "currency_gain": "повышение валюты",
     "store_discount": "скидка в магазине"
+  },
+  "Competence": {
+    "view_stories": "Посмотреть истории",
+    "stories": "Истории",
+    "world_stories_title": "Истории мира: {competencyName}",
+    "story_image": "Изображение истории",
+    "locked": "Заблокировано"
   }
 }

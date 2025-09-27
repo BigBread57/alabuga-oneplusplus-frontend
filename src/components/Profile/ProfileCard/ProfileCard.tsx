@@ -8,6 +8,7 @@ import { Col, Divider, Row } from 'antd'
 import { useTranslations } from 'next-intl'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { Artifacts } from '@/components/Profile/Artifacts'
+import { Competencies } from '@/components/Profile/Competencies'
 import { ProfileRank } from '@/components/Profile/ProfileRank'
 
 type ProfileCardProps = {
@@ -66,7 +67,9 @@ const ProfileCard: FCC<ProfileCardProps> = ({
         </Col>
         <Divider>{t('competencies')}</Divider>
 
-        <Col>{/* <Competencies items={competencesMock} /> */}</Col>
+        <Col>
+          <Competencies />
+        </Col>
       </Row>
     </CardWrapper>
   )

@@ -1,6 +1,7 @@
 {
   "Common": {
-    "no_data": "No data"
+    "no_data": "No data",
+    "locked": "Locked"
   },
   "MainPage": {
     "home": "Home",
@@ -276,5 +277,12 @@
     "experience_gain": "experience gain",
     "currency_gain": "currency gain",
     "store_discount": "store discount"
+  },
+  "Competence": {
+    "view_stories": "View stories",
+    "stories": "Stories",
+    "world_stories_title": "World Stories: {competencyName}",
+    "story_image": "Story image",
+    "locked": "Locked"
   }
 }
