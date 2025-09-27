@@ -33,9 +33,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<ThemeName>()
 
   useLayoutEffect(() => {
-    const savedTheme = localStorage.getItem('antd-theme') as ThemeName
+    const savedTheme = localStorage.getItem('antd-theme') as ThemeName | null
     if (savedTheme && themes[savedTheme]) {
       setCurrentTheme(savedTheme)
+    } else {
+      setCurrentTheme('light') // тема по умолчанию
     }
   }, [])
 
@@ -48,7 +50,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const contextValue = useMemo(
     () => ({
-      currentTheme,
+      currentTheme: currentTheme ?? 'light',
       setTheme,
       themeConfig,
     }),
