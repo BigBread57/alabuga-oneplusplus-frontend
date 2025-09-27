@@ -11,7 +11,7 @@ export interface CharacterArtifactProps extends BaseModelProps {
 
 enum ArtifactUrl {
   ARTIFACT = '/user/character-artifact',
-  ARTIFACTS = '/user/character-artifacts/list',
+  ARTIFACTS = '/user/character-artifacts',
 }
 
 export class CharacterArtifact extends BaseModel {

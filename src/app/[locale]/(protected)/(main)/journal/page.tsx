@@ -30,7 +30,15 @@ export default async function JournalPage(_props: JournalPageProps) {
       }}
       gutter={[24, 24]}
     >
-      <Col xs={24} sm={24} md={24} lg={16}>
+      <Col
+        xs={24}
+        sm={24}
+        md={24}
+        lg={16}
+        style={{
+          height: 'calc(100vh - 130px)',
+        }}
+      >
         <ActivityLogsCard />
       </Col>
       <Col

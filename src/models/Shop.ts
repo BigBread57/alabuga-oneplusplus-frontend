@@ -28,7 +28,7 @@ export interface ShopItemProps extends BaseModelProps {
 
 enum ShopItemUrl {
   SHOP_ITEM = '/shop/item',
-  SHOP_ITEMS_LIST = '/shop/items/list',
+  SHOP_ITEMS_LIST = '/shop/items',
 }
 
 export class Shop extends BaseModel {

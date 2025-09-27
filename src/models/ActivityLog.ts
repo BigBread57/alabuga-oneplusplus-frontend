@@ -13,7 +13,7 @@ export class ActivityLog extends BaseModel {
   static override modelName = 'activityLog'
 
   static override url() {
-    return '/communication/activity-logs/list'
+    return '/communication/activity-logs'
   }
 
   static contentTypesUrl() {

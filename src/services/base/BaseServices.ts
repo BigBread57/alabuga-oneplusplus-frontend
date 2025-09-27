@@ -6,7 +6,7 @@ import { addTrailingSlashToUrl } from '../helpers/addTrailingSlashToUrl'
 export default class BaseServices {
   static async fetch(url: string, filter?: any) {
     try {
-      return await apiClient.get(addTrailingSlashToUrl(url), {
+      return await apiClient.get(`${addTrailingSlashToUrl(url)}list/`, {
         params: { ...filter },
       })
     } catch (e) {
@@ -21,7 +21,9 @@ export default class BaseServices {
   ): any {
     return new Promise((resolve, reject) => {
       apiClient
-        .get(`${addTrailingSlashToUrl(url)}${id}/`, { params: { ...filter } })
+        .get(`${addTrailingSlashToUrl(url)}${id}/detail/`, {
+          params: { ...filter },
+        })
         .then((response: AxiosResponse) => {
           return resolve(response)
         })

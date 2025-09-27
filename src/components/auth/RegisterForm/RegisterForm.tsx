@@ -90,7 +90,7 @@ export default function RegisterForm({
   }
 
   // Success экран
-  if (!isSuccess) {
+  if (isSuccess) {
     return (
       <Card
         style={{

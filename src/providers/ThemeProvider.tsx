@@ -30,7 +30,7 @@ const themes: Record<ThemeName, ThemeConfig> = {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeName>()
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>('blue')
 
   useLayoutEffect(() => {
     const savedTheme = localStorage.getItem('antd-theme') as ThemeName

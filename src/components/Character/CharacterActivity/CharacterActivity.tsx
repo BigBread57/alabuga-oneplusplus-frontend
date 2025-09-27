@@ -70,6 +70,7 @@ const CharacterActivity: FCC<ChatacterActivityProps> = ({ prop }) => {
       }}
       tabList={tabList}
       activeTabKey={activeTabKey1}
+      onTabChange={onTab1Change}
       extra={
         <MissionStatusFilter
           value={filter.status}
@@ -78,7 +79,6 @@ const CharacterActivity: FCC<ChatacterActivityProps> = ({ prop }) => {
           }}
         />
       }
-      onTabChange={onTab1Change}
       {...prop}
     >
       {contentList?.[activeTabKey1]}
