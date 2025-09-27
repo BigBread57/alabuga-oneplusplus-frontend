@@ -45,7 +45,7 @@ export interface CharacterEventQueryParamsUnion {
 
 enum EventUrl {
   EVENT = '/user/character-event',
-  EVENTS = '/user/character-events/list',
+  EVENTS = '/user/character-events',
 }
 
 export class CharacterEvent extends BaseModel {

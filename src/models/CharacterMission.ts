@@ -27,6 +27,7 @@ export interface CharacterMissionProps extends BaseModelProps {
   start_datetime: string
   end_datetime: string | null
   content_type_id: number
+  result: string
 }
 
 // Альтернативный вариант с union type вместо enum
@@ -37,24 +38,23 @@ export type CharacterMissionStatusType
     | 'PENDING_REVIEW'
     | 'FAILED'
 
-// Интерфейс с union type
-export interface CharacterMissionQueryParamsUnion {
-  limit?: number
-  offset?: number
-  ordering?: string
-  search?: string
-  status?: CharacterMissionStatusType
-}
-
 enum MissionUrl {
   MISSION = '/user/character-mission',
-  MISSIONS = '/user/character-missions/list',
+  MISSIONS = '/user/character-missions',
 }
 
 export class CharacterMission extends BaseModel {
   static override modelName = 'characterMission'
 
   static override url() {
-    return MissionUrl.MISSIONS
+    return `${MissionUrl.MISSIONS}`
+  }
+
+  static updateForCharacterUrl(id: number) {
+    return `${this.url()}/${id}/update-for-character/`
+  }
+
+  static updateForInspectorUrl(id: number) {
+    return `${this.url()}/${id}/update-for-inspector/`
   }
 }

@@ -1,33 +1,72 @@
 'use client'
 
-import type { FCC } from 'src/types'
+import type { FCC, ReactQueryFetch } from 'src/types'
 import type { CharacterMissionProps } from '@/models/CharacterMission'
 import { DollarOutlined, TrophyOutlined } from '@ant-design/icons'
-import { Button, Divider, Drawer, Space, Tag, Typography } from 'antd'
+import {
+  Button,
+  Divider,
+  Drawer,
+  Form,
+  Input,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
+import { FileUpload } from '@/components/_base/FileUpload'
+import { CharacterMission } from '@/models/CharacterMission'
+import { useExtraActionsPut, useFetchOneItem } from '@/services/base/hooks'
 
 const { Text, Title, Paragraph } = Typography
+const { TextArea } = Input
 
 interface CharacterMissionDrawerProps {
-  data: CharacterMissionProps
+  itemId?: number
   open: boolean
   onClose: () => void
   onComplete?: () => void
   width?: number
 }
 
+const MODEL_MISSIONS = CharacterMission
+
 const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
-  data,
   open,
+  itemId,
   onClose,
   onComplete,
   width = 700,
 }) => {
   const t = useTranslations('MissionCard')
+  const [form] = Form.useForm()
+
+  const {
+    data: response,
+    isLoading,
+    refetch,
+  }: ReactQueryFetch<CharacterMissionProps> | any = useFetchOneItem({
+    model: MODEL_MISSIONS,
+    id: itemId,
+    qKey: 'characterMissionDrawer',
+    options: {
+      queryKey: ['characterMissionDrawer', itemId],
+      enabled: !!itemId && open,
+    },
+  })
+
+  const { mutate } = useExtraActionsPut('user_missions')
+  const handleUpdate = (id: number, values: Partial<CharacterMissionProps>) => {
+    mutate([MODEL_MISSIONS.updateForCharacterUrl(id), values], {
+      onSuccess: () => {
+        refetch()
+      },
+    })
+  }
   const getStatusColor = () => {
-    switch (data.status) {
+    switch (response?.data?.status) {
       case 'IN_PROGRESS':
         return 'blue'
       case 'COMPLETED':
@@ -43,25 +82,44 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
     }
   }
 
-  const handleComplete = () => {
+  const handleComplete = (values: { result: string }) => {
+    handleUpdate(itemId as number, values)
     onComplete?.()
+    form.resetFields()
     onClose()
+  }
+
+  const canSubmitResult = () => {
+    return (
+      response?.data?.status === 'IN_PROGRESS'
+      || response?.data?.status === 'NEED_IMPROVEMENT'
+      || response?.data?.status === 'FAILED'
+    )
+  }
+
+  const handleFileChange = () => {
+    refetch()
   }
 
   return (
     <Drawer
-      title={data.mission.name}
+      loading={isLoading}
+      title={response?.data?.mission.name}
       placement='right'
       onClose={onClose}
       open={open}
       width={width}
-      extra={<Tag color={getStatusColor()}>{data.status_display_name}</Tag>}
+      extra={
+        <Tag color={getStatusColor()}>
+          {response?.data?.status_display_name}
+        </Tag>
+      }
     >
       <Space direction='vertical' size='large' style={{ width: '100%' }}>
         {/* Описание */}
         <div>
           <Title level={5}>{t('mission_description')}</Title>
-          <Paragraph>{data.mission.description}</Paragraph>
+          <Paragraph>{response?.data?.mission.description}</Paragraph>
         </div>
 
         <Divider size='small' />
@@ -73,13 +131,14 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
             <Space>
               <TrophyOutlined style={{ color: '#faad14' }} />
               <Text>
-                {data.mission.experience.toLocaleString()} {t('experience')}
+                {response?.data?.mission.experience.toLocaleString()}{' '}
+                {t('experience')}
               </Text>
             </Space>
             <Space>
               <DollarOutlined style={{ color: '#52c41a' }} />
               <Text>
-                {data.mission.currency.toLocaleString()} {t('coins')}
+                {response?.data?.mission.currency.toLocaleString()} {t('coins')}
               </Text>
             </Space>
           </Space>
@@ -92,19 +151,18 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
           <Title level={5}>{t('information')}</Title>
           <Space direction='vertical' size='small' style={{ width: '100%' }}>
             <Text>
-              <strong>{t('branch')}:</strong> {data.mission.branch.name}
+              <strong>{t('branch')}:</strong>{' '}
+              {response?.data?.mission.branch.name}
             </Text>
             <Text>
               <strong>{t('category')}:</strong>{' '}
-              {data.mission.branch.category.name}
+              {response?.data?.mission.branch.category.name}
             </Text>
             <Text>
-              <strong>{t('order')}:</strong> #{data.mission.order}
+              <strong>{t('order')}:</strong> #{response?.data?.mission.order}
             </Text>
             <Text>
-              <>
-                <strong>{t('level')}:</strong> {data.mission.level}
-              </>
+              <strong>{t('level')}:</strong> {response?.data?.mission.level}
             </Text>
           </Space>
         </div>
@@ -118,13 +176,13 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
             <Text>
               <DateTimeCalendar
                 text={t('start_date')}
-                datetime={data.start_datetime as string}
+                datetime={response?.data?.start_datetime as string}
               />
             </Text>
             <Text>
               <DateTimeCalendar
                 text={t('end_date')}
-                datetime={data.end_datetime as string}
+                datetime={response?.data?.end_datetime as string}
               />
             </Text>
           </Space>
@@ -133,66 +191,95 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
         {/* Описание ветки */}
         <div>
           <Title level={5}>
-            {t('about_branch', { branchName: data.mission.branch.name })}
+            {t('about_branch', {
+              branchName: response?.data?.mission.branch.name,
+            })}
           </Title>
           <Paragraph type='secondary'>
-            {data.mission.branch.description}
+            {response?.data?.mission.branch.description}
           </Paragraph>
         </div>
 
-        {/* Кнопки действий */}
-        <div style={{ marginTop: 'auto', paddingTop: 16 }}>
-          <Space direction='vertical' style={{ width: '100%' }} size='middle'>
-            {data.status === 'IN_PROGRESS' && (
-              <Button
-                size='large'
-                type='primary'
-                block
-                onClick={handleComplete}
-              >
-                {t('complete_mission')}
-              </Button>
-            )}
+        {/* Блок для результатов выполнения */}
+        {canSubmitResult() && (
+          <>
+            <Divider size='small' />
+            <div>
+              <Title level={5}>{t('mission_results')}</Title>
+              <Form form={form} layout='vertical' onFinish={handleComplete}>
+                <Form.Item
+                  label={t('result_description')}
+                  name='result'
+                  rules={[
+                    {
+                      required: true,
+                      message: t('result_description_required'),
+                    },
+                  ]}
+                >
+                  <TextArea
+                    rows={4}
+                    placeholder={t('result_description_placeholder')}
+                    value={response?.data?.result}
+                    maxLength={1000}
+                    showCount
+                  />
+                </Form.Item>
 
-            {data.status === 'COMPLETED' && (
-              <Button size='large' block disabled>
-                {t('completed')}
-              </Button>
-            )}
+                <Form.Item label={t('attachments')}>
+                  <FileUpload
+                    fileList={response?.data?.multimedia}
+                    object_id={itemId as number}
+                    content_type_id={response?.data?.content_type_id as number}
+                    maxSize={10}
+                    onChange={handleFileChange}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  {/* Кнопки действий */}
+                  <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+                    <Space
+                      direction='vertical'
+                      style={{ width: '100%' }}
+                      size='middle'
+                    >
+                      {canSubmitResult() && (
+                        <Button
+                          size='large'
+                          type='primary'
+                          block
+                          htmlType='submit'
+                        >
+                          {response?.data?.status === 'IN_PROGRESS'
+                            && t('complete_mission')}
+                          {response?.data?.status === 'NEED_IMPROVEMENT'
+                            && t('resubmit')}
+                          {response?.data?.status === 'FAILED' && t('retry')}
+                        </Button>
+                      )}
 
-            {data.status === 'NEED_IMPROVEMENT' && (
-              <Button
-                size='large'
-                block
-                type='primary'
-                onClick={handleComplete}
-              >
-                {t('resubmit')}
-              </Button>
-            )}
+                      {response?.data?.status === 'COMPLETED' && (
+                        <Button size='large' block disabled>
+                          {t('completed')}
+                        </Button>
+                      )}
 
-            {data.status === 'PENDING_REVIEW' && (
-              <Button size='large' block disabled>
-                {t('pending_review')}
-              </Button>
-            )}
+                      {response?.data?.status === 'PENDING_REVIEW' && (
+                        <Button size='large' block disabled>
+                          {t('pending_review')}
+                        </Button>
+                      )}
 
-            {data.status === 'FAILED' && (
-              <Button
-                size='large'
-                block
-                type='primary'
-                onClick={handleComplete}
-              >
-                {t('retry')}
-              </Button>
-            )}
-
-            <Button size='large' block onClick={onClose}>
-              {t('close')}
-            </Button>
-          </Space>
-        </div>
+                      <Button size='large' block onClick={onClose}>
+                        {t('close')}
+                      </Button>
+                    </Space>
+                  </div>
+                </Form.Item>
+              </Form>
+            </div>
+          </>
+        )}
       </Space>
     </Drawer>
   )

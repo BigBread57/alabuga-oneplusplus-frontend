@@ -4,14 +4,6 @@ import type { RankProps } from '@/models/Rank'
 import type { UserProps } from '@/models/User'
 import { BaseModel } from '@/models/Base'
 
-// Category types
-export interface CategoryProps extends BaseModelProps {
-  name: string
-  description: string
-  icon: string
-  color: string
-}
-
 export interface CharacterRank extends BaseModelProps {
   rank: RankProps
   next_rank?: RankProps | null
@@ -39,7 +31,7 @@ export class Character extends BaseModel {
   static override modelName = 'character'
 
   static override url() {
-    return CharacterUrl.CHARACTER
+    return CharacterUrl.CHARACTERS
   }
 
   static actualForUserUrl() {

@@ -1,7 +1,7 @@
 'use client'
 
 import type { FCC } from '@/types'
-import { List, Tabs } from 'antd'
+import { List } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
@@ -40,14 +40,17 @@ const ActivityLogsCard: FCC = () => {
   return (
     <CardWrapper
       title={t('title').toUpperCase()}
+      tabList={tabsItems}
+      defaultActiveTabKey='all'
+      onTabChange={handleChange}
       styles={{
         body: {
-          height: '90%',
+          height: '85%',
           overflow: 'scroll',
         },
       }}
     >
-      <Tabs defaultActiveKey='all' items={tabsItems} onChange={handleChange} />
+      {/* <Tabs defaultActiveKey='all' items={tabsItems} onChange={handleChange} /> */}
 
       <FetchMoreItemsComponent
         model={MODEL}

@@ -265,7 +265,12 @@
     "pending_review": "На проверке",
     "retry": "Повторить",
     "locked": "Заблокировано",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "mission_results": "Результаты выполнения",
+    "result_description": "Описание результата",
+    "result_description_placeholder": "Опишите что вы сделали для выполнения задания...",
+    "result_description_required": "Описание результата обязательно для заполнения",
+    "attachments": "Прикрепленные файлы"
   },
   "Artifact": {
     "game_world_stories": "История мира",
@@ -281,5 +286,17 @@
     "world_stories_title": "Истории мира: {competencyName}",
     "story_image": "Изображение истории",
     "locked": "Заблокировано"
+  },
+  "FileUpload": {
+    "upload_text": "Нажмите или перетащите файлы в эту область для загрузки",
+    "upload_hint": "Поддерживаются файлы до {maxSize}MB. Максимум {maxCount} файлов",
+    "uploaded_files": "Загруженные файлы",
+    "uploading": "Загружается...",
+    "uploaded": "Загружено",
+    "upload_failed": "Ошибка загрузки",
+    "file_too_large": "Файл слишком большой. Максимальный размер: {maxSize}MB",
+    "max_files_exceeded": "Превышено максимальное количество файлов: {maxCount}",
+    "remove_file": "Удалить файл",
+    "upload_successful": "Файл успешно загружен"
   }
 }

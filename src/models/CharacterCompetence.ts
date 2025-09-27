@@ -10,7 +10,7 @@ export interface CharacterCompetencyProps extends BaseModelProps {
 
 enum CompetencyUrl {
   COMPETENCY = '/user/character-competency',
-  COMPETENCIES = '/user/character-competencies/list',
+  COMPETENCIES = '/user/character-competencies',
 }
 
 export class CharacterCompetency extends BaseModel {
