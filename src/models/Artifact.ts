@@ -1,5 +1,5 @@
 import type { BaseModelProps } from './Base'
-import type { GameWorldProps } from './GameWorld'
+import type { GameWorldStoryProps } from '@/models/GameWorldStory'
 import { BaseModel } from './Base'
 
 export enum ArtifactModifier {
@@ -15,12 +15,12 @@ export interface ArtifactProps extends BaseModelProps {
   color: string
   modifier: ArtifactModifier
   modifier_value: number
-  game_world: GameWorldProps
+  game_world_stories: GameWorldStoryProps[]
 }
 
 enum ArtifactUrl {
   ARTIFACT = '/game-world/artifact',
-  ARTIFACTS = '/game-world/artifacts',
+  ARTIFACTS = '/game-world/artifacts/list',
 }
 
 export class Artifact extends BaseModel {

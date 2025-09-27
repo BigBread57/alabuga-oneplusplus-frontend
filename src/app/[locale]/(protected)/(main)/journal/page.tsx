@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Col, Row } from 'antd'
 import { getTranslations } from 'next-intl/server'
 import { ActivityLogsCard } from '@/components/ActivityLog/ActivityLogsCard'
 
@@ -22,5 +23,27 @@ export async function generateMetadata(
 }
 
 export default async function JournalPage() {
-  return <ActivityLogsCard />
+  return (
+    <Row
+      style={{
+        height: '100%',
+      }}
+      gutter={[24, 24]}
+    >
+      <Col xs={24} sm={24} md={24} lg={16}>
+        <ActivityLogsCard />
+      </Col>
+      <Col
+        xs={24}
+        sm={24}
+        md={24}
+        lg={8}
+        style={{
+          height: 'calc(100vh - 130px)',
+        }}
+      >
+        STATISTICS HERE
+      </Col>
+    </Row>
+  )
 }

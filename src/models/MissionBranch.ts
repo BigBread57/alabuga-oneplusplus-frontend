@@ -1,7 +1,14 @@
 import type { BaseModelProps } from './Base'
 import type { GameWorldProps } from './GameWorld'
-import type { RankProps } from './Rank'
 import { BaseModel } from './Base'
+
+export interface ActivityCategoryProps {
+  id: number
+  name: string
+  description: string
+  icon: string | null
+  color: string
+}
 
 export interface MissionBranchProps extends BaseModelProps {
   name: string
@@ -9,10 +16,8 @@ export interface MissionBranchProps extends BaseModelProps {
   icon: string
   color: string
   is_active: boolean
-  start_datetime?: string | null
-  time_to_complete?: number | null
-  rank: RankProps
-  // category: ActivityCategoryProps
+
+  category: ActivityCategoryProps
   // mentor?: UserProps | null
   game_world: GameWorldProps
 }

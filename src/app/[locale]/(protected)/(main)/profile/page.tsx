@@ -3,14 +3,14 @@ import { getTranslations } from 'next-intl/server'
 import React from 'react'
 import { ProfilePage } from '@/components/Profile/ProfilePage'
 
-type IMainPageProps = {
+type PageProps = {
   params: Promise<{ locale: string }>
 }
 
-export async function generateMetadata(
-  props: IMainPageProps,
-): Promise<Metadata> {
-  const { locale } = await props.params
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params
   const t = await getTranslations({
     locale,
     namespace: 'MainPage',
@@ -22,6 +22,6 @@ export async function generateMetadata(
   }
 }
 
-export default async function MainPage() {
+export default async function Page() {
   return <ProfilePage />
 }

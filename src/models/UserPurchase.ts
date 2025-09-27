@@ -1,5 +1,5 @@
 import type { BaseModelProps } from './Base'
-import type { ShopItemProps } from '@/models/ShopItem'
+import type { ShopItemProps } from '@/models/Shop'
 import type { UserProps } from '@/models/User'
 import { BaseModel } from '@/models/Base'
 

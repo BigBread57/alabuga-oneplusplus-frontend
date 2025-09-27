@@ -5,10 +5,10 @@ import { Space } from 'antd'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Artifact } from '@/components/Profile/Artifact'
-import { Artifact as Model } from '@/models/Artifact'
+import { CharacterArtifact } from '@/models/CharacterArtifacts'
 import styles from './Artifacts.module.scss'
 
-const MODEL = Model
+const MODEL = CharacterArtifact
 
 const ArtifactsList: FCC = () => {
   return (
@@ -20,7 +20,7 @@ const ArtifactsList: FCC = () => {
         <div className={styles.container} data-testid='test-ArtifactsList'>
           <Space direction='horizontal' size='middle'>
             {data?.map((item) => (
-              <Artifact key={item.id} {...item} />
+              <Artifact key={item.id} {...item?.artifact} />
             ))}
           </Space>
         </div>

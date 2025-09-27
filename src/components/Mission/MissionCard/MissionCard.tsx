@@ -1,229 +1,122 @@
 'use client'
 
-import type { FCC } from 'src/types'
-import type { MissionProps } from '@/models/Mission'
-import {
-  CalendarOutlined,
-  DollarOutlined,
-  TrophyOutlined,
-} from '@ant-design/icons'
-import { Button, Space, Tag, Typography } from 'antd'
+import type { CharacterMissionProps } from '@/models/CharacterMission'
+import { EyeOutlined } from '@ant-design/icons'
+import { Button, Card, Space, Tag, Typography } from 'antd'
 import { useTranslations } from 'next-intl'
-import Image from 'next/image'
 import React, { useState } from 'react'
-import { CardWrapper } from '@/components/_base/CardWrapper'
-import ModalWrapper from '@/components/_base/ComponentModalWrapper/ComponentModalWrapper'
-import styles from './MissionCard.module.scss'
+import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
+import { CharacterMissionDrawer } from '@/components/Character/CharacterMissionDrawer'
 
 const { Text, Title, Paragraph } = Typography
 
 interface MissionCardProps {
-  mission: MissionProps
-  isCompleted?: boolean
-  canComplete?: boolean
-  onComplete?: (missionId: number) => void
-  className?: string
+  data: CharacterMissionProps
+  onComplete?: () => void
 }
 
-const MissionCard: FCC<MissionCardProps> = ({
-  mission,
-  isCompleted = false,
-  canComplete = true,
-  onComplete,
-  className,
-}) => {
+const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
   const t = useTranslations('MissionCard')
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [drawerVisible, setDrawerVisible] = useState(false)
 
   const getStatusColor = () => {
-    if (isCompleted) {
-      return 'success'
+    switch (data.status) {
+      case 'IN_PROGRESS':
+        return 'blue'
+      case 'COMPLETED':
+        return 'green'
+      case 'NEED_IMPROVEMENT':
+        return 'orange'
+      case 'PENDING_REVIEW':
+        return 'purple'
+      case 'FAILED':
+        return 'red'
+      default:
+        return 'default'
     }
-    if (!canComplete) {
-      return 'default'
-    }
-    if (mission.is_key_mission) {
-      return 'warning'
-    }
-    return 'processing'
-  }
-
-  const getStatusText = () => {
-    if (isCompleted) {
-      return t('completed')
-    }
-    if (!canComplete) {
-      return t('locked')
-    }
-    if (mission.is_key_mission) {
-      return t('key_mission')
-    }
-    return t('available')
-  }
-
-  const handleToggleExpand = () => {
-    setIsExpanded(!isExpanded)
   }
 
   const handleComplete = () => {
-    if (canComplete && !isCompleted && onComplete) {
-      onComplete(mission.id as number) // Assuming mission.id is number
-    }
+    onComplete?.()
+    setDrawerVisible(false)
   }
 
   return (
-    <ModalWrapper
-      trigger={
-        <CardWrapper
-          title={mission.name}
-          className={className || ''}
-          data-testid='test-MissionCard'
-          hoverable={!isExpanded}
+    <>
+      {/* Основная карточка */}
+      <Card
+        hoverable
+        onClick={() => setDrawerVisible(true)}
+        style={{ cursor: 'pointer' }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
         >
-          {/* Заголовок миссии (всегда видимый) */}
-          <div
-            role='button'
-            tabIndex={0}
-            key='header'
-            onClick={handleToggleExpand}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                handleToggleExpand()
-              }
-            }}
-          >
-            <Space align='start' size='middle' style={{ width: '100%' }}>
-              <div className={styles.iconWrapper}>
-                <Image
-                  src={mission.icon}
-                  alt={mission.name}
-                  className={styles.icon}
-                  width={100}
-                  height={100}
-                />
-              </div>
+          <div style={{ flex: 1 }}>
+            <Title level={5} style={{ color: data.mission.branch.color }}>
+              {data.mission.name}
+            </Title>
 
-              <div className={styles.titleSection}>
-                <Space direction='vertical' size={4} style={{ width: '100%' }}>
-                  <div className={styles.titleRow}>
-                    <Title level={5} className={styles.title}>
-                      {mission.description}
-                    </Title>
-                  </div>
-
-                  <Space wrap size='small'>
-                    <Tag color={getStatusColor()}>{getStatusText()}</Tag>
-
-                    <Tag color={mission.level.color}>{mission.level.name}</Tag>
-
-                    {mission.is_key_mission && (
-                      <Tag color='gold'>{t('key')}</Tag>
-                    )}
-
-                    {!mission.is_active && (
-                      <Tag color='default'>{t('inactive')}</Tag>
-                    )}
-                  </Space>
-                </Space>
-              </div>
-            </Space>
-          </div>
-        </CardWrapper>
-      }
-    >
-      <div className={styles.expandedContent}>
-        {/* Описание */}
-        <Space direction='vertical' size='middle' style={{ width: '100%' }}>
-          <div>
-            <Text strong>{t('description')}:</Text>
-            <Paragraph style={{ marginTop: 8 }}>
-              {mission.description}
+            <Paragraph ellipsis={{ rows: 2 }}>
+              {data.mission.description}
             </Paragraph>
-          </div>
 
-          {/* Награды */}
-          <div className={styles.rewards}>
-            <Text strong>{t('rewards')}:</Text>
-            <Space size='large' style={{ marginTop: 8 }}>
-              <Space>
-                <TrophyOutlined style={{ color: '#faad14' }} />
-                <Text>
-                  {mission.experience.toLocaleString()} {t('experience')}
-                </Text>
-              </Space>
-              <Space>
-                <DollarOutlined style={{ color: '#52c41a' }} />
-                <Text>
-                  {mission.currency.toLocaleString()}{' '}
-                  {mission?.game_world?.currency_name}
-                </Text>
-              </Space>
-            </Space>
-          </div>
+            <Space wrap size='small' style={{ marginBottom: 8 }}>
+              <Tag color={getStatusColor()}>{data.status_display_name}</Tag>
 
-          {/* Информация о ветке и времени */}
-          <div className={styles.missionInfo}>
-            <Space direction='vertical' size='small' style={{ width: '100%' }}>
-              <Text type='secondary'>
-                <strong>{t('branch')}:</strong> {mission.branch.name}
-              </Text>
-
-              {mission.time_to_complete && (
-                <Text type='secondary'>
-                  <CalendarOutlined /> {mission.time_to_complete}{' '}
-                  {t('days_to_complete')}
-                </Text>
+              {data.mission.is_key_mission && (
+                <Tag color='gold'>{t('key_mission')}</Tag>
               )}
 
-              <Text type='secondary'>
-                <strong>{t('order')}:</strong> #{mission.order}
+              <Tag color='blue'>
+                <>
+                  {t('level')} {data?.mission?.level}
+                </>
+              </Tag>
+            </Space>
+
+            <Space direction='vertical' size={4}>
+              <Text type='secondary' style={{ fontSize: '12px' }}>
+                <DateTimeCalendar
+                  text={t('start')}
+                  datetime={data.start_datetime as string}
+                />
+              </Text>
+              <Text type='secondary' style={{ fontSize: '12px' }}>
+                <DateTimeCalendar
+                  text={t('end')}
+                  datetime={data.start_datetime as string}
+                />
               </Text>
             </Space>
           </div>
 
-          {/* Требования */}
-          {mission.required_missions
-            && mission.required_missions.length > 0 && (
-            <div className={styles.requirements}>
-              <Text strong>{t('requirements')}:</Text>
-              <div style={{ marginTop: 8 }}>
-                {mission.required_missions.map((reqMission) => (
-                  <Tag
-                    key={reqMission.id}
-                    color='blue'
-                    style={{ marginBottom: 4 }}
-                  >
-                    {reqMission.name}
-                  </Tag>
-                ))}
-              </div>
-            </div>
-          )}
+          <Button
+            type='text'
+            icon={<EyeOutlined />}
+            size='small'
+            onClick={(e) => {
+              e.stopPropagation()
+              setDrawerVisible(true)
+            }}
+            aria-label={t('view_details')}
+          />
+        </div>
+      </Card>
 
-          {/* Кнопки действий */}
-          <div className={styles.actions}>
-            <Space>
-              {!isCompleted && canComplete && mission.is_active && (
-                <Button
-                  type='primary'
-                  onClick={handleComplete}
-                  disabled={!canComplete}
-                >
-                  {t('complete_mission')}
-                </Button>
-              )}
-
-              {isCompleted && <Button disabled>{t('completed')}</Button>}
-
-              {!canComplete && <Button disabled>{t('locked')}</Button>}
-            </Space>
-          </div>
-        </Space>
-      </div>
-    </ModalWrapper>
+      {/* Дровер с детальной информацией */}
+      <CharacterMissionDrawer
+        data={data}
+        open={drawerVisible}
+        onClose={() => setDrawerVisible(false)}
+        onComplete={handleComplete}
+      />
+    </>
   )
 }
-
-MissionCard.displayName = 'MissionCard'
 
 export default MissionCard

@@ -1,23 +1,26 @@
 import type { FCC } from 'src/types'
-import type { CompetenceModel } from '@/components/Profile/Competence/Competence'
-import { Space } from 'antd'
 import React from 'react'
+import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Competence } from '@/components/Profile/Competence'
+import { CharacterCompetency } from '@/models/CharacterCompetence'
 import styles from './Competencies.module.scss'
 
-type CompetenceListProps = {
-  items: CompetenceModel[]
-}
+const MODEL = CharacterCompetency
 
-export const CompetenceList: FCC<CompetenceListProps> = ({ items }) => {
+export const CompetenceList: FCC = () => {
   return (
-    <div className={styles.container} data-testid='test-CompetenceList'>
-      <Space direction='horizontal' size='middle'>
-        {items.map((item) => (
-          <Competence key={item.id} competence={item} />
-        ))}
-      </Space>
-    </div>
+    <FetchMoreItemsComponent
+      model={MODEL}
+      defFilters={{}}
+      isClearRender
+      renderItems={({ data, isLoading }) => (
+        <div className={styles.container} data-testid='test-ArtifactsList'>
+          {data?.map((item) => (
+            <Competence isLoading={isLoading} key={item.id} data={item} />
+          ))}
+        </div>
+      )}
+    />
   )
 }
 
