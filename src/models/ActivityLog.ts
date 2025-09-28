@@ -19,4 +19,14 @@ export class ActivityLog extends BaseModel {
   static contentTypesUrl() {
     return '/communication/activity-logs/content-types/list'
   }
+
+  // put activity-logs/<int:pk>/read/ тело {is_read: True}
+  static markAsReadUrl(id: string | number) {
+    return `/communication/activity-logs/${id}/read/`
+  }
+
+  // activity-logs/read-all/ тело {is_read: True}
+  static markAllAsReadUrl() {
+    return '/communication/activity-logs/read-all/'
+  }
 }

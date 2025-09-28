@@ -1,7 +1,11 @@
 {
   "Common": {
     "no_data": "No data",
-    "locked": "Locked"
+    "loading": "Loading...",
+    "go_back": "Go Back",
+    "locked": "Locked",
+    "success": "Success",
+    "error": "Error"
   },
   "MainPage": {
     "home": "Home",
@@ -235,7 +239,9 @@
   },
   "ActivityLog": {
     "title": "Activity log",
-    "all": "All"
+    "all": "All",
+    "read_all": "Read all",
+    "new": "New"
   },
   "MissionStatus": {
     "all": "All",
@@ -367,5 +373,8 @@
     "posts": "Posts",
     "meta_description": "Stay updated with the latest news",
     "view_details": "Details"
+  },
+  "Statistics": {
+    "title": "Statistics"
   }
 }

@@ -1,21 +1,22 @@
 'use client'
 
 import type { FCC } from '@/types'
-import { List } from 'antd'
+import { Button, List } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
-import { useDateTimePrettyStr } from '@/hooks/useDateTimePrettyStr'
 import { useFilter } from '@/hooks/useFilter'
+import useMessage from '@/hooks/useMessages'
 import { ActivityLog } from '@/models/ActivityLog'
-import { useExtraActionsGet } from '@/services/base/hooks'
+import { useExtraActionsGet, useExtraActionsPut } from '@/services/base/hooks'
+import JournalItem from '../JournalItem/JournalItem'
 
 const MODEL = ActivityLog
 const ActivityLogsCard: FCC = () => {
   const t = useTranslations('ActivityLog')
   const [filter, setFilter] = useFilter({})
-  const { timeDateString } = useDateTimePrettyStr()
+  const { messageSuccess } = useMessage()
   const { data: contentTypesData }: any = useExtraActionsGet({
     qKey: 'getContentTypes',
     extraUrl: MODEL.contentTypesUrl(),
@@ -37,6 +38,15 @@ const ActivityLogsCard: FCC = () => {
       }),
     ) || []),
   ]
+  const { mutate } = useExtraActionsPut('read_all')
+  const handleReadAll = (refetch: () => void) => {
+    mutate([MODEL.markAllAsReadUrl(), { is_read: true }], {
+      onSuccess: () => {
+        refetch()
+        messageSuccess()
+      },
+    })
+  }
   return (
     <CardWrapper
       title={t('title').toUpperCase()}
@@ -46,26 +56,47 @@ const ActivityLogsCard: FCC = () => {
       styles={{
         body: {
           height: '85%',
-          overflow: 'scroll',
         },
       }}
     >
-      {/* <Tabs defaultActiveKey='all' items={tabsItems} onChange={handleChange} /> */}
-
       <FetchMoreItemsComponent
         model={MODEL}
         defFilters={{ ...filter }}
+        extra={({ refetch }) => (
+          <Button onClick={() => handleReadAll(refetch)}>
+            {t('read_all')}
+          </Button>
+        )}
         renderItems={({ data }) => (
           <List
             itemLayout='horizontal'
-            dataSource={data}
+            style={{
+              overflow: 'scroll',
+              height: '85%',
+            }}
+            dataSource={[
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+              ...data,
+            ]}
             renderItem={(item) => (
-              <List.Item key={item.id}>
-                <List.Item.Meta
-                  title={item.text}
-                  description={timeDateString(item.created_at)}
-                />
-              </List.Item>
+              <JournalItem
+                key={item.id}
+                is_read={item.is_read}
+                itemId={item.id}
+                text={item.text}
+                created_at={item.created_at}
+              />
             )}
           />
         )}

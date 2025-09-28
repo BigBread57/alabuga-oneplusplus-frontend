@@ -20,7 +20,9 @@ type FetchMoreItemsComponentProps = {
   extra?: ({
     isLoading,
     isFetching,
+    refetch,
   }: {
+    refetch: () => void
     isLoading: boolean
     isFetching: boolean
   }) => React.ReactNode
@@ -113,6 +115,7 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
       {extra?.({
         isLoading,
         isFetching,
+        refetch,
       })}
       <Spin spinning={isLoading} />
       {renderItems({

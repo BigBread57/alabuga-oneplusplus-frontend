@@ -24,7 +24,7 @@ export interface CharacterProps extends BaseModelProps {
 enum CharacterUrl {
   CHARACTER = '/user/character',
   CHARACTERS = '/user/characters',
-  ACTUAL_FOR_USER = '/user/characters/actual-for-user',
+  ACTUAL_FOR_USER = '/user/characters/actual',
 }
 
 export class Character extends BaseModel {
