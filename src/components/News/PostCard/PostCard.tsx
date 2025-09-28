@@ -80,6 +80,9 @@ const PostCard: FCC<PostProps> = ({
         </div>
         <div className={styles.content}>
           <span className={styles.name}>{name}</span>
+          <p style={{ color: token.colorText, marginBottom: 12 }}>
+            {topic.name}
+          </p>
           <div className={styles.buttonContainer}>
             <Button type='primary' onClick={showDrawer}>
               {t('view_details')}
