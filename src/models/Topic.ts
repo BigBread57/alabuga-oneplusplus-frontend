@@ -1,24 +1,24 @@
 import type { BaseModelProps } from './Base'
-import type { GameWorldProps } from './GameWorld'
 import { BaseModel } from './Base'
 
-export interface TopicProps extends BaseModelProps {
+export interface CommunicationTopicProps extends BaseModelProps {
   name: string
   description: string
   icon: string
   color: string
-  game_worlds: GameWorldProps[]
+  post_count: number
+  created_at: string
 }
 
-enum TopicUrl {
-  TOPIC = '/communication/topic',
-  TOPICS = '/communication/topics',
+enum CommunicationTopicUrl {
+  COMMUNICATION_TOPIC = '/communication/topic',
+  COMMUNICATION_TOPICS = '/communication/topics',
+  COMMUNICATION_TOPICS_LIST = '/communication/topics/list',
 }
 
-export class Topic extends BaseModel {
-  static override modelName = 'topic'
-
+export class CommunicationTopic extends BaseModel {
+  static override modelName = 'communication_topic'
   static override url() {
-    return TopicUrl.TOPICS
+    return CommunicationTopicUrl.COMMUNICATION_TOPICS_LIST
   }
 }

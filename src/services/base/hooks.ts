@@ -246,14 +246,14 @@ export const useExtraActionsPut = <
   })
 }
 
-export const useExtraActionsGet = ({
+export const useExtraActionsGet = <TData = any>({
   qKey,
   extraUrl,
   options,
 }: {
   qKey: string
   extraUrl: string
-  options?: UseQueryOptions
+  options?: UseQueryOptions<TData, Error, TData, QueryKey>
   enabled?: boolean
 }) => {
   return useQuery({

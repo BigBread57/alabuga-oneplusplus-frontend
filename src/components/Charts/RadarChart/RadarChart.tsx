@@ -10,6 +10,9 @@ type DataItem = {
 }
 
 interface RadarChartProps {
+  xField?: string
+  yField?: string
+  colorField?: string
   data: DataItem[]
   width?: number
   height?: number
@@ -43,6 +46,9 @@ const RadarChart: FCC<RadarChartProps> = ({
   labelRotate = 0,
   labelOffset = 10,
   labelStyle,
+  xField,
+  yField,
+  colorField,
 }) => {
   // Определяем размеры в зависимости от пропса size
   const getSizeConfig = () => {
@@ -70,9 +76,9 @@ const RadarChart: FCC<RadarChartProps> = ({
 
   const config = {
     data,
-    xField: 'item',
-    yField: 'star',
-    colorField: 'type',
+    xField: xField || 'item',
+    yField: yField || 'score',
+    colorField: colorField || 'type',
     shapeField: smooth ? 'smooth' : undefined,
     ...sizeConfig,
     area: {

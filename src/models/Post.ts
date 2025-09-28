@@ -1,13 +1,13 @@
 import type { BaseModelProps } from './Base'
 import type { CharacterProps } from './Character'
-import type { TopicProps } from './Topic'
+import type { CommunicationTopicProps } from '@/models/Topic'
 import { BaseModel } from './Base'
 
 export interface PostProps extends BaseModelProps {
   name: string
   text: string
   character: CharacterProps
-  topic: TopicProps
+  topic: CommunicationTopicProps
   parent?: PostProps | null
   children?: PostProps[]
 }

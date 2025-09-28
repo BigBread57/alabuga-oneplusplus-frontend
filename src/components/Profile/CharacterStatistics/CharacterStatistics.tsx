@@ -42,6 +42,7 @@ const CharacterStatistics: FCC = () => {
       <Divider size='small'>{t('missions')}</Divider>
       <Col xs={24} lg={12}>
         <PieChart
+          key='by_level'
           legendPosition='left'
           height={250}
           data={response?.data?.missions.by_level}
@@ -49,6 +50,7 @@ const CharacterStatistics: FCC = () => {
       </Col>
       <Col xs={24} lg={12}>
         <PieChart
+          key='by_status'
           legendPosition='left'
           height={250}
           data={response?.data?.missions.by_status}
@@ -57,19 +59,21 @@ const CharacterStatistics: FCC = () => {
       <Col xs={24} lg={24}>
         <Row>
           <Col xs={24} lg={12}>
-            <Divider size='small'>{t('artifacts')}</Divider>
-            <PieChart
-              legendPosition='left'
-              height={250}
-              data={response?.data?.artifacts.by_type}
-            />
-          </Col>
-          <Col xs={24} lg={12}>
             <Divider size='small'>{t('events')}</Divider>
             <PieChart
+              key='by_status_events'
               legendPosition='left'
               height={250}
               data={response?.data?.events.by_status}
+            />
+          </Col>
+          <Col xs={24} lg={12}>
+            <Divider size='small'>{t('artifacts')}</Divider>
+            <PieChart
+              key='by_type_artifacts'
+              legendPosition='left'
+              height={250}
+              data={response?.data?.artifacts.by_type}
             />
           </Col>
         </Row>

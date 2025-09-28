@@ -74,21 +74,7 @@ const ActivityLogsCard: FCC = () => {
               overflow: 'scroll',
               height: '85%',
             }}
-            dataSource={[
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-              ...data,
-            ]}
+            dataSource={[...data]}
             renderItem={(item) => (
               <JournalItem
                 key={item.id}

@@ -95,7 +95,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     if (isConnectingModeRef.current) {
       setFirstSelectedNode((prevFirst) => {
         if (!prevFirst) {
-          node.attr('body/stroke', '#FF6B6B')
+          node.attr('body/stroke', '#009707')
           node.attr('body/strokeWidth', 5)
           return nodeId
         } else if (prevFirst !== nodeId) {

@@ -17,7 +17,7 @@ const StatisticsCard: FCC<StatisticsCardProps> = () => {
       title={t('title').toUpperCase()}
       styles={{
         body: {
-          height: '85%',
+          height: '90%',
           overflow: 'scroll',
         },
       }}

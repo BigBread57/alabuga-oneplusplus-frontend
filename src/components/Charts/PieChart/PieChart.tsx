@@ -24,7 +24,7 @@ const PieChart: FCC<PieChartProps> = ({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setData(data || [])
+      setData(data)
     }, 1000)
     return () => clearTimeout(timeout)
   }, [data])
@@ -49,6 +49,15 @@ const PieChart: FCC<PieChartProps> = ({
         position: legendPosition,
         rowPadding: 5,
       },
+    },
+    tooltip: {
+      title: 'type', // Заголовок тултипа будет показывать тип
+      items: [
+        {
+          field: 'value',
+          name: 'Всего', // Название для значения
+        },
+      ],
     },
   }
 

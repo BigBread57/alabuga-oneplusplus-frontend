@@ -372,7 +372,8 @@
     "meta_title": "Posts",
     "posts": "Posts",
     "meta_description": "Stay updated with the latest news",
-    "view_details": "Details"
+    "view_details": "Details",
+    "select_topic": "Select a topic"
   },
   "Statistics": {
     "title": "Statistics",
@@ -380,5 +381,10 @@
     "competencies": "Competencies",
     "missions": "Missions",
     "events": "Events"
+  },
+  "Select": {
+    "placeholder": "Select an option",
+    "no_data": "No data",
+    "error": "Error loading data"
   }
 }

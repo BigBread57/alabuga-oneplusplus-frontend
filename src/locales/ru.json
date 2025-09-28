@@ -366,7 +366,8 @@
     "meta_title": "Посты",
     "posts": "Посты",
     "meta_description": "Будьте в курсе последних новостей",
-    "view_details": "Подробнее"
+    "view_details": "Подробнее",
+    "select_topic": "Выберите тему"
   },
   "Statistics": {
     "title": "Статистика",
@@ -374,5 +375,10 @@
     "competencies": "Компетенции",
     "missions": "Миссии",
     "events": "События"
+  },
+  "Select": {
+    "placeholder": "Выберите элемент",
+    "no_data": "Нет данных",
+    "error": "Ошибка загрузки данных"
   }
 }

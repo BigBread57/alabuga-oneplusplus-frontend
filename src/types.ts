@@ -55,3 +55,11 @@ export type ReactQueryFetch<T> = {
   isLoading: boolean
   refetch: CallableFunction | unknown
 }
+
+export type ApiResponse<T = any> = {
+  data?: {
+    results?: T[]
+    [key: string]: any
+  }
+  [key: string]: any
+}
