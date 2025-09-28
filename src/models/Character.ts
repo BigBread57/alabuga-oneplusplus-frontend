@@ -41,4 +41,9 @@ export class Character extends BaseModel {
   static updateUrl() {
     return `${this.url()}/update/`
   }
+
+  // characters/actual/statistics/
+  static statisticsForUserUrl(id: number) {
+    return `${this.url()}/${id}/statistics/`
+  }
 }

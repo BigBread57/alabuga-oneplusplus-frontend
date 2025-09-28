@@ -254,6 +254,7 @@ export const useExtraActionsGet = ({
   qKey: string
   extraUrl: string
   options?: UseQueryOptions
+  enabled?: boolean
 }) => {
   return useQuery({
     queryKey: [qKey] as QueryKey,

@@ -4,6 +4,7 @@ import type { PermissionRulesProps } from '@/services/base/types'
 import { BaseModel } from 'src/models/Base'
 
 export type UserProps = {
+  active_character: number | null
   username: string
   avatar: string
   email: string

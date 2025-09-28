@@ -375,6 +375,10 @@
     "view_details": "Details"
   },
   "Statistics": {
-    "title": "Statistics"
+    "title": "Statistics",
+    "artifacts": "Artifacts",
+    "competencies": "Competencies",
+    "missions": "Missions",
+    "events": "Events"
   }
 }

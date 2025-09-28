@@ -61,7 +61,6 @@ const ProfileCard: FCC<ProfileCardProps> = ({
           />
         </Col>
         <Divider>{t('artifacts')}</Divider>
-
         <Col>
           <Artifacts />
         </Col>

@@ -40,7 +40,7 @@ export default async function JournalPage(_props: JournalPageProps) {
           height: 'calc(100vh - 130px)',
         }}
       >
-        <ActivityLogsCard />
+        <StatisticsCard />
       </Col>
       <Col
         xs={24}
@@ -51,7 +51,7 @@ export default async function JournalPage(_props: JournalPageProps) {
           height: 'calc(100vh - 130px)',
         }}
       >
-        <StatisticsCard />
+        <ActivityLogsCard />
       </Col>
     </Row>
   )

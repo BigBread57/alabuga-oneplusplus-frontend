@@ -1,11 +1,10 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import { Divider } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
-import { PieChart } from '@/components/Charts/PieChart'
+import { CharacterStatistics } from '@/components/Profile/CharacterStatistics'
 
 interface StatisticsCardProps {
   prop?: any
@@ -23,17 +22,7 @@ const StatisticsCard: FCC<StatisticsCardProps> = () => {
         },
       }}
     >
-      <Divider>SOME</Divider>
-      <PieChart
-        data={[
-          { type: '分类一', value: 27 },
-          { type: '分类二', value: 25 },
-          { type: '分类三', value: 18 },
-          { type: '分类四', value: 15 },
-          { type: '分类五', value: 10 },
-          { type: '其他', value: 5 },
-        ]}
-      />
+      <CharacterStatistics />
     </CardWrapper>
   )
 }

@@ -9,20 +9,34 @@ type DataItem = {
 
 interface PieChartProps {
   data: DataItem[]
+  width?: number
+  height?: number
+  legendPosition?: 'top' | 'left' | 'right' | 'bottom'
 }
 
-const PieChart: FCC<PieChartProps> = ({ data }) => {
+const PieChart: FCC<PieChartProps> = ({
+  data,
+  legendPosition = 'right',
+  width,
+  height,
+}) => {
   const [dataInner, setData] = React.useState([] as DataItem[])
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setData(data || [])
     }, 1000)
     return () => clearTimeout(timeout)
   }, [data])
+
   const config = {
     data: dataInner,
     angleField: 'value',
     colorField: 'type',
+    innerRadius: 0.6,
+    autoFit: true,
+    width,
+    height,
     label: {
       text: 'value',
       style: {
@@ -32,11 +46,12 @@ const PieChart: FCC<PieChartProps> = ({ data }) => {
     legend: {
       color: {
         title: false,
-        position: 'right',
+        position: legendPosition,
         rowPadding: 5,
       },
     },
   }
+
   return <Pie {...config} />
 }
 

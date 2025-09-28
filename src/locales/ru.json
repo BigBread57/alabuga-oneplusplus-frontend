@@ -369,6 +369,10 @@
     "view_details": "Подробнее"
   },
   "Statistics": {
-    "title": "Статистика"
+    "title": "Статистика",
+    "artifacts": "Артефакты",
+    "competencies": "Компетенции",
+    "missions": "Миссии",
+    "events": "События"
   }
 }
