@@ -1,5 +1,5 @@
 import type { FCC } from '@/types'
-import { Button, Drawer, theme } from 'antd'
+import { Button, Drawer, Space, Tag, theme } from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -80,9 +80,9 @@ const PostCard: FCC<PostProps> = ({
         </div>
         <div className={styles.content}>
           <span className={styles.name}>{name}</span>
-          <p style={{ color: token.colorText, marginBottom: 12 }}>
-            {topic.name}
-          </p>
+          <Space wrap size='small' style={{ marginBottom: 8 }}>
+            <Tag color='gold'>{topic.name}</Tag>
+          </Space>
           <div className={styles.buttonContainer}>
             <Button type='primary' onClick={showDrawer}>
               {t('view_details')}
@@ -108,10 +108,7 @@ const PostCard: FCC<PostProps> = ({
       >
         <div className={styles.container}>
           <div className={styles.theme}>
-            <strong style={{ color: token.colorText }}>Тема:</strong>
-            <span style={{ color: token.colorText, marginLeft: 8 }}>
-              {topic.name}
-            </span>
+            <Tag color='gold'>{topic.name}</Tag>
           </div>
 
           <div className={styles.imageContainer}>
