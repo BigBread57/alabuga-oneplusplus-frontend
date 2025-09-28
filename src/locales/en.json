@@ -308,28 +308,56 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "enter_title": "Enter title...",
+    "entity_title": "Entity",
+    "title_required": "Please enter a title",
+    "title_min_length": "Title must be at least 2 characters",
+    "title_max_length": "Title must not exceed 100 characters",
     "center": "Center",
     "fit": "Fit",
     "zoom_in": "Zoom In",
     "zoom_out": "Zoom Out",
-    "add_shape": "Add Shape",
+    "add_entity": "Add Entity",
     "clear_all": "Clear All",
-    "shapes": {
-      "rectangle": "Rectangle",
-      "circle": "Circle",
-      "ellipse": "Ellipse",
-      "triangle": "Triangle",
-      "diamond": "Diamond",
-      "star": "Star"
+    "create": "Create",
+    "cancel": "Cancel",
+    "entity_name": "Name",
+    "entity_description": "Description",
+    "enter_name": "Enter name...",
+    "enter_description": "Enter description...",
+    "name_required": "Please enter a name",
+    "name_min_length": "Name must be at least 2 characters",
+    "name_max_length": "Name must not exceed 50 characters",
+    "description_max_length": "Description must not exceed 200 characters",
+    "use_default_values": "Use Default Values",
+    "entities": {
+      "rang": "Rang",
+      "missionBranch": "Mission Branch",
+      "mission": "Mission",
+      "artefact": "Artefact",
+      "competency": "Competency",
+      "event": "Event",
+      "descriptions": {
+        "rang": "Rang description",
+        "missionBranch": "Mission branch description",
+        "mission": "Mission description",
+        "artefact": "Artefact description",
+        "competency": "Competency description",
+        "event": "Event description"
+      }
     },
     "tooltips": {
-      "add_rectangle": "Add Rectangle",
-      "add_circle": "Add Circle",
+      "add_rang": "Add Rang",
+      "add_mission_branch": "Add Mission Branch",
+      "add_mission": "Add Mission",
+      "add_artefact": "Add Artefact",
+      "add_competency": "Add Competency",
+      "add_event": "Add Event",
       "center_content": "Center Content",
       "fit_content": "Fit to Screen",
       "zoom_in": "Zoom In",
       "zoom_out": "Zoom Out",
-      "clear_graph": "Clear All Shapes"
+      "clear_graph": "Clear All Entities"
     }
   },
   "Post": {

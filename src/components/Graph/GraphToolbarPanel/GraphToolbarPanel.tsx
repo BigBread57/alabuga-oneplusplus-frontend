@@ -2,46 +2,50 @@ import type { MenuProps } from 'antd'
 import type { FCC } from 'src/types'
 import {
   AimOutlined,
-  AppstoreOutlined,
-  BorderOutlined,
+  BranchesOutlined, // MissionBranch
+  CalendarOutlined, // Event
   ClearOutlined,
   FullscreenOutlined,
-  PlayCircleOutlined,
+  GiftOutlined, // Artefact
   PlusOutlined,
-  RadiusSettingOutlined,
-  StarOutlined,
+  RocketOutlined, // Mission
+  // Иконки для сущностей
+  StarOutlined, // Rang
+  TrophyOutlined, // Competency
   ZoomInOutlined,
   ZoomOutOutlined,
 } from '@ant-design/icons'
 import { Button, Divider, Dropdown, Space, Tooltip } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
+
+import { ENTITY_COLORS } from '@/components/Graph/theme'
 import { useTheme } from '@/providers/ThemeProvider'
 
-interface GraphToolbarPanelProps {
-  // Callbacks для добавления фигур
-  onAddRectangle?: () => void
-  onAddCircle?: () => void
-  onAddEllipse?: () => void
-  onAddTriangle?: () => void
-  onAddDiamond?: () => void
-  onAddStar?: () => void
+interface EntityToolbarPanelProps {
+  // Callbacks для добавления сущностей
+  onAddRang?: () => void
+  onAddMissionBranch?: () => void
+  onAddMission?: () => void
+  onAddArtefact?: () => void
+  onAddCompetency?: () => void
+  onAddEvent?: () => void
   onClearGraph?: () => void
 
-  // Callbacks для управления графом (из GraphActionButtons)
+  // Callbacks для управления графом
   onCenterContent?: () => void
   onFitContent?: () => void
   onZoomIn?: () => void
   onZoomOut?: () => void
 }
 
-const GraphToolbarPanel: FCC<GraphToolbarPanelProps> = ({
-  onAddRectangle,
-  onAddCircle,
-  onAddEllipse,
-  onAddTriangle,
-  onAddDiamond,
-  onAddStar,
+const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
+  onAddRang,
+  onAddMissionBranch,
+  onAddMission,
+  onAddArtefact,
+  onAddCompetency,
+  onAddEvent,
   onClearGraph,
   onCenterContent,
   onFitContent,
@@ -50,46 +54,47 @@ const GraphToolbarPanel: FCC<GraphToolbarPanelProps> = ({
 }) => {
   const t = useTranslations('Graph')
   const { themeConfig } = useTheme()
-  // Меню для выпадающего списка фигур
-  const shapeMenuItems: MenuProps['items'] = [
+
+  // Меню для выпадающего списка сущностей
+  const entityMenuItems: MenuProps['items'] = [
     {
-      key: 'rectangle',
-      label: t('shapes.rectangle', { fallback: 'Rectangle' }),
-      icon: <BorderOutlined />,
-      onClick: onAddRectangle,
+      key: 'rang',
+      label: t('entities.rang', { fallback: 'Rang' }),
+      icon: <StarOutlined style={{ color: ENTITY_COLORS.rang }} />,
+      onClick: onAddRang,
     },
     {
-      key: 'circle',
-      label: t('shapes.circle', { fallback: 'Circle' }),
-      icon: <RadiusSettingOutlined />,
-      onClick: onAddCircle,
+      key: 'missionBranch',
+      label: t('entities.missionBranch', { fallback: 'Mission Branch' }),
+      icon: <BranchesOutlined style={{ color: ENTITY_COLORS.missionBranch }} />,
+      onClick: onAddMissionBranch,
     },
     {
-      key: 'ellipse',
-      label: t('shapes.ellipse', { fallback: 'Ellipse' }),
-      icon: <RadiusSettingOutlined />,
-      onClick: onAddEllipse,
+      key: 'mission',
+      label: t('entities.mission', { fallback: 'Mission' }),
+      icon: <RocketOutlined style={{ color: ENTITY_COLORS.mission }} />,
+      onClick: onAddMission,
     },
     {
       type: 'divider',
     },
     {
-      key: 'triangle',
-      label: t('shapes.triangle', { fallback: 'Triangle' }),
-      icon: <PlayCircleOutlined />,
-      onClick: onAddTriangle,
+      key: 'artefact',
+      label: t('entities.artefact', { fallback: 'Artefact' }),
+      icon: <GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />,
+      onClick: onAddArtefact,
     },
     {
-      key: 'diamond',
-      label: t('shapes.diamond', { fallback: 'Diamond' }),
-      icon: <AppstoreOutlined />,
-      onClick: onAddDiamond,
+      key: 'competency',
+      label: t('entities.competency', { fallback: 'Competency' }),
+      icon: <TrophyOutlined style={{ color: ENTITY_COLORS.competency }} />,
+      onClick: onAddCompetency,
     },
     {
-      key: 'star',
-      label: t('shapes.star', { fallback: 'Star' }),
-      icon: <StarOutlined />,
-      onClick: onAddStar,
+      key: 'event',
+      label: t('entities.event', { fallback: 'Event' }),
+      icon: <CalendarOutlined style={{ color: ENTITY_COLORS.event }} />,
+      onClick: onAddEvent,
     },
   ]
 
@@ -103,39 +108,46 @@ const GraphToolbarPanel: FCC<GraphToolbarPanelProps> = ({
         background: themeConfig?.token?.colorBgBase,
         padding: '8px',
         borderRadius: '6px',
-        // boxShadow: '0 1px 10px rgba(0, 0, 0, 0.55)',
         backdropFilter: 'blur(4px)',
         border: '1px solid rgba(0, 0, 0, 0.3)',
       }}
     >
       <Space wrap size='small'>
-        {/* Секция добавления фигур */}
+        {/* Секция добавления сущностей */}
         <Space size='small'>
           <Dropdown
-            menu={{ items: shapeMenuItems }}
+            menu={{ items: entityMenuItems }}
             placement='bottomLeft'
             arrow
             trigger={['click']}
           >
             <Button type='primary' icon={<PlusOutlined />} size='small'>
-              {t('add_shape', { fallback: 'Add Shape' })}
+              {t('add_entity', { fallback: 'Add Entity' })}
             </Button>
           </Dropdown>
 
-          {/* Быстрые кнопки для популярных фигур */}
-          <Tooltip title={t('shapes.rectangle', { fallback: 'Add Rectangle' })}>
+          {/* Быстрые кнопки для популярных сущностей */}
+          <Tooltip title={t('entities.rang', { fallback: 'Add Rang' })}>
             <Button
-              icon={<BorderOutlined />}
+              icon={<StarOutlined style={{ color: ENTITY_COLORS.rang }} />}
               size='small'
-              onClick={onAddRectangle}
+              onClick={onAddRang}
             />
           </Tooltip>
 
-          <Tooltip title={t('shapes.circle', { fallback: 'Add Circle' })}>
+          <Tooltip title={t('entities.mission', { fallback: 'Add Mission' })}>
             <Button
-              icon={<RadiusSettingOutlined />}
+              icon={<RocketOutlined style={{ color: ENTITY_COLORS.mission }} />}
               size='small'
-              onClick={onAddCircle}
+              onClick={onAddMission}
+            />
+          </Tooltip>
+
+          <Tooltip title={t('entities.artefact', { fallback: 'Add Artefact' })}>
+            <Button
+              icon={<GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />}
+              size='small'
+              onClick={onAddArtefact}
             />
           </Tooltip>
         </Space>
@@ -191,6 +203,6 @@ const GraphToolbarPanel: FCC<GraphToolbarPanelProps> = ({
   )
 }
 
-GraphToolbarPanel.displayName = 'GraphToolbarPanel'
+EntityToolbarPanel.displayName = 'EntityToolbarPanel'
 
-export default GraphToolbarPanel
+export default EntityToolbarPanel

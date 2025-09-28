@@ -1,0 +1,288 @@
+// Фейковые данные для графа
+export const fakeGraphData = {
+  cells: [
+    // Узлы (Nodes)
+    {
+      id: 'rang-1',
+      shape: 'rang-node',
+      x: 300,
+      y: 50,
+      attrs: {
+        title: { text: 'Senior Developer' },
+        description: { text: 'Опытный разработчик' },
+      },
+      data: {
+        type: 'rang',
+        name: 'Senior Developer',
+        description: 'Опытный разработчик с 5+ лет опыта',
+      },
+    },
+
+    // Ветки миссий
+    {
+      id: 'mission-branch-1',
+      shape: 'mission-branch-node',
+      x: 150,
+      y: 200,
+      attrs: {
+        title: { text: 'Frontend Development' },
+        description: { text: 'Фронтенд разработка' },
+      },
+      data: {
+        type: 'missionBranch',
+        name: 'Frontend Development',
+        description: 'Направление фронтенд разработки',
+      },
+    },
+    {
+      id: 'mission-branch-2',
+      shape: 'mission-branch-node',
+      x: 450,
+      y: 200,
+      attrs: {
+        title: { text: 'Backend Development' },
+        description: { text: 'Бэкенд разработка' },
+      },
+      data: {
+        type: 'missionBranch',
+        name: 'Backend Development',
+        description: 'Направление бэкенд разработки',
+      },
+    },
+
+    // Миссии
+    {
+      id: 'mission-1',
+      shape: 'mission-node',
+      x: 50,
+      y: 350,
+      attrs: {
+        title: { text: 'React App' },
+        description: { text: 'Создать React приложение' },
+      },
+      data: {
+        type: 'mission',
+        name: 'React App',
+        description: 'Разработать современное React приложение',
+      },
+    },
+    {
+      id: 'mission-2',
+      shape: 'mission-node',
+      x: 250,
+      y: 350,
+      attrs: {
+        title: { text: 'UI Components' },
+        description: { text: 'Библиотека компонентов' },
+      },
+      data: {
+        type: 'mission',
+        name: 'UI Components',
+        description: 'Создать переиспользуемые UI компоненты',
+      },
+    },
+    {
+      id: 'mission-3',
+      shape: 'mission-node',
+      x: 350,
+      y: 350,
+      attrs: {
+        title: { text: 'API Integration' },
+        description: { text: 'Интеграция с API' },
+      },
+      data: {
+        type: 'mission',
+        name: 'API Integration',
+        description: 'Настроить взаимодействие с REST API',
+      },
+    },
+    {
+      id: 'mission-4',
+      shape: 'mission-node',
+      x: 550,
+      y: 350,
+      attrs: {
+        title: { text: 'Database Design' },
+        description: { text: 'Проектирование БД' },
+      },
+      data: {
+        type: 'mission',
+        name: 'Database Design',
+        description: 'Спроектировать структуру базы данных',
+      },
+    },
+
+    // Артефакты
+    {
+      id: 'artefact-1',
+      shape: 'artefact-node',
+      x: 50,
+      y: 500,
+      attrs: {
+        title: { text: 'React Code' },
+        description: { text: 'Исходный код приложения' },
+      },
+      data: {
+        type: 'artefact',
+        name: 'React Code',
+        description: 'Исходный код React приложения',
+      },
+    },
+    {
+      id: 'artefact-2',
+      shape: 'artefact-node',
+      x: 250,
+      y: 500,
+      attrs: {
+        title: { text: 'Component Library' },
+        description: { text: 'Пакет компонентов' },
+      },
+      data: {
+        type: 'artefact',
+        name: 'Component Library',
+        description: 'NPM пакет с UI компонентами',
+      },
+    },
+    {
+      id: 'artefact-3',
+      shape: 'artefact-node',
+      x: 350,
+      y: 500,
+      attrs: {
+        title: { text: 'API Documentation' },
+        description: { text: 'Документация API' },
+      },
+      data: {
+        type: 'artefact',
+        name: 'API Documentation',
+        description: 'Swagger документация для API',
+      },
+    },
+    {
+      id: 'artefact-4',
+      shape: 'artefact-node',
+      x: 550,
+      y: 500,
+      attrs: {
+        title: { text: 'DB Schema' },
+        description: { text: 'Схема базы данных' },
+      },
+      data: {
+        type: 'artefact',
+        name: 'DB Schema',
+        description: 'SQL схема базы данных',
+      },
+    },
+
+    // Событие
+    {
+      id: 'event-1',
+      shape: 'event-node',
+      x: 300,
+      y: 650,
+      attrs: {
+        title: { text: 'Sprint Review' },
+        description: { text: 'Демонстрация результатов' },
+      },
+      data: {
+        type: 'event',
+        name: 'Sprint Review',
+        description: 'Еженедельная демонстрация результатов спринта',
+      },
+    },
+
+    // Рёбра (Edges)
+
+    // От ранга к веткам миссий
+    {
+      id: 'edge-1',
+      shape: 'entity-edge',
+      source: { cell: 'rang-1' },
+      target: { cell: 'mission-branch-1' },
+    },
+    {
+      id: 'edge-2',
+      shape: 'entity-edge',
+      source: { cell: 'rang-1' },
+      target: { cell: 'mission-branch-2' },
+    },
+
+    // От веток миссий к миссиям
+    {
+      id: 'edge-3',
+      shape: 'entity-edge',
+      source: { cell: 'mission-branch-1' },
+      target: { cell: 'mission-1' },
+    },
+    {
+      id: 'edge-4',
+      shape: 'entity-edge',
+      source: { cell: 'mission-branch-1' },
+      target: { cell: 'mission-2' },
+    },
+    {
+      id: 'edge-5',
+      shape: 'entity-edge',
+      source: { cell: 'mission-branch-2' },
+      target: { cell: 'mission-3' },
+    },
+    {
+      id: 'edge-6',
+      shape: 'entity-edge',
+      source: { cell: 'mission-branch-2' },
+      target: { cell: 'mission-4' },
+    },
+
+    // От миссий к артефактам
+    {
+      id: 'edge-7',
+      shape: 'entity-edge',
+      source: { cell: 'mission-1' },
+      target: { cell: 'artefact-1' },
+    },
+    {
+      id: 'edge-8',
+      shape: 'entity-edge',
+      source: { cell: 'mission-2' },
+      target: { cell: 'artefact-2' },
+    },
+    {
+      id: 'edge-9',
+      shape: 'entity-edge',
+      source: { cell: 'mission-3' },
+      target: { cell: 'artefact-3' },
+    },
+    {
+      id: 'edge-10',
+      shape: 'entity-edge',
+      source: { cell: 'mission-4' },
+      target: { cell: 'artefact-4' },
+    },
+
+    // От всех артефактов к событию
+    {
+      id: 'edge-11',
+      shape: 'entity-edge',
+      source: { cell: 'artefact-1' },
+      target: { cell: 'event-1' },
+    },
+    {
+      id: 'edge-12',
+      shape: 'entity-edge',
+      source: { cell: 'artefact-2' },
+      target: { cell: 'event-1' },
+    },
+    {
+      id: 'edge-13',
+      shape: 'entity-edge',
+      source: { cell: 'artefact-3' },
+      target: { cell: 'event-1' },
+    },
+    {
+      id: 'edge-14',
+      shape: 'entity-edge',
+      source: { cell: 'artefact-4' },
+      target: { cell: 'event-1' },
+    },
+  ],
+}

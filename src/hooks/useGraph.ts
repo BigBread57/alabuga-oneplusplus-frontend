@@ -1,6 +1,12 @@
+import type {
+  EntityData,
+  EntityType,
+} from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 // hooks/useGraph.ts
 import { Graph } from '@antv/x6'
 import { useEffect, useRef, useState } from 'react'
+import { baseNodeConfig } from '@/components/Graph/registerCustomNodesBaseConfig'
+import { ENTITY_COLORS } from '@/components/Graph/theme'
 import { useTheme } from '@/providers/ThemeProvider'
 
 interface UseGraphOptions {
@@ -12,14 +18,14 @@ interface UseGraphOptions {
   enableMousewheel?: boolean
 }
 
-// Типы фигур для добавления
-const SHAPE_TYPES = {
-  RECTANGLE: 'rect',
-  CIRCLE: 'circle',
-  ELLIPSE: 'ellipse',
-  TRIANGLE: 'polygon',
-  DIAMOND: 'polygon',
-  STAR: 'polygon',
+// Типы сущностей
+const ENTITY_TYPES = {
+  RANG: 'rang-node',
+  MISSION_BRANCH: 'mission-branch-node',
+  MISSION: 'mission-node',
+  ARTEFACT: 'artefact-node',
+  COMPETENCY: 'competency-node',
+  EVENT: 'event-node',
 } as const
 
 interface UseGraphReturn {
@@ -32,13 +38,21 @@ interface UseGraphReturn {
   zoomIn: () => void
   zoomOut: () => void
   clearGraph: () => void
-  // Функции добавления фигур
-  addRectangle: () => void
-  addCircle: () => void
-  addEllipse: () => void
-  addTriangle: () => void
-  addDiamond: () => void
-  addStar: () => void
+  // Функции добавления сущностей (теперь принимают данные)
+  addEntity: (entityType: EntityType, data: EntityData) => void
+  // Функции для запроса создания сущностей (триггеры для модального окна)
+  requestAddRang: () => void
+  requestAddMissionBranch: () => void
+  requestAddMission: () => void
+  requestAddArtefact: () => void
+  requestAddCompetency: () => void
+  requestAddEvent: () => void
+  getNodeData: (nodeId?: string) => any
+  // Состояние модального окна
+  modalVisible: boolean
+  currentEntityType: EntityType | null
+  showEntityModal: (entityType: EntityType) => void
+  hideEntityModal: () => void
 }
 
 export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
@@ -57,6 +71,12 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [isReady, setIsReady] = useState(false)
 
+  // Состояние для модального окна создания сущностей
+  const [modalVisible, setModalVisible] = useState(false)
+  const [currentEntityType, setCurrentEntityType] = useState<EntityType | null>(
+    null,
+  )
+
   // Функция для обновления размеров контейнера
   const updateContainerSize = () => {
     if (containerRef.current) {
@@ -64,6 +84,159 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
       setContainerSize({ width: offsetWidth, height: offsetHeight })
     }
+  }
+
+  // Регистрация кастомных узлов для сущностей
+  const registerEntityNodes = () => {
+    // Регистрируем узел Rang
+    Graph.registerNode(
+      ENTITY_TYPES.RANG,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.rang,
+            stroke: ENTITY_COLORS.rang,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '🎖️',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем узел MissionBranch
+    Graph.registerNode(
+      ENTITY_TYPES.MISSION_BRANCH,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.missionBranch,
+            stroke: ENTITY_COLORS.missionBranch,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '🧭',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем узел Mission
+    Graph.registerNode(
+      ENTITY_TYPES.MISSION,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.mission,
+            stroke: ENTITY_COLORS.mission,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '🚀',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем узел Artefact
+    Graph.registerNode(
+      ENTITY_TYPES.ARTEFACT,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.artefact,
+            stroke: ENTITY_COLORS.artefact,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '🎁',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем узел Competency
+    Graph.registerNode(
+      ENTITY_TYPES.COMPETENCY,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.competency,
+            stroke: ENTITY_COLORS.competency,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '🏆',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем узел Event
+    Graph.registerNode(
+      ENTITY_TYPES.EVENT,
+      {
+        ...baseNodeConfig,
+        attrs: {
+          ...baseNodeConfig.attrs,
+          body: {
+            ...baseNodeConfig.attrs.body,
+            fill: ENTITY_COLORS.event,
+            stroke: ENTITY_COLORS.event,
+          },
+          icon: {
+            ...baseNodeConfig.attrs.icon,
+            text: '📅',
+          },
+        },
+      },
+      true,
+    )
+
+    // Регистрируем кастомный край
+    Graph.registerEdge(
+      'entity-edge',
+      {
+        zIndex: -1,
+        attrs: {
+          line: {
+            fill: 'none',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            stroke: '#A2B1C3',
+            sourceMarker: null,
+            targetMarker: {
+              name: 'ellipse',
+              rx: 4,
+              ry: 3,
+              fill: '#A2B1C3',
+            },
+          },
+        },
+      },
+      true,
+    )
   }
 
   // Слушаем изменения размеров окна
@@ -84,6 +257,9 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       && containerSize.width > 0
       && containerSize.height > 0
     ) {
+      // Регистрируем узлы перед созданием графа
+      registerEntityNodes()
+
       graphRef.current = new Graph({
         container: containerRef.current,
         width: containerSize.width,
@@ -97,7 +273,12 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         },
         panning: enablePanning,
         mousewheel: enableMousewheel,
-      })
+        connecting: {
+          anchor: 'orth',
+          connectionPoint: 'boundary',
+          router: 'orth',
+        },
+      }) as Graph
 
       // Загружаем данные если они есть
       if (data) {
@@ -151,6 +332,17 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     y: Math.random() * 300 + 100,
   })
 
+  // Функции управления модальным окном
+  const showEntityModal = (entityType: EntityType) => {
+    setCurrentEntityType(entityType)
+    setModalVisible(true)
+  }
+
+  const hideEntityModal = () => {
+    setModalVisible(false)
+    setCurrentEntityType(null)
+  }
+
   // Базовые методы управления графом
   const centerContent = () => {
     graphRef.current?.centerContent()
@@ -185,173 +377,64 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     graphRef.current.clearCells()
   }
 
-  // Функции добавления фигур
-  const addRectangle = () => {
+  // Универсальная функция добавления сущности
+  const addEntity = (entityType: EntityType, data: EntityData) => {
     if (!graphRef.current) {
       return
     }
 
     const position = getRandomPosition()
-    graphRef.current.addNode({
-      shape: SHAPE_TYPES.RECTANGLE,
-      width: 100,
-      height: 60,
-      x: position.x,
-      y: position.y,
-      attrs: {
-        body: {
-          fill: '#f0f0f0',
-          stroke: '#333',
-          strokeWidth: 2,
-        },
-        label: {
-          text: 'Rectangle',
-          fill: '#333',
-          fontSize: 14,
-        },
-      },
-    })
-  }
-
-  const addCircle = () => {
-    if (!graphRef.current) {
-      return
+    const shapeMap = {
+      rang: ENTITY_TYPES.RANG,
+      missionBranch: ENTITY_TYPES.MISSION_BRANCH,
+      mission: ENTITY_TYPES.MISSION,
+      artefact: ENTITY_TYPES.ARTEFACT,
+      competency: ENTITY_TYPES.COMPETENCY,
+      event: ENTITY_TYPES.EVENT,
     }
 
-    const position = getRandomPosition()
     graphRef.current.addNode({
-      shape: SHAPE_TYPES.CIRCLE,
-      width: 80,
-      height: 80,
+      shape: shapeMap[entityType],
       x: position.x,
       y: position.y,
       attrs: {
-        body: {
-          fill: '#e6f7ff',
-          stroke: '#1890ff',
-          strokeWidth: 2,
-        },
-        label: {
-          text: 'Circle',
-          fill: '#333',
-          fontSize: 14,
-        },
+        title: { text: data.title },
+        description: { text: data.description },
+      },
+      data: {
+        type: entityType,
+        title: data.title,
+        description: data.description,
       },
     })
-  }
 
-  const addEllipse = () => {
+    // Закрываем модальное окно после создания
+    hideEntityModal()
+  }
+  const getNodeData = (nodeId?: string) => {
     if (!graphRef.current) {
-      return
+      return null
     }
 
-    const position = getRandomPosition()
-    graphRef.current.addNode({
-      shape: SHAPE_TYPES.ELLIPSE,
-      width: 120,
-      height: 80,
-      x: position.x,
-      y: position.y,
-      attrs: {
-        body: {
-          fill: '#f6ffed',
-          stroke: '#52c41a',
-          strokeWidth: 2,
-        },
-        label: {
-          text: 'Ellipse',
-          fill: '#333',
-          fontSize: 14,
-        },
-      },
-    })
-  }
-
-  const addTriangle = () => {
-    if (!graphRef.current) {
-      return
+    if (nodeId) {
+      const node = graphRef.current.getCellById(nodeId)
+      return node?.getData() || null
     }
 
-    const position = getRandomPosition()
-    graphRef.current.addNode({
-      shape: SHAPE_TYPES.TRIANGLE,
-      width: 80,
-      height: 80,
-      x: position.x,
-      y: position.y,
-      attrs: {
-        body: {
-          fill: '#fff2e8',
-          stroke: '#fa8c16',
-          strokeWidth: 2,
-          refPoints: '40,5 5,75 75,75',
-        },
-        label: {
-          text: 'Triangle',
-          fill: '#333',
-          fontSize: 12,
-          refY: 50,
-        },
-      },
-    })
+    // Получить данные всех узлов
+    return graphRef.current.getNodes().map((node) => ({
+      id: node.id,
+      ...node.getData(),
+    }))
   }
 
-  const addDiamond = () => {
-    if (!graphRef.current) {
-      return
-    }
-
-    const position = getRandomPosition()
-    graphRef.current.addNode({
-      shape: SHAPE_TYPES.DIAMOND,
-      width: 80,
-      height: 80,
-      x: position.x,
-      y: position.y,
-      attrs: {
-        body: {
-          fill: '#fff0f6',
-          stroke: '#eb2f96',
-          strokeWidth: 2,
-          refPoints: '40,5 75,40 40,75 5,40',
-        },
-        label: {
-          text: 'Diamond',
-          fill: '#333',
-          fontSize: 12,
-        },
-      },
-    })
-  }
-
-  const addStar = () => {
-    if (!graphRef.current) {
-      return
-    }
-
-    const position = getRandomPosition()
-    graphRef.current.addNode({
-      shape: SHAPE_TYPES.STAR,
-      width: 80,
-      height: 80,
-      x: position.x,
-      y: position.y,
-      attrs: {
-        body: {
-          fill: '#f9f0ff',
-          stroke: '#722ed1',
-          strokeWidth: 2,
-          refPoints:
-            '40,5 47,25 70,25 53,40 60,60 40,50 20,60 27,40 10,25 33,25',
-        },
-        label: {
-          text: 'Star',
-          fill: '#333',
-          fontSize: 12,
-        },
-      },
-    })
-  }
+  // Функции для запроса создания сущностей (показывают модальное окно)
+  const requestAddRang = () => showEntityModal('rang')
+  const requestAddMissionBranch = () => showEntityModal('missionBranch')
+  const requestAddMission = () => showEntityModal('mission')
+  const requestAddArtefact = () => showEntityModal('artefact')
+  const requestAddCompetency = () => showEntityModal('competency')
+  const requestAddEvent = () => showEntityModal('event')
 
   return {
     containerRef,
@@ -363,12 +446,19 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     zoomIn,
     zoomOut,
     clearGraph,
-    // Функции добавления фигур
-    addRectangle,
-    addCircle,
-    addEllipse,
-    addTriangle,
-    addDiamond,
-    addStar,
+    // Функции для работы с сущностями
+    addEntity,
+    requestAddRang,
+    requestAddMissionBranch,
+    requestAddMission,
+    requestAddArtefact,
+    requestAddCompetency,
+    requestAddEvent,
+    getNodeData,
+    // Состояние модального окна
+    modalVisible,
+    currentEntityType,
+    showEntityModal,
+    hideEntityModal,
   }
 }

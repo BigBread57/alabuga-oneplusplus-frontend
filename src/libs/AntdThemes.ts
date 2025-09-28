@@ -10,13 +10,16 @@ import { theme } from 'antd'
 export const Blue = '#00aeef'
 export const DarkBlue = '#005dac'
 export const LightBlue = '#6acff6'
-export const DarkPurple = '#283a97'
+export const DeepDarkPurple = '#283a97'
+export const Purple = '#9c27b0'
+export const DarkPurple = '#7b1fa2'
+export const Orange = '#ff6b35'
 
 export const lightTheme: ThemeConfig = {
   token: {
     colorPrimary: DarkBlue,
     colorBgBase: '#ffffff',
-    colorTextBase: DarkPurple,
+    colorTextBase: DeepDarkPurple,
     borderRadius: 8,
     boxShadow: '0 0px 4px #005dac',
   },
@@ -26,7 +29,7 @@ export const lightTheme: ThemeConfig = {
 export const darkTheme: ThemeConfig = {
   token: {
     colorPrimary: Blue,
-    colorBgBase: DarkPurple,
+    colorBgBase: DeepDarkPurple,
     colorTextBase: LightBlue,
     boxShadow: `0 0px 4px ${Blue}`,
   },

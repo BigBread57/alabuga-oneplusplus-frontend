@@ -305,28 +305,56 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "enter_title": "Введите заголовок...",
+    "entity_title": "Заголовок",
+    "title_required": "Пожалуйста, введите заголовок",
+    "title_min_length": "Заголовок должен содержать минимум 2 символа",
+    "title_max_length": "Заголовок не должен превышать 50 символов",
     "center": "Центрировать",
     "fit": "Вписать",
     "zoom_in": "Увеличить",
     "zoom_out": "Уменьшить",
-    "add_shape": "Добавить фигуру",
+    "add_entity": "Добавить сущность",
     "clear_all": "Очистить всё",
-    "shapes": {
-      "rectangle": "Прямоугольник",
-      "circle": "Круг",
-      "ellipse": "Эллипс",
-      "triangle": "Треугольник",
-      "diamond": "Ромб",
-      "star": "Звезда"
+    "create": "Создать",
+    "cancel": "Отмена",
+    "entity_name": "Название",
+    "entity_description": "Описание",
+    "enter_name": "Введите название...",
+    "enter_description": "Введите описание...",
+    "name_required": "Пожалуйста, введите название",
+    "name_min_length": "Название должно содержать минимум 2 символа",
+    "name_max_length": "Название не должно превышать 50 символов",
+    "description_max_length": "Описание не должно превышать 200 символов",
+    "use_default_values": "Использовать значения по умолчанию",
+    "entities": {
+      "rang": "Ранг",
+      "missionBranch": "Ветка миссии",
+      "mission": "Миссия",
+      "artefact": "Артефакт",
+      "competency": "Компетенция",
+      "event": "Событие",
+      "descriptions": {
+        "rang": "Описание ранга",
+        "missionBranch": "Описание ветки миссии",
+        "mission": "Описание миссии",
+        "artefact": "Описание артефакта",
+        "competency": "Описание компетенции",
+        "event": "Описание события"
+      }
     },
     "tooltips": {
-      "add_rectangle": "Добавить прямоугольник",
-      "add_circle": "Добавить круг",
+      "add_rang": "Добавить ранг",
+      "add_mission_branch": "Добавить ветку миссии",
+      "add_mission": "Добавить миссию",
+      "add_artefact": "Добавить артефакт",
+      "add_competency": "Добавить компетенцию",
+      "add_event": "Добавить событие",
       "center_content": "Центрировать содержимое",
       "fit_content": "Вписать в экран",
       "zoom_in": "Увеличить масштаб",
       "zoom_out": "Уменьшить масштаб",
-      "clear_graph": "Очистить все фигуры"
+      "clear_graph": "Очистить все сущности"
     }
   },
   "Post": {

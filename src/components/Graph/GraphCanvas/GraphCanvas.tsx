@@ -2,11 +2,11 @@
 
 import type { FCC } from 'src/types'
 import React from 'react'
+import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { useGraph } from '@/hooks/useGraph'
 
 interface GraphCanvasProps {
-  prop?: any
   data?: any
   gridVisible?: boolean
   gridSize?: number
@@ -15,7 +15,7 @@ interface GraphCanvasProps {
 }
 
 const GraphCanvas: FCC<GraphCanvasProps> = ({
-  data: externalData,
+  data,
   gridVisible = true,
   gridSize = 10,
   enablePanning = true,
@@ -29,14 +29,18 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     zoomIn,
     zoomOut,
     clearGraph,
-    addRectangle,
-    addCircle,
-    addEllipse,
-    addTriangle,
-    addDiamond,
-    addStar,
+    requestAddArtefact,
+    requestAddCompetency,
+    requestAddMissionBranch,
+    requestAddMission,
+    requestAddEvent,
+    requestAddRang,
+    modalVisible,
+    currentEntityType,
+    hideEntityModal,
+    addEntity,
   } = useGraph({
-    data: externalData,
+    data,
     gridVisible,
     gridSize,
     enablePanning,
@@ -45,18 +49,23 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      {/* Модальное окно для создания сущностей */}
+      <EntityCreationModal
+        visible={modalVisible}
+        entityType={currentEntityType}
+        onConfirm={addEntity}
+        onCancel={hideEntityModal}
+      />
       {/* Единая панель инструментов */}
       {isReady && (
         <GraphToolbarPanel
-          // Функции для добавления фигур из хука
-          onAddRectangle={addRectangle}
-          onAddCircle={addCircle}
-          onAddEllipse={addEllipse}
-          onAddTriangle={addTriangle}
-          onAddDiamond={addDiamond}
-          onAddStar={addStar}
+          onAddRang={requestAddRang}
+          onAddMissionBranch={requestAddMissionBranch}
+          onAddMission={requestAddMission}
+          onAddArtefact={requestAddArtefact}
+          onAddCompetency={requestAddCompetency}
+          onAddEvent={requestAddEvent}
           onClearGraph={clearGraph}
-          // Функции управления графом из хука
           onCenterContent={centerContent}
           onFitContent={fitContent}
           onZoomIn={zoomIn}

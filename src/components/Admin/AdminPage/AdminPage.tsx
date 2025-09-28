@@ -2,6 +2,7 @@ import type { FCC } from 'src/types'
 import { Col, Row } from 'antd'
 import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
+import { fakeGraphData } from '@/components/Graph/fakeData'
 import { GraphCanvas } from '@/components/Graph/GraphCanvas'
 
 const AdminPageWrapper: FCC = () => {
@@ -20,7 +21,7 @@ const AdminPageWrapper: FCC = () => {
             },
           }}
         >
-          <GraphCanvas />
+          <GraphCanvas data={fakeGraphData} />
         </CardWrapper>
       </Col>
     </Row>
