@@ -308,6 +308,8 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "exit_connect_mode": "Exit Connect Mode",
+    "connect_nodes": "Connect Nodes",
     "enter_title": "Enter title...",
     "entity_title": "Entity",
     "title_required": "Please enter a title",

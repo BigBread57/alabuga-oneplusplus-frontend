@@ -39,6 +39,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     currentEntityType,
     hideEntityModal,
     addEntity,
+    toggleConnectingMode,
+    isConnectingMode,
   } = useGraph({
     data,
     gridVisible,
@@ -50,6 +52,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {/* Модальное окно для создания сущностей */}
+
       <EntityCreationModal
         visible={modalVisible}
         entityType={currentEntityType}
@@ -70,6 +73,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
           onFitContent={fitContent}
           onZoomIn={zoomIn}
           onZoomOut={zoomOut}
+          onToggleConnectingMode={toggleConnectingMode}
+          isConnectingMode={isConnectingMode}
         />
       )}
 

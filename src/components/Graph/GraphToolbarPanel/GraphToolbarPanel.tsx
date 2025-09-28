@@ -7,6 +7,7 @@ import {
   ClearOutlined,
   FullscreenOutlined,
   GiftOutlined, // Artefact
+  LinkOutlined, // Connect nodes
   PlusOutlined,
   RocketOutlined, // Mission
   // Иконки для сущностей
@@ -37,6 +38,10 @@ interface EntityToolbarPanelProps {
   onFitContent?: () => void
   onZoomIn?: () => void
   onZoomOut?: () => void
+
+  // Callbacks для режима соединения
+  onToggleConnectingMode?: () => void
+  isConnectingMode?: boolean
 }
 
 const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
@@ -51,6 +56,8 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   onFitContent,
   onZoomIn,
   onZoomOut,
+  onToggleConnectingMode,
+  isConnectingMode = false,
 }) => {
   const t = useTranslations('Graph')
   const { themeConfig } = useTheme()
@@ -148,6 +155,30 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
               icon={<GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />}
               size='small'
               onClick={onAddArtefact}
+            />
+          </Tooltip>
+        </Space>
+
+        <Divider type='vertical' style={{ margin: '0 4px', height: '24px' }} />
+
+        {/* Секция соединения узлов */}
+        <Space size='small'>
+          <Tooltip
+            title={
+              isConnectingMode
+                ? t('exit_connect_mode', { fallback: 'Exit Connect Mode' })
+                : t('connect_nodes', { fallback: 'Connect Nodes' })
+            }
+          >
+            <Button
+              icon={<LinkOutlined />}
+              size='small'
+              type={isConnectingMode ? 'primary' : 'default'}
+              onClick={onToggleConnectingMode}
+              style={{
+                backgroundColor: isConnectingMode ? '#ff4d4f' : undefined,
+                borderColor: isConnectingMode ? '#ff4d4f' : undefined,
+              }}
             />
           </Tooltip>
         </Space>
