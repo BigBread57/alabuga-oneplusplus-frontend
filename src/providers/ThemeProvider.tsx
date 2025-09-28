@@ -1,12 +1,11 @@
 'use client'
 
 import type { ThemeConfig } from 'antd'
-import { Spin } from 'antd'
 import React, {
   createContext,
   useCallback,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -18,6 +17,7 @@ type ThemeContextType = {
   currentTheme: ThemeName
   setTheme: (theme: ThemeName) => void
   themeConfig: ThemeConfig
+  isHydrated: boolean
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -27,42 +27,80 @@ const themes: Record<ThemeName, ThemeConfig> = {
   dark: darkTheme,
   blue: blueTheme,
   green: greenTheme,
+} as const
+
+const THEME_STORAGE_KEY = 'antd-theme'
+const DEFAULT_THEME: ThemeName = 'light'
+
+// Безопасная функция для работы с localStorage
+const getStoredTheme = (): ThemeName | null => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY) as ThemeName | null
+    return stored && themes[stored] ? stored : null
+  } catch (error) {
+    console.warn('Failed to read theme from localStorage:', error)
+    return null
+  }
+}
+
+const setStoredTheme = (theme: ThemeName): void => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme)
+  } catch (error) {
+    console.warn('Failed to save theme to localStorage:', error)
+  }
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeName>('blue')
+  // Инициализируем тему без обращения к localStorage на сервере
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>(DEFAULT_THEME)
+  const [isHydrated, setIsHydrated] = useState(false)
 
-  useLayoutEffect(() => {
-    const savedTheme = localStorage.getItem('antd-theme') as ThemeName | null
-    if (savedTheme && themes[savedTheme]) {
-      setCurrentTheme(savedTheme)
-    } else {
-      setCurrentTheme('light') // тема по умолчанию
+  // Восстанавливаем тему из localStorage после гидратации
+  useEffect(() => {
+    const storedTheme = getStoredTheme()
+    if (storedTheme) {
+      // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+      setCurrentTheme(storedTheme)
     }
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+    setIsHydrated(true)
   }, [])
 
   const setTheme = useCallback((theme: ThemeName) => {
+    if (!themes[theme]) {
+      console.warn(`Invalid theme: ${theme}. Using default theme.`)
+      return
+    }
+
     setCurrentTheme(theme)
-    localStorage?.setItem('antd-theme', theme)
+    setStoredTheme(theme)
   }, [])
 
-  const themeConfig = currentTheme && themes[currentTheme]
+  const themeConfig = useMemo(() => {
+    return themes[currentTheme] || themes[DEFAULT_THEME]
+  }, [currentTheme])
 
   const contextValue = useMemo(
     () => ({
-      currentTheme: currentTheme ?? 'light',
+      currentTheme,
       setTheme,
       themeConfig,
+      isHydrated,
     }),
-    [currentTheme, setTheme, themeConfig],
+    [currentTheme, setTheme, themeConfig, isHydrated],
   )
 
-  if (currentTheme === undefined) {
-    return <Spin spinning></Spin>
-  }
-
   return (
-    <ThemeContext.Provider value={contextValue as ThemeContextType}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   )

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ArrowLeftOutlined, HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined } from '@ant-design/icons'
 import { Button, Layout, Result } from 'antd'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
@@ -44,14 +44,11 @@ export default async function LocalizedNotFound(props: NotFoundProps) {
         title='404'
         subTitle={t('description')}
         extra={[
-          <Link href={`/${locale}`} key='home'>
+          <Link href='/' key='home'>
             <Button type='primary' icon={<HomeOutlined />} size='large'>
               {t('go_home')}
             </Button>
           </Link>,
-          <Button key='back' icon={<ArrowLeftOutlined />} size='large'>
-            {t('go_back')}
-          </Button>,
         ]}
       />
     </Layout>

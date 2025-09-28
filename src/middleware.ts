@@ -5,6 +5,8 @@ import { NextResponse } from 'next/server'
 import arcjet from '@/libs/Arcjet'
 import { routing } from './libs/I18nRouting'
 
+const API_URL = process.env.API_URL || 'http://localhost:8000/api/v1'
+
 // i18n маршрутизация
 const handleI18nRouting = createMiddleware(routing)
 
@@ -22,6 +24,8 @@ const protectedRoutes = [
   '/:locale/shop',
   '/layout-log',
   '/:locale/layout-log',
+  '/admin',
+  '/:locale/admin',
 ]
 
 // Arcjet — защита от ботов
@@ -40,15 +44,12 @@ function isProtectedRoute(pathname: string) {
 }
 
 export default async function middleware(request: NextRequest) {
-  console.error('Middleware called for', request.url)
-  // Проверка на ботов
   if (process.env.ARCJET_KEY) {
     const decision = await aj.protect(request)
     if (decision.isDenied()) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
   }
-
   const { pathname } = request.nextUrl
 
   // Если защищённый маршрут — проверяем сессию
@@ -59,12 +60,11 @@ export default async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }
     // проверяем сессию через backend
-    const res = await fetch('http://localhost:8080/user/users/info', {
+    const res = await fetch(`${API_URL}/user/users/info`, {
       headers: {
         Cookie: `sessionid=${sessionId}`,
       },
     })
-
     if (!res.ok) {
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }

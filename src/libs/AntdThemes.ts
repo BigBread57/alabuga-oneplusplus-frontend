@@ -2,7 +2,6 @@ import type { ThemeConfig } from 'antd'
 import { theme } from 'antd'
 
 // colors
-
 // 40/58/151 - #283a97
 // 0 93 172 - #005dac
 // 0 174 239 - #00aeef

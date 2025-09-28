@@ -7,7 +7,11 @@ import ruRU from 'antd/locale/ru_RU'
 import { useTheme } from '@/providers/ThemeProvider'
 
 export function AntdProvider({ children }: { children: React.ReactNode }) {
-  const { themeConfig } = useTheme()
+  const { themeConfig, isHydrated } = useTheme()
+
+  if (!isHydrated) {
+    return null
+  }
 
   return (
     <AntdRegistry>

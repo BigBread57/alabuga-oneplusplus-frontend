@@ -1,8 +1,8 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import { Col, Row, Spin } from 'antd'
-import React, { Suspense } from 'react'
+import { Col, Row } from 'antd'
+import React from 'react'
 import { CharacterActivity } from '@/components/Character/CharacterActivity'
 import { ProfileCard } from '@/components/Profile/ProfileCard'
 import { Character } from '@/models/Character'
@@ -47,9 +47,7 @@ const ProfilePage: FCC = () => {
           height: 'calc(100vh - 130px)',
         }}
       >
-        <Suspense fallback={<Spin spinning />}>
-          <CharacterActivity />
-        </Suspense>
+        <CharacterActivity />
       </Col>
     </Row>
   )
