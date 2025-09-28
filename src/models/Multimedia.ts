@@ -15,7 +15,7 @@ export interface MultimediaCreateRequest {
 }
 
 enum MultimediaUrl {
-  MULTIMEDIAS = 'multimedia/multimedia',
+  MULTIMEDIA = 'multimedia/multimedia',
   CREATE = 'multimedia/multimedia/create',
 }
 
@@ -23,7 +23,7 @@ export class Multimedia extends BaseModel {
   static override modelName = 'multimedia'
 
   static override url() {
-    return MultimediaUrl.MULTIMEDIAS
+    return MultimediaUrl.MULTIMEDIA
   }
 
   static createUrl() {

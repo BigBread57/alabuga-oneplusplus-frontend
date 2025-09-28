@@ -331,5 +331,11 @@
       "zoom_out": "Zoom Out",
       "clear_graph": "Clear All Shapes"
     }
+  },
+  "Post": {
+    "meta_title": "Posts",
+    "posts": "Posts",
+    "meta_description": "Stay updated with the latest news",
+    "view_details": "Details"
   }
 }

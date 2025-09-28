@@ -1,0 +1,115 @@
+.cardContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.imageWrapper {
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    align-self: center;
+  }
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 12px;
+  width: 100px;
+  height: 100px;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.buttonContainer {
+  margin-top: auto; // кнопка прижимается к низу контейнера
+}
+
+.createdAt {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.characterRole {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.character {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: var(--color-fill-alter);
+  border-radius: 8px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+}
+
+.theme {
+  padding: 12px 16px;
+  background-color: var(--topic-color);
+  border-radius: 8px;
+  border-left: 4px solid var(--topic-color);
+}
+
+.imageContainer {
+  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 12px;
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  align-content: center;
+}
+
+.textContainer {
+  padding: 20px;
+  background-color: var(--color-fill-alter);
+  border-radius: 8px;
+  line-height: 1.6;
+  flex: 1px;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--color-text);
+  font-size: 14px;
+}
