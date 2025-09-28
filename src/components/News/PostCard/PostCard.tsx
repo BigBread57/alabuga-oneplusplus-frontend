@@ -81,17 +81,19 @@ const PostCard: FCC<PostProps> = ({
           />
         </div>
         <div className={styles.contentCard}>
-          <p className={styles.namePost}>{name}</p>
-          <Space wrap size='small' style={{ marginBottom: 40 }}>
-            <Tag color={topic.color}>{topic.name}</Tag>
-          </Space>
-          <div className={styles.buttonContainer}>
-            <Button type='primary' onClick={showDrawer}>
-              {t('view_details')}
-            </Button>
+          <div className={styles.contentTop}>
+            <p className={styles.namePost}>{name}</p>
+            <Space wrap size='small'>
+              <Tag color={topic.color}>{topic.name}</Tag>
+            </Space>
           </div>
-          <div className={styles.createdAt} style={{ textAlign: 'right' }}>
-            {timeDateString(created_at)}
+          <div className={styles.contentBottom}>
+            <div className={styles.buttonContainer}>
+              <Button type='primary' onClick={showDrawer}>
+                {t('view_details')}
+              </Button>
+            </div>
+            <div className={styles.createdAt}>{timeDateString(created_at)}</div>
           </div>
         </div>
       </div>
@@ -111,22 +113,21 @@ const PostCard: FCC<PostProps> = ({
           },
         }}
       >
-        <div className={styles.container}>
+        <div className={styles.containerDetail}>
           <div className={styles.theme}>
             <Tag color={topic.color}>{topic.name}</Tag>
           </div>
 
-          <div className={styles.postImage}>
+          <div className={styles.detailImage}>
             <Image
               src={image || 'https://picsum.photos/300/200'}
               alt=''
               width={600}
               height={400}
-              className={styles.image}
             />
           </div>
 
-          <div className={styles.textContainer}>
+          <div className={styles.detailText}>
             <p className={styles.text}>{text}</p>
           </div>
           <div className={styles.character}>
