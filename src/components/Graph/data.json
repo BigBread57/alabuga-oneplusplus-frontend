@@ -1,98 +1,460 @@
 {
   "cells": [
-    // Узлы (Nodes)
     {
-      "id": "rang-1",
+      "id": "rank-10",
       "shape": "rang-node",
       "x": 300,
-      "y": 50,
+      "y": 950,
       "attrs": {
-        "title": { "text": "Senior Developer" },
-        "description": { "text": "Опытный разработчик" }
+        "title": {
+          "text": "Властелин"
+        },
+        "description": {
+          "text": "Высший ранг, символ абсолютного превосходства"
+        }
       },
       "data": {
         "type": "rang",
-        "name": "Senior Developer",
-        "description": "Опытный разработчик с 5+ лет опыта"
+        "name": "Властелин",
+        "description": "Высший ранг, символ абсолютного превосходства",
+        "required_experience": 4500,
+        "color": "#00BCD4"
       }
     },
-
-    // Ветки миссий
     {
-      "id": "mission-branch-1",
+      "id": "rank-9",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 850,
+      "attrs": {
+        "title": {
+          "text": "Чемпион"
+        },
+        "description": {
+          "text": "Абсолютный пик игрового совершенства"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Чемпион",
+        "description": "Абсолютный пик игрового совершенства",
+        "required_experience": 3600,
+        "color": "#3F51B5"
+      }
+    },
+    {
+      "id": "rank-8",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 750,
+      "attrs": {
+        "title": {
+          "text": "Легенда"
+        },
+        "description": {
+          "text": "Мифический статус, достижимый лишь единицами"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Легенда",
+        "description": "Мифический статус, достижимый лишь единицами",
+        "required_experience": 2800,
+        "color": "#E91E63"
+      }
+    },
+    {
+      "id": "rank-7",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 650,
+      "attrs": {
+        "title": {
+          "text": "Грандмастер"
+        },
+        "description": {
+          "text": "Легендарный уровень мастерства"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Грандмастер",
+        "description": "Легендарный уровень мастерства",
+        "required_experience": 2100,
+        "color": "#FFD700"
+      }
+    },
+    {
+      "id": "rank-6",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 550,
+      "attrs": {
+        "title": {
+          "text": "Мастер"
+        },
+        "description": {
+          "text": "Виртуозное владение игровыми механиками"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Мастер",
+        "description": "Виртуозное владение игровыми механиками",
+        "required_experience": 1500,
+        "color": "#F44336"
+      }
+    },
+    {
+      "id": "rank-5",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 450,
+      "attrs": {
+        "title": {
+          "text": "Эксперт"
+        },
+        "description": {
+          "text": "Высокий уровень мастерства"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Эксперт",
+        "description": "Высокий уровень мастерства",
+        "required_experience": 1000,
+        "color": "#9C27B0"
+      }
+    },
+    {
+      "id": "rank-4",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Специалист"
+        },
+        "description": {
+          "text": "Углубленные знания в конкретных областях"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Специалист",
+        "description": "Углубленные знания в конкретных областях",
+        "required_experience": 600,
+        "color": "#FF9800"
+      }
+    },
+    {
+      "id": "event-4",
+      "shape": "event-node",
+      "x": 300,
+      "y": 650,
+      "attrs": {
+        "title": {
+          "text": "HR-аналитика: сбор и обработка метрик отбора"
+        },
+        "description": {
+          "text": "Масштабный проект по анализу эффективности рекрутинговых процессов. Сбор данных, построение отчетов и выработка рекомендаций по оптимизации."
+        }
+      },
+      "data": {
+        "type": "event",
+        "name": "HR-аналитика: сбор и обработка метрик отбора",
+        "description": "Масштабный проект по анализу эффективности рекрутинговых процессов. Сбор данных, построение отчетов и выработка рекомендаций по оптимизации.",
+        "experience": 600,
+        "currency": 400,
+        "category": "Процессы и аналитика",
+        "required_number": 3
+      }
+    },
+    {
+      "id": "edge-1",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "rank-4"
+      },
+      "target": {
+        "cell": "event-4"
+      }
+    },
+    {
+      "id": "rank-3",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 250,
+      "attrs": {
+        "title": {
+          "text": "Опытный"
+        },
+        "description": {
+          "text": "Уверенно владеет основными навыками"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Опытный",
+        "description": "Уверенно владеет основными навыками",
+        "required_experience": 300,
+        "color": "#2196F3"
+      }
+    },
+    {
+      "id": "mission-branch-3",
       "shape": "mission-branch-node",
-      "x": 150,
+      "x": 550,
       "y": 200,
       "attrs": {
-        "title": { "text": "Frontend Development" },
-        "description": { "text": "Фронтенд разработка" }
+        "title": {
+          "text": "HR-бренд и коммуникации"
+        },
+        "description": {
+          "text": "Ветка миссий по развитию HR-бренда компании и улучшению внутренних коммуникаций."
+        }
       },
       "data": {
         "type": "missionBranch",
-        "name": "Frontend Development",
-        "description": "Направление фронтенд разработки"
+        "name": "HR-бренд и коммуникации",
+        "description": "Ветка миссий по развитию HR-бренда компании и улучшению внутренних коммуникаций.",
+        "category": "Бренд работодателя",
+        "time_to_complete": 45
+      }
+    },
+    {
+      "id": "edge-2",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "rank-3"
+      },
+      "target": {
+        "cell": "mission-branch-3"
+      }
+    },
+    {
+      "id": "mission-7",
+      "shape": "mission-node",
+      "x": 1000,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Подготовка контента для HR-блога"
+        },
+        "description": {
+          "text": "Опыт: 180, Валюта: 150"
+        }
+      },
+      "data": {
+        "type": "mission",
+        "name": "Подготовка контента для HR-блога",
+        "description": "Опыт: 180, Валюта: 150",
+        "experience": 180,
+        "currency": 150,
+        "level": "Средний",
+        "is_key_mission": true
+      }
+    },
+    {
+      "id": "edge-3",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-3"
+      },
+      "target": {
+        "cell": "mission-7"
+      }
+    },
+    {
+      "id": "artifact-8",
+      "shape": "artefact-node",
+      "x": 1150,
+      "y": 500,
+      "attrs": {
+        "title": {
+          "text": "Членская карта Гильдии торговцев \"Зеро-Г\""
+        },
+        "description": {
+          "text": "Золотая карта элитной гильдии торговцев. Ее владельцы получают эксклюзивные скидки у всех поставщиков, аффилированных с Гильдией, по всей освоенной территории."
+        }
+      },
+      "data": {
+        "type": "artefact",
+        "name": "Членская карта Гильдии торговцев \"Зеро-Г\"",
+        "description": "Золотая карта элитной гильдии торговцев. Ее владельцы получают эксклюзивные скидки у всех поставщиков, аффилированных с Гильдией, по всей освоенной территории.",
+        "modifier": "SHOP_DISCOUNT",
+        "modifier_value": 15
+      }
+    },
+    {
+      "id": "edge-4",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-7"
+      },
+      "target": {
+        "cell": "artifact-8"
+      }
+    },
+    {
+      "id": "mission-6",
+      "shape": "mission-node",
+      "x": 850,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Написание отзыва о компании на порталах"
+        },
+        "description": {
+          "text": "Опыт: 90, Валюта: 70"
+        }
+      },
+      "data": {
+        "type": "mission",
+        "name": "Написание отзыва о компании на порталах",
+        "description": "Опыт: 90, Валюта: 70",
+        "experience": 90,
+        "currency": 70,
+        "level": "Простой",
+        "is_key_mission": false
+      }
+    },
+    {
+      "id": "edge-5",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-3"
+      },
+      "target": {
+        "cell": "mission-6"
+      }
+    },
+    {
+      "id": "event-2",
+      "shape": "event-node",
+      "x": 300,
+      "y": 650,
+      "attrs": {
+        "title": {
+          "text": "Серия мастер-классов по проведению собеседований"
+        },
+        "description": {
+          "text": "Цикл обучающих мероприятий для сотрудников, участвующих в процессе рекрутинга. Практические занятия по техникам интервью и оценке кандидатов."
+        }
+      },
+      "data": {
+        "type": "event",
+        "name": "Серия мастер-классов по проведению собеседований",
+        "description": "Цикл обучающих мероприятий для сотрудников, участвующих в процессе рекрутинга. Практические занятия по техникам интервью и оценке кандидатов.",
+        "experience": 350,
+        "currency": 250,
+        "category": "Лекторий",
+        "required_number": 8
+      }
+    },
+    {
+      "id": "edge-6",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "artifact-8"
+      },
+      "target": {
+        "cell": "event-2"
+      }
+    },
+    {
+      "id": "edge-7",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "rank-3"
+      },
+      "target": {
+        "cell": "event-2"
+      }
+    },
+    {
+      "id": "rank-2",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 150,
+      "attrs": {
+        "title": {
+          "text": "Ученик"
+        },
+        "description": {
+          "text": "Освоивший базовые механики игры"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Ученик",
+        "description": "Освоивший базовые механики игры",
+        "required_experience": 100,
+        "color": "#4CAF50"
       }
     },
     {
       "id": "mission-branch-2",
       "shape": "mission-branch-node",
-      "x": 450,
+      "x": 350,
       "y": 200,
       "attrs": {
-        "title": { "text": "Backend Development" },
-        "description": { "text": "Бэкенд разработка" }
+        "title": {
+          "text": "Адаптация и онбординг"
+        },
+        "description": {
+          "text": "Ветка миссий по интеграции новых сотрудников в компанию и созданию комфортной рабочей среды."
+        }
       },
       "data": {
         "type": "missionBranch",
-        "name": "Backend Development",
-        "description": "Направление бэкенд разработки"
-      }
-    },
-
-    // Миссии
-    {
-      "id": "mission-1",
-      "shape": "mission-node",
-      "x": 50,
-      "y": 350,
-      "attrs": {
-        "title": { "text": "React App" },
-        "description": { "text": "Создать React приложение" }
-      },
-      "data": {
-        "type": "mission",
-        "name": "React App",
-        "description": "Разработать современное React приложение"
+        "name": "Адаптация и онбординг",
+        "description": "Ветка миссий по интеграции новых сотрудников в компанию и созданию комфортной рабочей среды.",
+        "category": "Адаптация",
+        "time_to_complete": 21
       }
     },
     {
-      "id": "mission-2",
-      "shape": "mission-node",
-      "x": 250,
-      "y": 350,
-      "attrs": {
-        "title": { "text": "UI Components" },
-        "description": { "text": "Библиотека компонентов" }
+      "id": "edge-8",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "rank-2"
       },
-      "data": {
-        "type": "mission",
-        "name": "UI Components",
-        "description": "Создать переиспользуемые UI компоненты"
+      "target": {
+        "cell": "mission-branch-2"
       }
     },
     {
-      "id": "mission-3",
+      "id": "mission-5",
       "shape": "mission-node",
-      "x": 350,
+      "x": 700,
       "y": 350,
       "attrs": {
-        "title": { "text": "API Integration" },
-        "description": { "text": "Интеграция с API" }
+        "title": {
+          "text": "Проведение ознакомительной экскурсии"
+        },
+        "description": {
+          "text": "Опыт: 60, Валюта: 50"
+        }
       },
       "data": {
         "type": "mission",
-        "name": "API Integration",
-        "description": "Настроить взаимодействие с REST API"
+        "name": "Проведение ознакомительной экскурсии",
+        "description": "Опыт: 60, Валюта: 50",
+        "experience": 60,
+        "currency": 50,
+        "level": "Простой",
+        "is_key_mission": false
+      }
+    },
+    {
+      "id": "edge-9",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-2"
+      },
+      "target": {
+        "cell": "mission-5"
       }
     },
     {
@@ -101,187 +463,290 @@
       "x": 550,
       "y": 350,
       "attrs": {
-        "title": { "text": "Database Design" },
-        "description": { "text": "Проектирование БД" }
+        "title": {
+          "text": "Подготовка welcome-пакета для новичка"
+        },
+        "description": {
+          "text": "Опыт: 80, Валюта: 60"
+        }
       },
       "data": {
         "type": "mission",
-        "name": "Database Design",
-        "description": "Спроектировать структуру базы данных"
-      }
-    },
-
-    // Артефакты
-    {
-      "id": "artefact-1",
-      "shape": "artefact-node",
-      "x": 50,
-      "y": 500,
-      "attrs": {
-        "title": { "text": "React Code" },
-        "description": { "text": "Исходный код приложения" }
-      },
-      "data": {
-        "type": "artefact",
-        "name": "React Code",
-        "description": "Исходный код React приложения"
+        "name": "Подготовка welcome-пакета для новичка",
+        "description": "Опыт: 80, Валюта: 60",
+        "experience": 80,
+        "currency": 60,
+        "level": "Простой",
+        "is_key_mission": true
       }
     },
     {
-      "id": "artefact-2",
-      "shape": "artefact-node",
-      "x": 250,
-      "y": 500,
-      "attrs": {
-        "title": { "text": "Component Library" },
-        "description": { "text": "Пакет компонентов" }
+      "id": "edge-10",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-2"
       },
-      "data": {
-        "type": "artefact",
-        "name": "Component Library",
-        "description": "NPM пакет с UI компонентами"
+      "target": {
+        "cell": "mission-4"
       }
     },
-    {
-      "id": "artefact-3",
-      "shape": "artefact-node",
-      "x": 350,
-      "y": 500,
-      "attrs": {
-        "title": { "text": "API Documentation" },
-        "description": { "text": "Документация API" }
-      },
-      "data": {
-        "type": "artefact",
-        "name": "API Documentation",
-        "description": "Swagger документация для API"
-      }
-    },
-    {
-      "id": "artefact-4",
-      "shape": "artefact-node",
-      "x": 550,
-      "y": 500,
-      "attrs": {
-        "title": { "text": "DB Schema" },
-        "description": { "text": "Схема базы данных" }
-      },
-      "data": {
-        "type": "artefact",
-        "name": "DB Schema",
-        "description": "SQL схема базы данных"
-      }
-    },
-
-    // Событие
     {
       "id": "event-1",
       "shape": "event-node",
       "x": 300,
       "y": 650,
       "attrs": {
-        "title": { "text": "Sprint Review" },
-        "description": { "text": "Демонстрация результатов" }
+        "title": {
+          "text": "День открытых дверей для кандидатов"
+        },
+        "description": {
+          "text": "Организация и проведение дня открытых дверей для потенциальных кандидатов. Включает презентацию компании, экскурсию по офису и неформальное общение с командой."
+        }
       },
       "data": {
         "type": "event",
-        "name": "Sprint Review",
-        "description": "Еженедельная демонстрация результатов спринта"
+        "name": "День открытых дверей для кандидатов",
+        "description": "Организация и проведение дня открытых дверей для потенциальных кандидатов. Включает презентацию компании, экскурсию по офису и неформальное общение с командой.",
+        "experience": 200,
+        "currency": 150,
+        "category": "Бренд работодателя",
+        "required_number": 5
       }
     },
-
-    // Рёбра (Edges)
-
-    // От ранга к веткам миссий
-    {
-      "id": "edge-1",
-      "shape": "entity-edge",
-      "source": { "cell": "rang-1" },
-      "target": { "cell": "mission-branch-1" }
-    },
-    {
-      "id": "edge-2",
-      "shape": "entity-edge",
-      "source": { "cell": "rang-1" },
-      "target": { "cell": "mission-branch-2" }
-    },
-
-    // От веток миссий к миссиям
-    {
-      "id": "edge-3",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-branch-1" },
-      "target": { "cell": "mission-1" }
-    },
-    {
-      "id": "edge-4",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-branch-1" },
-      "target": { "cell": "mission-2" }
-    },
-    {
-      "id": "edge-5",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-branch-2" },
-      "target": { "cell": "mission-3" }
-    },
-    {
-      "id": "edge-6",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-branch-2" },
-      "target": { "cell": "mission-4" }
-    },
-
-    // От миссий к артефактам
-    {
-      "id": "edge-7",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-1" },
-      "target": { "cell": "artefact-1" }
-    },
-    {
-      "id": "edge-8",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-2" },
-      "target": { "cell": "artefact-2" }
-    },
-    {
-      "id": "edge-9",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-3" },
-      "target": { "cell": "artefact-3" }
-    },
-    {
-      "id": "edge-10",
-      "shape": "entity-edge",
-      "source": { "cell": "mission-4" },
-      "target": { "cell": "artefact-4" }
-    },
-
-    // От всех артефактов к событию
     {
       "id": "edge-11",
       "shape": "entity-edge",
-      "source": { "cell": "artefact-1" },
-      "target": { "cell": "event-1" }
+      "source": {
+        "cell": "rank-2"
+      },
+      "target": {
+        "cell": "event-1"
+      }
+    },
+    {
+      "id": "rank-1",
+      "shape": "rang-node",
+      "x": 300,
+      "y": 50,
+      "attrs": {
+        "title": {
+          "text": "Новичок"
+        },
+        "description": {
+          "text": "Начальный ранг, первые шаги в игре"
+        }
+      },
+      "data": {
+        "type": "rang",
+        "name": "Новичок",
+        "description": "Начальный ранг, первые шаги в игре",
+        "required_experience": 0,
+        "color": "#9E9E9E"
+      }
+    },
+    {
+      "id": "mission-branch-1",
+      "shape": "mission-branch-node",
+      "x": 150,
+      "y": 200,
+      "attrs": {
+        "title": {
+          "text": "Основы рекрутинга"
+        },
+        "description": {
+          "text": "Ветка миссий для освоения базовых навыков подбора персонала: от поиска кандидатов до проведения первых собеседований."
+        }
+      },
+      "data": {
+        "type": "missionBranch",
+        "name": "Основы рекрутинга",
+        "description": "Ветка миссий для освоения базовых навыков подбора персонала: от поиска кандидатов до проведения первых собеседований.",
+        "category": "Рекрутинг",
+        "time_to_complete": 30
+      }
     },
     {
       "id": "edge-12",
       "shape": "entity-edge",
-      "source": { "cell": "artefact-2" },
-      "target": { "cell": "event-1" }
+      "source": {
+        "cell": "rank-1"
+      },
+      "target": {
+        "cell": "mission-branch-1"
+      }
+    },
+    {
+      "id": "mission-3",
+      "shape": "mission-node",
+      "x": 400,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Проведение телефонного интервью"
+        },
+        "description": {
+          "text": "Опыт: 150, Валюта: 120"
+        }
+      },
+      "data": {
+        "type": "mission",
+        "name": "Проведение телефонного интервью",
+        "description": "Опыт: 150, Валюта: 120",
+        "experience": 150,
+        "currency": 120,
+        "level": "Средний",
+        "is_key_mission": true
+      }
     },
     {
       "id": "edge-13",
       "shape": "entity-edge",
-      "source": { "cell": "artefact-3" },
-      "target": { "cell": "event-1" }
+      "source": {
+        "cell": "mission-branch-1"
+      },
+      "target": {
+        "cell": "mission-3"
+      }
+    },
+    {
+      "id": "artifact-9",
+      "shape": "artefact-node",
+      "x": 1300,
+      "y": 500,
+      "attrs": {
+        "title": {
+          "text": "Ключ доступа к сети \"Бартер-Сеть\""
+        },
+        "description": {
+          "text": "Нелегальный децентрализованный чип, который подключается к теневой сети обмена между пилотами, ремонтниками и торговцами. Позволяет находить уникальные предложения и торговаться без лишних наценок."
+        }
+      },
+      "data": {
+        "type": "artefact",
+        "name": "Ключ доступа к сети \"Бартер-Сеть\"",
+        "description": "Нелегальный децентрализованный чип, который подключается к теневой сети обмена между пилотами, ремонтниками и торговцами. Позволяет находить уникальные предложения и торговаться без лишних наценок.",
+        "modifier": "SHOP_DISCOUNT",
+        "modifier_value": 10
+      }
     },
     {
       "id": "edge-14",
       "shape": "entity-edge",
-      "source": { "cell": "artefact-4" },
-      "target": { "cell": "event-1" }
+      "source": {
+        "cell": "mission-3"
+      },
+      "target": {
+        "cell": "artifact-9"
+      }
+    },
+    {
+      "id": "mission-2",
+      "shape": "mission-node",
+      "x": 250,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Поиск кандидатов в профессиональных соцсетях"
+        },
+        "description": {
+          "text": "Опыт: 120, Валюта: 100"
+        }
+      },
+      "data": {
+        "type": "mission",
+        "name": "Поиск кандидатов в профессиональных соцсетях",
+        "description": "Опыт: 120, Валюта: 100",
+        "experience": 120,
+        "currency": 100,
+        "level": "Простой",
+        "is_key_mission": false
+      }
+    },
+    {
+      "id": "edge-15",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-1"
+      },
+      "target": {
+        "cell": "mission-2"
+      }
+    },
+    {
+      "id": "mission-1",
+      "shape": "mission-node",
+      "x": 100,
+      "y": 350,
+      "attrs": {
+        "title": {
+          "text": "Составление профиля идеального кандидата"
+        },
+        "description": {
+          "text": "Опыт: 100, Валюта: 80"
+        }
+      },
+      "data": {
+        "type": "mission",
+        "name": "Составление профиля идеального кандидата",
+        "description": "Опыт: 100, Валюта: 80",
+        "experience": 100,
+        "currency": 80,
+        "level": "Простой",
+        "is_key_mission": true
+      }
+    },
+    {
+      "id": "edge-16",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "mission-branch-1"
+      },
+      "target": {
+        "cell": "mission-1"
+      }
+    },
+    {
+      "id": "event-3",
+      "shape": "event-node",
+      "x": 300,
+      "y": 650,
+      "attrs": {
+        "title": {
+          "text": "Неделя адаптации новых сотрудников"
+        },
+        "description": {
+          "text": "Комплекс мероприятий по интеграции новых членов команды: воркшопы, знакомство с процессами, менторские сессии и тимбилдинг."
+        }
+      },
+      "data": {
+        "type": "event",
+        "name": "Неделя адаптации новых сотрудников",
+        "description": "Комплекс мероприятий по интеграции новых членов команды: воркшопы, знакомство с процессами, менторские сессии и тимбилдинг.",
+        "experience": 150,
+        "currency": 100,
+        "category": "Адаптация",
+        "required_number": 10
+      }
+    },
+    {
+      "id": "edge-17",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "artifact-9"
+      },
+      "target": {
+        "cell": "event-3"
+      }
+    },
+    {
+      "id": "edge-18",
+      "shape": "entity-edge",
+      "source": {
+        "cell": "rank-1"
+      },
+      "target": {
+        "cell": "event-3"
+      }
     }
   ]
 }
