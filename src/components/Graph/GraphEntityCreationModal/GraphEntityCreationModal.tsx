@@ -1,4 +1,5 @@
 import type { FCC } from 'src/types'
+import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { Button, Form, Input, Modal, Space } from 'antd'
 import { useTranslations } from 'next-intl'
 import React, { useEffect, useState } from 'react'
@@ -8,18 +9,10 @@ export interface EntityData {
   description: string
 }
 
-export type EntityType
-  = | 'rang'
-    | 'missionBranch'
-    | 'mission'
-    | 'artefact'
-    | 'competency'
-    | 'event'
-
 interface EntityCreationModalProps {
   visible: boolean
-  entityType: EntityType | null
-  onConfirm: (entityType: EntityType, data: EntityData) => void
+  entityType: ENTITY_TYPES | null
+  onConfirm: (entityType: ENTITY_TYPES, data: EntityData) => void
   onCancel: () => void
 }
 
@@ -70,14 +63,14 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     onCancel()
   }
 
-  const getEntityLabel = (type: EntityType | null): string => {
+  const getEntityLabel = (type: ENTITY_TYPES | null): string => {
     if (!type) {
       return ''
     }
     return t(`entities.${type}`, { fallback: type })
   }
 
-  const getDefaultTitle = (type: EntityType | null): string => {
+  const getDefaultTitle = (type: ENTITY_TYPES | null): string => {
     if (!type) {
       return ''
     }
@@ -85,10 +78,10 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     return `${entityLabel} ${Date.now().toString().slice(-4)}` // Добавляем последние 4 цифры timestamp для уникальности
   }
 
-  const getDefaultDescription = (type: EntityType | null): string => {
+  const getDefaultDescription = (type: ENTITY_TYPES | null): string => {
     const descriptions = {
       rang: t('entities.descriptions.rang', { fallback: 'Rank description' }),
-      missionBranch: t('entities.descriptions.missionBranch', {
+      mission_branch: t('entities.descriptions.mission_branch', {
         fallback: 'Mission branch description',
       }),
       mission: t('entities.descriptions.mission', {
@@ -126,7 +119,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
         </Button>,
       ]}
       width={500}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form
         form={form}

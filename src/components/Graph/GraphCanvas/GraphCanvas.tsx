@@ -1,9 +1,12 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import React from 'react'
+import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
+import type { ENTITY_TYPES } from '@/hooks/useGraph'
+import React, { useState } from 'react'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
+import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
 
 interface GraphCanvasProps {
@@ -21,6 +24,31 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   enablePanning = true,
   enableMousewheel = true,
 }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false)
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+
+  const [isShowModal, setIsShowModal] = useState(false)
+  const [currentEntityType, setCurrentEntityType]
+    = useState<ENTITY_TYPES | null>(null)
+  const handleShowModal = (entityType: ENTITY_TYPES) => {
+    setIsShowModal(true)
+    setCurrentEntityType(entityType)
+  }
+  const handleHideModal = () => {
+    setIsShowModal(false)
+    setCurrentEntityType(null)
+  }
+
+  const handleNodeClick = (nodeId: string) => {
+    setSelectedNodeId(nodeId)
+    setDrawerVisible(true)
+  }
+
+  const handleCloseDrawer = () => {
+    setDrawerVisible(false)
+    setSelectedNodeId(null)
+  }
+
   const {
     containerRef,
     isReady,
@@ -29,15 +57,6 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     zoomIn,
     zoomOut,
     clearGraph,
-    requestAddArtefact,
-    requestAddCompetency,
-    requestAddMissionBranch,
-    requestAddMission,
-    requestAddEvent,
-    requestAddRang,
-    modalVisible,
-    currentEntityType,
-    hideEntityModal,
     addEntity,
     toggleConnectingMode,
     isConnectingMode,
@@ -47,27 +66,36 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     gridSize,
     enablePanning,
     enableMousewheel,
+    onNodeClick: handleNodeClick,
   })
+
+  const handleAddEntity = (
+    entityType: ENTITY_TYPES,
+    entityData: EntityData,
+  ) => {
+    addEntity(entityType, entityData)
+    handleHideModal()
+  }
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {/* Модальное окно для создания сущностей */}
-
       <EntityCreationModal
-        visible={modalVisible}
+        visible={isShowModal}
         entityType={currentEntityType}
-        onConfirm={addEntity}
-        onCancel={hideEntityModal}
+        onConfirm={handleAddEntity}
+        onCancel={handleHideModal}
+      />
+      {/* Drawer для информации о ноде */}
+      <NodeInfoDrawer
+        visible={drawerVisible}
+        nodeId={selectedNodeId}
+        onClose={handleCloseDrawer}
       />
       {/* Единая панель инструментов */}
       {isReady && (
         <GraphToolbarPanel
-          onAddRang={requestAddRang}
-          onAddMissionBranch={requestAddMissionBranch}
-          onAddMission={requestAddMission}
-          onAddArtefact={requestAddArtefact}
-          onAddCompetency={requestAddCompetency}
-          onAddEvent={requestAddEvent}
+          onAddEntity={handleShowModal}
           onClearGraph={clearGraph}
           onCenterContent={centerContent}
           onFitContent={fitContent}

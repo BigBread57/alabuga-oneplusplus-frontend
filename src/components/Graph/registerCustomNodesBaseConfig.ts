@@ -50,21 +50,35 @@ export const baseNodeConfig = {
     },
     'title': {
       refX: 45,
-      refY: 20,
+      refY: 15,
       fill: '#fff',
       fontFamily: 'Arial, sans-serif',
       fontSize: 14,
       fontWeight: 'bold',
       textAnchor: 'start',
+      // Настройки переноса текста
+      textWrap: {
+        width: -55, // отрицательное значение = ширина узла минус отступ
+        height: 25, // максимальная высота для заголовка
+        ellipsis: true, // добавляет ... если текст не помещается
+        breakWord: false, // не разрывать слова посередине
+      },
     },
     'description': {
       refX: 45,
-      refY: 40,
+      refY: 45,
       fill: '#fff',
       fontFamily: 'Arial, sans-serif',
       fontSize: 11,
       textAnchor: 'start',
       fillOpacity: 0.8,
+      // Настройки переноса для описания
+      textWrap: {
+        width: -55,
+        height: 25,
+        ellipsis: true,
+        breakWord: false,
+      },
     },
   },
 }

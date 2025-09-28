@@ -1,7 +1,4 @@
-import type {
-  EntityData,
-  EntityType,
-} from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
+import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 // hooks/useGraph.ts
 import { Graph } from '@antv/x6'
 import { useEffect, useRef, useState } from 'react'
@@ -24,14 +21,14 @@ interface UseGraphOptions {
   ) => void
 }
 
-const ENTITY_TYPES = {
-  RANG: 'rang-node',
-  MISSION_BRANCH: 'mission-branch-node',
-  MISSION: 'mission-node',
-  ARTEFACT: 'artefact-node',
-  COMPETENCY: 'competency-node',
-  EVENT: 'event-node',
-} as const
+export enum ENTITY_TYPES {
+  RANG = 'rang',
+  MISSION_BRANCH = 'mission_branch',
+  MISSION = 'mission',
+  ARTEFACT = 'artefact',
+  COMPETENCY = 'competency',
+  EVENT = 'event',
+}
 
 interface UseGraphReturn {
   containerRef: React.RefObject<HTMLDivElement>
@@ -43,18 +40,8 @@ interface UseGraphReturn {
   zoomIn: () => void
   zoomOut: () => void
   clearGraph: () => void
-  addEntity: (entityType: EntityType, data: EntityData) => void
-  requestAddRang: () => void
-  requestAddMissionBranch: () => void
-  requestAddMission: () => void
-  requestAddArtefact: () => void
-  requestAddCompetency: () => void
-  requestAddEvent: () => void
+  addEntity: (entityType: ENTITY_TYPES, data: EntityData) => void
   getNodeData: (nodeId?: string) => any
-  modalVisible: boolean
-  currentEntityType: EntityType | null
-  showEntityModal: (entityType: EntityType) => void
-  hideEntityModal: () => void
   toggleConnectingMode: () => void
   isConnectingMode: boolean
 }
@@ -75,12 +62,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const graphRef = useRef<Graph | null>(null)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [isReady, setIsReady] = useState(false)
-
-  // состояние модального окна
-  const [modalVisible, setModalVisible] = useState(false)
-  const [currentEntityType, setCurrentEntityType] = useState<EntityType | null>(
-    null,
-  )
 
   // режим соединения
   const [isConnectingMode, setIsConnectingMode] = useState(false)
@@ -341,6 +322,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         setIsReady(false)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     containerSize,
     themeConfig,
@@ -349,7 +331,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     enablePanning,
     enableMousewheel,
     data,
-    onNodeClick,
   ])
 
   // обновление размеров графа
@@ -376,16 +357,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     x: Math.random() * 300 + 100,
     y: Math.random() * 300 + 100,
   })
-
-  const showEntityModal = (entityType: EntityType) => {
-    setCurrentEntityType(entityType)
-    setModalVisible(true)
-  }
-
-  const hideEntityModal = () => {
-    setModalVisible(false)
-    setCurrentEntityType(null)
-  }
 
   const centerContent = () => graphRef.current?.centerContent()
   const zoomIn = () => graphRef.current?.zoom(0.3, { absolute: false })
@@ -428,23 +399,15 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     }
   }
 
-  const addEntity = (entityType: EntityType, data: EntityData) => {
+  const addEntity = (entityType: ENTITY_TYPES, data: EntityData) => {
     if (!graphRef.current) {
       return
     }
 
     const position = getRandomPosition()
-    const shapeMap = {
-      rang: ENTITY_TYPES.RANG,
-      missionBranch: ENTITY_TYPES.MISSION_BRANCH,
-      mission: ENTITY_TYPES.MISSION,
-      artefact: ENTITY_TYPES.ARTEFACT,
-      competency: ENTITY_TYPES.COMPETENCY,
-      event: ENTITY_TYPES.EVENT,
-    }
 
     graphRef.current.addNode({
-      shape: shapeMap[entityType],
+      shape: entityType,
       x: position.x,
       y: position.y,
       attrs: {
@@ -457,8 +420,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         description: data.description,
       },
     })
-
-    hideEntityModal()
+    return true
   }
 
   const getNodeData = (nodeId?: string) => {
@@ -476,13 +438,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     }))
   }
 
-  const requestAddRang = () => showEntityModal('rang')
-  const requestAddMissionBranch = () => showEntityModal('missionBranch')
-  const requestAddMission = () => showEntityModal('mission')
-  const requestAddArtefact = () => showEntityModal('artefact')
-  const requestAddCompetency = () => showEntityModal('competency')
-  const requestAddEvent = () => showEntityModal('event')
-
   return {
     containerRef,
     graph: graphRef.current,
@@ -494,17 +449,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     zoomOut,
     clearGraph,
     addEntity,
-    requestAddRang,
-    requestAddMissionBranch,
-    requestAddMission,
-    requestAddArtefact,
-    requestAddCompetency,
-    requestAddEvent,
     getNodeData,
-    modalVisible,
-    currentEntityType,
-    showEntityModal,
-    hideEntityModal,
     toggleConnectingMode,
     isConnectingMode,
   }

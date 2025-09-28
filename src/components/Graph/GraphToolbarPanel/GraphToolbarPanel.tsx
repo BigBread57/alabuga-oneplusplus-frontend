@@ -21,17 +21,13 @@ import { useTranslations } from 'next-intl'
 import React from 'react'
 
 import { ENTITY_COLORS } from '@/components/Graph/theme'
+import { ENTITY_TYPES } from '@/hooks/useGraph'
 import { useTheme } from '@/providers/ThemeProvider'
 
 interface EntityToolbarPanelProps {
-  // Callbacks для добавления сущностей
-  onAddRang?: () => void
-  onAddMissionBranch?: () => void
-  onAddMission?: () => void
-  onAddArtefact?: () => void
-  onAddCompetency?: () => void
-  onAddEvent?: () => void
   onClearGraph?: () => void
+
+  onAddEntity: (entityType: ENTITY_TYPES) => void
 
   // Callbacks для управления графом
   onCenterContent?: () => void
@@ -45,12 +41,6 @@ interface EntityToolbarPanelProps {
 }
 
 const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
-  onAddRang,
-  onAddMissionBranch,
-  onAddMission,
-  onAddArtefact,
-  onAddCompetency,
-  onAddEvent,
   onClearGraph,
   onCenterContent,
   onFitContent,
@@ -58,6 +48,7 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   onZoomOut,
   onToggleConnectingMode,
   isConnectingMode = false,
+  onAddEntity,
 }) => {
   const t = useTranslations('Graph')
   const { themeConfig } = useTheme()
@@ -68,19 +59,19 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
       key: 'rang',
       label: t('entities.rang', { fallback: 'Rang' }),
       icon: <StarOutlined style={{ color: ENTITY_COLORS.rang }} />,
-      onClick: onAddRang,
+      onClick: () => onAddEntity(ENTITY_TYPES.RANG),
     },
     {
-      key: 'missionBranch',
-      label: t('entities.missionBranch', { fallback: 'Mission Branch' }),
+      key: 'mission_ranch',
+      label: t('entities.mission_branch', { fallback: 'Mission Branch' }),
       icon: <BranchesOutlined style={{ color: ENTITY_COLORS.missionBranch }} />,
-      onClick: onAddMissionBranch,
+      onClick: () => onAddEntity(ENTITY_TYPES.MISSION_BRANCH),
     },
     {
       key: 'mission',
       label: t('entities.mission', { fallback: 'Mission' }),
       icon: <RocketOutlined style={{ color: ENTITY_COLORS.mission }} />,
-      onClick: onAddMission,
+      onClick: () => onAddEntity(ENTITY_TYPES.MISSION),
     },
     {
       type: 'divider',
@@ -89,19 +80,19 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
       key: 'artefact',
       label: t('entities.artefact', { fallback: 'Artefact' }),
       icon: <GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />,
-      onClick: onAddArtefact,
+      onClick: () => onAddEntity(ENTITY_TYPES.ARTEFACT),
     },
     {
       key: 'competency',
       label: t('entities.competency', { fallback: 'Competency' }),
       icon: <TrophyOutlined style={{ color: ENTITY_COLORS.competency }} />,
-      onClick: onAddCompetency,
+      onClick: () => onAddEntity(ENTITY_TYPES.COMPETENCY),
     },
     {
       key: 'event',
       label: t('entities.event', { fallback: 'Event' }),
       icon: <CalendarOutlined style={{ color: ENTITY_COLORS.event }} />,
-      onClick: onAddEvent,
+      onClick: () => onAddEntity(ENTITY_TYPES.EVENT),
     },
   ]
 
@@ -138,7 +129,7 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
             <Button
               icon={<StarOutlined style={{ color: ENTITY_COLORS.rang }} />}
               size='small'
-              onClick={onAddRang}
+              onClick={() => onAddEntity(ENTITY_TYPES.RANG)}
             />
           </Tooltip>
 
@@ -146,7 +137,7 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
             <Button
               icon={<RocketOutlined style={{ color: ENTITY_COLORS.mission }} />}
               size='small'
-              onClick={onAddMission}
+              onClick={() => onAddEntity(ENTITY_TYPES.MISSION)}
             />
           </Tooltip>
 
@@ -154,7 +145,7 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
             <Button
               icon={<GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />}
               size='small'
-              onClick={onAddArtefact}
+              onClick={() => onAddEntity(ENTITY_TYPES.ARTEFACT)}
             />
           </Tooltip>
         </Space>

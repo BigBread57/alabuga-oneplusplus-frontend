@@ -334,14 +334,14 @@
     "use_default_values": "Use Default Values",
     "entities": {
       "rang": "Rang",
-      "missionBranch": "Mission Branch",
+      "mission_branch": "Mission Branch",
       "mission": "Mission",
       "artefact": "Artefact",
       "competency": "Competency",
       "event": "Event",
       "descriptions": {
         "rang": "Rang description",
-        "missionBranch": "Mission branch description",
+        "mission_branch": "Mission branch description",
         "mission": "Mission description",
         "artefact": "Artefact description",
         "competency": "Competency description",

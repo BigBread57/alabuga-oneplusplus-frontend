@@ -331,14 +331,14 @@
     "use_default_values": "Использовать значения по умолчанию",
     "entities": {
       "rang": "Ранг",
-      "missionBranch": "Ветка миссии",
+      "mission_branch": "Ветка миссии",
       "mission": "Миссия",
       "artefact": "Артефакт",
       "competency": "Компетенция",
       "event": "Событие",
       "descriptions": {
         "rang": "Описание ранга",
-        "missionBranch": "Описание ветки миссии",
+        "mission_branch": "Описание ветки миссии",
         "mission": "Описание миссии",
         "artefact": "Описание артефакта",
         "competency": "Описание компетенции",

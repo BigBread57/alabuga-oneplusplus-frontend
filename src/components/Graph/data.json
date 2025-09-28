@@ -2,7 +2,7 @@
   "cells": [
     {
       "id": "rank-10",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 950,
       "attrs": {
@@ -23,7 +23,7 @@
     },
     {
       "id": "rank-9",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 850,
       "attrs": {
@@ -44,7 +44,7 @@
     },
     {
       "id": "rank-8",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 750,
       "attrs": {
@@ -65,7 +65,7 @@
     },
     {
       "id": "rank-7",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 650,
       "attrs": {
@@ -86,7 +86,7 @@
     },
     {
       "id": "rank-6",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 550,
       "attrs": {
@@ -107,7 +107,7 @@
     },
     {
       "id": "rank-5",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 450,
       "attrs": {
@@ -128,7 +128,7 @@
     },
     {
       "id": "rank-4",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 350,
       "attrs": {
@@ -149,7 +149,7 @@
     },
     {
       "id": "event-4",
-      "shape": "event-node",
+      "shape": "event",
       "x": 300,
       "y": 650,
       "attrs": {
@@ -182,7 +182,7 @@
     },
     {
       "id": "rank-3",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 250,
       "attrs": {
@@ -203,7 +203,7 @@
     },
     {
       "id": "mission-branch-3",
-      "shape": "mission-branch-node",
+      "shape": "mission_branch",
       "x": 550,
       "y": 200,
       "attrs": {
@@ -215,7 +215,7 @@
         }
       },
       "data": {
-        "type": "missionBranch",
+        "type": "mission_branch",
         "name": "HR-бренд и коммуникации",
         "description": "Ветка миссий по развитию HR-бренда компании и улучшению внутренних коммуникаций.",
         "category": "Бренд работодателя",
@@ -234,7 +234,7 @@
     },
     {
       "id": "mission-7",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 1000,
       "y": 350,
       "attrs": {
@@ -267,7 +267,7 @@
     },
     {
       "id": "artifact-8",
-      "shape": "artefact-node",
+      "shape": "artefact",
       "x": 1150,
       "y": 500,
       "attrs": {
@@ -298,7 +298,7 @@
     },
     {
       "id": "mission-6",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 850,
       "y": 350,
       "attrs": {
@@ -331,7 +331,7 @@
     },
     {
       "id": "event-2",
-      "shape": "event-node",
+      "shape": "event",
       "x": 300,
       "y": 650,
       "attrs": {
@@ -374,7 +374,7 @@
     },
     {
       "id": "rank-2",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 150,
       "attrs": {
@@ -395,7 +395,7 @@
     },
     {
       "id": "mission-branch-2",
-      "shape": "mission-branch-node",
+      "shape": "mission_branch",
       "x": 350,
       "y": 200,
       "attrs": {
@@ -407,7 +407,7 @@
         }
       },
       "data": {
-        "type": "missionBranch",
+        "type": "mission_branch",
         "name": "Адаптация и онбординг",
         "description": "Ветка миссий по интеграции новых сотрудников в компанию и созданию комфортной рабочей среды.",
         "category": "Адаптация",
@@ -426,7 +426,7 @@
     },
     {
       "id": "mission-5",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 700,
       "y": 350,
       "attrs": {
@@ -459,7 +459,7 @@
     },
     {
       "id": "mission-4",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 550,
       "y": 350,
       "attrs": {
@@ -492,7 +492,7 @@
     },
     {
       "id": "event-1",
-      "shape": "event-node",
+      "shape": "event",
       "x": 300,
       "y": 650,
       "attrs": {
@@ -525,7 +525,7 @@
     },
     {
       "id": "rank-1",
-      "shape": "rang-node",
+      "shape": "rang",
       "x": 300,
       "y": 50,
       "attrs": {
@@ -546,7 +546,7 @@
     },
     {
       "id": "mission-branch-1",
-      "shape": "mission-branch-node",
+      "shape": "mission_branch",
       "x": 150,
       "y": 200,
       "attrs": {
@@ -558,7 +558,7 @@
         }
       },
       "data": {
-        "type": "missionBranch",
+        "type": "mission_branch",
         "name": "Основы рекрутинга",
         "description": "Ветка миссий для освоения базовых навыков подбора персонала: от поиска кандидатов до проведения первых собеседований.",
         "category": "Рекрутинг",
@@ -577,7 +577,7 @@
     },
     {
       "id": "mission-3",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 400,
       "y": 350,
       "attrs": {
@@ -610,7 +610,7 @@
     },
     {
       "id": "artifact-9",
-      "shape": "artefact-node",
+      "shape": "artefact",
       "x": 1300,
       "y": 500,
       "attrs": {
@@ -641,7 +641,7 @@
     },
     {
       "id": "mission-2",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 250,
       "y": 350,
       "attrs": {
@@ -674,7 +674,7 @@
     },
     {
       "id": "mission-1",
-      "shape": "mission-node",
+      "shape": "mission",
       "x": 100,
       "y": 350,
       "attrs": {
@@ -707,7 +707,7 @@
     },
     {
       "id": "event-3",
-      "shape": "event-node",
+      "shape": "event",
       "x": 300,
       "y": 650,
       "attrs": {
