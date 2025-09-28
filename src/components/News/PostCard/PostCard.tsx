@@ -59,7 +59,9 @@ const PostCard: FCC<PostProps> = ({
     position: 'relative',
     width: '100%',
     height: 'auto',
-    padding: 48,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 50,
     overflow: 'hidden',
     background: token.colorFillAlter,
     border: `1px solid ${token.colorBorderSecondary}`,
@@ -73,20 +75,23 @@ const PostCard: FCC<PostProps> = ({
           <Image
             src={image || 'https://picsum.photos/300/200'}
             alt=''
-            width={50}
-            height={50}
+            width={150}
+            height={150}
             className={styles.image}
           />
         </div>
-        <div className={styles.content}>
-          <span className={styles.name}>{name}</span>
-          <Space wrap size='small' style={{ marginBottom: 8 }}>
-            <Tag color='gold'>{topic.name}</Tag>
+        <div className={styles.contentCard}>
+          <p className={styles.namePost}>{name}</p>
+          <Space wrap size='small' style={{ marginBottom: 40 }}>
+            <Tag color={topic.color}>{topic.name}</Tag>
           </Space>
           <div className={styles.buttonContainer}>
             <Button type='primary' onClick={showDrawer}>
               {t('view_details')}
             </Button>
+          </div>
+          <div className={styles.createdAt} style={{ textAlign: 'right' }}>
+            {timeDateString(created_at)}
           </div>
         </div>
       </div>
@@ -102,16 +107,16 @@ const PostCard: FCC<PostProps> = ({
             top: 0,
             right: 0,
             height: '100vh',
-            width: window.innerWidth < 768 ? '100%' : '66.666%',
+            width: window.innerWidth < 768 ? '100%' : '70%',
           },
         }}
       >
         <div className={styles.container}>
           <div className={styles.theme}>
-            <Tag color='gold'>{topic.name}</Tag>
+            <Tag color={topic.color}>{topic.name}</Tag>
           </div>
 
-          <div className={styles.imageContainer}>
+          <div className={styles.postImage}>
             <Image
               src={image || 'https://picsum.photos/300/200'}
               alt=''
