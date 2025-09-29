@@ -39,13 +39,15 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     setCurrentEntityType(null)
   }
 
-  const handleNodeClick = (nodeId: string) => {
+  const handleNodeClick = (nodeId: string, entityType: ENTITY_TYPES) => {
     setSelectedNodeId(nodeId)
+    setCurrentEntityType(entityType)
     setDrawerVisible(true)
   }
 
   const handleCloseDrawer = () => {
     setDrawerVisible(false)
+    setCurrentEntityType(null)
     setSelectedNodeId(null)
   }
 
@@ -90,6 +92,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
       <NodeInfoDrawer
         visible={drawerVisible}
         nodeId={selectedNodeId}
+        entityType={currentEntityType}
         onClose={handleCloseDrawer}
       />
       {/* Единая панель инструментов */}

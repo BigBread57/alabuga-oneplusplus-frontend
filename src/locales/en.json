@@ -5,7 +5,8 @@
     "go_back": "Go Back",
     "locked": "Locked",
     "success": "Success",
-    "error": "Error"
+    "error": "Error",
+    "information": "Information"
   },
   "MainPage": {
     "home": "Home",
@@ -386,5 +387,111 @@
     "placeholder": "Select an option",
     "no_data": "No data",
     "error": "Error loading data"
+  },
+  "MissionForm": {
+    "title": "Mission Form",
+    "submit_create": "Create Mission",
+    "submit_update": "Update Mission",
+    "fields": {
+      "icon": {
+        "label": "Icon",
+        "placeholder": "Enter URL or icon name"
+      },
+      "name": {
+        "label": "Mission Name",
+        "placeholder": "Enter mission name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter mission description"
+      },
+      "experience": {
+        "label": "Experience",
+        "placeholder": "Enter experience amount"
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "Enter currency amount"
+      },
+      "order": {
+        "label": "Order",
+        "placeholder": "Enter order number"
+      },
+      "is_key_mission": {
+        "label": "Key Mission",
+        "placeholder": "Mark as key mission"
+      },
+      "branch": {
+        "label": "Mission Branch",
+        "placeholder": "Select mission branch"
+      },
+      "level": {
+        "label": "Mission Level",
+        "placeholder": "Select mission level"
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      },
+      "game_world_stories": {
+        "label": "Game World Stories",
+        "placeholder": "Select stories"
+      },
+      "is_active": {
+        "label": "Active",
+        "placeholder": "Mission is active"
+      },
+      "time_to_complete": {
+        "label": "Time to Complete (minutes)",
+        "placeholder": "Enter time in minutes"
+      },
+      "required_missions": {
+        "label": "Required Missions",
+        "placeholder": "Select required missions"
+      },
+      "artifacts": {
+        "label": "Artifacts",
+        "placeholder": "Select artifacts"
+      },
+      "competencies": {
+        "label": "Competencies",
+        "placeholder": "Select competencies"
+      }
+    }
+  },
+  "FormValidation": {
+    "required": "Field {field} is required",
+    "min_length": "Minimum length: {min} characters",
+    "max_length": "Maximum length: {max} characters",
+    "min_max_length": "Length must be between {min} and {max} characters",
+    "min_value": "Minimum value: {min}",
+    "max_value": "Maximum value: {max}",
+    "invalid_format": "Invalid format",
+    "invalid_email": "Please enter a valid email",
+    "invalid_number": "Please enter a valid number"
+  },
+  "Form": {
+    "required": "Field {field} is required",
+    "invalid_email": "Please enter a valid email address",
+    "invalid_number": "Please enter a valid number",
+    "min_length": "Minimum length: {min} characters",
+    "max_length": "Maximum length: {max} characters",
+    "invalid_format": "Invalid data format",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "save": "Save",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "success": "Successfully saved",
+    "error": "Error saving",
+    "validation_error": "Please fix the errors in the form",
+    "confirm_delete": "Are you sure you want to delete this item?",
+    "no_changes": "No changes to save",
+    "unsaved_changes": "You have unsaved changes. Are you sure you want to leave this page?"
   }
 }

@@ -15,7 +15,7 @@ interface UseGraphOptions {
   enableMousewheel?: boolean
   onNodeClick?: (
     nodeId: string,
-    entityType: string,
+    entityType: ENTITY_TYPES,
     data: any,
     attrs: any,
   ) => void
@@ -133,7 +133,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     // обычный клик — показать инфо
     const nodeData = node.getData()
     const nodeAttrs = node.getAttrs()
-
     const entityType = nodeData?.type || 'unknown'
     if (onNodeClick) {
       onNodeClick(nodeId, entityType, nodeData, nodeAttrs)
@@ -352,11 +351,29 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     }
   }, [data])
 
-  // utils
-  const getRandomPosition = () => ({
-    x: Math.random() * 300 + 100,
-    y: Math.random() * 300 + 100,
-  })
+  // получение координат левого верхнего угла видимой области
+  const getTopLeftPosition = () => {
+    if (!graphRef.current) {
+      return { x: 50, y: 50 } // fallback координаты
+    }
+
+    try {
+      // Получаем текущий масштаб и позицию графа
+      const zoom = graphRef.current.zoom()
+      const translate = graphRef.current.translate()
+
+      // Вычисляем координаты левого верхнего угла видимой области
+      // с учетом трансформации и масштаба
+      const x = -translate.tx / zoom + 50 // добавляем отступ 50px
+      const y = -translate.ty / zoom + 100 // добавляем отступ 50px
+
+      return { x, y }
+    } catch (error) {
+      // Если методы недоступны, возвращаем координаты по умолчанию
+      console.warn('Could not get graph transform:', error)
+      return { x: 50, y: 50 }
+    }
+  }
 
   const centerContent = () => graphRef.current?.centerContent()
   const zoomIn = () => graphRef.current?.zoom(0.3, { absolute: false })
@@ -404,7 +421,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       return
     }
 
-    const position = getRandomPosition()
+    // Используем координаты левого верхнего угла вместо случайных
+    const position = getTopLeftPosition()
 
     graphRef.current.addNode({
       shape: entityType,

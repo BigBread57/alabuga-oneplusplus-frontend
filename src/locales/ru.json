@@ -6,7 +6,8 @@
     "go_back": "Вернуться назад",
     "not_found": "Не найдено",
     "locked": "Заблокировано",
-    "success": "Успешно"
+    "success": "Успешно",
+    "information": "Information"
   },
   "MainPage": {
     "home": "Главная",
@@ -380,5 +381,111 @@
     "placeholder": "Выберите элемент",
     "no_data": "Нет данных",
     "error": "Ошибка загрузки данных"
+  },
+  "MissionForm": {
+    "title": "Форма миссии",
+    "submit_create": "Создать миссию",
+    "submit_update": "Обновить миссию",
+    "fields": {
+      "icon": {
+        "label": "Иконка",
+        "placeholder": "Введите URL или имя иконки"
+      },
+      "name": {
+        "label": "Название миссии",
+        "placeholder": "Введите название миссии"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание миссии"
+      },
+      "experience": {
+        "label": "Опыт",
+        "placeholder": "Введите количество опыта"
+      },
+      "currency": {
+        "label": "Валюта",
+        "placeholder": "Введите количество валюты"
+      },
+      "order": {
+        "label": "Порядок",
+        "placeholder": "Введите порядковый номер"
+      },
+      "is_key_mission": {
+        "label": "Ключевая миссия",
+        "placeholder": "Отметить как ключевую миссию"
+      },
+      "branch": {
+        "label": "Ветка миссии",
+        "placeholder": "Выберите ветку миссии"
+      },
+      "level": {
+        "label": "Уровень миссии",
+        "placeholder": "Выберите уровень миссии"
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      },
+      "game_world_stories": {
+        "label": "Истории игрового мира",
+        "placeholder": "Выберите истории"
+      },
+      "is_active": {
+        "label": "Активная",
+        "placeholder": "Миссия активна"
+      },
+      "time_to_complete": {
+        "label": "Время на выполнение (минуты)",
+        "placeholder": "Введите время в минутах"
+      },
+      "required_missions": {
+        "label": "Необходимые миссии",
+        "placeholder": "Выберите необходимые миссии"
+      },
+      "artifacts": {
+        "label": "Артефакты",
+        "placeholder": "Выберите артефакты"
+      },
+      "competencies": {
+        "label": "Компетенции",
+        "placeholder": "Выберите компетенции"
+      }
+    }
+  },
+  "FormValidation": {
+    "required": "Поле {field} обязательно для заполнения",
+    "min_length": "Минимальная длина: {min} символов",
+    "max_length": "Максимальная длина: {max} символов",
+    "min_max_length": "Длина должна быть от {min} до {max} символов",
+    "min_value": "Минимальное значение: {min}",
+    "max_value": "Максимальное значение: {max}",
+    "invalid_format": "Неверный формат",
+    "invalid_email": "Введите корректный email",
+    "invalid_number": "Введите корректное число"
+  },
+  "Form": {
+    "required": "Поле {field} обязательно для заполнения",
+    "invalid_email": "Введите корректный email адрес",
+    "invalid_number": "Введите корректное число",
+    "min_length": "Минимальная длина: {min} символов",
+    "max_length": "Максимальная длина: {max} символов",
+    "invalid_format": "Неверный формат данных",
+    "submit": "Отправить",
+    "cancel": "Отменить",
+    "reset": "Сбросить",
+    "save": "Сохранить",
+    "create": "Создать",
+    "update": "Обновить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "loading": "Загрузка...",
+    "saving": "Сохранение...",
+    "success": "Успешно сохранено",
+    "error": "Ошибка при сохранении",
+    "validation_error": "Пожалуйста, исправьте ошибки в форме",
+    "confirm_delete": "Вы уверены, что хотите удалить этот элемент?",
+    "no_changes": "Нет изменений для сохранения",
+    "unsaved_changes": "У вас есть несохраненные изменения. Вы уверены, что хотите покинуть страницу?"
   }
 }

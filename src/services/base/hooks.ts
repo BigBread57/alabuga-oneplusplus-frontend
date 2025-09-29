@@ -45,12 +45,14 @@ export const useFetchItems = <T = any>({
   resultsKey,
   options,
   filter,
+  enabled = true,
 }: {
   model: typeof BaseModel
   filter?: Record<string, any>
   resultsKey?: string
   options?: UseQueryOptions
   qKey?: string | string[]
+  enabled?: boolean
 }): { results: T, [key: string]: any } => {
   const queryKey = qKey || model.modelName
   const url = model.url()
@@ -59,6 +61,7 @@ export const useFetchItems = <T = any>({
     queryKey: [queryKey, filter] as QueryKey,
     queryFn: () => BaseServices.fetch(url, filter),
     refetchOnWindowFocus: false,
+    enabled,
     ...options,
   })
 
@@ -68,18 +71,20 @@ export const useFetchItems = <T = any>({
   }
 }
 
-export const useFetchOneItem = ({
+export const useFetchOneItem = <TData>({
   model,
   id,
   options,
   filters,
   qKey,
+  enabled = true,
 }: {
   model: typeof BaseModel
   id: string | string[] | number | undefined
-  options?: UseQueryOptions
+  options?: UseQueryOptions<TData, Error, TData, QueryKey>
   filters?: Record<string, any>
   qKey?: string
+  enabled?: boolean
 }) => {
   const url = model?.url()
   const queryKey = qKey || model?.modelName
@@ -88,6 +93,7 @@ export const useFetchOneItem = ({
   return useQuery({
     queryKey: [queryKey, id] as QueryKey,
     queryFn: () => BaseServices.fetchOne(url, id, filters),
+    enabled,
     ...options,
   })
 }
