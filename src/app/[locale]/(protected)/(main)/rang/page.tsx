@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import GlobalStatistics from '@/components/Statistics/GlobalStatistics/GlobalStatistics'
 
 type RangPageProps = {
   params: Promise<{ locale: string }>
@@ -21,10 +22,5 @@ export async function generateMetadata(
 }
 
 export default async function RangPage(_props: RangPageProps) {
-  return (
-    <div>
-      <h1>Rang Page</h1>
-      {/* Add your rang components here */}
-    </div>
-  )
+  return <GlobalStatistics />
 }

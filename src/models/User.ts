@@ -5,6 +5,7 @@ import { BaseModel } from 'src/models/Base'
 
 export type UserProps = {
   active_character: number | null
+  active_game_world: number | null
   username: string
   avatar: string
   email: string

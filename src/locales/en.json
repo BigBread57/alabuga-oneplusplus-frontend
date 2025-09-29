@@ -381,7 +381,15 @@
     "artifacts": "Artifacts",
     "competencies": "Competencies",
     "missions": "Missions",
-    "events": "Events"
+    "events": "Events",
+    "grouping_character_by_ranks": "Grouping character by ranks",
+    "number_of_character_who_closed_the_mission_branch": "Number of character who closed the mission_branch",
+    "number_of_character_who_closed_the_mission": "Number of character who closed the mission",
+    "completed_or_failed_character_missions": "Completed or failed character missions",
+    "character_number": "Character number",
+    "character_name": "Character name",
+    "character_place": "Character place",
+    "top_characters": "Top characters"
   },
   "Select": {
     "placeholder": "Select an option",

@@ -11,8 +11,7 @@ export interface GameWorldProps extends BaseModelProps {
 }
 
 enum GameWorldUrl {
-  GAME_WORLD = '/game/world',
-  GAME_WORLDS = '/game/worlds',
+  GAME_WORLDS = 'game-world/game-worlds',
 }
 
 export class GameWorld extends BaseModel {
@@ -20,5 +19,9 @@ export class GameWorld extends BaseModel {
 
   static override url() {
     return GameWorldUrl.GAME_WORLDS
+  }
+
+  static statisticsUrl(id: number) {
+    return `${this.url()}/${id}/statistics`
   }
 }

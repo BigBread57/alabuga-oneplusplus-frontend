@@ -6,11 +6,11 @@ import React from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { CharacterStatistics } from '@/components/Profile/CharacterStatistics'
 
-interface StatisticsCardProps {
+interface CharacterStatisticsCardProps {
   prop?: any
 }
 
-const StatisticsCard: FCC<StatisticsCardProps> = () => {
+const CharacterStatisticsCard: FCC<CharacterStatisticsCardProps> = () => {
   const t = useTranslations('Statistics')
   return (
     <CardWrapper
@@ -27,6 +27,6 @@ const StatisticsCard: FCC<StatisticsCardProps> = () => {
   )
 }
 
-StatisticsCard.displayName = 'StatisticsCard'
+CharacterStatisticsCard.displayName = 'CharacterStatisticsCard'
 
-export default StatisticsCard
+export default CharacterStatisticsCard
