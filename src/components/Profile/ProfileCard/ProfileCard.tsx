@@ -20,6 +20,7 @@ type ProfileCardProps = {
   showProgress?: boolean
   gameWorld?: GameWorldProps
   isLoading?: boolean
+  onUpdateAvatarSuccess?: (updatedCharacter: any) => void
 } & Omit<CardWrapperProps, 'children'>
 
 const ProfileCard: FCC<ProfileCardProps> = ({
@@ -28,6 +29,7 @@ const ProfileCard: FCC<ProfileCardProps> = ({
   character,
   gameWorld,
   isLoading,
+  onUpdateAvatarSuccess,
   ...cardProps
 }) => {
   const t = useTranslations('ProfileCard')
@@ -58,6 +60,7 @@ const ProfileCard: FCC<ProfileCardProps> = ({
             gameWorld={gameWorld}
             showProgress
             currentExperience={character?.character_rank?.experience}
+            onUpdateAvatarSuccess={onUpdateAvatarSuccess}
           />
         </Col>
         <Divider>{t('artifacts')}</Divider>
@@ -65,7 +68,6 @@ const ProfileCard: FCC<ProfileCardProps> = ({
           <Artifacts />
         </Col>
         <Divider>{t('competencies')}</Divider>
-
         <Col>
           <Competencies />
         </Col>

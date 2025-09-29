@@ -14,9 +14,11 @@ const ProfilePage: FCC = () => {
   const {
     data,
     isLoading,
+    refetch,
   }: {
     data: any
     isLoading: boolean
+    refetch: () => void
   } = useFetchExtraAction({
     extraUrl: MODEL.actualForUserUrl(),
     qKey: 'CharacterActualForUser',
@@ -36,6 +38,7 @@ const ProfilePage: FCC = () => {
           userAvatar={data?.data?.avatar}
           character={data?.data}
           gameWorld={data?.data?.game_world}
+          onUpdateAvatarSuccess={refetch}
         />
       </Col>
       <Col

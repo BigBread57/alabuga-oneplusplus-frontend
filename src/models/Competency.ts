@@ -8,6 +8,7 @@ export interface CompetencyProps extends BaseModelProps {
   description: string
   required_experience: number
   icon: string | null
+  level: number
   color: string
   parent: CompetencyProps | null
   game_world: GameWorldProps

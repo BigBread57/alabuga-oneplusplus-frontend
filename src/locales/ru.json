@@ -290,7 +290,10 @@
     "stories": "Истории",
     "world_stories_title": "Истории мира: {competencyName}",
     "story_image": "Изображение истории",
-    "locked": "Заблокировано"
+    "locked": "Заблокировано",
+    "from": "из",
+    "level": "уровень",
+    "received": "Получено"
   },
   "FileUpload": {
     "upload_text": "Нажмите или перетащите файлы в эту область для загрузки",

@@ -18,6 +18,7 @@ type ProfileRankProps = {
   nextRank?: RankProps | null
   showProgress?: boolean
   className?: string
+  onUpdateAvatarSuccess?: (updatedCharacter: any) => void
 }
 
 const ProfileRank: FCC<ProfileRankProps> = ({
@@ -29,6 +30,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
   userAvatar,
   userName,
   characterId,
+  onUpdateAvatarSuccess,
 }) => {
   const t = useTranslations('ProfileRank')
   const { Text, Title } = Typography
@@ -61,6 +63,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
             username={userName}
             avatar={userAvatar}
             editable
+            onSuccess={onUpdateAvatarSuccess}
           />
 
           <Space direction='vertical'>

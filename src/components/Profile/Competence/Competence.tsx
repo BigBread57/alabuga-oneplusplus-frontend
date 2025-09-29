@@ -1,10 +1,18 @@
 import type { FCC } from 'src/types'
 import type { CharacterCompetencyProps } from '@/models/CharacterCompetence'
-import { BookOutlined, LockOutlined } from '@ant-design/icons'
-import { Card, Divider, Image, Modal, Space, Tag, Typography } from 'antd'
+import { BookOutlined } from '@ant-design/icons'
+import {
+  Badge,
+  Card,
+  Divider,
+  Image,
+  Modal,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
-import { ComponentLocker } from '@/components/_base/ComponentLocker'
 import styles from './Competence.module.scss'
 
 const { Text, Paragraph } = Typography
@@ -22,72 +30,77 @@ export const Competence: FCC<CompetenceProps> = ({ data, isLoading }) => {
     = data?.competency?.game_world_stories
       && data.competency.game_world_stories.length > 0
 
-  const isBlocked = !data?.is_received
-
   return (
     <>
-      <Card
-        loading={isLoading}
-        className={`${styles.card} ${isBlocked ? styles.blocked : ''}`}
-        data-testid={`competency-${data?.competency.id}`}
-        size='small'
-        hoverable={!isBlocked}
+      <Badge.Ribbon
+        color='gold'
+        text={t('received')}
         style={{
-          borderTop: `8px solid ${data?.competency.color || '#1677ff'}`,
-          opacity: isBlocked ? 0.5 : 1,
-          filter: isBlocked ? 'grayscale(70%)' : 'none',
-          position: 'relative',
+          display: data?.is_received ? 'block' : 'none',
         }}
       >
-        {/* Оверлей блокировки */}
-        {isBlocked ? <ComponentLocker /> : null}
-
-        <Space
-          direction='vertical'
+        <Card
+          loading={isLoading}
+          className={styles.card}
+          data-testid={`competency-${data?.competency.id}`}
           size='small'
           style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
+            borderTop: `4px solid ${data?.competency.color || '#1677ff'}`,
+            borderBottom: `4px solid ${data?.competency.color || '#1677ff'}`,
+            position: 'relative',
           }}
         >
-          <Image
-            src={
-              (data?.competency.icon as string) || 'https://picsum.photos/200'
-            }
-            alt={data?.competency.name}
-            preview={false}
-            className={styles.icon}
-            height={48}
-          />
-          <Text strong>{data?.competency.name}</Text>
-          {data?.competency.description && (
-            <Paragraph ellipsis={{ rows: 3 }}>
-              {data?.competency.description}
-            </Paragraph>
-          )}
-          <Space direction='horizontal'>
-            <Tag color={isBlocked ? 'default' : 'blue'}>
-              {data?.experience} XP
-            </Tag>
-            {isBlocked && (
-              <Tag color='red' icon={<LockOutlined />}>
-                {t('locked')}
-              </Tag>
+          <Space
+            direction='vertical'
+            size='small'
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+            }}
+          >
+            <Image
+              src={
+                (data?.competency.icon as string) || 'https://picsum.photos/200'
+              }
+              alt={data?.competency.name}
+              preview={false}
+              className={styles.icon}
+              height={48}
+            />
+            <Text strong type='warning'>
+              {data?.competency.name}
+            </Text>
+            <Text>
+              {t('level')}: {data?.competency.level}
+            </Text>
+            {data?.competency.description && (
+              <Paragraph ellipsis={{ rows: 3 }}>
+                {data?.competency.description}
+              </Paragraph>
             )}
-            {hasStories && !isBlocked && (
-              <Tag
-                color='purple'
-                icon={<BookOutlined />}
-                style={{ cursor: 'pointer' }}
-                onClick={() => setStoriesModalOpen(true)}
-              >
-                {t('stories')}
-              </Tag>
-            )}
+            <Space direction='horizontal'>
+              <Tag color='default'>{data?.experience} XP</Tag>
+              {t('from')}
+              <Tag color='gold'>{data?.competency.required_experience} XP</Tag>
+            </Space>
+            {hasStories
+              ? (
+                  <Space>
+                    <Tag
+                      color='purple'
+                      icon={<BookOutlined />}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setStoriesModalOpen(true)}
+                    >
+                      {t('stories')}
+                    </Tag>
+                  </Space>
+                )
+              : null}
           </Space>
-        </Space>
-      </Card>
+        </Card>
+      </Badge.Ribbon>
 
       {/* Модалка с историями */}
       <Modal

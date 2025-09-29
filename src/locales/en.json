@@ -296,7 +296,10 @@
     "stories": "Stories",
     "world_stories_title": "World Stories: {competencyName}",
     "story_image": "Story image",
-    "locked": "Locked"
+    "locked": "Locked",
+    "from": "from",
+    "level": "level",
+    "received": "received"
   },
   "FileUpload": {
     "upload_text": "Click or drag files to this area to upload",
