@@ -50,7 +50,7 @@ const BarChart: FCC<BarChartProps> = ({
   label,
   axis,
   color,
-  appendPadding = [20, 20, 20, 20],
+  appendPadding,
 }) => {
   // Определяем размеры в зависимости от пропса size
   const getSizeConfig = () => {
@@ -105,7 +105,7 @@ const BarChart: FCC<BarChartProps> = ({
     label: label || defaultLabelConfig,
     axis: axis || defaultAxisConfig,
     color,
-    appendPadding,
+    appendPadding: appendPadding || [20, 20, 20, 20],
   }
 
   return (

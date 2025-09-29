@@ -2,6 +2,7 @@
 
 import type { FCC, ReactQueryFetch } from 'src/types'
 import type { CharacterMissionProps } from '@/models/CharacterMission'
+import type { GameWorldStoryProps } from '@/models/GameWorldStory'
 import { DollarOutlined, TrophyOutlined } from '@ant-design/icons'
 import {
   Button,
@@ -36,8 +37,8 @@ const MODEL_MISSIONS = CharacterMission
 const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
   open,
   itemId,
-  onClose,
   onComplete,
+  onClose,
   width = 700,
 }) => {
   const t = useTranslations('MissionCard')
@@ -84,9 +85,8 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
 
   const handleComplete = (values: { result: string }) => {
     handleUpdate(itemId as number, values)
-    onComplete?.()
     form.resetFields()
-    onClose()
+    onComplete?.()
   }
 
   const canSubmitResult = () => {
@@ -121,7 +121,29 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
           <Title level={5}>{t('mission_description')}</Title>
           <Paragraph>{response?.data?.mission.description}</Paragraph>
         </div>
-
+        {/* Связанные истории мира */}
+        {response?.data?.mission?.game_world_stories
+          && response?.data?.mission?.game_world_stories.length > 0
+          ? (
+              <>
+                <Divider size='small' />
+                <div>
+                  <Title level={5}>{t('related_stories')}</Title>
+                  <Space
+                    direction='vertical'
+                    size='small'
+                    style={{ width: '100%' }}
+                  >
+                    {response?.data?.mission?.game_world_stories.map(
+                      (story: GameWorldStoryProps) => (
+                        <Text key={story.id}>{story.text || story.id}</Text>
+                      ),
+                    )}
+                  </Space>
+                </div>
+              </>
+            )
+          : null}
         <Divider size='small' />
 
         {/* Награды */}
@@ -192,11 +214,11 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
         <div>
           <Title level={5}>
             {t('about_branch', {
-              branchName: response?.data?.mission.branch.name,
+              branchName: response?.data?.mission?.branch?.name,
             })}
           </Title>
           <Paragraph type='secondary'>
-            {response?.data?.mission.branch.description}
+            {response?.data?.mission.branch?.description}
           </Paragraph>
         </div>
 
@@ -206,7 +228,12 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
             <Divider size='small' />
             <div>
               <Title level={5}>{t('mission_results')}</Title>
-              <Form form={form} layout='vertical' onFinish={handleComplete}>
+              <Form
+                initialValues={response?.data}
+                form={form}
+                layout='vertical'
+                onFinish={handleComplete}
+              >
                 <Form.Item
                   label={t('result_description')}
                   name='result'
@@ -251,7 +278,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
                           htmlType='submit'
                         >
                           {response?.data?.status === 'IN_PROGRESS'
-                            && t('complete_mission')}
+                            && t('to_pending_review')}
                           {response?.data?.status === 'NEED_IMPROVEMENT'
                             && t('resubmit')}
                           {response?.data?.status === 'FAILED' && t('retry')}

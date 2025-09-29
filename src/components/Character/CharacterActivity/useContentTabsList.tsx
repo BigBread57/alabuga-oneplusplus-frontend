@@ -1,11 +1,12 @@
 import { Space } from 'antd'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
-import { MissionCard } from '@/components/Mission/MissionCard'
+import { CharacterBranchesMission } from '@/models/CharacterBrancesMission'
 import { CharacterEvent } from '@/models/CharacterEvent'
-import { CharacterMission } from '@/models/CharacterMission'
+import EventCard from '../../Event/EventCard/EventCard'
+import MissionBranchCollapse from '../../MissionBranch/MissionBranchCollapse/MissionBranchCollapse'
 
-const MODEL_MISSIONS = CharacterMission
+const MODEL_CHARACTER_MISSIONS_BRANCH = CharacterBranchesMission
 const MODEL_EVENTS = CharacterEvent
 
 export const useContentTabsList = (filter: Record<string, any>) => {
@@ -15,9 +16,9 @@ export const useContentTabsList = (filter: Record<string, any>) => {
       tab1: (
         <FetchMoreItemsComponent
           isParentCounter
-          model={MODEL_MISSIONS}
+          model={MODEL_CHARACTER_MISSIONS_BRANCH}
           defFilters={filterMemo}
-          renderItems={({ data }) => (
+          renderItems={({ data, refetch }) => (
             <div
               style={{
                 paddingRight: '8px',
@@ -29,7 +30,12 @@ export const useContentTabsList = (filter: Record<string, any>) => {
                 style={{ width: '100%' }}
               >
                 {data?.map((item) => (
-                  <MissionCard data={item} key={item.id} />
+                  <MissionBranchCollapse
+                    data={item}
+                    key={item.id}
+                    externalFilter={filter}
+                    onRefetch={refetch}
+                  />
                 ))}
               </Space>
             </div>
@@ -41,7 +47,7 @@ export const useContentTabsList = (filter: Record<string, any>) => {
           isParentCounter
           model={MODEL_EVENTS}
           defFilters={filterMemo}
-          renderItems={({ data }) => (
+          renderItems={({ data, refetch }) => (
             <div
               style={{
                 paddingRight: '8px',
@@ -53,8 +59,7 @@ export const useContentTabsList = (filter: Record<string, any>) => {
                 style={{ width: '100%' }}
               >
                 {data?.map((item) => (
-                  <div key={item.id}>{item.id}</div>
-                  // <CharacterEvetCard characterEnet={item} key={item.id} />
+                  <EventCard data={item} key={item.id} onComplete={refetch} />
                 ))}
               </Space>
             </div>

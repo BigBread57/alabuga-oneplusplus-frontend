@@ -54,4 +54,12 @@ export class CharacterEvent extends BaseModel {
   static override url() {
     return EventUrl.EVENTS
   }
+
+  static updateForCharacterUrl(id: number) {
+    return `${this.url()}/${id}/update-for-character/`
+  }
+
+  static updateForInspectorUrl(id: number) {
+    return `${this.url()}/${id}/update-for-inspector/`
+  }
 }

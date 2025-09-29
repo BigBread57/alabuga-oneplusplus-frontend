@@ -13,7 +13,7 @@ export const useUrlDrawer = ({ paramName, itemId }: UseUrlDrawerProps) => {
   // Проверяем URL параметр при монтировании и изменении searchParams
   useEffect(() => {
     const itemParam = searchParams.get(paramName)
-    if (itemParam === itemId.toString()) {
+    if (itemParam === itemId?.toString()) {
       // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
       setDrawerVisible(true)
     } else {
@@ -27,7 +27,7 @@ export const useUrlDrawer = ({ paramName, itemId }: UseUrlDrawerProps) => {
     // Добавляем параметр к существующим URL параметрам
     const currentPath = window.location.pathname
     const currentSearch = new URLSearchParams(window.location.search)
-    currentSearch.set(paramName, itemId.toString())
+    currentSearch.set(paramName, itemId?.toString())
     const newUrl = `${currentPath}?${currentSearch.toString()}`
     window.history.pushState(null, '', newUrl)
   }

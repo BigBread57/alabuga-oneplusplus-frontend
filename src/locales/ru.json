@@ -145,7 +145,8 @@
     "mission_completed": "Миссия завершена",
     "new_mission": "Новая миссия доступна",
     "events": "События",
-    "activities": "Активности"
+    "activities": "Активности",
+    "missions_branches": "Ветки миссий"
   },
   "CurrentUser": {
     "logout": "Выйти"
@@ -244,9 +245,11 @@
     "completed": "Завершено",
     "need_improvement": "Требует доработки",
     "pending_review": "На проверке",
+    "to_pending_review": "На проверку",
     "failed": "Провалено"
   },
   "MissionCard": {
+    "related_stories": "История",
     "key_mission": "Ключевая",
     "level": "Уровень",
     "start": "Начало",
@@ -268,6 +271,7 @@
     "completed": "Выполнено",
     "resubmit": "Переделать",
     "pending_review": "На проверке",
+    "to_pending_review": "На проверку",
     "retry": "Повторить",
     "locked": "Заблокировано",
     "close": "Закрыть",
@@ -283,7 +287,7 @@
     "no_modifier": "без модификатора",
     "experience_gain": "повышение опыта",
     "currency_gain": "повышение валюты",
-    "store_discount": "скидка в магазине"
+    "SHOP_DISCOUNT": "скидка в магазине"
   },
   "Competence": {
     "view_stories": "Посмотреть истории",
@@ -498,5 +502,41 @@
     "confirm_delete": "Вы уверены, что хотите удалить этот элемент?",
     "no_changes": "Нет изменений для сохранения",
     "unsaved_changes": "У вас есть несохраненные изменения. Вы уверены, что хотите покинуть страницу?"
+  },
+  "MissionBranchCollapse": {},
+  "EventDrawer": {
+    "key_mission": "Ключевая миссия",
+    "event_description": "Описание события",
+    "rewards": "Награды",
+    "experience": "опыта",
+    "coins": "монет",
+    "information": "Информация",
+    "category": "Категория",
+    "order": "Порядок",
+    "required_number": "Требуемое количество",
+    "time_to_complete": "Время на выполнение",
+    "minutes": "минут",
+    "timeframe": "Временные рамки",
+    "start_date": "Дата начала",
+    "end_date": "Дата окончания",
+    "about_category": "О категории {categoryName}",
+    "related_stories": "Связанные истории",
+    "close": "Закрыть",
+    "mission_results": "Результаты события",
+    "result_description": "Описание результата",
+    "result_description_placeholder": "Опишите, что вы сделали для выполнения события...",
+    "result_description_required": "Описание результата обязательно",
+    "attachments": "Вложения",
+    "participate": "Участвовать",
+    "to_pending_review": "На проверку",
+    "resubmit": "Отправить повторно",
+    "retry": "Попробовать снова",
+    "completed": "Завершено",
+    "pending_review": "На проверке"
+  },
+  "EventCard": {
+    "start": "Начало",
+    "end": "Завершение",
+    "view_details": "Просмотреть детали"
   }
 }

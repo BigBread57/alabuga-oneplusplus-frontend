@@ -40,7 +40,7 @@ const RadialBarChart: FCC<RadialBarChartProps> = ({
   markBackgroundOpacity = 0.25,
   maxValue = 12000,
   styleRadius = 180,
-  tooltipItems = ['star'],
+  tooltipItems,
   axisY = false,
 }) => {
   // Определяем размеры в зависимости от пропса size
@@ -75,7 +75,7 @@ const RadialBarChart: FCC<RadialBarChartProps> = ({
     innerRadius,
     ...sizeConfig,
     tooltip: {
-      items: tooltipItems,
+      items: tooltipItems || ['star'],
     },
     legend: showLegend,
     axis: {

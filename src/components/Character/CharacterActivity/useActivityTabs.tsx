@@ -2,9 +2,13 @@ import { Space, Tag } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 
-export const useActivityTabs = (
-  { missionData, eventData }: { missionData?: any, eventData?: any },
-) => {
+export const useActivityTabs = ({
+  missionData,
+  eventData,
+}: {
+  missionData?: any
+  eventData?: any
+}) => {
   const t = useTranslations('Mission')
 
   const tabList = [
@@ -12,7 +16,7 @@ export const useActivityTabs = (
       key: 'tab1',
       tab: (
         <Space direction='horizontal'>
-          {t('missions').toUpperCase()}
+          {t('missions_branches').toUpperCase()}
           <Tag>{missionData?.data?.count || 0}</Tag>
         </Space>
       ),

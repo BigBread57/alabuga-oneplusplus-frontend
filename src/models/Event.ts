@@ -1,4 +1,5 @@
 import type { BaseModelProps } from './Base'
+import type { EventCategoryProps } from '@/models/EventCategory'
 import type { GameWorldStoryProps } from '@/models/GameWorldStory'
 import { BaseModel } from './Base'
 
@@ -15,11 +16,12 @@ export interface EventProps extends BaseModelProps {
   start_datetime: string
   time_to_complete: number
   end_datetime: string | null
+  category: EventCategoryProps
 }
 
 enum EventUrl {
-  EVENTS = '/game-world/events/list',
-  EVENT = '/game-world/events',
+  EVENTS = '/game-world/events',
+  EVENT = '/game-world/event',
 }
 
 export class Event extends BaseModel {

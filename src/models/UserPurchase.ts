@@ -7,7 +7,7 @@ export enum UserPurchaseStatus {
   DEFAULT = 'DEFAULT',
   EXPERIENCE_GAIN = 'EXPERIENCE_GAIN',
   CURRENCY_GAIN = 'CURRENCY_GAIN',
-  STORE_DISCOUNT = 'STORE_DISCOUNT',
+  SHOP_DISCOUNT = 'SHOP_DISCOUNT',
 }
 export interface UserPurchaseProps extends BaseModelProps {
   id: string

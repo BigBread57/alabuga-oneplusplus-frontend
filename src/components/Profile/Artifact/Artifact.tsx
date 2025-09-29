@@ -15,7 +15,7 @@ const modifierLabels: Record<ArtifactProps['modifier'], string> = {
   DEFAULT: 'no_modifier',
   EXPERIENCE_GAIN: 'experience_gain',
   CURRENCY_GAIN: 'currency_gain',
-  STORE_DISCOUNT: 'store_discount',
+  SHOP_DISCOUNT: 'SHOP_DISCOUNT',
 }
 
 const Artifact: FCC<ArtifactProps> = ({
