@@ -2,7 +2,7 @@
 
 import type { FCC } from 'src/types'
 import type { ArtifactProps } from '@/models/Artifact'
-import { Card, Divider, Modal, Tag, Typography } from 'antd'
+import { Card, Divider, Modal, Tag, Tooltip, Typography } from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -31,7 +31,7 @@ const Artifact: FCC<ArtifactProps> = ({
   const [open, setOpen] = useState(false)
 
   return (
-    <>
+    <Tooltip placement='top' title={name}>
       <div
         className={styles.iconWrapper}
         role='button'
@@ -119,7 +119,7 @@ const Artifact: FCC<ArtifactProps> = ({
           )}
         </Card>
       </Modal>
-    </>
+    </Tooltip>
   )
 }
 

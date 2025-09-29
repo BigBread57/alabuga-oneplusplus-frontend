@@ -39,7 +39,7 @@ export class Character extends BaseModel {
   }
 
   static updateUrl() {
-    return `${this.url()}/update/`
+    return `${this.url()}/actual/update/`
   }
 
   // characters/actual/statistics/
