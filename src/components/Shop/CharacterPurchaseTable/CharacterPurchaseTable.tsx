@@ -43,6 +43,22 @@ interface CharacterPurchaseProps {
 
 const columns: TableProps<CharacterPurchaseProps>['columns'] = [
   {
+    title: 'Изображение',
+    dataIndex: 'shop_item',
+    key: 'image',
+    render: (shop_item) => {
+      return (
+        <Image
+          src={shop_item.image || 'https://dummyimage.com/300/200'}
+          alt={shop_item.name}
+          width={100}
+          height={100}
+          className={styles.shopItemImage}
+        />
+      )
+    },
+  },
+  {
     title: 'Товар',
     dataIndex: 'shop_item',
     key: 'shop_item',
@@ -92,8 +108,7 @@ const columns: TableProps<CharacterPurchaseProps>['columns'] = [
     render: (status) => {
       const statusConfig = {
         PENDING: { color: 'orange', text: 'Ожидание' },
-        COMPLETED: { color: 'green', text: 'Завершено' },
-        CANCELLED: { color: 'red', text: 'Отменено' },
+        DELIVERED: { color: 'green', text: 'Завершено' },
       }
 
       const config = statusConfig[status as keyof typeof statusConfig] || {
@@ -102,22 +117,6 @@ const columns: TableProps<CharacterPurchaseProps>['columns'] = [
       }
 
       return <Tag color={config.color}>{config.text}</Tag>
-    },
-  },
-  {
-    title: 'Изображение',
-    dataIndex: 'shop_item',
-    key: 'image',
-    render: (shop_item) => {
-      return (
-        <Image
-          src={shop_item.image || 'https://dummyimage.com/300/200'}
-          alt={shop_item.name}
-          width={100}
-          height={100}
-          className={styles.shopItemImage}
-        />
-      )
     },
   },
 ]

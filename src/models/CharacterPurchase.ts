@@ -6,8 +6,8 @@ import { BaseModel } from '@/models/Base'
 export enum CharacterPurchaseStatus {
   PENDING = 'PENDING',
   CONFIRMED = 'CONFIRMED',
+  SENT = 'SENT',
   DELIVERED = 'DELIVERED',
-  CANCELLED = 'CANCELLED',
 }
 export interface CharacterPurchaseProps extends BaseModelProps {
   id: string

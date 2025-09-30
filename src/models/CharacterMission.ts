@@ -51,10 +51,14 @@ export class CharacterMission extends BaseModel {
   }
 
   static updateForCharacterUrl(id: number) {
-    return `${this.url()}/${id}/update-for-character/`
+    return `${this.url()}/${id}/update/for-character/`
+  }
+
+  static listForInspectorUrl(id: number) {
+    return `${this.url()}/${id}/list/for-inspector/`
   }
 
   static updateForInspectorUrl(id: number) {
-    return `${this.url()}/${id}/update-for-inspector/`
+    return `${this.url()}/${id}/update/for-inspector/`
   }
 }

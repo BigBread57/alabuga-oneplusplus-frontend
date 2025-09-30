@@ -6,9 +6,9 @@ import { CardWrapper } from '@/components/_base/CardWrapper'
 import { useActivityTabs } from '@/components/Character/CharacterActivity/useActivityTabs'
 import { useContentTabsList } from '@/components/Character/CharacterActivity/useContentTabsList'
 import { useFilter } from '@/hooks/useFilter'
-import { CharacterBranchesMission } from '@/models/CharacterBrancesMission'
 import { CharacterEvent } from '@/models/CharacterEvent'
 import { CharacterMissionStatus } from '@/models/CharacterMission'
+import { CharacterMissionBranch } from '@/models/CharacterMissionBranch'
 import { useFetchItems } from '@/services/base/hooks'
 import MissionStatusFilter from '../MissionStatusFilter/MissionStatusFilter'
 
@@ -17,7 +17,7 @@ interface CharacterActivityProps {
 }
 
 const MODEL_EVENTS = CharacterEvent
-const MODEL_CHARACTER_MISSIONS_BRANCH = CharacterBranchesMission
+const MODEL_CHARACTER_MISSION_BRANCHES = CharacterMissionBranch
 
 const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>('tab1')
@@ -39,7 +39,7 @@ const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
     qKey: 'eventsCardCount',
   })
   const { data: missionData } = useFetchItems({
-    model: MODEL_CHARACTER_MISSIONS_BRANCH,
+    model: MODEL_CHARACTER_MISSION_BRANCHES,
     filter: {
       limit: 1,
       offset: 0,

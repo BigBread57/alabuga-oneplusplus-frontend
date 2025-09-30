@@ -543,12 +543,18 @@
     "view_details": "Просмотреть детали"
   },
   "AdminMenu": {
-    "lor": "LOP",
+    "lor": "Лор",
     "missions": "Миссии",
-    "statistics": "Статистика"
+    "statistics": "Статистика",
+    "shop": "Магазин"
   },
   "CharacterPurchaseTable": {
     "select_shop_item_category": "Выберите категорию",
-    "character_purchases": "Покупки персонажа"
+    "character_purchases": "Покупки персонажа",
+    "confirmed": "Подтверждена",
+    "sent": "Отправлена",
+    "pending": "В обработке",
+    "delivered": "Доставлена",
+    "shop": "Магазин"
   }
 }

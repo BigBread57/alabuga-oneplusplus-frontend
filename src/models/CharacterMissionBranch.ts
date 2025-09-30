@@ -4,7 +4,7 @@ import type { MissionProps } from '@/models/Mission'
 import type { MissionBranchProps } from '@/models/MissionBranch'
 import { BaseModel } from './Base'
 
-export interface CharacterBranchesMissionProps extends BaseModelProps {
+export interface CharacterMissionBranchProps extends BaseModelProps {
   status: string
   status_display_name: string
   start_datetime: string
@@ -15,15 +15,15 @@ export interface CharacterBranchesMissionProps extends BaseModelProps {
   character_missions: CharacterMissionProps[]
 }
 
-enum CharacterBranchesMissionUrl {
-  CHARACTER_BRANCH_MISSION = '/user/character-mission-branch',
-  CHARACTER_BRANCH_MISSIONS = '/user/character-mission-branches',
+enum CharacterMissionBranchUrl {
+  CHARACTER_MISSION_BRANCH = '/user/character-mission-branch',
+  CHARACTER_MISSION_BRANCHES = '/user/character-mission-branches',
 }
 
-export class CharacterBranchesMission extends BaseModel {
-  static override modelName = 'characterBranchesMission'
+export class CharacterMissionBranch extends BaseModel {
+  static override modelName = 'characterMissionBranch'
 
   static override url() {
-    return CharacterBranchesMissionUrl.CHARACTER_BRANCH_MISSIONS
+    return CharacterMissionBranchUrl.CHARACTER_MISSION_BRANCHES
   }
 }

@@ -552,10 +552,15 @@
   "AdminMenu": {
     "lor": "LOR",
     "missions": "Missions",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "shop": "Shop"
   },
   "CharacterPurchaseTable": {
     "select_shop_item_category": "Select item category",
-    "character_purchases": "Character purchases"
+    "character_purchases": "Character purchases",
+    "confirmed": "Confirmed",
+    "sent": "Sent",
+    "pending": "Pending",
+    "delivered": "Delivered"
   }
 }

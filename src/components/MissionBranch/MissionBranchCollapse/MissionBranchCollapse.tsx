@@ -1,5 +1,5 @@
 'use client'
-import type { CharacterBranchesMissionProps } from '@/models/CharacterBrancesMission'
+import type { CharacterMissionBranchProps } from '@/models/CharacterMissionBranch'
 import { Collapse, Space, Spin, Tag, Typography } from 'antd'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
@@ -12,7 +12,7 @@ import { useFetchItems } from '@/services/base/hooks'
 const { Text } = Typography
 
 interface MissionBranchCollapseProps {
-  data: CharacterBranchesMissionProps
+  data: CharacterMissionBranchProps
   externalFilter?: Record<string, any>
   onRefetch?: () => void
 }

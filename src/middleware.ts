@@ -32,6 +32,8 @@ const protectedRoutes = [
   '/:locale/admin/lor',
   '/admin/statistics',
   '/:locale/admin/statistics',
+  '/admin/shop',
+  '/:locale/admin/shop',
 ]
 
 // Arcjet — защита от ботов

@@ -29,6 +29,9 @@ const AdminMenu: FCC = () => {
     if (pathname.includes('statistics')) {
       return 'statistics'
     }
+    if (pathname.includes('shop')) {
+      return 'shop'
+    }
     return 'admin'
   }
 
@@ -47,6 +50,11 @@ const AdminMenu: FCC = () => {
       key: 'statistics',
       icon: <BarChartOutlined />,
       label: <Link href='statistics'>{t('statistics')}</Link>,
+    },
+    {
+      key: 'shop',
+      icon: <BarChartOutlined />,
+      label: <Link href='shop'>{t('shop')}</Link>,
     },
   ]
 

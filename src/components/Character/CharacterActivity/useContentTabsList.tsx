@@ -1,12 +1,12 @@
 import { Space } from 'antd'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
-import { CharacterBranchesMission } from '@/models/CharacterBrancesMission'
 import { CharacterEvent } from '@/models/CharacterEvent'
+import { CharacterMissionBranch } from '@/models/CharacterMissionBranch'
 import EventCard from '../../Event/EventCard/EventCard'
 import MissionBranchCollapse from '../../MissionBranch/MissionBranchCollapse/MissionBranchCollapse'
 
-const MODEL_CHARACTER_MISSIONS_BRANCH = CharacterBranchesMission
+const MODEL_CHARACTER_MISSION_BRANCHES = CharacterMissionBranch
 const MODEL_EVENTS = CharacterEvent
 
 export const useContentTabsList = (filter: Record<string, any>) => {
@@ -16,7 +16,7 @@ export const useContentTabsList = (filter: Record<string, any>) => {
       tab1: (
         <FetchMoreItemsComponent
           isParentCounter
-          model={MODEL_CHARACTER_MISSIONS_BRANCH}
+          model={MODEL_CHARACTER_MISSION_BRANCHES}
           defFilters={filterMemo}
           renderItems={({ data, refetch }) => (
             <div
