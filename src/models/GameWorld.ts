@@ -24,4 +24,8 @@ export class GameWorld extends BaseModel {
   static statisticsUrl(id: number) {
     return `${this.url()}/${id}/statistics`
   }
+
+  static allInfoUrl(id: number) {
+    return `${this.url()}/${id}/all-info/`
+  }
 }

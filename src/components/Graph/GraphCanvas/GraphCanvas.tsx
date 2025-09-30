@@ -6,12 +6,15 @@ import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
+import { GameWorld } from '@/models/GameWorld'
+import { useExtraActionsGet } from '@/services/base/hooks'
 
 interface GraphCanvasProps {
   data?: any
@@ -20,9 +23,8 @@ interface GraphCanvasProps {
   enablePanning?: boolean
   enableMousewheel?: boolean
 }
-
+const MODEL = GameWorld
 const GraphCanvas: FCC<GraphCanvasProps> = ({
-  data,
   gridVisible = true,
   gridSize = 10,
   enablePanning = true,
@@ -31,10 +33,17 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
-
   const [isShowModal, setIsShowModal] = useState(false)
   const [currentEntityType, setCurrentEntityType]
     = useState<ENTITY_TYPES | null>(null)
+  const { currentUser } = useContext(CurrentUserContext)
+
+  const { data: response }: any = useExtraActionsGet({
+    qKey: 'graph-all-info',
+    extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
+    enabled: !!currentUser?.active_game_world,
+  })
+
   const handleShowModal = (entityType: ENTITY_TYPES) => {
     setIsShowModal(true)
     setCurrentEntityType(entityType)
@@ -68,7 +77,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     toggleConnectingMode,
     isConnectingMode,
   } = useGraph({
-    data,
+    data: response?.data,
     gridVisible,
     gridSize,
     enablePanning,
