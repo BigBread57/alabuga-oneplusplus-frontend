@@ -119,7 +119,6 @@ const EventDrawer: FCC<EventDrawerProps> = ({
     return (
       response?.data?.status === 'IN_PROGRESS'
       || response?.data?.status === 'NEED_IMPROVEMENT'
-      || response?.data?.status === 'FAILED'
     )
   }
 

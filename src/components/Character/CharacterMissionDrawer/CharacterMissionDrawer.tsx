@@ -276,7 +276,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
                 <TextArea
                   rows={4}
                   disabled={
-                    !['COMPLETED', 'NEED_IMPROVEMENT'].includes(
+                    !['IN_PROGRESS', 'NEED_IMPROVEMENT'].includes(
                       response?.data?.status,
                     )
                   }
@@ -289,7 +289,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
               <Form.Item label={t('attachments')}>
                 <FileUpload
                   disabled={
-                    !['COMPLETED', 'NEED_IMPROVEMENT'].includes(
+                    !['IN_PROGRESS', 'NEED_IMPROVEMENT'].includes(
                       response?.data?.status,
                     )
                   }
