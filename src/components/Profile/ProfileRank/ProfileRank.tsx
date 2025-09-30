@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
 
 type ProfileRankProps = {
+  currency?: number
   characterId?: string | number
   userName: string
   userAvatar: string | undefined
@@ -31,6 +32,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
   userName,
   characterId,
   onUpdateAvatarSuccess,
+  currency,
 }) => {
   const t = useTranslations('ProfileRank')
   const { Text, Title } = Typography
@@ -104,6 +106,9 @@ const ProfileRank: FCC<ProfileRankProps> = ({
                 {t('current_experience')}: {currentExperience?.toLocaleString()}
               </Text>
             )}
+            <Text type='secondary'>
+              {gameWorld?.currency_name?.toUpperCase()}: {currency}
+            </Text>
           </Space>
           <Space direction='vertical' size='small' style={{ width: '100%' }}>
             <Space style={{ width: '100%', justifyContent: 'space-between' }}>

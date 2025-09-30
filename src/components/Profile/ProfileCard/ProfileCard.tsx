@@ -78,6 +78,7 @@ const ProfileCard = forwardRef<ProfileCardRef, ProfileCardProps>(
               userAvatar={userAvatar}
               rank={character?.character_rank?.rank}
               nextRank={character?.character_rank?.next_rank || null}
+              currency={character?.currency}
               gameWorld={gameWorld}
               showProgress
               currentExperience={character?.character_rank?.experience}
