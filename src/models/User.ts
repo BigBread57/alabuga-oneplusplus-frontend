@@ -1,6 +1,6 @@
 import type { BaseModelProps } from '@/models/Base'
 
-import type { PermissionRulesProps } from '@/services/base/types'
+import type { CharacterRole } from '@/models/Character'
 import { BaseModel } from 'src/models/Base'
 
 export type UserProps = {
@@ -14,8 +14,7 @@ export type UserProps = {
   is_active: boolean
   full_name: string
   middle_name: string
-  is_need_add_info: true
-  permission_rules: PermissionRulesProps
+  active_character_role: CharacterRole
 } & BaseModelProps
 
 export class UserModel extends BaseModel {

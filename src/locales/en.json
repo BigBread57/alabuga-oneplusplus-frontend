@@ -257,6 +257,7 @@
     "failed": "Failed"
   },
   "MissionCard": {
+    "no_result_yet": "No result yet",
     "related_stories": "Related Stories",
     "key_mission": "Key Mission",
     "level": "Level",
@@ -287,7 +288,14 @@
     "result_description": "Result Description",
     "result_description_placeholder": "Describe what you did to complete the task...",
     "result_description_required": "Result description is required",
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "inspector_comment": "Inspector Comment",
+    "inspector_comment_placeholder": "Add a comment about the mission completion...",
+    "status": "Status",
+    "select_status": "Select status",
+    "status_required": "Status is required",
+    "need_improvement": "Need Improvement",
+    "apply": "Apply"
   },
   "Artifact": {
     "game_world_stories": "World Stories",
@@ -308,16 +316,17 @@
     "received": "received"
   },
   "FileUpload": {
-    "upload_text": "Click or drag files to this area to upload",
-    "upload_hint": "Support files up to {maxSize}MB. Maximum {maxCount} files",
-    "uploaded_files": "Uploaded files",
-    "uploading": "Uploading...",
-    "uploaded": "Uploaded",
-    "upload_failed": "Upload failed",
-    "file_too_large": "File too large. Maximum size: {maxSize}MB",
-    "max_files_exceeded": "Maximum number of files exceeded: {maxCount}",
-    "remove_file": "Remove file",
-    "upload_successful": "File uploaded successfully"
+    "upload_text": "Click or drag file to upload",
+    "upload_hint": "Maximum file size: {maxSize}MB, maximum files: {maxCount}",
+    "uploaded_files": "Uploaded Files",
+    "upload_successful": "File uploaded successfully",
+    "upload_failed": "File upload failed",
+    "download_successful": "File downloaded successfully",
+    "download_failed": "File download failed",
+    "download": "Download",
+    "delete": "Delete",
+    "file_too_large": "File is too large. Maximum size: {maxSize}MB",
+    "max_files_exceeded": "Maximum number of files exceeded: {maxCount}"
   },
   "AdminPage": {
     "meta_title": "Admin Panel",
@@ -531,17 +540,26 @@
     "about_category": "About {categoryName} Category",
     "related_stories": "Related Stories",
     "close": "Close",
+    "event_results": "Event Results",
     "mission_results": "Event Results",
     "result_description": "Result Description",
     "result_description_placeholder": "Describe what you did to complete the event...",
     "result_description_required": "Result description is required",
     "attachments": "Attachments",
     "participate": "Participate",
-    "to_pending_review": "To Pending Review",
+    "to_pending_review": "Submit for Review",
     "resubmit": "Resubmit",
     "retry": "Retry",
     "completed": "Completed",
-    "pending_review": "Pending Review"
+    "pending_review": "Pending Review",
+    "no_result_yet": "No results submitted yet",
+    "inspector_comment": "Inspector Comment",
+    "inspector_comment_placeholder": "Add your feedback for the participant...",
+    "status": "Status",
+    "status_required": "Status is required",
+    "select_status": "Select status",
+    "need_improvement": "Needs Improvement",
+    "apply": "Apply Changes"
   },
   "EventCard": {
     "start": "Start",

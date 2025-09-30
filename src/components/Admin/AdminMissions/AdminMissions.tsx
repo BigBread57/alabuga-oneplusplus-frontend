@@ -6,22 +6,18 @@ import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
+import { MissionStatusFilter } from '@/components/Character/MissionStatusFilter'
+import { EventCard } from '@/components/Event/EventCard'
 import { MissionCard } from '@/components/Mission/MissionCard'
 import { useFilter } from '@/hooks/useFilter'
-import { CharacterEvent } from '@/models/CharacterEvent'
-import {
-  CharacterMission,
-  CharacterMissionStatus,
-} from '@/models/CharacterMission'
+import { CharacterEventForInspector } from '@/models/CharacterEventForInspector'
+import { CharacterMissionStatus } from '@/models/CharacterMission'
+import { CharacterMissionForInspector } from '@/models/CharacterMissionForInspector'
 import { useFetchItems } from '@/services/base/hooks'
-import MissionStatusFilter from '../../Character/MissionStatusFilter/MissionStatusFilter'
-import EventCard from '../../Event/EventCard/EventCard'
 
-const MODEL_EVENTS = CharacterEvent
-const MODEL_MISSIONS = CharacterMission
-const MODEL_CHARACTER_MISSIONS = CharacterMission
+const MODEL_EVENTS = CharacterEventForInspector
+const MODEL_CHARACTER_MISSIONS = CharacterMissionForInspector
 
-// Кастомный хук для списка контента табов
 const contentTabsList = ({
   externalFilter,
   onRefetch,
@@ -35,7 +31,7 @@ const contentTabsList = ({
     tab1: (
       <FetchMoreItemsComponent
         isParentCounter
-        model={MODEL_MISSIONS}
+        model={MODEL_CHARACTER_MISSIONS}
         defFilters={externalFilter}
         renderItems={({ data, refetch }) => (
           <div style={{ paddingRight: '8px' }}>
@@ -76,7 +72,6 @@ const contentTabsList = ({
   return contentList
 }
 
-// Создаем кастомный хук для табов активности
 const useActivityTabs = ({
   missionData,
   eventData,

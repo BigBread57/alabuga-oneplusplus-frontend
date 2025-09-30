@@ -4,7 +4,11 @@ import type { UploadProps } from 'antd'
 import type { RcFile } from 'antd/es/upload'
 import type { FCC } from 'src/types'
 import type { MultimediaProps } from '@/models/Multimedia'
-import { DeleteOutlined, InboxOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  InboxOutlined,
+} from '@ant-design/icons'
 import { App, Button, List, Space, Typography, Upload } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
@@ -15,6 +19,7 @@ const { Dragger } = Upload
 const { Text } = Typography
 
 interface FileUploadProps {
+  disabled?: boolean
   fileList: MultimediaProps[]
   onChange: () => void
   maxCount?: number
@@ -34,13 +39,14 @@ const FileUpload: FCC<FileUploadProps> = ({
   maxSize = 10,
   object_id,
   content_type_id,
+  disabled,
 }) => {
   const t = useTranslations('FileUpload')
   const { mutate: create } = usePostExtraActions(
     'uploadFile',
     MODEL.createUrl(),
   )
-  const { message } = App.useApp() // Используем хук из App контекста
+  const { message } = App.useApp()
 
   const handleUpload: UploadProps['customRequest'] = ({ file }) => {
     const formData = new FormData()
@@ -66,6 +72,22 @@ const FileUpload: FCC<FileUploadProps> = ({
     onChange()
   }
 
+  const handleDownload = (file: MultimediaProps) => {
+    try {
+      // Создаем временную ссылку для скачивания
+      const link = document.createElement('a')
+      link.href = file.multimedia || ''
+      link.download = file.multimedia_name || 'download'
+      link.target = '_blank'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      message.success(t('download_successful'))
+    } catch (error) {
+      message.error(`${t('download_failed')} ${error}`)
+    }
+  }
+
   const beforeUpload = (file: File) => {
     const isValidSize = file.size / 1024 / 1024 < maxSize
     if (!isValidSize) {
@@ -85,6 +107,10 @@ const FileUpload: FCC<FileUploadProps> = ({
   return (
     <div>
       <Dragger
+        style={{
+          pointerEvents: disabled ? 'none' : 'auto',
+          opacity: disabled ? 0.5 : 1,
+        }}
         multiple
         fileList={fileList as any}
         customRequest={handleUpload}
@@ -92,7 +118,7 @@ const FileUpload: FCC<FileUploadProps> = ({
         beforeUpload={beforeUpload}
         accept={accept}
         showUploadList={false}
-        disabled={fileList.length >= maxCount}
+        disabled={fileList.length >= maxCount || disabled}
       >
         <Space direction='vertical'>
           <InboxOutlined
@@ -115,14 +141,23 @@ const FileUpload: FCC<FileUploadProps> = ({
               <List.Item
                 actions={[
                   <Button
-                    key='delete'
+                    key='download'
                     type='text'
-                    size='small'
-                    danger
-                    icon={<DeleteOutlined />}
-                    onClick={() => handleRemove()}
+                    icon={<DownloadOutlined />}
+                    onClick={() => handleDownload(file)}
+                    title={t('download')}
                   />,
-                ]}
+                  !disabled && (
+                    <Button
+                      key='delete'
+                      type='text'
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleRemove()}
+                      title={t('delete')}
+                    />
+                  ),
+                ].filter(Boolean)}
               >
                 <Space>
                   <Text>{file.multimedia_name}</Text>

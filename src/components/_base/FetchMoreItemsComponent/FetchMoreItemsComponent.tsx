@@ -14,6 +14,7 @@ import styles from './FetchMoreItemsComponent.module.scss'
 const { Text } = Typography
 
 type FetchMoreItemsComponentProps = {
+  baseURL?: string
   model: typeof BaseModel
   defFilters?: Record<string, any>
   options?: Record<string, any>
@@ -59,6 +60,7 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   extra,
   isClearRender,
   isParentCounter,
+  baseURL,
 }) => {
   const t = useTranslations('FetchMoreItemsComponent')
   const {
@@ -70,6 +72,7 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
     dataCount,
     refetch,
   }: any = useInfinityFetchData({
+    baseURL,
     model: Model,
     defFilters,
     options,

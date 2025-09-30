@@ -4,6 +4,16 @@ import type { RankProps } from '@/models/Rank'
 import type { UserProps } from '@/models/User'
 import { BaseModel } from '@/models/Base'
 
+export enum CharacterRole {
+  CANDIDATE = 'CANDIDATE',
+  EMPLOYEE = 'EMPLOYEE',
+  MANAGER = 'MANAGER',
+  CONTENT_MANAGER = 'CONTENT_MANAGER',
+  HR = 'HR',
+  ORGANIZER = 'ORGANIZER',
+  ADMIN = 'ADMIN',
+}
+
 export interface CharacterRank extends BaseModelProps {
   rank: RankProps
   next_rank?: RankProps | null

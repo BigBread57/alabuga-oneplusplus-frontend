@@ -63,14 +63,16 @@ export const useInfinityFetchData = <ModelType>({
   options,
   qKeyPrefix,
   dependOn,
+  baseURL,
 }: {
   model: typeof BaseModel
   defFilters?: Record<string, any>
   options?: any
   qKeyPrefix?: string
   dependOn?: any
+  baseURL?: string
 }) => {
-  const url = model.url()
+  const url = baseURL || model.url()
   // const qKey = qKeyPrefix || model.modelName
   // useChoices(qKey, url)
   // useOptions(qKey, url)

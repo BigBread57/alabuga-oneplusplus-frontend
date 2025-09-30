@@ -30,7 +30,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <ResponsiveLayout>
-      <ResponsiveHeader title={<LogoSwitcher height={50} />} />
+      <ResponsiveHeader title={<LogoSwitcher height={35} />} />
       <Content style={{ padding: '24px 0', overflow: 'initial' }}>
         {children}
       </Content>

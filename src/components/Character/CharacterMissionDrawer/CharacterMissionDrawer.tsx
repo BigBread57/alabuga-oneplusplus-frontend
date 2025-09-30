@@ -10,15 +10,19 @@ import {
   Drawer,
   Form,
   Input,
+  Select,
   Space,
   Tag,
   Typography,
 } from 'antd'
 import { useTranslations } from 'next-intl'
-import React from 'react'
+import React, { useContext } from 'react'
 import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
 import { FileUpload } from '@/components/_base/FileUpload'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { CharacterRole } from '@/models/Character'
 import { CharacterMission } from '@/models/CharacterMission'
+import { CharacterMissionForInspector } from '@/models/CharacterMissionForInspector'
 import { useExtraActionsPut, useFetchOneItem } from '@/services/base/hooks'
 
 const { Text, Title, Paragraph } = Typography
@@ -34,6 +38,8 @@ interface CharacterMissionDrawerProps {
 
 const MODEL_MISSIONS = CharacterMission
 
+const CHARACTER_MISSION_MODEL = CharacterMissionForInspector
+
 const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
   open,
   itemId,
@@ -42,7 +48,9 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
   width = 700,
 }) => {
   const t = useTranslations('MissionCard')
-  const [form] = Form.useForm()
+  const [userForm] = Form.useForm()
+  const [hrForm] = Form.useForm()
+  const { currentUser } = useContext(CurrentUserContext)
 
   const {
     data: response,
@@ -58,14 +66,37 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
     },
   })
 
-  const { mutate } = useExtraActionsPut('user_missions')
-  const handleUpdate = (id: number, values: Partial<CharacterMissionProps>) => {
-    mutate([MODEL_MISSIONS.updateForCharacterUrl(id), values], {
-      onSuccess: () => {
-        refetch()
+  const { mutate: updateForInspector } = useExtraActionsPut(
+    'update_for_inspector',
+  )
+  const handleInspectorUpdate = (values: {
+    inspector_comment?: string
+    status?: string
+  }) => {
+    updateForInspector(
+      [CHARACTER_MISSION_MODEL.updateForInspectorUrl(itemId as number), values],
+      {
+        onSuccess: () => {
+          refetch()
+          onComplete?.()
+        },
       },
-    })
+    )
   }
+
+  const { mutate: updateForCharacter } = useExtraActionsPut('user_missions')
+  const handleCharacterUpdate = (values: { result: string }) => {
+    updateForCharacter(
+      [MODEL_MISSIONS.updateForCharacterUrl(itemId as number), values],
+      {
+        onSuccess: () => {
+          refetch()
+          onComplete?.()
+        },
+      },
+    )
+  }
+
   const getStatusColor = () => {
     switch (response?.data?.status) {
       case 'IN_PROGRESS':
@@ -83,11 +114,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
     }
   }
 
-  const handleComplete = (values: { result: string }) => {
-    handleUpdate(itemId as number, values)
-    form.resetFields()
-    onComplete?.()
-  }
+  const isHR = currentUser?.active_character_role === CharacterRole.HR
 
   const canSubmitResult = () => {
     return (
@@ -121,6 +148,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
           <Title level={5}>{t('mission_description')}</Title>
           <Paragraph>{response?.data?.mission.description}</Paragraph>
         </div>
+
         {/* Связанные истории мира */}
         {response?.data?.mission?.game_world_stories
           && response?.data?.mission?.game_world_stories.length > 0
@@ -144,6 +172,7 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
               </>
             )
           : null}
+
         <Divider size='small' />
 
         {/* Награды */}
@@ -222,90 +251,154 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
           </Paragraph>
         </div>
 
-        {/* Блок для результатов выполнения */}
-        {canSubmitResult() && (
-          <>
-            <Divider size='small' />
-            <div>
-              <Title level={5}>{t('mission_results')}</Title>
-              <Form
-                initialValues={response?.data}
-                form={form}
-                layout='vertical'
-                onFinish={handleComplete}
+        <Divider size='small' />
+
+        {/* Форма для пользователя */}
+        {!isHR && (
+          <div>
+            <Title level={5}>{t('mission_results')}</Title>
+            <Form
+              form={userForm}
+              initialValues={response?.data}
+              layout='vertical'
+              onFinish={handleCharacterUpdate}
+            >
+              <Form.Item
+                label={t('result_description')}
+                name='result'
+                rules={[
+                  {
+                    required: true,
+                    message: t('result_description_required'),
+                  },
+                ]}
               >
-                <Form.Item
-                  label={t('result_description')}
-                  name='result'
-                  rules={[
-                    {
-                      required: true,
-                      message: t('result_description_required'),
-                    },
-                  ]}
-                >
-                  <TextArea
-                    rows={4}
-                    placeholder={t('result_description_placeholder')}
-                    value={response?.data?.result}
-                    maxLength={1000}
-                    showCount
-                  />
-                </Form.Item>
+                <TextArea
+                  rows={4}
+                  disabled={
+                    !['COMPLETED', 'NEED_IMPROVEMENT'].includes(
+                      response?.data?.status,
+                    )
+                  }
+                  placeholder={t('result_description_placeholder')}
+                  maxLength={1000}
+                  showCount
+                />
+              </Form.Item>
 
-                <Form.Item label={t('attachments')}>
-                  <FileUpload
-                    fileList={response?.data?.multimedia}
-                    object_id={itemId as number}
-                    content_type_id={response?.data?.content_type_id as number}
-                    maxSize={10}
-                    onChange={handleFileChange}
-                  />
-                </Form.Item>
+              <Form.Item label={t('attachments')}>
+                <FileUpload
+                  disabled={
+                    !['COMPLETED', 'NEED_IMPROVEMENT'].includes(
+                      response?.data?.status,
+                    )
+                  }
+                  fileList={response?.data?.multimedia}
+                  object_id={itemId as number}
+                  content_type_id={response?.data?.content_type_id as number}
+                  maxSize={10}
+                  onChange={handleFileChange}
+                />
+              </Form.Item>
+
+              {canSubmitResult() && (
                 <Form.Item>
-                  {/* Кнопки действий */}
-                  <div style={{ marginTop: 'auto', paddingTop: 16 }}>
-                    <Space
-                      direction='vertical'
-                      style={{ width: '100%' }}
-                      size='middle'
-                    >
-                      {canSubmitResult() && (
-                        <Button
-                          size='large'
-                          type='primary'
-                          block
-                          htmlType='submit'
-                        >
-                          {response?.data?.status === 'IN_PROGRESS'
-                            && t('to_pending_review')}
-                          {response?.data?.status === 'NEED_IMPROVEMENT'
-                            && t('resubmit')}
-                          {response?.data?.status === 'FAILED' && t('retry')}
-                        </Button>
-                      )}
-
-                      {response?.data?.status === 'COMPLETED' && (
-                        <Button size='large' block disabled>
-                          {t('completed')}
-                        </Button>
-                      )}
-
-                      {response?.data?.status === 'PENDING_REVIEW' && (
-                        <Button size='large' block disabled>
-                          {t('pending_review')}
-                        </Button>
-                      )}
-
-                      <Button size='large' block onClick={onClose}>
-                        {t('close')}
-                      </Button>
-                    </Space>
-                  </div>
+                  <Button size='large' type='primary' block htmlType='submit'>
+                    {response?.data?.status === 'IN_PROGRESS'
+                      && t('to_pending_review')}
+                    {response?.data?.status === 'NEED_IMPROVEMENT'
+                      && t('resubmit')}
+                    {response?.data?.status === 'FAILED' && t('retry')}
+                  </Button>
                 </Form.Item>
-              </Form>
+              )}
+            </Form>
+          </div>
+        )}
+
+        {/* Форма для HR */}
+        {isHR && (
+          <div>
+            <Title level={5}>{t('mission_results')}</Title>
+
+            {/* Результаты пользователя (read-only) */}
+            <div style={{ marginBottom: 16 }}>
+              <Text strong>{t('result_description')}:</Text>
+              <Paragraph style={{ marginTop: 8 }}>
+                {response?.data?.result || t('no_result_yet')}
+              </Paragraph>
             </div>
-          </>
+
+            {response?.data?.multimedia
+              && response?.data?.multimedia.length > 0 && (
+              <div style={{ marginBottom: 16 }}>
+                <FileUpload
+                  fileList={response?.data?.multimedia}
+                  object_id={itemId as number}
+                  content_type_id={response?.data?.content_type_id as number}
+                  maxSize={10}
+                  disabled={true}
+                  onChange={handleFileChange}
+                />
+              </div>
+            )}
+
+            <Divider size='small' />
+
+            {/* Форма проверки HR */}
+            <Form
+              form={hrForm}
+              initialValues={response?.data}
+              layout='vertical'
+              onFinish={handleInspectorUpdate}
+            >
+              <Form.Item
+                label={t('inspector_comment')}
+                name='inspector_comment'
+              >
+                <TextArea
+                  rows={3}
+                  placeholder={t('inspector_comment_placeholder')}
+                  maxLength={500}
+                  showCount
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={t('status')}
+                name='status'
+                rules={[
+                  {
+                    required: true,
+                    message: t('status_required'),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={t('select_status')}
+                  options={[
+                    { value: 'PENDING_REVIEW', label: t('pending_review') },
+                    {
+                      value: 'NEED_IMPROVEMENT',
+                      label: t('need_improvement'),
+                    },
+                    { value: 'COMPLETED', label: t('completed') },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Button size='large' type='primary' block htmlType='submit'>
+                  {t('apply')}
+                </Button>
+              </Form.Item>
+            </Form>
+
+            {/* Кнопка закрыть вне формы */}
+            <Button size='large' block onClick={onClose}>
+              {t('close')}
+            </Button>
+          </div>
         )}
       </Space>
     </Drawer>
