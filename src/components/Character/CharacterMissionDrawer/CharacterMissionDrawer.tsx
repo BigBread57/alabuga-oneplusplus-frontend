@@ -300,6 +300,16 @@ const CharacterMissionDrawer: FCC<CharacterMissionDrawerProps> = ({
                   onChange={handleFileChange}
                 />
               </Form.Item>
+              {response?.data?.inspector_comment
+                ? (
+                    <Form.Item
+                      label={t('inspector_comment')}
+                      name='inspector_comment'
+                    >
+                      <Text>{response?.data?.inspector_comment}</Text>
+                    </Form.Item>
+                  )
+                : null}
 
               {canSubmitResult() && (
                 <Form.Item>

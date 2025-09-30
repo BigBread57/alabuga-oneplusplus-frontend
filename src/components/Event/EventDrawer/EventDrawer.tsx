@@ -292,6 +292,16 @@ const EventDrawer: FCC<EventDrawerProps> = ({
                 />
               </Form.Item>
 
+              {response?.data?.inspector_comment
+                ? (
+                    <Form.Item
+                      label={t('inspector_comment')}
+                      name='inspector_comment'
+                    >
+                      <Text>{response?.data?.inspector_comment}</Text>
+                    </Form.Item>
+                  )
+                : null}
               {canSubmitResult() && (
                 <Form.Item>
                   <Button size='large' type='primary' block htmlType='submit'>
