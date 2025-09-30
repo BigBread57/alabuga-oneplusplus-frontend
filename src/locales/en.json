@@ -61,7 +61,11 @@
     "news": "News",
     "open_menu": "Open menu",
     "navigation": "Navigation",
-    "admin": "Admin"
+    "admin": "Admin",
+    "welcome": "Welcome",
+    "welcome_text": "Welcome text",
+    "start_tour": "Start!",
+    "skip_tour": "Skip"
   },
   "ShopPage": {
     "meta_title": "Shop",
@@ -69,7 +73,11 @@
   },
   "ProfilePage": {
     "meta_title": "Profile",
-    "meta_description": "View and edit your profile information"
+    "meta_description": "View and edit your profile information",
+    "welcome": "Welcome",
+    "welcome_text": "Welcome text",
+    "start_tour": "Start!",
+    "skip_tour": "Skip"
   },
 
   "ProfileCard": {
