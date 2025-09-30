@@ -1,10 +1,9 @@
 'use client'
 import type { FCC } from 'src/types'
-import { Col, Divider, Row, Table, Tabs } from 'antd'
+import { Col, Row, Table, Tabs } from 'antd'
 import { useTranslations } from 'next-intl'
 import React, { useContext } from 'react'
-import { BarChart } from '@/components/Charts/BarChart'
-import { ColumnChart } from '@/components/Charts/ColumnChart'
+import { CardWrapper } from '@/components/_base/CardWrapper'
 import RadialBarChart from '@/components/Charts/RadialBarChart/RadialBarChart'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { GameWorld } from '@/models/GameWorld'
@@ -133,48 +132,21 @@ const GlobalStatistics: FCC = () => {
   ]
 
   return (
-    <Row justify='center'>
+    <Row justify='center' gutter={[16, 16]}>
       <Col xs={24} lg={24}>
-        <Divider size='small'>{t('grouping_character_by_ranks')}</Divider>
-        <RadialBarChart
-          autoFit={true}
-          maxValue={10}
-          height={250}
-          data={response?.data?.grouping_character_by_ranks}
-        />
+        <CardWrapper title={t('top_characters').toUpperCase()}>
+          <Tabs defaultActiveKey='1' items={tabItems} />
+        </CardWrapper>
       </Col>
-      <Divider size='small'>
-        {t('number_of_character_who_closed_the_mission_branch')}
-      </Divider>
-      <Col xs={24} lg={12}>
-        <BarChart
-          height={250}
-          data={
-            response?.data?.number_of_character_who_closed_the_mission_branch
-          }
-        />
-      </Col>
-      <Divider size='small'>
-        {t('number_of_character_who_closed_the_mission')}
-      </Divider>
-      <Col xs={24} lg={12}>
-        <BarChart
-          height={250}
-          data={response?.data?.number_of_character_who_closed_the_mission}
-        />
-      </Col>
-      <Divider size='small'>
-        {t('completed_or_failed_character_missions')}
-      </Divider>
-      <Col xs={24} lg={12}>
-        <ColumnChart
-          height={250}
-          data={response?.data?.completed_or_failed_character_missions}
-        />
-      </Col>
-      <Divider size='small'>{t('top_characters')}</Divider>
       <Col xs={24} lg={24}>
-        <Tabs defaultActiveKey='1' items={tabItems} />
+        <CardWrapper title={t('grouping_character_by_ranks').toUpperCase()}>
+          <RadialBarChart
+            autoFit={true}
+            maxValue={10}
+            height={250}
+            data={response?.data?.grouping_character_by_ranks}
+          />
+        </CardWrapper>
       </Col>
     </Row>
   )

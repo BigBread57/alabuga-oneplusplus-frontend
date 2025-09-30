@@ -3,7 +3,11 @@
 import type { FCC } from 'src/types'
 import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import type { ENTITY_TYPES } from '@/hooks/useGraph'
+import { PlusOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
+import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
+import { CardWrapper } from '@/components/_base/CardWrapper'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
@@ -24,6 +28,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   enablePanning = true,
   enableMousewheel = true,
 }) => {
+  const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
 
@@ -78,46 +83,60 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     addEntity(entityType, entityData)
     handleHideModal()
   }
-
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      {/* Модальное окно для создания сущностей */}
-      <EntityCreationModal
-        visible={isShowModal}
-        entityType={currentEntityType}
-        onConfirm={handleAddEntity}
-        onCancel={handleHideModal}
-      />
-      {/* Drawer для информации о ноде */}
-      <NodeInfoDrawer
-        visible={drawerVisible}
-        nodeId={selectedNodeId}
-        entityType={currentEntityType}
-        onClose={handleCloseDrawer}
-      />
-      {/* Единая панель инструментов */}
-      {isReady && (
-        <GraphToolbarPanel
-          onAddEntity={handleShowModal}
-          onClearGraph={clearGraph}
-          onCenterContent={centerContent}
-          onFitContent={fitContent}
-          onZoomIn={zoomIn}
-          onZoomOut={zoomOut}
-          onToggleConnectingMode={toggleConnectingMode}
-          isConnectingMode={isConnectingMode}
+    <CardWrapper
+      title=''
+      extra={
+        <Button type='primary' icon={<PlusOutlined />} size='middle'>
+          {t('create_new_lor')}
+        </Button>
+      }
+      styles={{
+        body: {
+          height: 'calc(80vh)',
+          padding: 8,
+        },
+      }}
+    >
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        {/* Модальное окно для создания сущностей */}
+        <EntityCreationModal
+          visible={isShowModal}
+          entityType={currentEntityType}
+          onConfirm={handleAddEntity}
+          onCancel={handleHideModal}
         />
-      )}
+        {/* Drawer для информации о ноде */}
+        <NodeInfoDrawer
+          visible={drawerVisible}
+          nodeId={selectedNodeId}
+          entityType={currentEntityType}
+          onClose={handleCloseDrawer}
+        />
+        {/* Единая панель инструментов */}
+        {isReady && (
+          <GraphToolbarPanel
+            onAddEntity={handleShowModal}
+            onClearGraph={clearGraph}
+            onCenterContent={centerContent}
+            onFitContent={fitContent}
+            onZoomIn={zoomIn}
+            onZoomOut={zoomOut}
+            onToggleConnectingMode={toggleConnectingMode}
+            isConnectingMode={isConnectingMode}
+          />
+        )}
 
-      <div
-        ref={containerRef}
-        style={{
-          width: '100%',
-          height: '100%',
-          minHeight: '400px',
-        }}
-      />
-    </div>
+        <div
+          ref={containerRef}
+          style={{
+            width: '100%',
+            height: '100%',
+            minHeight: '400px',
+          }}
+        />
+      </div>
+    </CardWrapper>
   )
 }
 

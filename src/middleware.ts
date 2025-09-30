@@ -26,6 +26,12 @@ const protectedRoutes = [
   '/:locale/layout-log',
   '/admin',
   '/:locale/admin',
+  '/admin/missions',
+  '/:locale/admin/missions',
+  '/admin/lor',
+  '/:locale/admin/lor',
+  '/admin/statistics',
+  '/:locale/admin/statistics',
 ]
 
 // Arcjet — защита от ботов
@@ -59,13 +65,18 @@ export default async function middleware(request: NextRequest) {
     if (!sessionId) {
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }
-    // проверяем сессию через backend
-    const res = await fetch(`${API_URL}/user/users/info`, {
-      headers: {
-        Cookie: `sessionid=${sessionId}`,
-      },
-    })
-    if (!res.ok) {
+    try {
+      // проверяем сессию через backend
+      const res = await fetch(`${API_URL}/user/users/info`, {
+        headers: {
+          Cookie: `sessionid=${sessionId}`,
+        },
+      })
+      if (!res.ok) {
+        return NextResponse.redirect(new URL('/sign-in', request.url))
+      }
+    } catch (e) {
+      console.error('Session check error:', e)
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }
   }

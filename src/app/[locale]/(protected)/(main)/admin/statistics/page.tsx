@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import AdminPageWrapper from '@/components/Admin/AdminPage/AdminPage'
+import React from 'react'
+import { AdminStatPage } from '@/components/Admin/AdminStatPage'
 
 type AdminPageProps = {
   params: Promise<{ locale: string }>
@@ -22,5 +23,5 @@ export async function generateMetadata(
 }
 
 export default async function AdminPage(_props: AdminPageProps) {
-  return <AdminPageWrapper />
+  return <AdminStatPage />
 }

@@ -322,6 +322,7 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "create_new_lor": "Create New LOR",
     "exit_connect_mode": "Exit Connect Mode",
     "connect_nodes": "Connect Nodes",
     "enter_title": "Enter title...",
@@ -545,5 +546,10 @@
     "end": "End",
     "view_details": "View details",
     "event_description": "Event Description"
+  },
+  "AdminMenu": {
+    "lor": "LOR",
+    "missions": "Missions",
+    "statistics": "Statistics"
   }
 }

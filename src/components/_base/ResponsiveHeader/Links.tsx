@@ -58,7 +58,7 @@ export const Links: LinksKeys = {
   ADMIN: {
     icon: TeamOutlined,
     labelKey: 'admin',
-    href: '/admin',
+    href: '/admin/lor',
     isProfileTab: true,
   },
 }

@@ -1,3 +1,4 @@
+'use client'
 import type { FCC } from 'src/types'
 import { Column } from '@ant-design/plots'
 import { forEach, groupBy } from 'lodash'

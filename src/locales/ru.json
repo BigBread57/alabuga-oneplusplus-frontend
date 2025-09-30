@@ -316,6 +316,7 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "create_new_lor": "Создать новый LOP",
     "enter_title": "Введите заголовок...",
     "entity_title": "Заголовок",
     "title_required": "Пожалуйста, введите заголовок",
@@ -538,5 +539,10 @@
     "start": "Начало",
     "end": "Завершение",
     "view_details": "Просмотреть детали"
+  },
+  "AdminMenu": {
+    "lor": "LOP",
+    "missions": "Миссии",
+    "statistics": "Статистика"
   }
 }

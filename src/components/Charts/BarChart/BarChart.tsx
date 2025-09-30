@@ -1,3 +1,4 @@
+'use client'
 import type { FCC } from 'src/types'
 import { Bar } from '@ant-design/plots'
 import React from 'react'
