@@ -20,8 +20,8 @@ export interface EventProps extends BaseModelProps {
 }
 
 enum EventUrl {
-  EVENTS = '/game-world/events',
   EVENT = '/game-world/event',
+  EVENTS = '/game-world/events',
 }
 
 export class Event extends BaseModel {

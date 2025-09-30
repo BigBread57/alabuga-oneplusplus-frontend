@@ -31,7 +31,7 @@ enum ShopItemUrl {
   SHOP_ITEMS_LIST = '/shop/items',
 }
 
-export class Shop extends BaseModel {
+export class ShopItem extends BaseModel {
   static override modelName = 'shopItem'
 
   static override url() {

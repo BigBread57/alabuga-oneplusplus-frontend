@@ -61,7 +61,8 @@ export const Competence: FCC<CompetenceProps> = ({ data, isLoading }) => {
           >
             <Image
               src={
-                (data?.competency.icon as string) || 'https://picsum.photos/200'
+                (data?.competency.icon as string)
+                || 'https://dummyimage.com/200'
               }
               alt={data?.competency.name}
               preview={false}

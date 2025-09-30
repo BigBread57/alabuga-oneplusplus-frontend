@@ -80,7 +80,7 @@ const PostCard: FCC<PostProps> = ({
             width={272}
             height={10}
             alt='logo'
-            src={image || 'https://picsum.photos/300/200'}
+            src={image || 'https://dummyimage.com/300/200'}
           />
         }
         actions={[
@@ -130,7 +130,7 @@ const PostCard: FCC<PostProps> = ({
               </Col>
               <Col xs={24}>
                 <Image
-                  src={image || 'https://picsum.photos/300/200'}
+                  src={image || 'https://dummyimage.com/300/200'}
                   alt=''
                   width={600}
                   height={400}

@@ -220,7 +220,9 @@
     "available_quantity": "Доступно",
     "status": "Статус",
     "active": "Активен",
-    "inactive": "Неактивен"
+    "inactive": "Неактивен",
+    "select_shop_item_category": "Выберите категорию",
+    "character_purchases": "Покупки персонажа"
   },
   "ModalConfirm": {
     "confirm": "Подтверждение",
@@ -544,5 +546,9 @@
     "lor": "LOP",
     "missions": "Миссии",
     "statistics": "Статистика"
+  },
+  "CharacterPurchaseTable": {
+    "select_shop_item_category": "Выберите категорию",
+    "character_purchases": "Покупки персонажа"
   }
 }

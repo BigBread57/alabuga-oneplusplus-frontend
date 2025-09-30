@@ -18,6 +18,7 @@ const baseConfig: NextConfig = {
   images: {
     remotePatterns: [
       new URL('https://picsum.photos/**'),
+      new URL('https://dummyimage.com/**'),
       new URL('http://localhost:8000/**'),
     ],
   },

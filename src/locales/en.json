@@ -237,7 +237,9 @@
     "available_quantity": "Available",
     "status": "Status",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "select_shop_item_category": "Select item category",
+    "character_purchases": "Character purchases"
   },
   "ActivityLog": {
     "title": "Activity log",
@@ -551,5 +553,9 @@
     "lor": "LOR",
     "missions": "Missions",
     "statistics": "Statistics"
+  },
+  "CharacterPurchaseTable": {
+    "select_shop_item_category": "Select item category",
+    "character_purchases": "Character purchases"
   }
 }

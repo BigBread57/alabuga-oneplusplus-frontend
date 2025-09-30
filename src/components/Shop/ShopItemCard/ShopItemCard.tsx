@@ -74,7 +74,7 @@ const ShopItemCard: FCC<ShopItemProps> = ({
         cover={
           <div className={styles.imageWrapper}>
             <Image
-              src={image || 'https://picsum.photos/300/200'}
+              src={image || 'https://dummyimage.com/300/200'}
               alt={name}
               width={300}
               height={200}
@@ -158,18 +158,16 @@ const ShopItemCard: FCC<ShopItemProps> = ({
         width={600}
       >
         <div className={styles.modalContent}>
-          {image && (
-            <div className={styles.modalImageWrapper}>
-              <Image
-                src={image}
-                alt={name}
-                width={400}
-                height={300}
-                className={styles.modalImage}
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-          )}
+          <div className={styles.modalImageWrapper}>
+            <Image
+              src={image || 'https://dummyimage.com/400/300'}
+              alt={name}
+              width={400}
+              height={300}
+              className={styles.modalImage}
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
 
           <Space
             direction='vertical'

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { ShopItemsCard } from '@/components/Shop/ShopItemsCard'
+import CharacterPurchaseTable from '@/components/Shop/CharacterPurchaseTable/CharacterPurchaseTable'
 
 type ShopPageProps = {
   params: Promise<{ locale: string }>
@@ -22,5 +22,6 @@ export async function generateMetadata(
 }
 
 export default async function ShopPage(_props: ShopPageProps) {
-  return <ShopItemsCard />
+  // return <ShopItemsCard />
+  return <CharacterPurchaseTable />
 }

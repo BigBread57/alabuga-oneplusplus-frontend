@@ -12,14 +12,14 @@ import { CharacterMissionStatus } from '@/models/CharacterMission'
 import { useFetchItems } from '@/services/base/hooks'
 import MissionStatusFilter from '../MissionStatusFilter/MissionStatusFilter'
 
-interface ChatacterActivityProps {
+interface CharacterActivityProps {
   prop?: any
 }
 
 const MODEL_EVENTS = CharacterEvent
 const MODEL_CHARACTER_MISSIONS_BRANCH = CharacterBranchesMission
 
-const CharacterActivity: FCC<ChatacterActivityProps> = ({ prop }) => {
+const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>('tab1')
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key)

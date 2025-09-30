@@ -43,7 +43,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
   const getRankIcon = () => {
     return (
       <Image
-        src={rank?.icon || 'https://picsum.photos/200'}
+        src={rank?.icon || 'https://dummyimage.com/200'}
         alt={rank?.name || 'Rank Icon'}
         width={70}
         height={70}
