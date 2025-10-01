@@ -36,7 +36,7 @@ const CharacterStatistics: FCC = () => {
             textOverflow: 'ellipsis',
             maxWidth: '60px',
           }}
-          data={response?.data?.competencies.by_name}
+          data={response?.data?.competencies?.by_name}
         />
       </Col>
       <Divider size='small'>{t('missions')}</Divider>
