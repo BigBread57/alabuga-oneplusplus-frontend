@@ -1,7 +1,13 @@
 'use client'
 
 import type { TourProps } from 'antd'
-import React, { createContext, useMemo, useRef } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 interface TourContextValue {
   profileSectionRef: React.RefObject<HTMLDivElement>
@@ -18,6 +24,9 @@ interface TourContextValue {
   statusFilterRef: React.RefObject<HTMLDivElement>
   activityTabsRef: React.RefObject<HTMLDivElement>
   steps: TourProps['steps']
+  isDrawerOpen: boolean
+  setIsDrawerOpen: (open: boolean) => void
+  openDrawerForTour: () => void
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -31,6 +40,8 @@ interface TourProviderProps {
 }
 
 export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   // Рефы для тура по странице профиля
   const profileSectionRef = useRef<HTMLDivElement>(null)
   const artifactsSectionRef = useRef<HTMLDivElement>(null)
@@ -47,6 +58,10 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
   const newsRef = useRef<HTMLAnchorElement>(null)
   const adminRef = useRef<HTMLAnchorElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
+
+  const openDrawerForTour = useCallback(() => {
+    setIsDrawerOpen(true)
+  }, [])
 
   const value: TourContextValue = useMemo(() => {
     const steps: TourProps['steps'] = [
@@ -131,8 +146,11 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
       statusFilterRef,
       activityTabsRef,
       steps,
+      isDrawerOpen,
+      setIsDrawerOpen,
+      openDrawerForTour,
     }
-  }, [])
+  }, [isDrawerOpen, openDrawerForTour])
 
   return <TourContext.Provider value={value}>{children}</TourContext.Provider>
 }

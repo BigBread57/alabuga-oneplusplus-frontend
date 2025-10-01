@@ -7,7 +7,7 @@ import { Button, Drawer, Menu } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import React, { useState } from 'react'
+import React from 'react'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
@@ -23,7 +23,6 @@ const navigationItems = [
 ]
 
 const MenuLinks: FCC = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const pathname = usePathname()
   const params = useParams()
   const locale = params.locale as string
@@ -37,9 +36,12 @@ const MenuLinks: FCC = () => {
     rangRef,
     newsRef,
     adminRef,
+    isDrawerOpen,
+    setIsDrawerOpen,
   } = useTour()
 
   const isCompact = isMobile || isTablet
+
   const handleDrawerToggle = () => {
     setIsDrawerOpen(!isDrawerOpen)
   }

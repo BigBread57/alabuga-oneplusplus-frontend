@@ -12,7 +12,7 @@ import { TooltipButton } from '@/components/_base/TooltipButton'
 import { Artifacts } from '@/components/Profile/Artifacts'
 import { Competencies } from '@/components/Profile/Competencies'
 import { ProfileRank } from '@/components/Profile/ProfileRank'
-import { ProfileTour } from '@/components/Tour/ProfileTour'
+import { ProfileTour } from '@/components/Tour/ProfileTour/ProfileTour'
 import { useProfileTour } from '@/components/Tour/ProfileTour/useProfileTour'
 import { useTour } from '@/components/Tour/useTour'
 
@@ -46,9 +46,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   const {
     isModalOpen,
     tourOpen,
+    currentStep,
     handleStartTour,
     handleSkipTour,
     handleCloseTour,
+    handleStepChange,
   } = useProfileTour()
 
   return (
@@ -79,9 +81,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         isModalOpen={isModalOpen}
         tourOpen={tourOpen}
         steps={steps}
+        currentStep={currentStep}
         onStartTour={handleStartTour}
         onSkipTour={handleSkipTour}
         onCloseTour={handleCloseTour}
+        onStepChange={handleStepChange}
       />
       <Row justify='center'>
         {/* Секция профиля с рефом */}
