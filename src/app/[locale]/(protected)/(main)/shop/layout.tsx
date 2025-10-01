@@ -1,10 +1,11 @@
 'use client'
 
 import { ShopOutlined, ShoppingOutlined } from '@ant-design/icons'
-import { Card, Menu, Space } from 'antd'
+import { Menu, Space } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { CardWrapper } from '@/components/_base/CardWrapper'
 import { useTheme } from '@/providers/ThemeProvider'
 
 type ShopPageProps = {
@@ -43,18 +44,29 @@ export default function Layout(props: ShopPageProps) {
         width: '100%',
       }}
     >
-      <Card
+      <CardWrapper
         title=''
+        iconSize={50}
         style={{
           boxShadow: themeConfig.token?.boxShadow,
-          border: 'none',
+          background: themeConfig.token?.colorBgBase,
         }}
         styles={{
           body: { padding: 8 },
         }}
+        iconStyle={{
+          left: '90%',
+        }}
+        backgroundIcon={ShopOutlined}
       >
-        <Menu mode='horizontal' items={menuItems} />
-      </Card>
+        <Menu
+          mode='horizontal'
+          items={menuItems}
+          style={{
+            background: 'transparent',
+          }}
+        />
+      </CardWrapper>
 
       {props.children}
     </Space>

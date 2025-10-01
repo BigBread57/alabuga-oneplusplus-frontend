@@ -76,6 +76,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         />
       }
       {...cardProps}
+      iconSize={500}
     >
       <ProfileTour
         isModalOpen={isModalOpen}

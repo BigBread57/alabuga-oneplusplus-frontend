@@ -51,7 +51,13 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale}>
-      <body>
+      <body
+        style={{
+          margin: 0,
+          padding: 0,
+          boxSizing: 'border-box',
+        }}
+      >
         <NextIntlClientProvider>
           <ThemeProvider>
             <AntdProvider>
