@@ -27,8 +27,9 @@ export enum ENTITY_TYPES {
   ARTEFACT = 'artefact-node',
   COMPETENCY = 'competency-node',
   EVENT = 'event-node',
-  EVENT_COMPETENCY = 'event-competency',
-  MISSION_COMPETENCY = 'mission-competency',
+  EVENT_COMPETENCY = 'event-competency-node',
+  MISSION_COMPETENCY = 'mission-competency-node',
+  GAME_WORLD_STORY = 'game-world-story-node',
 }
 
 interface UseGraphReturn {

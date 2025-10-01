@@ -7,6 +7,7 @@ import { useArtifactFormConfig } from '@/components/Mission/useArtifactFormConfi
 import { useCompetencyFormConfig } from '@/components/Mission/useCompetencyFormConfig'
 import { useEventCompetencyFormConfig } from '@/components/Mission/useEventCompetencyFormConfig'
 import { useEventFormConfig } from '@/components/Mission/useEventFormConfig'
+import { useGameWorldStoryFormConfig } from '@/components/Mission/useGameWorldStoryFormConfig'
 import { useMissionBranchFormConfig } from '@/components/Mission/useMissionBranchFormConfig'
 import { useMissionCompetencyFormConfig } from '@/components/Mission/useMissionCompetencyFormConfig'
 import { useMissionFormConfig } from '@/components/Mission/useMissionFormConfig'
@@ -43,6 +44,7 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
   const { formFields: competencyFormFields } = useCompetencyFormConfig()
   const { formFields: eventFormFields } = useEventFormConfig()
   const { formFields: artifactFormFields } = useArtifactFormConfig()
+  const { formFields: GameWorldStoryFormFields } = useGameWorldStoryFormConfig()
   const { formFields: eventCompetencyFormFields }
     = useEventCompetencyFormConfig()
   const { formFields: missionCompetencyFormFields }
@@ -66,12 +68,14 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
         return eventFormFields
       case 'competency-node':
         return competencyFormFields
-      case 'event-competency':
+      case 'event-competency-node':
         return eventCompetencyFormFields
-      case 'mission-competency':
+      case 'mission-competency-node':
         return missionCompetencyFormFields
       case 'mission-branch-node':
         return missionBranchFormFields
+      case 'game-world-story-node':
+        return GameWorldStoryFormFields
       case 'artefact-node':
         return artifactFormFields
       case 'rank-node':
@@ -93,11 +97,12 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
     const entityTitles: EntityTitles = {
       'mission-node': 'Миссия',
       'event-node': 'Событие',
-      'event-competency': 'Компетенция события',
-      'mission-competency': 'Компетенция миссии',
+      'event-competency-node': 'Компетенция события',
+      'mission-competency-node': 'Компетенция миссии',
       'mission-branch-node': 'Ветка миссии',
       'artefact-node': 'Артефакт',
       'rank-node': 'Ранг',
+      'game-world-story-node': 'Истории игрового мира',
     }
 
     const entityTitle = entityTitles[entityType]

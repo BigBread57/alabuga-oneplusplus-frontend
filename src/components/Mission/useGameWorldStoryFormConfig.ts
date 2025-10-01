@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
 
 // Типизируем ключи полей на основе модели
-type GameWorldStoryFormFields = keyof Omit<
+type useGameWorldStoryForm = keyof Omit<
   GameWorldStoryProps,
   | 'id'
   | 'created_at'
@@ -68,7 +68,7 @@ export const useGameWorldStoryFormConfig = (gameWorldStoryId?: number) => {
 
   return {
     formFields,
-    getFieldConfig: (fieldKey: GameWorldStoryFormFields) =>
+    getFieldConfig: (fieldKey: useGameWorldStoryForm) =>
       formFields.find((field) => field.key === fieldKey),
     getFieldsByType: (type: FormField['type']) =>
       formFields.filter((field) => field.type === type),
@@ -76,4 +76,4 @@ export const useGameWorldStoryFormConfig = (gameWorldStoryId?: number) => {
 }
 
 // Экспортируем типы для использования в других местах
-export type { GameWorldStoryFormFields }
+export type { useGameWorldStoryForm }
