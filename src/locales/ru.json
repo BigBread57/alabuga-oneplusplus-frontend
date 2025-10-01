@@ -352,6 +352,7 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "delete_selected": "Удалить фигуру",
     "create_new_lor": "Создать новый LOP",
     "enter_title": "Введите заголовок...",
     "entity_title": "Заголовок",

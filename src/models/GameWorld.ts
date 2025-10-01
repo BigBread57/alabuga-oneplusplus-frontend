@@ -26,6 +26,6 @@ export class GameWorld extends BaseModel {
   }
 
   static allInfoUrl(id: number) {
-    return `${this.url()}/${id}/all-info/`
+    return `${this.url()}/${id}//list-with-all-entities/`
   }
 }

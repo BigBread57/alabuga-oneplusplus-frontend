@@ -1,56 +1,71 @@
-export const data = {
-  nodes: [
-    {
-      id: 'node1',
-      shape: 'rect',
-      x: 40,
-      y: 40,
-      width: 100,
-      height: 40,
-      label: 'hello',
-      attrs: {
-        // body 是选择器名称，选中的是 rect 元素
-        body: {
-          stroke: '#8f8f8f',
-          strokeWidth: 1,
-          fill: '#fff',
-          rx: 6,
-          ry: 6,
-        },
-      },
-    },
-    {
-      id: 'node2',
-      shape: 'rect',
-      x: 160,
-      y: 180,
-      width: 100,
-      height: 40,
-      label: 'world',
-      attrs: {
-        body: {
-          stroke: '#8f8f8f',
-          strokeWidth: 1,
-          fill: '#fff',
-          rx: 6,
-          ry: 6,
-        },
-      },
-    },
-  ],
-  edges: [
+export const fakeData = {
+  cells: [
     {
       shape: 'edge',
-      source: 'node1',
-      target: 'node2',
-      label: 'x6',
+      zIndex: -1,
+      id: 'e86c42c2-f054-46d3-ae67-ee1a4d9c7c48',
+      data: {
+        source_type: 'artefact',
+        target_type: 'rank',
+      },
+      source: {
+        cell: '34c3665d-5ad9-44f2-bda7-d513176c059a',
+      },
+      target: {
+        cell: 'dde89dfb-11d9-4213-9a18-a458786b590b',
+      },
+    },
+    {
+      position: {
+        x: -40,
+        y: 290,
+      },
+      size: {
+        width: 250,
+        height: 80,
+      },
       attrs: {
-        // line 是选择器名称，选中的边的 path 元素
-        line: {
-          stroke: '#8f8f8f',
-          strokeWidth: 1,
+        title: {
+          text: 'Ранг 5172',
+        },
+        description: {
+          text: 'Описание ранга',
         },
       },
+      shape: 'rank',
+      id: 'dde89dfb-11d9-4213-9a18-a458786b590b',
+      data: {
+        type: 'rank',
+        title: 'Ранг 5172',
+        description: 'Описание ранга',
+      },
+      zIndex: 1,
+    },
+    {
+      position: {
+        x: 480,
+        y: 320,
+      },
+      size: {
+        width: 250,
+        height: 80,
+      },
+      attrs: {
+        title: {
+          text: 'Артефакт 8472',
+        },
+        description: {
+          text: 'Описание артефакта',
+        },
+      },
+      shape: 'artefact',
+      id: '34c3665d-5ad9-44f2-bda7-d513176c059a',
+      data: {
+        type: 'artefact',
+        title: 'Артефакт 8472',
+        description: 'Описание артефакта',
+      },
+      zIndex: 2,
     },
   ],
 }

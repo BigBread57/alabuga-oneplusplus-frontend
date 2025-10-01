@@ -21,15 +21,15 @@ interface UseGraphOptions {
 }
 
 export enum ENTITY_TYPES {
-  RANK = 'rank-node',
-  MISSION_BRANCH = 'mission-branch-node',
-  MISSION = 'mission-node',
-  ARTEFACT = 'artefact-node',
-  COMPETENCY = 'competency-node',
-  EVENT = 'event-node',
-  EVENT_COMPETENCY = 'event-competency-node',
-  MISSION_COMPETENCY = 'mission-competency-node',
-  GAME_WORLD_STORY = 'game-world-story-node',
+  RANK = 'rank',
+  MISSION_BRANCH = 'mission_branch',
+  MISSION = 'mission',
+  ARTEFACT = 'artefact',
+  COMPETENCY = 'competency',
+  EVENT = 'event',
+  EVENT_COMPETENCY = 'event_competency',
+  MISSION_COMPETENCY = 'mission_competency',
+  GAME_WORLD_STORY = 'game_world_story',
 }
 
 interface UseGraphReturn {
@@ -46,6 +46,8 @@ interface UseGraphReturn {
   getNodeData: (nodeId?: string) => any
   toggleConnectingMode: () => void
   isConnectingMode: boolean
+  toggleDeleteMode: () => void
+  isDeleteMode: boolean
 }
 
 export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
@@ -65,11 +67,13 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [isReady, setIsReady] = useState(false)
   const [isConnectingMode, setIsConnectingMode] = useState(false)
+  const [isDeleteMode, setIsDeleteMode] = useState(false)
   const firstSelectedNodeRef = useRef<string | null>(null)
 
   // Используем ref для актуальных значений
   const onNodeClickRef = useRef(onNodeClick)
   const isConnectingModeRef = useRef(isConnectingMode)
+  const isDeleteModeRef = useRef(isDeleteMode)
 
   useEffect(() => {
     onNodeClickRef.current = onNodeClick
@@ -78,6 +82,10 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   useEffect(() => {
     isConnectingModeRef.current = isConnectingMode
   }, [isConnectingMode])
+
+  useEffect(() => {
+    isDeleteModeRef.current = isDeleteMode
+  }, [isDeleteMode])
 
   // Мемоизируем конфиг регистрации для предотвращения пересоздания
   const registrationConfig = useMemo(
@@ -155,7 +163,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     })
 
     Graph.registerEdge(
-      'entity-edge',
+      'edge',
       {
         zIndex: -1,
         attrs: {
@@ -250,6 +258,12 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         return
       }
 
+      // Режим удаления - проверяем ПЕРВЫМ
+      if (isDeleteModeRef.current) {
+        graphRef.current.removeCell(nodeId)
+        return
+      }
+
       // Режим соединения - используем ref для актуального значения
       if (isConnectingModeRef.current) {
         if (!firstSelectedNodeRef.current) {
@@ -258,22 +272,30 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           clickedNode.attr('body/strokeWidth', 5)
           firstSelectedNodeRef.current = nodeId
         } else if (firstSelectedNodeRef.current !== nodeId) {
-          // Создаем связь
+          // Получаем данные первого узла ДО создания связи
+          const firstNode = graphRef.current.getCellById(
+            firstSelectedNodeRef.current,
+          )
+          const firstNodeData = firstNode?.getData()
+          const sourceType = firstNodeData?.type
+          const targetType = clickedNode.getData()?.type
+
+          // Создаем связь с правильными типами
           const newEdge = graphRef.current.addEdge({
-            shape: 'entity-edge',
+            shape: 'edge',
             source: firstSelectedNodeRef.current,
             target: nodeId,
+            data: {
+              source_type: sourceType,
+              target_type: targetType,
+            },
           })
 
           // Обновляем цвет новой связи
           updateEdgeColor(newEdge)
 
           // Сбрасываем выделение первого узла
-          const firstNode = graphRef.current.getCellById(
-            firstSelectedNodeRef.current,
-          )
           if (firstNode) {
-            const firstNodeData = firstNode.getData()
             const entityType = firstNodeData?.type
             if (
               entityType
@@ -431,12 +453,18 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const clearGraph = useCallback(() => {
     graphRef.current?.clearCells()
     setIsConnectingMode(false)
+    setIsDeleteMode(false)
     firstSelectedNodeRef.current = null
   }, [])
 
   const toggleConnectingMode = useCallback(() => {
     setIsConnectingMode((prev) => {
       const newMode = !prev
+
+      // Если включаем режим соединения, выключаем режим удаления
+      if (newMode) {
+        setIsDeleteMode(false)
+      }
 
       // Если выключаем режим соединения, сбрасываем все выделения
       if (prev && graphRef.current) {
@@ -460,6 +488,38 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       return newMode
     })
     firstSelectedNodeRef.current = null
+  }, [])
+  const toggleDeleteMode = useCallback(() => {
+    setIsDeleteMode((prev) => {
+      const newMode = !prev
+
+      // Если включаем режим удаления, выключаем режим соединения
+      if (newMode) {
+        setIsConnectingMode(false)
+        firstSelectedNodeRef.current = null
+
+        // Сбрасываем выделения узлов
+        if (graphRef.current) {
+          graphRef.current.getNodes().forEach((node) => {
+            const nodeData = node.getData()
+            const entityType = nodeData?.type
+
+            if (
+              entityType
+              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+            ) {
+              node.attr(
+                'body/stroke',
+                ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS],
+              )
+              node.attr('body/strokeWidth', 2)
+            }
+          })
+        }
+      }
+
+      return newMode
+    })
   }, [])
 
   const addEntity = useCallback(
@@ -520,5 +580,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     getNodeData,
     toggleConnectingMode,
     isConnectingMode,
+    toggleDeleteMode,
+    isDeleteMode,
   }
 }

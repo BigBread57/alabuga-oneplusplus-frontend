@@ -62,23 +62,23 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
   // Получение соответствующих полей формы для типа сущности
   const getFormFields = () => {
     switch (entityType) {
-      case 'mission-node':
+      case 'mission':
         return missionFormFields
-      case 'event-node':
+      case 'event':
         return eventFormFields
-      case 'competency-node':
+      case 'competency':
         return competencyFormFields
-      case 'event-competency-node':
+      case 'event_competency':
         return eventCompetencyFormFields
-      case 'mission-competency-node':
+      case 'mission_competency':
         return missionCompetencyFormFields
-      case 'mission-branch-node':
+      case 'mission_branch':
         return missionBranchFormFields
-      case 'game-world-story-node':
+      case 'game_world_story':
         return GameWorldStoryFormFields
-      case 'artefact-node':
+      case 'artefact':
         return artifactFormFields
-      case 'rank-node':
+      case 'rank':
         return rankFormFields
       default:
         return []
@@ -95,14 +95,14 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
     }
 
     const entityTitles: EntityTitles = {
-      'mission-node': 'Миссия',
-      'event-node': 'Событие',
-      'event-competency-node': 'Компетенция события',
-      'mission-competency-node': 'Компетенция миссии',
-      'mission-branch-node': 'Ветка миссии',
-      'artefact-node': 'Артефакт',
-      'rank-node': 'Ранг',
-      'game-world-story-node': 'Истории игрового мира',
+      mission: 'Миссия',
+      event: 'Событие',
+      event_competency: 'Компетенция события',
+      mission_competency: 'Компетенция миссии',
+      mission_branch: 'Ветка миссии',
+      artefact: 'Артефакт',
+      rank: 'Ранг',
+      game_world_story: 'Истории игрового мира',
     }
 
     const entityTitle = entityTitles[entityType]

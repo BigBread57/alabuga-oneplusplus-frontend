@@ -6,15 +6,13 @@ import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
-import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { fakeData } from '@/components/Graph/GraphCanvas/fake_data'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
-import { GameWorld } from '@/models/GameWorld'
-import { useExtraActionsGet } from '@/services/base/hooks'
 
 interface GraphCanvasProps {
   data?: any
@@ -23,7 +21,7 @@ interface GraphCanvasProps {
   enablePanning?: boolean
   enableMousewheel?: boolean
 }
-const MODEL = GameWorld
+// const MODEL = GameWorld
 const GraphCanvas: FCC<GraphCanvasProps> = ({
   gridVisible = true,
   gridSize = 10,
@@ -36,13 +34,13 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   const [isShowModal, setIsShowModal] = useState(false)
   const [currentEntityType, setCurrentEntityType]
     = useState<ENTITY_TYPES | null>(null)
-  const { currentUser } = useContext(CurrentUserContext)
+  // const { currentUser } = useContext(CurrentUserContext)
 
-  const { data: response }: any = useExtraActionsGet({
-    qKey: 'graph-all-info',
-    extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
-    enabled: !!currentUser?.active_game_world,
-  })
+  // const { data: response }: any = useExtraActionsGet({
+  //   qKey: 'graph-all-info',
+  //   extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
+  //   enabled: !!currentUser?.active_game_world,
+  // })
 
   const handleShowModal = (entityType: ENTITY_TYPES) => {
     setIsShowModal(true)
@@ -76,8 +74,10 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     addEntity,
     toggleConnectingMode,
     isConnectingMode,
+    toggleDeleteMode,
+    isDeleteMode,
   } = useGraph({
-    data: response?.data,
+    data: fakeData,
     gridVisible,
     gridSize,
     enablePanning,
@@ -133,6 +133,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
             onZoomOut={zoomOut}
             onToggleConnectingMode={toggleConnectingMode}
             isConnectingMode={isConnectingMode}
+            isDeleteMode={isDeleteMode}
+            onDeleteSelected={toggleDeleteMode}
           />
         )}
 

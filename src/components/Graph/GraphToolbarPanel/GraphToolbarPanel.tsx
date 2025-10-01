@@ -5,6 +5,7 @@ import {
   BranchesOutlined, // MissionBranch
   CalendarOutlined, // Event
   ClearOutlined,
+  DeleteOutlined, // Добавили новую иконку
   FullscreenOutlined,
   GiftOutlined, // Artefact
   LinkOutlined, // Connect nodes
@@ -26,7 +27,8 @@ import { useTheme } from '@/providers/ThemeProvider'
 
 interface EntityToolbarPanelProps {
   onClearGraph?: () => void
-
+  onDeleteSelected?: () => void // Добавили новый проп
+  isDeleteMode?: boolean
   onAddEntity: (entityType: ENTITY_TYPES) => void
 
   // Callbacks для управления графом
@@ -36,12 +38,13 @@ interface EntityToolbarPanelProps {
   onZoomOut?: () => void
 
   // Callbacks для режима соединения
-  onToggleConnectingMode?: () => void
-  isConnectingMode?: boolean
+  onToggleConnectingMode: () => void
+  isConnectingMode: boolean
 }
 
 const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   onClearGraph,
+  onDeleteSelected,
   onCenterContent,
   onFitContent,
   onZoomIn,
@@ -49,6 +52,7 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   onToggleConnectingMode,
   isConnectingMode = false,
   onAddEntity,
+  isDeleteMode,
 }) => {
   const t = useTranslations('Graph')
   const { themeConfig } = useTheme()
@@ -211,6 +215,18 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
 
         {/* Секция действий */}
         <Space size='small'>
+          <Tooltip
+            title={t('delete_selected', { fallback: 'Delete Selected' })}
+          >
+            <Button
+              danger
+              type={isDeleteMode ? 'primary' : 'default'}
+              icon={<DeleteOutlined />}
+              size='small'
+              onClick={onDeleteSelected}
+            />
+          </Tooltip>
+
           <Tooltip title={t('clear_all', { fallback: 'Clear All' })}>
             <Button
               danger
