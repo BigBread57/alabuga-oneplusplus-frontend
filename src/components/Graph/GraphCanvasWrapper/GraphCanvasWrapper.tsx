@@ -42,11 +42,15 @@ const GraphCanvasWrapper: FCC = () => {
         messageSuccess(t('graph_saved_successfully'))
       },
       onError: (err: any) => {
-        if (err?.response?.data?.detail) {
-          messageError(err?.response?.data?.detail)
-        } else {
-          messageError(t('error_saving_graph'))
-        }
+        console.error('Ошибка сохранения графа:', err)
+
+        const errorMessage
+          = err?.response?.data?.errors?.[0]?.detail
+            || err?.response?.data?.detail
+            || err?.message
+
+        messageError(t('error_saving_graph'))
+        messageError(errorMessage)
       },
     })
   }

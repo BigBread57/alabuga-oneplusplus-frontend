@@ -136,7 +136,7 @@ export const fakeData = {
       id: 'dde89dfb-11d9-4213-9a18-a458786b590b',
       data: {
         type: 'rank',
-        title: 'Ранг 5172',
+        name: 'Ранг 5172',
         description: 'Описание ранга',
       },
       zIndex: 1,
@@ -162,7 +162,7 @@ export const fakeData = {
       id: '34c3665d-5ad9-44f2-bda7-d513176c059a',
       data: {
         type: 'artefact',
-        title: 'Артефакт 8472',
+        name: 'Артефакт 8472',
         description: 'Описание артефакта',
       },
       zIndex: 2,
@@ -188,7 +188,7 @@ export const fakeData = {
       id: '63bf4c08-d813-4f5c-9528-fa72f3f8b965',
       data: {
         type: 'mission_branch',
-        title: 'Ветка миссии 9165',
+        name: 'Ветка миссии 9165',
         description: 'Описание ветки миссии',
       },
       zIndex: 3,
@@ -214,7 +214,7 @@ export const fakeData = {
       id: 'ac5e4a8d-af5c-4691-b35a-854e7e7f17ae',
       data: {
         type: 'mission',
-        title: 'Миссия 5374',
+        name: 'Миссия 5374',
         description: 'Описание миссии',
       },
       zIndex: 4,
@@ -240,7 +240,7 @@ export const fakeData = {
       id: 'f5481ffc-d347-47b1-9c92-7ac8981d950b',
       data: {
         type: 'event',
-        title: 'Событие 8757',
+        name: 'Событие 8757',
         description: 'Описание события',
       },
       zIndex: 5,
@@ -266,7 +266,7 @@ export const fakeData = {
       id: '51f13cdd-89a8-4a4d-9022-2d17dda290c0',
       data: {
         type: 'competency',
-        title: 'Компетенция 1775',
+        name: 'Компетенция 1775',
         description: 'Описание компетенции',
       },
       zIndex: 6,

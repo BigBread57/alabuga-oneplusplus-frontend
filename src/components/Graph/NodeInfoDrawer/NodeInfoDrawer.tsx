@@ -116,7 +116,6 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
         },
       }}
     >
-      {JSON.stringify(nodeData)}
       <AwesomeFormGenerator
         initialValues={nodeData}
         layout='vertical'
