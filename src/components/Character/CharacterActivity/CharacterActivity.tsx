@@ -1,9 +1,11 @@
 'use client'
 
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import type { FCC } from '@/types'
+import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { useActivityTabs } from '@/components/Character/CharacterActivity/useActivityTabs'
 import { useContentTabsList } from '@/components/Character/CharacterActivity/useContentTabsList'
+import { useTour } from '@/components/Tour/useTour'
 import { useFilter } from '@/hooks/useFilter'
 import { CharacterEvent } from '@/models/CharacterEvent'
 import { CharacterMissionStatus } from '@/models/CharacterMission'
@@ -15,30 +17,20 @@ interface CharacterActivityProps {
   prop?: any
 }
 
-export type CharacterActivityRef = {
-  getTourRefs: () => Record<string, React.RefObject<any>>
-}
-
 const MODEL_EVENTS = CharacterEvent
 const MODEL_CHARACTER_MISSION_BRANCHES = CharacterMissionBranch
 
-const CharacterActivity = forwardRef<
-  CharacterActivityRef,
-  CharacterActivityProps
->(({ prop }, ref) => {
+const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>('tab1')
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key)
   }
 
+  const { statusFilterRef, activitySectionRef, activityTabsRef } = useTour()
+
   const [filter, handleSetFilter] = useFilter({
     status: CharacterMissionStatus.IN_PROGRESS,
   })
-
-  // Рефы для тура
-  const activitySectionRef = useRef<HTMLDivElement>(null)
-  const statusFilterRef = useRef<HTMLDivElement>(null)
-  const activityTabsRef = useRef<HTMLDivElement>(null)
 
   const { data: eventData } = useFetchItems({
     model: MODEL_EVENTS,
@@ -65,15 +57,6 @@ const CharacterActivity = forwardRef<
 
   const [contentList]: Record<string, React.ReactNode>[]
     = useContentTabsList(filter)
-
-  // Экспортируем рефы для родительского компонента
-  useImperativeHandle(ref, () => ({
-    getTourRefs: () => ({
-      activitySection: activitySectionRef,
-      statusFilter: statusFilterRef,
-      activityTabs: activityTabsRef,
-    }),
-  }))
 
   return (
     <div ref={activitySectionRef}>
@@ -106,7 +89,7 @@ const CharacterActivity = forwardRef<
       </CardWrapper>
     </div>
   )
-})
+}
 
 CharacterActivity.displayName = 'CharacterActivity'
 

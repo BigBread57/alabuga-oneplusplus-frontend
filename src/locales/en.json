@@ -81,6 +81,7 @@
   },
 
   "ProfileCard": {
+    "start_tour": "Start Tour",
     "rank": "Rank",
     "experience": "Experience",
     "competencies": "Competencies",
@@ -314,6 +315,7 @@
     "SHOP_DISCOUNT": "store discount"
   },
   "Competence": {
+    "game_world_stories": "World Stories",
     "view_stories": "View stories",
     "stories": "Stories",
     "world_stories_title": "World Stories: {competencyName}",
@@ -588,5 +590,11 @@
     "sent": "Sent",
     "pending": "Pending",
     "delivered": "Delivered"
+  },
+  "ProfileTour": {
+    "welcome_title": "Welcome to your Profile!",
+    "start_tour": "Start Tour",
+    "skip_tour": "Skip Tour",
+    "welcome_description": "Let's take a quick tour to get you familiar with your profile page."
   }
 }
