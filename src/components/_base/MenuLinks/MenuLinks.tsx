@@ -17,7 +17,7 @@ const navigationItems = [
   Links.PROFILE,
   Links.JOURNAL,
   Links.SHOP,
-  Links.RANG,
+  Links.RANK,
   Links.NEWS,
   Links.ADMIN,
 ]
@@ -33,7 +33,7 @@ const MenuLinks: FCC = () => {
     profileRef,
     journalRef,
     shopRef,
-    rangRef,
+    rankRef,
     newsRef,
     adminRef,
     isDrawerOpen,
@@ -59,8 +59,8 @@ const MenuLinks: FCC = () => {
         return journalRef
       case Links.SHOP.href:
         return shopRef
-      case Links.RANG.href:
-        return rangRef
+      case Links.RANK.href:
+        return rankRef
       case Links.NEWS.href:
         return newsRef
       case Links.ADMIN.href:

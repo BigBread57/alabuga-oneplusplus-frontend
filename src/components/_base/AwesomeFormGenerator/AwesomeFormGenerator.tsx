@@ -14,6 +14,7 @@ type FieldType
     | 'email'
     | 'number'
     | 'file'
+    | 'datetime'
 
 export type FormField = {
   key: string

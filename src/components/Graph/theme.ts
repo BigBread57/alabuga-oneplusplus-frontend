@@ -9,7 +9,7 @@ import {
 } from '@/libs/AntdThemes'
 
 export const ENTITY_COLORS = {
-  rang: DeepDarkPurple,
+  rank: DeepDarkPurple,
   missionBranch: DarkPurple,
   mission: Blue,
   artefact: LightBlue,

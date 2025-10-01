@@ -57,7 +57,7 @@
     "profile": "Profile",
     "journal": "Journal",
     "shop": "Shop",
-    "rang": "Ranking",
+    "rank": "Ranking",
     "news": "News",
     "open_menu": "Open menu",
     "navigation": "Navigation",
@@ -94,9 +94,9 @@
     "meta_title": "Journal",
     "meta_description": "Read and manage your journal entries"
   },
-  "RangPage": {
-    "meta_title": "Rang",
-    "meta_description": "Check your rang and achievements"
+  "RankPage": {
+    "meta_title": "Rank",
+    "meta_description": "Check your rank and achievements"
   },
   "NewsPage": {
     "meta_title": "News",
@@ -371,14 +371,14 @@
     "description_max_length": "Description must not exceed 200 characters",
     "use_default_values": "Use Default Values",
     "entities": {
-      "rang": "Rang",
+      "rank": "Rank",
       "mission_branch": "Mission Branch",
       "mission": "Mission",
       "artefact": "Artefact",
       "competency": "Competency",
       "event": "Event",
       "descriptions": {
-        "rang": "Rang description",
+        "rank": "Rank description",
         "mission_branch": "Mission branch description",
         "mission": "Mission description",
         "artefact": "Artefact description",
@@ -387,7 +387,7 @@
       }
     },
     "tooltips": {
-      "add_rang": "Add Rang",
+      "add_rank": "Add Rank",
       "add_mission_branch": "Add Mission Branch",
       "add_mission": "Add Mission",
       "add_artefact": "Add Artefact",
@@ -507,7 +507,9 @@
     "max_value": "Maximum value: {max}",
     "invalid_format": "Invalid format",
     "invalid_email": "Please enter a valid email",
-    "invalid_number": "Please enter a valid number"
+    "invalid_number": "Please enter a valid number",
+    "email": "Please enter a valid email address",
+    "url": "Please enter a valid URL"
   },
   "Form": {
     "required": "Field {field} is required",
@@ -598,5 +600,268 @@
     "start_tour": "Start Tour",
     "skip_tour": "Skip Tour",
     "welcome_description": "Let's take a quick tour to get you familiar with your profile page."
+  },
+  "ArtifactForm": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter artifact name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter artifact description"
+      },
+      "icon": {
+        "label": "Icon",
+        "placeholder": "Upload artifact icon"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Enter color code or name"
+      },
+      "modifier": {
+        "label": "Modifier",
+        "options": {
+          "default": "Standard",
+          "experience_gain": "Experience Gain",
+          "currency_gain": "Currency Gain",
+          "shop_discount": "Shop Discount"
+        }
+      },
+      "modifier_value": {
+        "label": "Modifier Value (%)",
+        "placeholder": "Enter modifier value in percent"
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      }
+    }
+  },
+  "MissionCompetencyForm": {
+    "fields": {
+      "mission": {
+        "label": "Mission",
+        "placeholder": "Select mission"
+      },
+      "competency": {
+        "label": "Competency",
+        "placeholder": "Select competency"
+      },
+      "experience": {
+        "label": "Experience",
+        "placeholder": "Enter experience amount"
+      }
+    }
+  },
+  "GameWorldStoryForm": {
+    "fields": {
+      "text": {
+        "label": "Story Text",
+        "placeholder": "Enter game world story description..."
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      },
+      "image": {
+        "label": "Image",
+        "placeholder": "Upload image for the story"
+      }
+    }
+  },
+  "EventCompetencyForm": {
+    "fields": {
+      "event": {
+        "label": "Event",
+        "placeholder": "Select an event"
+      },
+      "competency": {
+        "label": "Competency",
+        "placeholder": "Select a competency"
+      },
+      "experience": {
+        "label": "Experience",
+        "placeholder": "Enter experience amount"
+      }
+    }
+  },
+  "MissionBranchForm": {
+    "fields": {
+      "name": {
+        "label": "Mission Branch Name",
+        "placeholder": "Enter mission branch name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Describe what the user should accomplish in this mission branch"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Enter color in HEX format or color name"
+      },
+      "is_active": {
+        "label": "Active Branch",
+        "placeholder": "Mission branch is active for completion"
+      },
+      "start_datetime": {
+        "label": "Start Date and Time",
+        "placeholder": "Select date and time for branch launch"
+      },
+      "time_to_complete": {
+        "label": "Days to Complete",
+        "placeholder": "Number of days to complete the mission branch"
+      },
+      "rank": {
+        "label": "Rank",
+        "placeholder": "Select rank for mission branch"
+      },
+      "category": {
+        "label": "Activity Category",
+        "placeholder": "Select activity category"
+      },
+      "mentor": {
+        "label": "Mentor",
+        "placeholder": "Select mentor for mission branch"
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      },
+      "icon": {
+        "label": "Branch Icon",
+        "placeholder": "Upload icon for mission branch"
+      }
+    }
+  },
+  "EventForm": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter description"
+      },
+      "experience": {
+        "label": "Experience",
+        "placeholder": "Enter experience amount"
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "Enter currency amount"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Select color"
+      },
+      "required_number": {
+        "label": "Required Number",
+        "placeholder": "Enter required number"
+      },
+      "is_active": {
+        "label": "Is Active",
+        "placeholder": "Event activity status"
+      },
+      "start_datetime": {
+        "label": "Start Date and Time",
+        "placeholder": "Select start date and time"
+      },
+      "time_to_complete": {
+        "label": "Time to Complete",
+        "placeholder": "Enter time to complete"
+      },
+      "category": {
+        "label": "Category"
+      },
+      "rank": {
+        "label": "Rank"
+      },
+      "artifacts": {
+        "label": "Artifacts"
+      },
+      "competencies": {
+        "label": "Competencies"
+      },
+      "mentor": {
+        "label": "Mentor"
+      },
+      "game_world": {
+        "label": "Game World"
+      },
+      "icon": {
+        "label": "Icon",
+        "placeholder": "Upload icon"
+      }
+    }
+  },
+  "RankForm": {
+    "fields": {
+      "name": {
+        "label": "Rank Name",
+        "placeholder": "Enter rank name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter rank description"
+      },
+      "required_experience": {
+        "label": "Required Experience",
+        "placeholder": "Enter required experience amount"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Select rank color"
+      },
+      "parent": {
+        "label": "Parent Rank",
+        "placeholder": "Select parent rank"
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      },
+      "icon": {
+        "label": "Rank Icon",
+        "placeholder": "Upload rank icon"
+      }
+    }
+  },
+  "CompetencyForm": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter competency name"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter competency description"
+      },
+      "required_experience": {
+        "label": "Required Experience",
+        "placeholder": "Enter required experience amount"
+      },
+      "level": {
+        "label": "Level",
+        "placeholder": "Enter competency level"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Select competency color"
+      },
+      "parent": {
+        "label": "Parent Competency",
+        "placeholder": "Select parent competency"
+      },
+      "game_world": {
+        "label": "Game World",
+        "placeholder": "Select game world"
+      },
+      "icon": {
+        "label": "Icon",
+        "placeholder": "Upload competency icon"
+      }
+    }
   }
 }

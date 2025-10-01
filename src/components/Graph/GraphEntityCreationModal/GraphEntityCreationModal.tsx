@@ -67,6 +67,8 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     if (!type) {
       return ''
     }
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
     return t(`entities.${type}`, { fallback: type })
   }
 
@@ -80,7 +82,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
 
   const getDefaultDescription = (type: ENTITY_TYPES | null): string => {
     const descriptions = {
-      rang: t('entities.descriptions.rang', { fallback: 'Rank description' }),
+      rank: t('entities.descriptions.rank', { fallback: 'Rank description' }),
       mission_branch: t('entities.descriptions.mission_branch', {
         fallback: 'Mission branch description',
       }),
@@ -97,6 +99,8 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
         fallback: 'Event description',
       }),
     }
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
     return type ? descriptions[type] : ''
   }
 

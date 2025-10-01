@@ -2,17 +2,17 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import GlobalStatistics from '@/components/Statistics/GlobalStatistics/GlobalStatistics'
 
-type RangPageProps = {
+type RankPageProps = {
   params: Promise<{ locale: string }>
 }
 
 export async function generateMetadata(
-  props: RangPageProps,
+  props: RankPageProps,
 ): Promise<Metadata> {
   const { locale } = await props.params
   const t = await getTranslations({
     locale,
-    namespace: 'RangPage',
+    namespace: 'RankPage',
   })
 
   return {
@@ -21,6 +21,6 @@ export async function generateMetadata(
   }
 }
 
-export default async function RangPage(_props: RangPageProps) {
+export default async function RankPage(_props: RankPageProps) {
   return <GlobalStatistics />
 }

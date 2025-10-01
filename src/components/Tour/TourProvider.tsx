@@ -16,7 +16,7 @@ interface TourContextValue {
   profileRef: React.RefObject<HTMLAnchorElement>
   journalRef: React.RefObject<HTMLAnchorElement>
   shopRef: React.RefObject<HTMLAnchorElement>
-  rangRef: React.RefObject<HTMLAnchorElement>
+  rankRef: React.RefObject<HTMLAnchorElement>
   newsRef: React.RefObject<HTMLAnchorElement>
   adminRef: React.RefObject<HTMLAnchorElement>
   menuButtonRef: React.RefObject<HTMLButtonElement>
@@ -54,7 +54,7 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
   const profileRef = useRef<HTMLAnchorElement>(null)
   const journalRef = useRef<HTMLAnchorElement>(null)
   const shopRef = useRef<HTMLAnchorElement>(null)
-  const rangRef = useRef<HTMLAnchorElement>(null)
+  const rankRef = useRef<HTMLAnchorElement>(null)
   const newsRef = useRef<HTMLAnchorElement>(null)
   const adminRef = useRef<HTMLAnchorElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -117,7 +117,7 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
         title: 'Рейтинг',
         description:
           'Сравните свои достижения с другими игроками в рейтинговой таблице.',
-        target: () => rangRef.current || document.body,
+        target: () => rankRef.current || document.body,
       },
       {
         title: 'Новости',
@@ -138,7 +138,7 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
       profileRef,
       journalRef,
       shopRef,
-      rangRef,
+      rankRef,
       newsRef,
       adminRef,
       menuButtonRef,

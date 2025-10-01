@@ -5,7 +5,7 @@ module.exports = {
         type: 'list',
         name: 'page_name',
         message: 'Which main page would you like to generate?',
-        choices: ['journal', 'shop', 'rang', 'news'],
+        choices: ['journal', 'shop', 'rank', 'news'],
       },
     ]
 

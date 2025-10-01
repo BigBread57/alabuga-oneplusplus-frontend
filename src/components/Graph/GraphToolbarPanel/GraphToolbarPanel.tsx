@@ -11,7 +11,7 @@ import {
   PlusOutlined,
   RocketOutlined, // Mission
   // Иконки для сущностей
-  StarOutlined, // Rang
+  StarOutlined, // Rank
   TrophyOutlined, // Competency
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -56,10 +56,10 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   // Меню для выпадающего списка сущностей
   const entityMenuItems: MenuProps['items'] = [
     {
-      key: 'rang',
-      label: t('entities.rang', { fallback: 'Rang' }),
-      icon: <StarOutlined style={{ color: ENTITY_COLORS.rang }} />,
-      onClick: () => onAddEntity(ENTITY_TYPES.RANG),
+      key: 'rank',
+      label: t('entities.rank', { fallback: 'Rank' }),
+      icon: <StarOutlined style={{ color: ENTITY_COLORS.rank }} />,
+      onClick: () => onAddEntity(ENTITY_TYPES.RANK),
     },
     {
       key: 'mission_ranch',
@@ -125,11 +125,11 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
           </Dropdown>
 
           {/* Быстрые кнопки для популярных сущностей */}
-          <Tooltip title={t('entities.rang', { fallback: 'Add Rang' })}>
+          <Tooltip title={t('entities.rank', { fallback: 'Add Rank' })}>
             <Button
-              icon={<StarOutlined style={{ color: ENTITY_COLORS.rang }} />}
+              icon={<StarOutlined style={{ color: ENTITY_COLORS.rank }} />}
               size='small'
-              onClick={() => onAddEntity(ENTITY_TYPES.RANG)}
+              onClick={() => onAddEntity(ENTITY_TYPES.RANK)}
             />
           </Tooltip>
 

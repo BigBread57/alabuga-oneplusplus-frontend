@@ -21,12 +21,14 @@ interface UseGraphOptions {
 }
 
 export enum ENTITY_TYPES {
-  RANG = 'rang',
-  MISSION_BRANCH = 'mission_branch',
-  MISSION = 'mission',
-  ARTEFACT = 'artefact',
-  COMPETENCY = 'competency',
-  EVENT = 'event',
+  RANK = 'rank-node',
+  MISSION_BRANCH = 'mission-branch-node',
+  MISSION = 'mission-node',
+  ARTEFACT = 'artefact-node',
+  COMPETENCY = 'competency-node',
+  EVENT = 'event-node',
+  EVENT_COMPETENCY = 'event-competency',
+  MISSION_COMPETENCY = 'mission-competency',
 }
 
 interface UseGraphReturn {
@@ -87,10 +89,32 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     [gridVisible, gridSize, enablePanning, enableMousewheel],
   )
 
+  // Функция для получения цвета из узла-источника
+  const getSourceColor = useCallback((edge: any) => {
+    const sourceNode = edge.getSourceNode()
+    return sourceNode ? sourceNode.attr('body/fill') : '#A2B1C3'
+  }, [])
+
+  // Функция для обновления цвета ребра
+  const updateEdgeColor = useCallback(
+    (edge: any) => {
+      const sourceColor = getSourceColor(edge)
+      edge.attr({
+        line: {
+          stroke: sourceColor,
+          targetMarker: {
+            fill: sourceColor,
+          },
+        },
+      })
+    },
+    [getSourceColor],
+  )
+
   // Регистрация узлов - вызывается только один раз
   const registerEntityNodes = useCallback(() => {
     const entityConfigs = [
-      { type: ENTITY_TYPES.RANG, color: ENTITY_COLORS.rang, icon: '🎖️' },
+      { type: ENTITY_TYPES.RANK, color: ENTITY_COLORS.rank, icon: '🎖️' },
       {
         type: ENTITY_TYPES.MISSION_BRANCH,
         color: ENTITY_COLORS.missionBranch,
@@ -138,13 +162,13 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             fill: 'none',
             strokeLinejoin: 'round',
             strokeWidth: 2,
-            stroke: '#A2B1C3',
+            stroke: '{sourceColor}', // будет заменено динамически
             sourceMarker: null,
             targetMarker: {
               name: 'block',
               width: 8,
               height: 6,
-              fill: '#A2B1C3',
+              fill: '{sourceColor}', // будет заменено динамически
             },
           },
         },
@@ -207,6 +231,11 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       },
     })
 
+    // Обработчик для обновления цвета ребра при создании
+    const handleEdgeConnected = ({ edge }: { edge: any }) => {
+      updateEdgeColor(edge)
+    }
+
     // Обработчик клика - использует ref для актуальных значений
     const handleNodeClickEvent = ({ node }: { node: any }) => {
       const nodeId = node.id
@@ -229,11 +258,14 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           firstSelectedNodeRef.current = nodeId
         } else if (firstSelectedNodeRef.current !== nodeId) {
           // Создаем связь
-          graphRef.current.addEdge({
+          const newEdge = graphRef.current.addEdge({
             shape: 'entity-edge',
             source: firstSelectedNodeRef.current,
             target: nodeId,
           })
+
+          // Обновляем цвет новой связи
+          updateEdgeColor(newEdge)
 
           // Сбрасываем выделение первого узла
           const firstNode = graphRef.current.getCellById(
@@ -279,12 +311,19 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
 
     graph.on('node:click', handleNodeClickEvent)
     graph.on('edge:click', handleEdgeClickEvent)
+    graph.on('edge:connected', handleEdgeConnected)
 
     graphRef.current = graph
 
     // Загружаем данные если есть
     if (data) {
       graph.fromJSON(data)
+
+      // Обновляем цвета всех существующих ребер
+      graph.getEdges().forEach((edge) => {
+        updateEdgeColor(edge)
+      })
+
       graph.centerContent()
     }
 
@@ -296,6 +335,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       if (graphRef.current) {
         graphRef.current.off('node:click', handleNodeClickEvent)
         graphRef.current.off('edge:click', handleEdgeClickEvent)
+        graphRef.current.off('edge:connected', handleEdgeConnected)
         graphRef.current.dispose()
         graphRef.current = null
       }
@@ -309,6 +349,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     themeConfig?.token?.colorBgBase,
     registrationConfig,
     registerEntityNodes,
+    updateEdgeColor,
   ])
 
   // Обновление размеров графа при изменении контейнера
@@ -326,9 +367,15 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   useEffect(() => {
     if (graphRef.current && data && isReady) {
       graphRef.current.fromJSON(data)
+
+      // Обновляем цвета всех существующих ребер
+      graphRef.current.getEdges().forEach((edge) => {
+        updateEdgeColor(edge)
+      })
+
       graphRef.current.centerContent()
     }
-  }, [data, isReady])
+  }, [data, isReady, updateEdgeColor])
 
   // Получение координат левого верхнего угла видимой области
   const getTopLeftPosition = useCallback(() => {

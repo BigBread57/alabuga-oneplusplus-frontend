@@ -58,7 +58,7 @@
     "profile": "Профиль",
     "journal": "Журнал",
     "shop": "Магазин",
-    "rang": "Рейтинг",
+    "rank": "Рейтинг",
     "news": "Новости",
     "open_menu": "Открыть меню",
     "navigation": "Навигация",
@@ -90,7 +90,7 @@
     "artifacts": "Артефакты",
     "profile": "Профиль"
   },
-  "RangPage": {
+  "RankPage": {
     "meta_title": "Рейтинг",
     "meta_description": "Это страница рейтинга"
   },
@@ -365,14 +365,14 @@
     "description_max_length": "Описание не должно превышать 200 символов",
     "use_default_values": "Использовать значения по умолчанию",
     "entities": {
-      "rang": "Ранг",
+      "rank": "Ранг",
       "mission_branch": "Ветка миссии",
       "mission": "Миссия",
       "artefact": "Артефакт",
       "competency": "Компетенция",
       "event": "Событие",
       "descriptions": {
-        "rang": "Описание ранга",
+        "rank": "Описание ранга",
         "mission_branch": "Описание ветки миссии",
         "mission": "Описание миссии",
         "artefact": "Описание артефакта",
@@ -381,7 +381,7 @@
       }
     },
     "tooltips": {
-      "add_rang": "Добавить ранг",
+      "add_rank": "Добавить ранг",
       "add_mission_branch": "Добавить ветку миссии",
       "add_mission": "Добавить миссию",
       "add_artefact": "Добавить артефакт",
@@ -501,7 +501,9 @@
     "max_value": "Максимальное значение: {max}",
     "invalid_format": "Неверный формат",
     "invalid_email": "Введите корректный email",
-    "invalid_number": "Введите корректное число"
+    "invalid_number": "Введите корректное число",
+    "email": "Введите корректный email",
+    "url": "Введите корректный url"
   },
   "Form": {
     "required": "Поле {field} обязательно для заполнения",
@@ -528,7 +530,6 @@
     "unsaved_changes": "У вас есть несохраненные изменения. Вы уверены, что хотите покинуть страницу?"
   },
   "MissionBranchCollapse": {},
-
   "EventCard": {
     "start": "Начало",
     "end": "Завершение",
@@ -593,5 +594,268 @@
     "start_tour": "Начать",
     "skip_tour": "Пропустить",
     "welcome_description": "Давайте проведем вас по основным элементам вашего профиля."
+  },
+  "ArtifactForm": {
+    "fields": {
+      "name": {
+        "label": "Название",
+        "placeholder": "Введите название артефакта"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание артефакта"
+      },
+      "icon": {
+        "label": "Иконка",
+        "placeholder": "Загрузите иконку артефакта"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Введите код или название цвета"
+      },
+      "modifier": {
+        "label": "Модификатор",
+        "options": {
+          "default": "Стандартный",
+          "experience_gain": "Прирост опыта",
+          "currency_gain": "Прирост валюты",
+          "shop_discount": "Скидка в магазине"
+        }
+      },
+      "modifier_value": {
+        "label": "Значение модификатора (%)",
+        "placeholder": "Введите значение модификатора в процентах"
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      }
+    }
+  },
+  "MissionCompetencyForm": {
+    "fields": {
+      "mission": {
+        "label": "Миссия",
+        "placeholder": "Выберите миссию"
+      },
+      "competency": {
+        "label": "Компетенция",
+        "placeholder": "Выберите компетенцию"
+      },
+      "experience": {
+        "label": "Опыт",
+        "placeholder": "Введите количество опыта"
+      }
+    }
+  },
+  "GameWorldStoryForm": {
+    "fields": {
+      "text": {
+        "label": "Текст истории",
+        "placeholder": "Введите описание истории игрового мира..."
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      },
+      "image": {
+        "label": "Изображение",
+        "placeholder": "Загрузите изображение для истории"
+      }
+    }
+  },
+  "EventCompetencyForm": {
+    "fields": {
+      "event": {
+        "label": "Событие",
+        "placeholder": "Выберите событие"
+      },
+      "competency": {
+        "label": "Компетенция",
+        "placeholder": "Выберите компетенцию"
+      },
+      "experience": {
+        "label": "Опыт",
+        "placeholder": "Введите количество опыта"
+      }
+    }
+  },
+  "MissionBranchForm": {
+    "fields": {
+      "name": {
+        "label": "Название ветки миссий",
+        "placeholder": "Введите название ветки миссий"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Опишите, что должен сделать пользователь в рамках ветки миссий"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Введите цвет в формате HEX или название"
+      },
+      "is_active": {
+        "label": "Активная ветка",
+        "placeholder": "Ветка миссий активна для выполнения"
+      },
+      "start_datetime": {
+        "label": "Дата и время запуска",
+        "placeholder": "Выберите дату и время для запуска ветки"
+      },
+      "time_to_complete": {
+        "label": "Дней на выполнение",
+        "placeholder": "Количество дней на выполнение ветки миссий"
+      },
+      "rank": {
+        "label": "Ранг",
+        "placeholder": "Выберите ранг для ветки миссий"
+      },
+      "category": {
+        "label": "Категория активности",
+        "placeholder": "Выберите категорию активности"
+      },
+      "mentor": {
+        "label": "Ментор",
+        "placeholder": "Выберите ментора для ветки миссий"
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      },
+      "icon": {
+        "label": "Иконка ветки",
+        "placeholder": "Загрузите иконку для ветки миссий"
+      }
+    }
+  },
+  "EventForm": {
+    "fields": {
+      "name": {
+        "label": "Название",
+        "placeholder": "Введите название"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание"
+      },
+      "experience": {
+        "label": "Опыт",
+        "placeholder": "Введите количество опыта"
+      },
+      "currency": {
+        "label": "Валюта",
+        "placeholder": "Введите количество валюты"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Выберите цвет"
+      },
+      "required_number": {
+        "label": "Необходимое количество",
+        "placeholder": "Введите необходимое количество"
+      },
+      "is_active": {
+        "label": "Активно",
+        "placeholder": "Активность события"
+      },
+      "start_datetime": {
+        "label": "Дата и время начала",
+        "placeholder": "Выберите дату и время начала"
+      },
+      "time_to_complete": {
+        "label": "Время на выполнение",
+        "placeholder": "Введите время на выполнение"
+      },
+      "category": {
+        "label": "Категория"
+      },
+      "rank": {
+        "label": "Ранг"
+      },
+      "artifacts": {
+        "label": "Артефакты"
+      },
+      "competencies": {
+        "label": "Компетенции"
+      },
+      "mentor": {
+        "label": "Наставник"
+      },
+      "game_world": {
+        "label": "Игровой мир"
+      },
+      "icon": {
+        "label": "Иконка",
+        "placeholder": "Загрузите иконку"
+      }
+    }
+  },
+  "RankForm": {
+    "fields": {
+      "name": {
+        "label": "Название ранга",
+        "placeholder": "Введите название ранга"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание ранга"
+      },
+      "required_experience": {
+        "label": "Требуемый опыт",
+        "placeholder": "Введите количество требуемого опыта"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Выберите цвет ранга"
+      },
+      "parent": {
+        "label": "Родительский ранг",
+        "placeholder": "Выберите родительский ранг"
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      },
+      "icon": {
+        "label": "Иконка ранга",
+        "placeholder": "Загрузите иконку ранга"
+      }
+    }
+  },
+  "CompetencyForm": {
+    "fields": {
+      "name": {
+        "label": "Название",
+        "placeholder": "Введите название компетенции"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Введите описание компетенции"
+      },
+      "required_experience": {
+        "label": "Требуемый опыт",
+        "placeholder": "Введите количество требуемого опыта"
+      },
+      "level": {
+        "label": "Уровень",
+        "placeholder": "Введите уровень компетенции"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Выберите цвет компетенции"
+      },
+      "parent": {
+        "label": "Родительская компетенция",
+        "placeholder": "Выберите родительскую компетенцию"
+      },
+      "game_world": {
+        "label": "Игровой мир",
+        "placeholder": "Выберите игровой мир"
+      },
+      "icon": {
+        "label": "Иконка",
+        "placeholder": "Загрузите иконку компетенции"
+      }
+    }
   }
 }

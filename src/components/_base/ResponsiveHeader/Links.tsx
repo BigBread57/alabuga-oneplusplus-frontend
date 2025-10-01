@@ -19,7 +19,7 @@ export interface LinksKeys {
   JOURNAL: LinkProps
   NEWS: LinkProps
   PROFILE: LinkProps
-  RANG: LinkProps
+  RANK: LinkProps
   SHOP: LinkProps
   ADMIN: LinkProps
 }
@@ -43,10 +43,10 @@ export const Links: LinksKeys = {
     href: '/profile',
     isTab: true,
   },
-  RANG: {
+  RANK: {
     icon: TeamOutlined,
-    labelKey: 'rang',
-    href: '/rang',
+    labelKey: 'rank',
+    href: '/rank',
     isTab: true,
   },
   SHOP: {
