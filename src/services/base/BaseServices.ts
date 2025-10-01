@@ -36,7 +36,7 @@ export default class BaseServices {
   static create(url: string, data: any, options: object): any {
     return new Promise((resolve, reject) => {
       apiClient
-        .post(addTrailingSlashToUrl(url), data, options)
+        .post(`${addTrailingSlashToUrl(url)}create/`, data, options)
         .then((response: AxiosResponse) => {
           return resolve(response)
         })

@@ -10,9 +10,7 @@ type MissionCompetencyFormFields = keyof Omit<
 >
 
 // Хук для получения конфигурации полей формы компетенции миссии
-export const useMissionCompetencyFormConfig = (
-  missionCompetencyId?: number,
-) => {
+export const useMissionCompetencyFormConfig = () => {
   const t = useTranslations('MissionCompetencyForm')
   const tValidation = useTranslations('FormValidation')
 
@@ -58,7 +56,7 @@ export const useMissionCompetencyFormConfig = (
         },
       },
     ],
-    [t, tValidation, missionCompetencyId],
+    [t, tValidation],
   )
 
   return {

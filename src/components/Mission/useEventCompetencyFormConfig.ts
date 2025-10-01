@@ -10,7 +10,7 @@ type EventCompetencyFormFields = keyof Omit<
 >
 
 // Хук для получения конфигурации полей формы
-export const useEventCompetencyFormConfig = (eventCompetencyId?: number) => {
+export const useEventCompetencyFormConfig = () => {
   const t = useTranslations('EventCompetencyForm')
   const tValidation = useTranslations('FormValidation')
 
@@ -56,7 +56,7 @@ export const useEventCompetencyFormConfig = (eventCompetencyId?: number) => {
         },
       },
     ],
-    [t, tValidation, eventCompetencyId],
+    [t, tValidation],
   )
 
   return {

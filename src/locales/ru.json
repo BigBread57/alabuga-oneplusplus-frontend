@@ -216,8 +216,9 @@
     "go_to_home": "На главную"
   },
   "ShopItem": {
+    "currency": "Валюта",
     "shop_items": "Товары магазина",
-    "view_details": "Подробнее",
+    "view_details": "Посмотреть детали",
     "purchase": "Купить",
     "purchase_for": "Купить за",
     "points": "баллов",
@@ -232,8 +233,20 @@
     "status": "Статус",
     "active": "Активен",
     "inactive": "Неактивен",
-    "select_shop_item_category": "Выберите категорию",
-    "character_purchases": "Покупки персонажа"
+    "select_shop_item_category": "Выберите категорию товара",
+    "character_purchases": "Покупки персонажей",
+    "purchase_item": "Покупка товара",
+    "quantity": "Количество",
+    "quantity_required": "Количество обязательно",
+    "min_quantity": "Минимальное количество: 1",
+    "max_quantity": "Превышено доступное количество",
+    "enter_quantity": "Введите количество",
+    "price_per_item": "Цена за единицу",
+    "total": "Итого",
+    "cancel": "Отмена",
+    "confirm_purchase": "Купить",
+    "purchase_success": "Покупка успешна!",
+    "purchase_success_message": "Вы успешно приобрели {quantity} x {itemName} за {totalPrice} баллов."
   },
   "ModalConfirm": {
     "confirm": "Подтверждение",

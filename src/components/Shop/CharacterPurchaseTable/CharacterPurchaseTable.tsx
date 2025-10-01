@@ -1,18 +1,18 @@
 'use client'
 
-import type { TableProps } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 import type { FCC } from '@/types'
-import { Table, Tag } from 'antd'
+import { Table } from 'antd'
 import { useTranslations } from 'next-intl'
-import Image from 'next/image'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Select } from '@/components/_base/Select'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { useCharacterPurchaseColumns } from '@/components/Shop/CharacterPurchaseTable/useCharacterPurchaseColumns'
 import { useFilter } from '@/hooks/useFilter'
 import { CharacterPurchase } from '@/models/CharacterPurchase'
 import { ShopItemCategory } from '@/models/ShopItemCategory'
-import styles from './CharacterPurchaseTable.module.scss'
 
 interface CharacterPurchaseProps {
   key?: React.Key
@@ -41,90 +41,14 @@ interface CharacterPurchaseProps {
   }
 }
 
-const columns: TableProps<CharacterPurchaseProps>['columns'] = [
-  {
-    title: 'Изображение',
-    dataIndex: 'shop_item',
-    key: 'image',
-    render: (shop_item) => {
-      return (
-        <Image
-          src={shop_item.image || 'https://dummyimage.com/300/200'}
-          alt={shop_item.name}
-          width={100}
-          height={100}
-          className={styles.shopItemImage}
-        />
-      )
-    },
-  },
-  {
-    title: 'Товар',
-    dataIndex: 'shop_item',
-    key: 'shop_item',
-    render: (shop_item) => (
-      <div>
-        <div>{shop_item.name}</div>
-        <div style={{ fontSize: '12px', color: '#666' }}>
-          {shop_item.category.name}
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: 'Цена',
-    dataIndex: 'price',
-    key: 'price',
-    render: (price) => `${price} ₽`,
-  },
-  {
-    title: 'Количество',
-    dataIndex: 'number',
-    key: 'number',
-  },
-  {
-    title: 'Скидка',
-    key: 'discount',
-    render: (_, record) => {
-      const discount = record.discount
-
-      return (
-        <span style={{ color: discount > 0 ? '#ff4d4f' : '#000' }}>
-          {discount > 0 ? `${discount}%` : '0%'}
-        </span>
-      )
-    },
-  },
-  {
-    title: 'Общая сумма',
-    dataIndex: 'total_sum',
-    key: 'total_sum',
-    render: (total_sum) => `${total_sum} ₽`,
-  },
-  {
-    title: 'Статус',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status) => {
-      const statusConfig = {
-        PENDING: { color: 'orange', text: 'Ожидание' },
-        DELIVERED: { color: 'green', text: 'Завершено' },
-      }
-
-      const config = statusConfig[status as keyof typeof statusConfig] || {
-        color: 'default',
-        text: status,
-      }
-
-      return <Tag color={config.color}>{config.text}</Tag>
-    },
-  },
-]
-
 const MODEL = CharacterPurchase
 const SHOP_ITEM_CATEGORY_MODEL = ShopItemCategory
 
 const CharacterPurchaseTable: FCC = () => {
+  const { currentUser } = useContext(CurrentUserContext)
+  const { columns } = useCharacterPurchaseColumns(
+    currentUser?.active_game_world_currency_name,
+  )
   const t = useTranslations('CharacterPurchaseTable')
   const [filter, setFilter] = useFilter({})
 
@@ -158,7 +82,7 @@ const CharacterPurchaseTable: FCC = () => {
         }}
         renderItems={({ data, isLoading }) => (
           <Table<CharacterPurchaseProps>
-            columns={columns}
+            columns={columns as ColumnsType<any>}
             dataSource={data?.map((item) => ({ ...item, key: item.id })) || []}
             loading={isLoading}
             pagination={false}

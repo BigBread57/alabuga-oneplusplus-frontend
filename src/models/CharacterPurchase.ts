@@ -18,7 +18,7 @@ export interface CharacterPurchaseProps extends BaseModelProps {
   status: CharacterPurchaseStatus
   additional_info: string
   buyer: CharacterProps
-  shop_item: ShopItemProps
+  shop_item: ShopItemProps | number
   manager?: CharacterProps | null
 }
 

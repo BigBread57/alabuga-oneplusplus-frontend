@@ -1,7 +1,6 @@
 'use client'
 
 import type { FCC } from '@/types'
-import { StarOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { useActivityTabs } from '@/components/Character/CharacterActivity/useActivityTabs'
@@ -74,12 +73,6 @@ const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
         tabList={tabList}
         activeTabKey={activeTabKey1}
         onTabChange={onTab1Change}
-        backgroundIcon={StarOutlined}
-        iconSize={100}
-        iconStyle={{
-          top: '50%',
-          left: '90%',
-        }}
         extra={
           <div ref={statusFilterRef}>
             <MissionStatusFilter

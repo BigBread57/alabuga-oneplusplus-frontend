@@ -1,12 +1,27 @@
 'use client'
 
 import type { FCC } from 'src/types'
+import type { CharacterPurchaseProps } from '@/models/CharacterPurchase'
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
-import { Button, Card, Modal, Row, Space, Tag, Typography } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  InputNumber,
+  Modal,
+  Row,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { TooltipButton } from '@/components/_base/TooltipButton'
+import useMessage from '@/hooks/useMessages'
+import { CharacterPurchase } from '@/models/CharacterPurchase'
+import { useCreateItem } from '@/services/base/hooks'
 import styles from './ShopItemCard.module.scss'
 
 const { Title, Text, Paragraph } = Typography
@@ -29,10 +44,13 @@ type ShopItemProps = {
   start_datetime: string | null
   end_datetime: string | null
   purchase_restriction: string | null
+  active_game_world_currency_name: string
   children: any[]
+  onSuccess?: () => void
 }
 
 const ShopItemCard: FCC<ShopItemProps> = ({
+  id,
   name,
   description,
   category,
@@ -43,9 +61,16 @@ const ShopItemCard: FCC<ShopItemProps> = ({
   start_datetime,
   end_datetime,
   purchase_restriction,
+  onSuccess,
+  active_game_world_currency_name,
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false)
+  const [form] = Form.useForm()
   const t = useTranslations('ShopItem')
+  const { messageSuccess, messageError } = useMessage()
+
+  const { mutate: createItem, isPending } = useCreateItem(CharacterPurchase)
 
   const handleViewDetails = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -54,7 +79,46 @@ const ShopItemCard: FCC<ShopItemProps> = ({
 
   const handlePurchase = (e: React.MouseEvent) => {
     e.stopPropagation()
-    // Здесь будет логика покупки
+    setModalOpen(false)
+    setPurchaseModalOpen(true)
+  }
+
+  const handlePurchaseSubmit = (
+    values: Pick<CharacterPurchaseProps, 'number'>,
+  ) => {
+    const purchaseData: Partial<CharacterPurchaseProps> = {
+      number: values.number,
+      shop_item: id as number,
+    }
+
+    createItem(purchaseData, {
+      onSuccess: () => {
+        messageSuccess()
+        form.resetFields()
+        setPurchaseModalOpen(false)
+        setModalOpen(false)
+        onSuccess?.()
+      },
+      onError: (error: any) => {
+        console.error('Purchase error:', error)
+        // Обработка ошибок в формате массива
+        if (Array.isArray(error?.response?.data?.errors)) {
+          const errors = error?.response?.data?.errors
+          errors.forEach(
+            (err: { code: string, detail: string, attr: string | null }) => {
+              messageError(err.detail || t('purchase_error'))
+            },
+          )
+        } else if (error?.response?.data?.detail) {
+          // Обработка одиночной ошибки
+          messageError(error.response.data.detail)
+        } else if (error?.message) {
+          messageError(error.message)
+        } else {
+          messageError(t('purchase_error'))
+        }
+      },
+    })
   }
 
   const formatPrice = (price: number) => {
@@ -107,9 +171,14 @@ const ShopItemCard: FCC<ShopItemProps> = ({
           title={
             <Row justify='space-between'>
               <Title level={5}>{name}</Title>
-              <Text className={styles.price}>
-                {formatPrice(price)} {t('points')}
-              </Text>
+              <Col xs={24}>
+                <Text>{t('price')}: </Text>
+                {formatPrice(price)}
+              </Col>
+              <Col xs={24}>
+                <Text>{t('currency')}: </Text>
+                {active_game_world_currency_name}
+              </Col>
             </Row>
           }
           description={
@@ -137,6 +206,7 @@ const ShopItemCard: FCC<ShopItemProps> = ({
         />
       </Card>
 
+      {/* Модалка с деталями товара */}
       <Modal
         title={name}
         open={modalOpen}
@@ -152,7 +222,8 @@ const ShopItemCard: FCC<ShopItemProps> = ({
             onClick={handlePurchase}
             disabled={!is_active}
           >
-            {t('purchase_for')} {formatPrice(price)} {t('points')}
+            {t('purchase_for')} {formatPrice(price)}{' '}
+            {active_game_world_currency_name}
           </Button>,
         ]}
         width={600}
@@ -187,7 +258,7 @@ const ShopItemCard: FCC<ShopItemProps> = ({
             <Space direction='horizontal'>
               <Text strong>{t('price')}:</Text>
               <Text>
-                {formatPrice(price)} {t('points')}
+                {formatPrice(price)} {active_game_world_currency_name}
               </Text>
             </Space>
 
@@ -227,6 +298,97 @@ const ShopItemCard: FCC<ShopItemProps> = ({
             </Space>
           </Space>
         </div>
+      </Modal>
+
+      {/* Модалка покупки */}
+      <Modal
+        title={t('purchase_item')}
+        open={purchaseModalOpen}
+        onCancel={() => {
+          setPurchaseModalOpen(false)
+          form.resetFields()
+        }}
+        footer={null}
+        width={400}
+      >
+        <Form
+          form={form}
+          onFinish={handlePurchaseSubmit}
+          layout='vertical'
+          initialValues={{ number: 1 }}
+        >
+          <Form.Item
+            label={t('quantity')}
+            name='number'
+            rules={[
+              { required: true, message: t('quantity_required') },
+              { type: 'number', min: 1, message: t('min_quantity') },
+              ...(number > 0
+                ? [
+                    {
+                      type: 'number' as const,
+                      max: number,
+                      message: t('max_quantity'),
+                    },
+                  ]
+                : []),
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              min={1}
+              max={number > 0 ? number : undefined}
+              placeholder={t('enter_quantity')}
+            />
+          </Form.Item>
+
+          <Space
+            direction='vertical'
+            size='small'
+            style={{ width: '100%', marginBottom: 16 }}
+          >
+            <Text>
+              <Text strong>{t('price_per_item')}:</Text> {formatPrice(price)} (
+              {active_game_world_currency_name})
+            </Text>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.number !== currentValues.number}
+            >
+              {({ getFieldValue }) => {
+                const quantity = getFieldValue('number') || 1
+                const total = price * quantity
+                return (
+                  <Text>
+                    <Text strong>{t('total')}:</Text> {formatPrice(total)}{' '}
+                  </Text>
+                )
+              }}
+            </Form.Item>
+          </Space>
+
+          <Form.Item style={{ marginBottom: 0 }}>
+            <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+              <Button
+                onClick={() => {
+                  setPurchaseModalOpen(false)
+                  form.resetFields()
+                }}
+              >
+                {t('cancel')}
+              </Button>
+              <Button
+                type='primary'
+                htmlType='submit'
+                loading={isPending}
+                icon={<ShoppingCartOutlined />}
+              >
+                {t('confirm_purchase')}
+              </Button>
+            </Space>
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   )

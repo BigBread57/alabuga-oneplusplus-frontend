@@ -10,7 +10,6 @@ import {
   Divider,
   Form,
   Input,
-  notification,
   Space,
   Typography,
 } from 'antd'
@@ -19,6 +18,7 @@ import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
 import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { useFormErrors } from '@/hooks/useFormErrors'
+import useMessage from '@/hooks/useMessages'
 import { useLogin } from '@/services/auth/hooks'
 
 const { Title, Text, Link } = Typography
@@ -37,6 +37,7 @@ export default function LoginForm({
   const t = useTranslations('LoginForm')
   const [form] = Form.useForm()
   const { errors, setFormErrors } = useFormErrors() as FormErrorsHook
+  const { messageSuccess, messageError } = useMessage()
 
   const { mutate: login, isLoading: loginIsLoading }: any = useLogin()
 
@@ -47,15 +48,23 @@ export default function LoginForm({
       ) => {
         // Вызываем колбэк onSuccess если он передан
         onSuccess?.(data)
-
+        messageSuccess()
         window.location.href = redirectPath
       },
       onError: (error: any) => {
         setFormErrors(error?.data)
-        if (error?.data?.detail) {
-          notification.error({
-            message: error.data.detail,
-          })
+        if (Array.isArray(error?.data?.errors)) {
+          const errors = error?.data?.errors
+          errors.forEach(
+            (err: { code: string, detail: string, attr: string | null }) => {
+              messageError(err.detail)
+            },
+          )
+        } else if (error?.data?.detail) {
+          // Обработка одиночной ошибки
+          messageError(error?.data.detail)
+        } else {
+          messageError(error?.data?.message)
         }
       },
     })

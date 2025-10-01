@@ -1,7 +1,6 @@
 'use client'
 
 import type { FCC } from '@/types'
-import { GlobalOutlined } from '@ant-design/icons'
 import { Button, List } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
@@ -60,7 +59,6 @@ const ActivityLogsCard: FCC = () => {
           overflow: 'scroll',
         },
       }}
-      backgroundIcon={GlobalOutlined}
     >
       <FetchMoreItemsComponent
         model={MODEL}

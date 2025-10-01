@@ -15,6 +15,7 @@ export type UserProps = {
   full_name: string
   middle_name: string
   active_character_role: CharacterRole
+  active_game_world_currency_name: string
 } & BaseModelProps
 
 export class UserModel extends BaseModel {

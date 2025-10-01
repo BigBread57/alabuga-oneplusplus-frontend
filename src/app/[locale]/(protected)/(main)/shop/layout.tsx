@@ -46,7 +46,6 @@ export default function Layout(props: ShopPageProps) {
     >
       <CardWrapper
         title=''
-        iconSize={50}
         style={{
           boxShadow: themeConfig.token?.boxShadow,
           background: themeConfig.token?.colorBgBase,
@@ -54,10 +53,6 @@ export default function Layout(props: ShopPageProps) {
         styles={{
           body: { padding: 8 },
         }}
-        iconStyle={{
-          left: '90%',
-        }}
-        backgroundIcon={ShopOutlined}
       >
         <Menu
           mode='horizontal'
