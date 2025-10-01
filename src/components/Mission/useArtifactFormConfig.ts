@@ -71,54 +71,54 @@ export const useArtifactFormConfig = (artifactId?: number) => {
           message: tValidation('min_max_length', { min: 0, max: 256 }),
         },
       },
-      {
-        key: 'modifier',
-        title: t('fields.modifier.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          // static: [
-          //   { value: 'DEFAULT', label: t('fields.modifier.options.default') },
-          //   {
-          //     value: 'EXPERIENCE_GAIN',
-          //     label: t('fields.modifier.options.experience_gain'),
-          //   },
-          //   {
-          //     value: 'CURRENCY_GAIN',
-          //     label: t('fields.modifier.options.currency_gain'),
-          //   },
-          //   {
-          //     value: 'SHOP_DISCOUNT',
-          //     label: t('fields.modifier.options.shop_discount'),
-          //   },
-          // ],
-          multiple: false,
-        },
-      },
-      {
-        key: 'modifier_value',
-        title: t('fields.modifier_value.label'),
-        type: 'number',
-        is_required: true,
-        placeholder: t('fields.modifier_value.placeholder'),
-        validation: {
-          min: 0,
-          message: tValidation('min_value', { min: 1 }),
-        },
-      },
-      {
-        key: 'game_world',
-        title: t('fields.game_world.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/game-worlds',
-          qKey: 'game-worlds',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
+      // {
+      //   key: 'modifier',
+      //   title: t('fields.modifier.label'),
+      //   type: 'select',
+      //   is_required: true,
+      //   options: {
+      // static: [
+      //   { value: 'DEFAULT', label: t('fields.modifier.options.default') },
+      //   {
+      //     value: 'EXPERIENCE_GAIN',
+      //     label: t('fields.modifier.options.experience_gain'),
+      //   },
+      //   {
+      //     value: 'CURRENCY_GAIN',
+      //     label: t('fields.modifier.options.currency_gain'),
+      //   },
+      //   {
+      //     value: 'SHOP_DISCOUNT',
+      //     label: t('fields.modifier.options.shop_discount'),
+      //   },
+      // ],
+      // multiple: false,
+      // },
+      // },
+      // {
+      //   key: 'modifier_value',
+      //   title: t('fields.modifier_value.label'),
+      //   type: 'number',
+      //   is_required: true,
+      //   placeholder: t('fields.modifier_value.placeholder'),
+      //   validation: {
+      //     min: 0,
+      //     message: tValidation('min_value', { min: 1 }),
+      //   },
+      // },
+      // {
+      //   key: 'game_world',
+      //   title: t('fields.game_world.label'),
+      //   type: 'select',
+      //   is_required: true,
+      //   options: {
+      //     url: '/api/game-worlds',
+      //     qKey: 'game-worlds',
+      //     valueKey: 'id',
+      //     labelKey: 'name',
+      //     multiple: false,
+      //   },
+      // },
     ],
     [t, tValidation, artifactId],
   )

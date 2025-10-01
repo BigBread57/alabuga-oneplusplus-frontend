@@ -10,7 +10,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { ModalConfirm } from '@/components/_base/ModalConfirm'
 import { TooltipButton } from '@/components/_base/TooltipButton'
-import { Blue, DarkBlue, DeepDarkPurple, LightBlue } from '@/libs/AntdThemes'
+import { Blue, DarkBlue, DeepDarkBlue, LightBlue } from '@/libs/AntdThemes'
 import { Character } from '@/models/Character'
 import { useExtraActionsPut } from '@/services/base/hooks'
 
@@ -144,7 +144,7 @@ export function ProfilePhoto({
                 size={size}
                 variant='beam'
                 name={username || 'avatar'}
-                colors={[Blue, DarkBlue, DeepDarkPurple, LightBlue]}
+                colors={[Blue, DarkBlue, DeepDarkBlue, LightBlue]}
                 style={{
                   opacity: isLoading ? 0.7 : 1,
                   transition: 'opacity 0.3s ease',

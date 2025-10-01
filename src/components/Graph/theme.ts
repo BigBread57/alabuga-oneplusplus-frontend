@@ -1,18 +1,18 @@
 // Цвета для сущностей
 import {
   Blue,
+  DarkBlue,
   DarkPurple,
-  DeepDarkPurple,
+  DeepDarkBlue,
   LightBlue,
   Orange,
-  Purple,
 } from '@/libs/AntdThemes'
 
 export const ENTITY_COLORS = {
-  rank: DeepDarkPurple,
-  missionBranch: DarkPurple,
+  rank: DeepDarkBlue,
+  missionBranch: DarkBlue,
   mission: Blue,
-  artefact: LightBlue,
-  competency: Purple,
-  event: Orange,
+  artefact: Orange,
+  competency: DarkPurple,
+  event: LightBlue,
 } as const

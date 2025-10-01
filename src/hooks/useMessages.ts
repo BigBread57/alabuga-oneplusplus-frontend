@@ -5,8 +5,8 @@ const useMessage = () => {
   const { message } = App.useApp()
   const t = useTranslations('Common')
 
-  const messageSuccess = () => {
-    message.success(t('success'))
+  const messageSuccess = (text?: string) => {
+    message.success(text || t('success'))
   }
 
   const messageError = (errorText: string) => {

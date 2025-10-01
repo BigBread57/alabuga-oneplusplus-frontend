@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type { ENTITY_TYPES } from '@/hooks/useGraph'
-import type { ApiResponse } from '@/types'
 import { Drawer } from 'antd'
 import { useTranslations } from 'next-intl'
+import { AwesomeFormGenerator } from '@/components/_base/AwesomeFormGenerator'
 import { useArtifactFormConfig } from '@/components/Mission/useArtifactFormConfig'
 import { useCompetencyFormConfig } from '@/components/Mission/useCompetencyFormConfig'
 import { useEventCompetencyFormConfig } from '@/components/Mission/useEventCompetencyFormConfig'
@@ -12,18 +12,15 @@ import { useMissionBranchFormConfig } from '@/components/Mission/useMissionBranc
 import { useMissionCompetencyFormConfig } from '@/components/Mission/useMissionCompetencyFormConfig'
 import { useMissionFormConfig } from '@/components/Mission/useMissionFormConfig'
 import { useRankFormConfig } from '@/components/Mission/useRankFormConfig'
-import { Mission } from '@/models/Mission'
-import { useFetchOneItem } from '@/services/base/hooks'
-import AwesomeFormGenerator from '../../_base/AwesomeFormGenerator/AwesomeFormGenerator'
 
 export interface NodeInfoDrawerProps {
+  nodeData: Record<string, any>
   visible: boolean
   nodeId: string | null
   onClose: () => void
   entityType: ENTITY_TYPES | null
+  onFinish?: (values: Record<string, any>) => void
 }
-
-const MISSION_MODEL = Mission
 
 // Тип для заголовков сущностей
 type EntityTitles = {
@@ -32,9 +29,10 @@ type EntityTitles = {
 
 const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
   visible,
-  nodeId,
   onClose,
   entityType,
+  nodeData,
+  onFinish,
 }) => {
   const t = useTranslations('Common')
 
@@ -50,14 +48,6 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
   const { formFields: missionCompetencyFormFields }
     = useMissionCompetencyFormConfig()
   const { formFields: missionBranchFormFields } = useMissionBranchFormConfig()
-
-  // Получение данных в зависимости от типа сущности
-  const { data, isLoading } = useFetchOneItem<ApiResponse>({
-    model: MISSION_MODEL,
-    id: nodeId || undefined,
-    qKey: `${entityType}NodeInfo`,
-    enabled: visible && !!entityType && !!nodeId,
-  })
 
   // Получение соответствующих полей формы для типа сущности
   const getFormFields = () => {
@@ -84,7 +74,6 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
         return []
     }
   }
-  const loading = isLoading
 
   // Получение заголовка для Drawer в зависимости от типа сущности
   const getDrawerTitle = () => {
@@ -119,7 +108,6 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
       placement='right'
       width={600}
       open={visible}
-      loading={loading}
       onClose={onClose}
       destroyOnHidden
       styles={{
@@ -128,11 +116,12 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
         },
       }}
     >
+      {JSON.stringify(nodeData)}
       <AwesomeFormGenerator
-        loading={isLoading}
-        initialValues={data?.data}
+        initialValues={nodeData}
         layout='vertical'
         fields={formFields}
+        onFinish={onFinish}
       />
     </Drawer>
   )

@@ -46,7 +46,7 @@ export type FormField = {
 
 type AwesomeFormGeneratorProps = {
   fields: FormField[]
-  onSubmit?: (values: Record<string, any>) => void
+  onFinish?: (values: Record<string, any>) => void
   onValuesChange?: (
     changedValues: Record<string, any>,
     allValues: Record<string, any>,
@@ -63,7 +63,7 @@ type AwesomeFormGeneratorProps = {
 
 const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
   fields,
-  onSubmit,
+  onFinish,
   onValuesChange,
   initialValues,
   loading = false,
@@ -92,7 +92,7 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
   }, [fields, initialValues, formInstance])
 
   const handleFinish = (values: Record<string, any>) => {
-    onSubmit?.(values)
+    onFinish?.(values)
   }
 
   const getValidationRules = (field: FormField) => {
@@ -260,15 +260,16 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
         ))}
       </Row>
 
-      {onSubmit && (
+      {onFinish && (
         <Form.Item>
           <Button
             type='primary'
             htmlType='submit'
             loading={loading}
             size='large'
+            block
           >
-            {submitText || t('submit')}
+            {submitText || t('save')}
           </Button>
         </Form.Item>
       )}

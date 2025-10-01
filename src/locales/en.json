@@ -358,6 +358,7 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "graph_saved_successfully": "LOR saved successfully",
     "delete_selected": "Delete Selected",
     "create_new_lor": "Create New LOR",
     "exit_connect_mode": "Exit Connect Mode",

@@ -1,8 +1,9 @@
 import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { Graph } from '@antv/x6'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { baseNodeConfig } from '@/components/Graph/registerCustomNodesBaseConfig'
+import { registerEntityNodes } from '@/components/Graph/registerNodes'
 import { ENTITY_COLORS } from '@/components/Graph/theme'
+import { useGraphFunc } from '@/components/Graph/useGraphFunc'
 import { useTheme } from '@/providers/ThemeProvider'
 
 interface UseGraphOptions {
@@ -18,6 +19,7 @@ interface UseGraphOptions {
     data: any,
     attrs: any,
   ) => void
+  onGraphChange?: (data: any) => void
 }
 
 export enum ENTITY_TYPES {
@@ -43,6 +45,7 @@ interface UseGraphReturn {
   zoomOut: () => void
   clearGraph: () => void
   addEntity: (entityType: ENTITY_TYPES, data: EntityData) => boolean
+  updateEntity: (nodeId: string, newData: Record<string, any>) => boolean
   getNodeData: (nodeId?: string) => any
   toggleConnectingMode: () => void
   isConnectingMode: boolean
@@ -60,6 +63,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     enablePanning = true,
     enableMousewheel = true,
     onNodeClick,
+    onGraphChange,
   } = options
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -69,6 +73,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const [isConnectingMode, setIsConnectingMode] = useState(false)
   const [isDeleteMode, setIsDeleteMode] = useState(false)
   const firstSelectedNodeRef = useRef<string | null>(null)
+  const { updateEdgeColor, getTopLeftPosition } = useGraphFunc()
 
   // Используем ref для актуальных значений
   const onNodeClickRef = useRef(onNodeClick)
@@ -98,98 +103,11 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     [gridVisible, gridSize, enablePanning, enableMousewheel],
   )
 
-  // Функция для получения цвета из узла-источника
-  const getSourceColor = useCallback((edge: any) => {
-    const sourceNode = edge.getSourceNode()
-    return sourceNode ? sourceNode.attr('body/fill') : '#A2B1C3'
-  }, [])
-
-  // Функция для обновления цвета ребра
-  const updateEdgeColor = useCallback(
-    (edge: any) => {
-      const sourceColor = getSourceColor(edge)
-      edge.attr({
-        line: {
-          stroke: sourceColor,
-          targetMarker: {
-            fill: sourceColor,
-          },
-        },
-      })
-    },
-    [getSourceColor],
-  )
-
-  // Регистрация узлов - вызывается только один раз
-  const registerEntityNodes = useCallback(() => {
-    const entityConfigs = [
-      { type: ENTITY_TYPES.RANK, color: ENTITY_COLORS.rank, icon: '🎖️' },
-      {
-        type: ENTITY_TYPES.MISSION_BRANCH,
-        color: ENTITY_COLORS.missionBranch,
-        icon: '🧭',
-      },
-      { type: ENTITY_TYPES.MISSION, color: ENTITY_COLORS.mission, icon: '🚀' },
-      {
-        type: ENTITY_TYPES.ARTEFACT,
-        color: ENTITY_COLORS.artefact,
-        icon: '🎁',
-      },
-      {
-        type: ENTITY_TYPES.COMPETENCY,
-        color: ENTITY_COLORS.competency,
-        icon: '🏆',
-      },
-      { type: ENTITY_TYPES.EVENT, color: ENTITY_COLORS.event, icon: '📅' },
-    ]
-
-    entityConfigs.forEach(({ type, color, icon }) => {
-      Graph.registerNode(
-        type,
-        {
-          ...baseNodeConfig,
-          attrs: {
-            ...baseNodeConfig.attrs,
-            body: {
-              ...baseNodeConfig.attrs.body,
-              fill: color,
-              stroke: color,
-            },
-            icon: { ...baseNodeConfig.attrs.icon, text: icon },
-          },
-        },
-        true,
-      )
-    })
-
-    Graph.registerEdge(
-      'edge',
-      {
-        zIndex: -1,
-        attrs: {
-          line: {
-            fill: 'none',
-            strokeLinejoin: 'round',
-            strokeWidth: 2,
-            stroke: '{sourceColor}', // будет заменено динамически
-            sourceMarker: null,
-            targetMarker: {
-              name: 'block',
-              width: 8,
-              height: 6,
-              fill: '{sourceColor}', // будет заменено динамически
-            },
-          },
-        },
-      },
-      true,
-    )
-  }, [])
-
   // Обновление размеров контейнера
   const updateContainerSize = useCallback(() => {
     if (containerRef.current) {
       const { offsetWidth, offsetHeight } = containerRef.current
+
       // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
       setContainerSize({ width: offsetWidth, height: offsetHeight })
     }
@@ -207,6 +125,10 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     }
   }, [updateContainerSize])
 
+  const registerEntityNodesCall = useCallback(() => {
+    registerEntityNodes()
+  }, [])
+
   // Инициализация графа - КРИТИЧНО: минимальные зависимости
   useEffect(() => {
     if (
@@ -217,8 +139,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     ) {
       return
     }
-
-    registerEntityNodes()
+    // Регистрируем узлы
+    registerEntityNodesCall()
 
     const graph = new Graph({
       container: containerRef.current,
@@ -331,7 +253,17 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         graph.removeCell(edge.id)
       }
     }
+    const handleGraphChange = () => {
+      if (onGraphChange && graphRef.current) {
+        const graphData = graphRef.current.toJSON()
+        onGraphChange(graphData)
+      }
+    }
 
+    // Подписываемся на все изменения
+    graph.on('cell:added', handleGraphChange)
+    graph.on('cell:removed', handleGraphChange)
+    graph.on('cell:change:*', handleGraphChange)
     graph.on('node:click', handleNodeClickEvent)
     graph.on('edge:click', handleEdgeClickEvent)
     graph.on('edge:connected', handleEdgeConnected)
@@ -356,6 +288,9 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     // Cleanup
     return () => {
       if (graphRef.current) {
+        graphRef.current.off('cell:added', handleGraphChange)
+        graphRef.current.off('cell:removed', handleGraphChange)
+        graphRef.current.off('cell:change:*', handleGraphChange)
         graphRef.current.off('node:click', handleNodeClickEvent)
         graphRef.current.off('edge:click', handleEdgeClickEvent)
         graphRef.current.off('edge:connected', handleEdgeConnected)
@@ -399,26 +334,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       graphRef.current.centerContent()
     }
   }, [data, isReady, updateEdgeColor])
-
-  // Получение координат левого верхнего угла видимой области
-  const getTopLeftPosition = useCallback(() => {
-    if (!graphRef.current) {
-      return { x: 50, y: 50 }
-    }
-
-    try {
-      const zoom = graphRef.current.zoom()
-      const translate = graphRef.current.translate()
-
-      const x = -translate.tx / zoom + 50
-      const y = -translate.ty / zoom + 50
-
-      return { x, y }
-    } catch (error) {
-      console.warn('Could not get graph transform:', error)
-      return { x: 50, y: 50 }
-    }
-  }, [])
 
   // API методы
   const centerContent = useCallback(() => {
@@ -528,26 +443,52 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         return false
       }
 
-      const position = getTopLeftPosition()
+      const position = getTopLeftPosition(graphRef)
 
       graphRef.current.addNode({
         shape: entityType,
         x: position.x,
         y: position.y,
         attrs: {
-          title: { text: data.title },
+          title: { text: data.name },
           description: { text: data.description },
         },
         data: {
           type: entityType,
-          title: data.title,
-          description: data.description,
+          ...data,
         },
       })
 
       return true
     },
     [getTopLeftPosition],
+  )
+
+  const updateEntity = useCallback(
+    (nodeId: string, newData: Record<string, any>) => {
+      if (!graphRef.current) {
+        return false
+      }
+
+      const node = graphRef.current.getCellById(nodeId)
+      if (!node) {
+        return false
+      }
+      const currentData = node.getData() || {}
+      node.updateData({
+        ...currentData,
+        ...newData,
+      })
+      // Обновляем визуальные атрибуты если есть title и description
+      if (newData.name) {
+        node.attr('title/text', newData.name)
+      }
+      if (newData.description) {
+        node.attr('description/text', newData.description)
+      }
+      return true
+    },
+    [],
   )
 
   const getNodeData = useCallback((nodeId?: string) => {
@@ -577,6 +518,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     zoomOut,
     clearGraph,
     addEntity,
+    updateEntity,
     getNodeData,
     toggleConnectingMode,
     isConnectingMode,

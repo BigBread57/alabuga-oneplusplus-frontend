@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import React, { useEffect, useState } from 'react'
 
 export interface EntityData {
-  title: string
+  name: string
   description: string
 }
 
@@ -32,7 +32,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
       form.resetFields()
       // Устанавливаем значения по умолчанию
       form.setFieldsValue({
-        title: '',
+        name: '',
         description: '',
       })
     }
@@ -45,7 +45,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
 
       if (entityType) {
         onConfirm(entityType, {
-          title: values.title.trim(),
+          name: values.name.trim(),
           description: values.description.trim(),
         })
       }
@@ -135,7 +135,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
       >
         <Form.Item
           label={t('entity_title', { fallback: 'Title' })}
-          name='title'
+          name='name'
           rules={[
             {
               required: true,
@@ -190,7 +190,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
             block
             onClick={() => {
               form.setFieldsValue({
-                title: getDefaultTitle(entityType),
+                name: getDefaultTitle(entityType),
                 description: getDefaultDescription(entityType),
               })
             }}

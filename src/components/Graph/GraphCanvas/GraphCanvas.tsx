@@ -5,24 +5,29 @@ import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/Gra
 import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import { debounce } from 'lodash'
 import { useTranslations } from 'next-intl'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
-import { fakeData } from '@/components/Graph/GraphCanvas/fake_data'
+import { GRAPH_STORAGE_KEY } from '@/components/Graph/GraphCanvasWrapper/GraphCanvasWrapper'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
+import useMessage from '@/hooks/useMessages'
 
 interface GraphCanvasProps {
-  data?: any
+  data: any // Теперь обязательный prop
   gridVisible?: boolean
   gridSize?: number
   enablePanning?: boolean
   enableMousewheel?: boolean
 }
-// const MODEL = GameWorld
+
+const EMPTY_GRAPH = { cells: [] }
+
 const GraphCanvas: FCC<GraphCanvasProps> = ({
+  data,
   gridVisible = true,
   gridSize = 10,
   enablePanning = true,
@@ -31,29 +36,32 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [selectedNodeData, setSelectedNodeData] = useState<Record<
+    string,
+    any
+  > | null>(null)
   const [isShowModal, setIsShowModal] = useState(false)
   const [currentEntityType, setCurrentEntityType]
     = useState<ENTITY_TYPES | null>(null)
-  // const { currentUser } = useContext(CurrentUserContext)
-
-  // const { data: response }: any = useExtraActionsGet({
-  //   qKey: 'graph-all-info',
-  //   extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
-  //   enabled: !!currentUser?.active_game_world,
-  // })
-
+  const { messageSuccess } = useMessage()
   const handleShowModal = (entityType: ENTITY_TYPES) => {
     setIsShowModal(true)
     setCurrentEntityType(entityType)
   }
+
   const handleHideModal = () => {
     setIsShowModal(false)
     setCurrentEntityType(null)
   }
 
-  const handleNodeClick = (nodeId: string, entityType: ENTITY_TYPES) => {
+  const handleNodeClick = (
+    nodeId: string,
+    entityType: ENTITY_TYPES,
+    nodeData: Record<string, null>,
+  ) => {
     setSelectedNodeId(nodeId)
     setCurrentEntityType(entityType)
+    setSelectedNodeData(nodeData)
     setDrawerVisible(true)
   }
 
@@ -61,7 +69,22 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     setDrawerVisible(false)
     setCurrentEntityType(null)
     setSelectedNodeId(null)
+    setSelectedNodeData(null)
   }
+
+  const handleGraphChange = useMemo(
+    () =>
+      debounce((graphData: any) => {
+        try {
+          localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(graphData))
+          messageSuccess(t('graph_saved_successfully'))
+        } catch (error) {
+          console.error('Ошибка при сохранении в localStorage:', error)
+        }
+      }, 5000),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  )
 
   const {
     containerRef,
@@ -72,17 +95,19 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     zoomOut,
     clearGraph,
     addEntity,
+    updateEntity,
     toggleConnectingMode,
     isConnectingMode,
     toggleDeleteMode,
     isDeleteMode,
   } = useGraph({
-    data: fakeData,
+    data,
     gridVisible,
     gridSize,
     enablePanning,
     enableMousewheel,
     onNodeClick: handleNodeClick,
+    onGraphChange: handleGraphChange,
   })
 
   const handleAddEntity = (
@@ -92,6 +117,19 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     addEntity(entityType, entityData)
     handleHideModal()
   }
+
+  const handleFinish = (values: Record<string, any>) => {
+    if (selectedNodeId && currentEntityType) {
+      updateEntity(selectedNodeId, values)
+      handleCloseDrawer()
+    }
+  }
+
+  const handleClearAll = () => {
+    clearGraph()
+    localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(EMPTY_GRAPH))
+  }
+
   return (
     <CardWrapper
       title=''
@@ -108,25 +146,26 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
       }}
     >
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-        {/* Модальное окно для создания сущностей */}
         <EntityCreationModal
           visible={isShowModal}
           entityType={currentEntityType}
           onConfirm={handleAddEntity}
           onCancel={handleHideModal}
         />
-        {/* Drawer для информации о ноде */}
+
         <NodeInfoDrawer
+          nodeData={selectedNodeData as Record<string, any>}
           visible={drawerVisible}
           nodeId={selectedNodeId}
           entityType={currentEntityType}
           onClose={handleCloseDrawer}
+          onFinish={handleFinish}
         />
-        {/* Единая панель инструментов */}
+
         {isReady && (
           <GraphToolbarPanel
             onAddEntity={handleShowModal}
-            onClearGraph={clearGraph}
+            onClearGraph={handleClearAll}
             onCenterContent={centerContent}
             onFitContent={fitContent}
             onZoomIn={zoomIn}
