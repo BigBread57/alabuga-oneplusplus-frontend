@@ -5,16 +5,14 @@ import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/Gra
 import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import { debounce } from 'lodash'
 import { useTranslations } from 'next-intl'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
 import { GRAPH_STORAGE_KEY } from '@/components/Graph/GraphCanvasWrapper/GraphCanvasWrapper'
 import EntityCreationModal from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import { GraphToolbarPanel } from '@/components/Graph/GraphToolbarPanel'
 import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
-import useMessage from '@/hooks/useMessages'
 
 interface GraphCanvasProps {
   data: any // Теперь обязательный prop
@@ -22,6 +20,7 @@ interface GraphCanvasProps {
   gridSize?: number
   enablePanning?: boolean
   enableMousewheel?: boolean
+  onChange?: (data: Record<string, any>) => void
 }
 
 const EMPTY_GRAPH = { cells: [] }
@@ -32,6 +31,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   gridSize = 10,
   enablePanning = true,
   enableMousewheel = true,
+  onChange,
 }) => {
   const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
@@ -43,7 +43,6 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   const [isShowModal, setIsShowModal] = useState(false)
   const [currentEntityType, setCurrentEntityType]
     = useState<ENTITY_TYPES | null>(null)
-  const { messageSuccess } = useMessage()
   const handleShowModal = (entityType: ENTITY_TYPES) => {
     setIsShowModal(true)
     setCurrentEntityType(entityType)
@@ -72,20 +71,6 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     setSelectedNodeData(null)
   }
 
-  const handleGraphChange = useMemo(
-    () =>
-      debounce((graphData: any) => {
-        try {
-          localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(graphData))
-          messageSuccess(t('graph_saved_successfully'))
-        } catch (error) {
-          console.error('Ошибка при сохранении в localStorage:', error)
-        }
-      }, 5000),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  )
-
   const {
     containerRef,
     isReady,
@@ -107,7 +92,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     enablePanning,
     enableMousewheel,
     onNodeClick: handleNodeClick,
-    onGraphChange: handleGraphChange,
+    onGraphChange: onChange,
   })
 
   const handleAddEntity = (

@@ -352,6 +352,8 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "loading_graph": "Загрузка ЛОР...",
+    "error_saving_graph": "Ошибка при сохранении ЛОР",
     "graph_saved_successfully": "ЛОР успешно сохранён",
     "delete_selected": "Удалить фигуру",
     "create_new_lor": "Создать новый ЛОР",
