@@ -81,6 +81,7 @@
   },
 
   "ProfileCard": {
+    "start_tour": "Start Tour",
     "rank": "Rank",
     "experience": "Experience",
     "competencies": "Competencies",
@@ -314,6 +315,7 @@
     "SHOP_DISCOUNT": "store discount"
   },
   "Competence": {
+    "game_world_stories": "World Stories",
     "view_stories": "View stories",
     "stories": "Stories",
     "world_stories_title": "World Stories: {competencyName}",

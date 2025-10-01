@@ -81,6 +81,7 @@
     "skip_tour": "Пропустить"
   },
   "ProfileCard": {
+    "start_tour": "Начать ознакомительную экскурсию",
     "rank": "Ранг",
     "experience": "Опыт",
     "competencies": "Компетенции",
@@ -308,6 +309,7 @@
     "SHOP_DISCOUNT": "скидка в магазине"
   },
   "Competence": {
+    "game_world_stories": "История мира",
     "view_stories": "Посмотреть истории",
     "stories": "Истории",
     "world_stories_title": "Истории мира: {competencyName}",

@@ -1,13 +1,15 @@
 'use client'
 
-import type { MenuProps, TourProps } from 'antd'
+import type { MenuProps } from 'antd'
+import type { FCC } from 'src/types'
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, Drawer, Menu, Modal, Tour } from 'antd'
+import { Button, Drawer, Menu } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
+import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 
 // Определяем навигационные элементы с маршрутами
@@ -20,48 +22,24 @@ const navigationItems = [
   Links.ADMIN,
 ]
 
-// Тип для рефов меню
-export type MenuLinksRef = {
-  getTourRefs: () => Record<
-    string,
-    React.RefObject<HTMLAnchorElement | HTMLButtonElement>
-  >
-}
-
-const MenuLinks = forwardRef<MenuLinksRef>((_props, ref) => {
+const MenuLinks: FCC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(true)
-  const [tourOpen, setTourOpen] = useState(false)
   const pathname = usePathname()
   const params = useParams()
   const locale = params.locale as string
   const t = useTranslations('MenuLinks')
   const { isMobile, isTablet } = useScreens()
+  const {
+    menuButtonRef,
+    profileRef,
+    journalRef,
+    shopRef,
+    rangRef,
+    newsRef,
+    adminRef,
+  } = useTour()
 
   const isCompact = isMobile || isTablet
-
-  // Рефы для элементов меню
-  const profileRef = useRef<HTMLAnchorElement>(null)
-  const journalRef = useRef<HTMLAnchorElement>(null)
-  const shopRef = useRef<HTMLAnchorElement>(null)
-  const rangRef = useRef<HTMLAnchorElement>(null)
-  const newsRef = useRef<HTMLAnchorElement>(null)
-  const adminRef = useRef<HTMLAnchorElement>(null)
-  const menuButtonRef = useRef<HTMLButtonElement>(null)
-
-  // Экспортируем рефы для родительского компонента
-  useImperativeHandle(ref, () => ({
-    getTourRefs: () => ({
-      profileMenuItem: profileRef,
-      journalMenuItem: journalRef,
-      shopMenuItem: shopRef,
-      rangMenuItem: rangRef,
-      newsMenuItem: newsRef,
-      adminMenuItem: adminRef,
-      menuButton: menuButtonRef,
-    }),
-  }))
-
   const handleDrawerToggle = () => {
     setIsDrawerOpen(!isDrawerOpen)
   }
@@ -69,55 +47,6 @@ const MenuLinks = forwardRef<MenuLinksRef>((_props, ref) => {
   const handleDrawerClose = () => {
     setIsDrawerOpen(false)
   }
-
-  const handleOk = () => {
-    setIsModalOpen(false)
-    // Запускаем тур после закрытия модального окна
-    setTimeout(() => setTourOpen(true), 300)
-  }
-
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
-
-  // Шаги тура для меню
-  const menuTourSteps: TourProps['steps'] = [
-    {
-      title: 'Профиль',
-      description:
-        'Перейдите в свой профиль, чтобы посмотреть статистику, артефакты и компетенции.',
-      target: () => profileRef.current || document.body,
-    },
-    {
-      title: 'Журнал',
-      description:
-        'Здесь вы можете просмотреть историю своих действий и достижений.',
-      target: () => journalRef.current || document.body,
-    },
-    {
-      title: 'Магазин',
-      description:
-        'Приобретайте полезные предметы и улучшения для вашего персонажа.',
-      target: () => shopRef.current || document.body,
-    },
-    {
-      title: 'Рейтинг',
-      description:
-        'Сравните свои достижения с другими игроками в рейтинговой таблице.',
-      target: () => rangRef.current || document.body,
-    },
-    {
-      title: 'Новости',
-      description: 'Будьте в курсе последних обновлений и событий в игре.',
-      target: () => newsRef.current || document.body,
-    },
-    {
-      title: 'Админ-панель',
-      description:
-        'Для администраторов: управление контентом и пользователями.',
-      target: () => adminRef.current || document.body,
-    },
-  ]
 
   // Функция для получения рефа по ключу
   const getMenuItemRef = (href: string): React.RefObject<HTMLAnchorElement> => {
@@ -191,6 +120,7 @@ const MenuLinks = forwardRef<MenuLinksRef>((_props, ref) => {
           }}
         >
           <Button
+            ref={menuButtonRef}
             type='text'
             icon={<MenuOutlined />}
             onClick={handleDrawerToggle}
@@ -222,46 +152,19 @@ const MenuLinks = forwardRef<MenuLinksRef>((_props, ref) => {
 
   // Десктопная версия
   return (
-    <>
-      {/* Модальное окно приветствия */}
-      <Modal
-        title={t('welcome')}
-        closable={{ 'aria-label': 'Custom Close Button' }}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText={t('start_tour')}
-        cancelText={t('skip_tour')}
-      >
-        <p>{t('welcome_text')}</p>
-        <p>Хотите пройти ознакомительный тур по странице профиля?</p>
-      </Modal>
-      <Menu
-        mode='horizontal'
-        selectedKeys={selectedKeys}
-        items={createMenuItems(false)}
-        style={{
-          flex: 1,
-          minWidth: 0,
-          background: 'transparent',
-          border: 'none',
-        }}
-      />
-
-      {/* Тур для десктопного меню */}
-      <Tour
-        open={tourOpen}
-        onClose={() => setTourOpen(false)}
-        steps={menuTourSteps}
-        indicatorsRender={(current, total) => (
-          <span>
-            {current + 1} / {total}
-          </span>
-        )}
-      />
-    </>
+    <Menu
+      mode='horizontal'
+      selectedKeys={selectedKeys}
+      items={createMenuItems(false)}
+      style={{
+        flex: 1,
+        minWidth: 0,
+        background: 'transparent',
+        border: 'none',
+      }}
+    />
   )
-})
+}
 
 MenuLinks.displayName = 'MenuLinks'
 
