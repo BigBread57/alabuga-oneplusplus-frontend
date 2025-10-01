@@ -33,4 +33,11 @@ export class GameWorld extends BaseModel {
   static updateOrCreateAllEntitiesUrl(id: number) {
     return `${this.url()}/${id}/update-or-create-all-entities/`
   }
+
+  // POST
+  // /api/v1/game-world/game-worlds/{id}/generate/
+
+  static generateUrl(id: number) {
+    return `${this.url()}/${id}/generate/`
+  }
 }

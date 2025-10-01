@@ -8,6 +8,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { GraphCanvas } from '@/components/Graph/GraphCanvas'
 import { fakeData } from '@/components/Graph/GraphCanvas/fake_data'
+import { postDataGenerate } from '@/components/Graph/postDataGenerate'
 import useMessage from '@/hooks/useMessages'
 import { GameWorld } from '@/models/GameWorld'
 import { useExtraActionsGet, usePostExtraActions } from '@/services/base/hooks'
@@ -29,13 +30,12 @@ const GraphCanvasWrapper: FCC = () => {
   })
 
   const { mutate: updateGraph, isLoading: isLoadingUpdate }: any
-    = usePostExtraActions(
-      'updateOrCreateAllEntitiesUrl',
-      MODEL.updateOrCreateAllEntitiesUrl(
+    = usePostExtraActions({
+      qKey: 'updateOrCreateAllEntitiesUrl',
+      extraUrl: MODEL.updateOrCreateAllEntitiesUrl(
         currentUser?.active_game_world as number,
       ),
-    )
-
+    })
   const handleUpdateGraph = (graphData: Record<string, any>) => {
     updateGraph(graphData, {
       onSuccess: () => {
@@ -50,6 +50,34 @@ const GraphCanvasWrapper: FCC = () => {
             || err?.message
 
         messageError(t('error_saving_graph'))
+        messageError(errorMessage)
+      },
+    })
+  }
+
+  const { mutate: generateNewLor, isLoading: isLoadingGenerate }: any
+    = usePostExtraActions({
+      qKey: 'generateNewLor',
+      extraUrl: MODEL.generateUrl(currentUser?.active_game_world as number),
+    })
+
+  const handleNewLoreClick = () => {
+    generateNewLor(postDataGenerate, {
+      onSuccess: (res: any) => {
+        if (res?.data) {
+          setGraphData(res.data)
+          localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(res.data))
+          messageSuccess(t('new_lore_generated_successfully'))
+        }
+      },
+      onError: (err: any) => {
+        console.error('Ошибка генерации нового лора:', err)
+
+        const errorMessage
+          = err?.response?.data?.errors?.[0]?.detail
+            || err?.response?.data?.detail
+            || err?.message
+        messageError(t('error_generating_new_lore'))
         messageError(errorMessage)
       },
     })
@@ -77,6 +105,7 @@ const GraphCanvasWrapper: FCC = () => {
     }
 
     try {
+      // FIXME: раскоментить когда бэкенд будет готов
       // // Приоритет 1: Данные с сервера
       // if (
       //   response?.data &&
@@ -120,17 +149,19 @@ const GraphCanvasWrapper: FCC = () => {
     }
   }, [isLoading, response])
 
-  // Показываем спиннер пока загружаются данные
-  if (isLoading || !isDataLoaded) {
-    return <Spin spinning size='large' />
-  }
-
   // Показываем спиннер при сохранении
-  if (isLoadingUpdate) {
+  if (isLoading || !isDataLoaded || isLoadingUpdate) {
     return <Spin spinning size='large' />
   }
 
-  return <GraphCanvas data={graphData} onChange={handleGraphChange} />
+  return (
+    <GraphCanvas
+      isLoadingGenerate={isLoadingGenerate}
+      data={graphData}
+      onChange={handleGraphChange}
+      onNewLoreClick={handleNewLoreClick}
+    />
+  )
 }
 
 GraphCanvasWrapper.displayName = 'GraphCanvasWrapper'

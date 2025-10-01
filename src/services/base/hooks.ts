@@ -200,11 +200,15 @@ export const usePostExtraActions = <
   FieldsType,
   TData = unknown,
   TError = Error,
->(
-  qKey: string,
-  extraUrl: string,
-  options?: UseMutationOptions<TData, TError, FieldsType>,
-) => {
+>({
+  qKey,
+  extraUrl,
+  options,
+}: {
+  qKey: string
+  extraUrl: string
+  options?: UseMutationOptions<TData, TError, FieldsType>
+}) => {
   return useMutation<TData, TError, FieldsType>({
     mutationKey: [qKey],
     mutationFn: (fields: FieldsType) =>

@@ -358,6 +358,8 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "error_generating_new_lore": "Error generating new LOR",
+    "new_lore_generated_successfully": "New LOR generated successfully",
     "loading_graph": "Loading LOR...",
     "error_saving_graph": "Error saving LOR",
     "graph_saved_successfully": "LOR saved successfully",

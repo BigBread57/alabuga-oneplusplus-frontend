@@ -19,8 +19,10 @@ interface GraphCanvasProps {
   gridVisible?: boolean
   gridSize?: number
   enablePanning?: boolean
+  isLoadingGenerate?: boolean
   enableMousewheel?: boolean
   onChange?: (data: Record<string, any>) => void
+  onNewLoreClick?: () => void
 }
 
 const EMPTY_GRAPH = { cells: [] }
@@ -32,6 +34,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   enablePanning = true,
   enableMousewheel = true,
   onChange,
+  onNewLoreClick,
+  isLoadingGenerate,
 }) => {
   const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
@@ -119,7 +123,13 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     <CardWrapper
       title=''
       extra={
-        <Button type='primary' icon={<PlusOutlined />} size='middle'>
+        <Button
+          loading={isLoadingGenerate}
+          type='primary'
+          icon={<PlusOutlined />}
+          size='middle'
+          onClick={onNewLoreClick}
+        >
           {t('create_new_lor')}
         </Button>
       }

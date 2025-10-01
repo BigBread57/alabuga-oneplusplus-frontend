@@ -42,10 +42,10 @@ const FileUpload: FCC<FileUploadProps> = ({
   disabled,
 }) => {
   const t = useTranslations('FileUpload')
-  const { mutate: create } = usePostExtraActions(
-    'uploadFile',
-    MODEL.createUrl(),
-  )
+  const { mutate: create } = usePostExtraActions({
+    qKey: 'uploadFile',
+    extraUrl: MODEL.createUrl(),
+  })
   const { message } = App.useApp()
 
   const handleUpload: UploadProps['customRequest'] = ({ file }) => {

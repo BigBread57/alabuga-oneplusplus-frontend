@@ -352,6 +352,8 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "error_generating_new_lore": "Ошибка при генерации нового ЛОР",
+    "new_lore_generated_successfully": "Новый ЛОР успешно сгенерирован",
     "loading_graph": "Загрузка ЛОР...",
     "error_saving_graph": "Ошибка при сохранении ЛОР",
     "graph_saved_successfully": "ЛОР успешно сохранён",
