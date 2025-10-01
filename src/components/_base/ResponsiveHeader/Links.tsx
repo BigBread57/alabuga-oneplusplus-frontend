@@ -52,7 +52,7 @@ export const Links: LinksKeys = {
   SHOP: {
     icon: ShopOutlined,
     labelKey: 'shop',
-    href: '/shop',
+    href: '/shop/showcase',
     isTab: true,
   },
   ADMIN: {

@@ -70,7 +70,9 @@
   },
   "ShopPage": {
     "meta_title": "Магазин",
-    "meta_description": "Это страница магазина"
+    "meta_description": "Магазин игровых предметов",
+    "menu_shop": "Магазин",
+    "menu_purchases": "Покупки персонажа"
   },
   "ProfilePage": {
     "meta_title": "Профиль",

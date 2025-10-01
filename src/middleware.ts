@@ -22,6 +22,8 @@ const protectedRoutes = [
   '/:locale/rang',
   '/shop',
   '/:locale/shop',
+  '/shop/purchases',
+  '/:locale/shop/purchases',
   '/layout-log',
   '/:locale/layout-log',
   '/admin',

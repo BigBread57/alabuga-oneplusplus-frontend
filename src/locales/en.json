@@ -69,7 +69,9 @@
   },
   "ShopPage": {
     "meta_title": "Shop",
-    "meta_description": "Browse and purchase items in our shop"
+    "meta_description": "Game items shop",
+    "menu_shop": "Shop",
+    "menu_purchases": "Character Purchases"
   },
   "ProfilePage": {
     "meta_title": "Profile",

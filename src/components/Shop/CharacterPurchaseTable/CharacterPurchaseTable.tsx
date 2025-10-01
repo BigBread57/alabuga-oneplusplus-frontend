@@ -156,25 +156,14 @@ const CharacterPurchaseTable: FCC = () => {
         options={{
           pageSize: 10,
         }}
-        renderItems={({ data, isLoading, dataCount }) => (
-          <div>
-            {/* Можно показать общее количество */}
-            {dataCount !== undefined && (
-              <div style={{ marginBottom: 16 }}>
-                Найдено записей: {dataCount}
-              </div>
-            )}
-
-            <Table<CharacterPurchaseProps>
-              columns={columns}
-              dataSource={
-                data?.map((item) => ({ ...item, key: item.id })) || []
-              }
-              loading={isLoading}
-              pagination={false}
-              scroll={{ x: true }}
-            />
-          </div>
+        renderItems={({ data, isLoading }) => (
+          <Table<CharacterPurchaseProps>
+            columns={columns}
+            dataSource={data?.map((item) => ({ ...item, key: item.id })) || []}
+            loading={isLoading}
+            pagination={false}
+            scroll={{ x: true }}
+          />
         )}
       />
     </CardWrapper>
