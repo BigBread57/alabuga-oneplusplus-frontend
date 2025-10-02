@@ -71,7 +71,7 @@ export const useEventFormConfig = (eventId?: number) => {
       {
         key: 'color',
         title: t('fields.color.label'),
-        type: 'input',
+        type: 'color',
         is_required: false,
         placeholder: t('fields.color.placeholder'),
       },
@@ -117,73 +117,8 @@ export const useEventFormConfig = (eventId?: number) => {
         type: 'select',
         is_required: true,
         options: {
-          url: '/api/activity-categories',
+          url: '/game-world/mission-categories/list/',
           qKey: 'activity-categories',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'rank',
-        title: t('fields.rank.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/ranks',
-          qKey: 'ranks',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'artifacts',
-        title: t('fields.artifacts.label'),
-        type: 'select',
-        is_required: false,
-        options: {
-          url: '/api/artifacts',
-          qKey: 'event-artifacts',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: true,
-        },
-      },
-      {
-        key: 'competencies',
-        title: t('fields.competencies.label'),
-        type: 'select',
-        is_required: false,
-        options: {
-          url: '/api/competencies',
-          qKey: 'event-competencies',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: true,
-        },
-      },
-      {
-        key: 'mentor',
-        title: t('fields.mentor.label'),
-        type: 'select',
-        is_required: false,
-        options: {
-          url: '/api/characters',
-          qKey: 'characters',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'game_world',
-        title: t('fields.game_world.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/game-worlds',
-          qKey: 'game-worlds',
           valueKey: 'id',
           labelKey: 'name',
           multiple: false,
@@ -198,9 +133,9 @@ export const useEventFormConfig = (eventId?: number) => {
         fileProps: {
           maxCount: 1,
           accept: '.jpg,.jpeg,.png,.svg,.ico',
-          maxSize: 5, // 5MB для иконок
-          content_type_id: 2, // ID типа контента для событий (нужно уточнить)
-          object_id: eventId, // ID события для связи с файлом
+          maxSize: 5,
+          content_type_id: 2,
+          object_id: eventId,
         },
       },
     ],

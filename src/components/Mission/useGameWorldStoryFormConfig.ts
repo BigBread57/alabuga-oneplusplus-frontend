@@ -36,19 +36,6 @@ export const useGameWorldStoryFormConfig = (gameWorldStoryId?: number) => {
         },
       },
       {
-        key: 'game_world',
-        title: t('fields.game_world.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/game-worlds',
-          qKey: 'game-worlds',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
         key: 'image',
         title: t('fields.image.label'),
         type: 'file',
@@ -57,13 +44,13 @@ export const useGameWorldStoryFormConfig = (gameWorldStoryId?: number) => {
         fileProps: {
           maxCount: 1,
           accept: '.jpg,.jpeg,.png,.webp',
-          maxSize: 10, // 10MB для изображений
-          content_type_id: 3, // ID типа контента для историй игрового мира
-          object_id: gameWorldStoryId, // ID истории для связи с файлом
+          maxSize: 10,
+          content_type_id: 3,
+          object_id: gameWorldStoryId,
         },
       },
     ],
-    [t, tValidation, gameWorldStoryId],
+    [gameWorldStoryId],
   )
 
   return {

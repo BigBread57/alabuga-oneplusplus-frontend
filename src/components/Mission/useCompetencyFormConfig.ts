@@ -70,35 +70,9 @@ export const useCompetencyFormConfig = (competencyId?: number) => {
       {
         key: 'color',
         title: t('fields.color.label'),
-        type: 'input',
+        type: 'color',
         is_required: false,
         placeholder: t('fields.color.placeholder'),
-      },
-      {
-        key: 'parent',
-        title: t('fields.parent.label'),
-        type: 'select',
-        is_required: false,
-        options: {
-          url: '/api/competencies',
-          qKey: 'competency-parents',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'game_world',
-        title: t('fields.game_world.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/game-worlds',
-          qKey: 'game-worlds',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
       },
       {
         key: 'icon',
@@ -109,9 +83,9 @@ export const useCompetencyFormConfig = (competencyId?: number) => {
         fileProps: {
           maxCount: 1,
           accept: '.jpg,.jpeg,.png,.svg,.ico',
-          maxSize: 5, // 5MB для иконок
-          content_type_id: 2, // ID типа контента для компетенций (нужно получить из API или константы)
-          object_id: competencyId, // ID компетенции для связи с файлом
+          maxSize: 5,
+          content_type_id: 2,
+          object_id: competencyId,
         },
       },
     ],

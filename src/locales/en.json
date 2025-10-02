@@ -453,10 +453,6 @@
     "submit_create": "Create Mission",
     "submit_update": "Update Mission",
     "fields": {
-      "icon": {
-        "label": "Icon",
-        "placeholder": "Enter URL or icon name"
-      },
       "name": {
         "label": "Mission Name",
         "placeholder": "Enter mission name"
@@ -473,6 +469,14 @@
         "label": "Currency",
         "placeholder": "Enter currency amount"
       },
+      "icon": {
+        "label": "Icon",
+        "placeholder": "Upload mission icon"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Enter color (e.g., #FF5733)"
+      },
       "order": {
         "label": "Order",
         "placeholder": "Enter order number"
@@ -480,22 +484,6 @@
       "is_key_mission": {
         "label": "Key Mission",
         "placeholder": "Mark as key mission"
-      },
-      "branch": {
-        "label": "Mission Branch",
-        "placeholder": "Select mission branch"
-      },
-      "level": {
-        "label": "Mission Level",
-        "placeholder": "Select mission level"
-      },
-      "game_world": {
-        "label": "Game World",
-        "placeholder": "Select game world"
-      },
-      "game_world_stories": {
-        "label": "Game World Stories",
-        "placeholder": "Select stories"
       },
       "is_active": {
         "label": "Active",
@@ -505,17 +493,21 @@
         "label": "Time to Complete (minutes)",
         "placeholder": "Enter time in minutes"
       },
-      "required_missions": {
-        "label": "Required Missions",
-        "placeholder": "Select required missions"
+      "qr_code": {
+        "label": "QR Code",
+        "placeholder": "Enter QR code data"
       },
-      "artifacts": {
-        "label": "Artifacts",
-        "placeholder": "Select artifacts"
+      "level": {
+        "label": "Mission Level",
+        "placeholder": "Select mission level"
       },
-      "competencies": {
-        "label": "Competencies",
-        "placeholder": "Select competencies"
+      "category": {
+        "label": "Category",
+        "placeholder": "Select mission category"
+      },
+      "mentor": {
+        "label": "Mentor",
+        "placeholder": "Select mentor"
       }
     }
   },

@@ -447,10 +447,6 @@
     "submit_create": "Создать миссию",
     "submit_update": "Обновить миссию",
     "fields": {
-      "icon": {
-        "label": "Иконка",
-        "placeholder": "Введите URL или имя иконки"
-      },
       "name": {
         "label": "Название миссии",
         "placeholder": "Введите название миссии"
@@ -467,49 +463,45 @@
         "label": "Валюта",
         "placeholder": "Введите количество валюты"
       },
+      "icon": {
+        "label": "Иконка",
+        "placeholder": "Загрузите иконку миссии"
+      },
+      "color": {
+        "label": "Цвет",
+        "placeholder": "Введите цвет (например, #FF5733)"
+      },
       "order": {
         "label": "Порядок",
-        "placeholder": "Введите порядковый номер"
+        "placeholder": "Введите номер порядка"
       },
       "is_key_mission": {
         "label": "Ключевая миссия",
         "placeholder": "Отметить как ключевую миссию"
       },
-      "branch": {
-        "label": "Ветка миссии",
-        "placeholder": "Выберите ветку миссии"
-      },
-      "level": {
-        "label": "Уровень миссии",
-        "placeholder": "Выберите уровень миссии"
-      },
-      "game_world": {
-        "label": "Игровой мир",
-        "placeholder": "Выберите игровой мир"
-      },
-      "game_world_stories": {
-        "label": "Истории игрового мира",
-        "placeholder": "Выберите истории"
-      },
       "is_active": {
-        "label": "Активная",
+        "label": "Активна",
         "placeholder": "Миссия активна"
       },
       "time_to_complete": {
         "label": "Время на выполнение (минуты)",
         "placeholder": "Введите время в минутах"
       },
-      "required_missions": {
-        "label": "Необходимые миссии",
-        "placeholder": "Выберите необходимые миссии"
+      "qr_code": {
+        "label": "QR-код",
+        "placeholder": "Введите данные QR-кода"
       },
-      "artifacts": {
-        "label": "Артефакты",
-        "placeholder": "Выберите артефакты"
+      "level": {
+        "label": "Уровень миссии",
+        "placeholder": "Выберите уровень миссии"
       },
-      "competencies": {
-        "label": "Компетенции",
-        "placeholder": "Выберите компетенции"
+      "category": {
+        "label": "Категория",
+        "placeholder": "Выберите категорию миссии"
+      },
+      "mentor": {
+        "label": "Наставник",
+        "placeholder": "Выберите наставника"
       }
     }
   },
