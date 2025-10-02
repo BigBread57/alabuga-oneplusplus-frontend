@@ -20,7 +20,14 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         {/* Навигационное меню */}
         <AdminMenu />
       </Col>
-      <Col xs={24} md={24} lg={20}>
+      <Col
+        xs={24}
+        md={24}
+        lg={20}
+        style={{
+          width: '100%',
+        }}
+      >
         {children}
       </Col>
     </Row>

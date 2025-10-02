@@ -64,7 +64,7 @@ const CharacterStatistics: FCC = () => {
               key='by_status'
               legendPosition='left'
               height={250}
-              data={response?.data?.missions.by_status}
+              data={response?.data?.missions?.by_status}
             />
           </Col>
           <Col xs={24} lg={24}>
@@ -75,7 +75,7 @@ const CharacterStatistics: FCC = () => {
                   key='by_status_events'
                   legendPosition='left'
                   height={250}
-                  data={response?.data?.events.by_status}
+                  data={response?.data?.events?.by_status}
                 />
               </Col>
               <Col xs={24} lg={12}>
@@ -84,7 +84,7 @@ const CharacterStatistics: FCC = () => {
                   key='by_type_artifacts'
                   legendPosition='left'
                   height={250}
-                  data={response?.data?.artifacts.by_type}
+                  data={response?.data?.artifacts?.by_type}
                 />
               </Col>
             </Row>

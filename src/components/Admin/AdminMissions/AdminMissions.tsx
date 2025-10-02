@@ -152,7 +152,7 @@ const AdminMissions: FCC = () => {
           display: 'none',
         },
         body: {
-          height: '85%',
+          height: '70vh',
           overflow: 'scroll',
         },
       }}

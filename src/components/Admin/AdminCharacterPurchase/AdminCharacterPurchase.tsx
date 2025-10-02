@@ -223,6 +223,9 @@ const AdminCharacterPurchase: FCC = () => {
   return (
     <CardWrapper
       title='ПОКУПКИ ПЕРСОНАЖЕЙ'
+      style={{
+        height: '80vh',
+      }}
       extra={
         <CustomSelect
           url={`${SHOP_ITEM_CATEGORY_MODEL.url()}?limit=1000&offset=0`}

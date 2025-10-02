@@ -294,7 +294,7 @@ export default function RegisterForm({
         >
           <Input
             prefix={<PhoneOutlined />}
-            placeholder={t('phone_placeholder')}
+            placeholder={'+79199697725'}
             disabled={registerIsLoading}
           />
         </Form.Item>

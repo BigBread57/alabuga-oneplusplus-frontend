@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 import arcjet from '@/libs/Arcjet'
 import { routing } from './libs/I18nRouting'
 
-const API_URL = process.env.API_URL || 'http://localhost:8000/api/v1'
+const API_URL = process.env.API_URL || 'http://127.0.0.1:8000/api/v1'
 
 // i18n маршрутизация
 const handleI18nRouting = createMiddleware(routing)

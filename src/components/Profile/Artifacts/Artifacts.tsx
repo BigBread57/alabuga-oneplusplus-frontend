@@ -18,6 +18,7 @@ const ArtifactsList: FCC = () => {
       isClearRender
       renderItems={({ data }) => (
         <div className={styles.container} data-testid='test-ArtifactsList'>
+          {data?.length === 0 ? 'У вас пока нет артефактов' : null}
           <Space direction='horizontal' size='middle'>
             {data?.map((item) => (
               <Artifact key={item.id} {...item?.artifact} />

@@ -55,8 +55,8 @@ const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
     eventData,
   })
 
-  const [contentList]: Record<string, React.ReactNode>[]
-    = useContentTabsList(filter)
+  const [contentList]: Record<string, React.ReactNode>[] =
+    useContentTabsList(filter)
 
   return (
     <div ref={activitySectionRef}>
@@ -66,7 +66,7 @@ const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
             display: 'none',
           },
           body: {
-            height: '85%',
+            height: '77vh',
             overflow: 'scroll',
           },
         }}

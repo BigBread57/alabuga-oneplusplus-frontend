@@ -124,12 +124,12 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
         description: 'Будьте в курсе последних обновлений и событий в игре.',
         target: () => newsRef.current || document.body,
       },
-      {
-        title: 'Админ-панель',
-        description:
-          'Для администраторов: управление контентом и пользователями.',
-        target: () => adminRef.current || document.body,
-      },
+      // {
+      //   title: 'Админ-панель',
+      //   description:
+      //     'Для администраторов: управление контентом и пользователями.',
+      //   target: () => adminRef.current || document.body,
+      // },
     ]
     return {
       profileSectionRef,
