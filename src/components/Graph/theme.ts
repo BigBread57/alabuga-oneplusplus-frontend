@@ -12,7 +12,7 @@ export const ENTITY_COLORS = {
   rank: DeepDarkBlue,
   missionBranch: DarkBlue,
   mission: Blue,
-  artefact: Orange,
+  artifact: Orange,
   competency: DarkPurple,
   event: LightBlue,
 } as const

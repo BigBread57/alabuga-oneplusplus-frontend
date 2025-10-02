@@ -7,7 +7,7 @@ import {
   ClearOutlined,
   DeleteOutlined, // Добавили новую иконку
   FullscreenOutlined,
-  GiftOutlined, // Artefact
+  GiftOutlined, // Artifact
   LinkOutlined, // Connect nodes
   PlusOutlined,
   RocketOutlined, // Mission
@@ -81,10 +81,10 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
       type: 'divider',
     },
     {
-      key: 'artefact',
-      label: t('entities.artefact', { fallback: 'Artefact' }),
-      icon: <GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />,
-      onClick: () => onAddEntity(ENTITY_TYPES.ARTEFACT),
+      key: 'artifact',
+      label: t('entities.artifact', { fallback: 'Artifact' }),
+      icon: <GiftOutlined style={{ color: ENTITY_COLORS.artifact }} />,
+      onClick: () => onAddEntity(ENTITY_TYPES.ARTIFACT),
     },
     {
       key: 'competency',
@@ -145,11 +145,11 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
             />
           </Tooltip>
 
-          <Tooltip title={t('entities.artefact', { fallback: 'Add Artefact' })}>
+          <Tooltip title={t('entities.artifact', { fallback: 'Add Artifact' })}>
             <Button
-              icon={<GiftOutlined style={{ color: ENTITY_COLORS.artefact }} />}
+              icon={<GiftOutlined style={{ color: ENTITY_COLORS.artifact }} />}
               size='small'
-              onClick={() => onAddEntity(ENTITY_TYPES.ARTEFACT)}
+              onClick={() => onAddEntity(ENTITY_TYPES.ARTIFACT)}
             />
           </Tooltip>
         </Space>

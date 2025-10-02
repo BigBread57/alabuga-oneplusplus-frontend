@@ -66,7 +66,7 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
         return missionBranchFormFields
       case 'game_world_story':
         return GameWorldStoryFormFields
-      case 'artefact':
+      case 'artifact':
         return artifactFormFields
       case 'rank':
         return rankFormFields
@@ -89,7 +89,7 @@ const NodeInfoDrawer: FC<NodeInfoDrawerProps> = ({
       event_competency: 'Компетенция события',
       mission_competency: 'Компетенция миссии',
       mission_branch: 'Ветка миссии',
-      artefact: 'Артефакт',
+      artifact: 'Артефакт',
       rank: 'Ранг',
       game_world_story: 'Истории игрового мира',
     }

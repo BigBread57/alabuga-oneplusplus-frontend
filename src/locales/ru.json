@@ -387,14 +387,14 @@
       "rank": "Ранг",
       "mission_branch": "Ветка миссии",
       "mission": "Миссия",
-      "artefact": "Артефакт",
+      "artifact": "Артефакт",
       "competency": "Компетенция",
       "event": "Событие",
       "descriptions": {
         "rank": "Описание ранга",
         "mission_branch": "Описание ветки миссии",
         "mission": "Описание миссии",
-        "artefact": "Описание артефакта",
+        "artifact": "Описание артефакта",
         "competency": "Описание компетенции",
         "event": "Описание события"
       }
@@ -403,7 +403,7 @@
       "add_rank": "Добавить ранг",
       "add_mission_branch": "Добавить ветку миссии",
       "add_mission": "Добавить миссию",
-      "add_artefact": "Добавить артефакт",
+      "add_artifact": "Добавить артефакт",
       "add_competency": "Добавить компетенцию",
       "add_event": "Добавить событие",
       "center_content": "Центрировать содержимое",

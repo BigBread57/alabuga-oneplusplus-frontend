@@ -13,8 +13,8 @@ export const registerEntityNodes = () => {
     },
     { type: ENTITY_TYPES.MISSION, color: ENTITY_COLORS.mission, icon: '🚀' },
     {
-      type: ENTITY_TYPES.ARTEFACT,
-      color: ENTITY_COLORS.artefact,
+      type: ENTITY_TYPES.ARTIFACT,
+      color: ENTITY_COLORS.artifact,
       icon: '🎁',
     },
     {

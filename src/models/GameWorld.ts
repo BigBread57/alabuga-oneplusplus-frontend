@@ -26,7 +26,7 @@ export class GameWorld extends BaseModel {
   }
 
   static allInfoUrl(id: number) {
-    return `${this.url()}/${id}/list-with-all-entities/`
+    return `${this.url()}/${id}/data-for-graph/`
   }
 
   // /api/v1/game-world/game-worlds/{id}/update-or-create-all-entities/

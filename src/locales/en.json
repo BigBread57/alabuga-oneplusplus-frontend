@@ -393,14 +393,14 @@
       "rank": "Rank",
       "mission_branch": "Mission Branch",
       "mission": "Mission",
-      "artefact": "Artefact",
+      "artifact": "Artifact",
       "competency": "Competency",
       "event": "Event",
       "descriptions": {
         "rank": "Rank description",
         "mission_branch": "Mission branch description",
         "mission": "Mission description",
-        "artefact": "Artefact description",
+        "artifact": "Artifact description",
         "competency": "Competency description",
         "event": "Event description"
       }
@@ -409,7 +409,7 @@
       "add_rank": "Add Rank",
       "add_mission_branch": "Add Mission Branch",
       "add_mission": "Add Mission",
-      "add_artefact": "Add Artefact",
+      "add_artifact": "Add Artifact",
       "add_competency": "Add Competency",
       "add_event": "Add Event",
       "center_content": "Center Content",

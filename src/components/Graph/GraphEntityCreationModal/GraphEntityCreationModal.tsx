@@ -89,8 +89,8 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
       mission: t('entities.descriptions.mission', {
         fallback: 'Mission description',
       }),
-      artefact: t('entities.descriptions.artefact', {
-        fallback: 'Artefact description',
+      artifact: t('entities.descriptions.artifact', {
+        fallback: 'Artifact description',
       }),
       competency: t('entities.descriptions.competency', {
         fallback: 'Competency description',

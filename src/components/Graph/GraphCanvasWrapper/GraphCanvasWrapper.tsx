@@ -106,33 +106,33 @@ const GraphCanvasWrapper: FCC = () => {
 
     try {
       // FIXME: раскоментить когда бэкенд будет готов
-      // // Приоритет 1: Данные с сервера
-      // if (
-      //   response?.data &&
-      //   response.data.cells &&
-      //   response.data.cells.length > 0
-      // ) {
-      //   // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-      //   setGraphData(response.data)
-      //   // Сохраняем серверные данные в localStorage для кэширования
-      //   localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(response.data))
-      //   // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-      //   setIsDataLoaded(true)
-      //   return
-      // }
-
-      // Приоритет 2: localStorage (если сервер вернул пустые данные или ошибку)
-      const savedData = localStorage.getItem(GRAPH_STORAGE_KEY)
-      if (savedData) {
-        const parsedData = JSON.parse(savedData)
-        if (parsedData && parsedData.cells && parsedData.cells.length > 0) {
-          // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-          setGraphData(parsedData)
-          // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-          setIsDataLoaded(true)
-          return
-        }
+      // Приоритет 1: Данные с сервера
+      if (
+        response?.data
+        && response.data.cells
+        && response.data.cells.length > 0
+      ) {
+        // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+        setGraphData(response.data)
+        // Сохраняем серверные данные в localStorage для кэширования
+        localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(response.data))
+        // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+        setIsDataLoaded(true)
+        return
       }
+
+      // // Приоритет 2: localStorage (если сервер вернул пустые данные или ошибку)
+      // const savedData = localStorage.getItem(GRAPH_STORAGE_KEY)
+      // if (savedData) {
+      //   const parsedData = JSON.parse(savedData)
+      //   if (parsedData && parsedData.cells && parsedData.cells.length > 0) {
+      //     // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+      //     setGraphData(parsedData)
+      //     // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+      //     setIsDataLoaded(true)
+      //     return
+      //   }
+      // }
 
       // Приоритет 3: Fake данные (fallback)
       // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
