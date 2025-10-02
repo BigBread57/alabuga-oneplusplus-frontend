@@ -23,7 +23,7 @@ export const useMissionCompetencyFormConfig = () => {
         is_required: true,
         placeholder: t('fields.mission.placeholder'),
         options: {
-          url: '/api/missions',
+          url: '/user/character-missions/list/',
           qKey: 'missions',
           valueKey: 'id',
           labelKey: 'name',
@@ -37,7 +37,7 @@ export const useMissionCompetencyFormConfig = () => {
         is_required: true,
         placeholder: t('fields.competency.placeholder'),
         options: {
-          url: '/api/competencies',
+          url: '/game-mechanics/competencies/list/',
           qKey: 'competencies',
           valueKey: 'id',
           labelKey: 'name',
