@@ -82,8 +82,8 @@ NEXT_PUBLIC_SENTRY_DSN=your_sentry_dsn
 Продвигайтесь по космическим рангам с тройной проверкой:
 
 ```
-Искатель → Разведчик → Навигатор → Пилот-кандидат → 
-Принятый в экипаж → Пилот-испытатель → Лидер эскадрильи → 
+Искатель → Разведчик → Навигатор → Пилот-кандидат →
+Принятый в экипаж → Пилот-испытатель → Лидер эскадрильи →
 Командир космического поселения
 ```
 
@@ -474,8 +474,8 @@ export const lightTheme: ThemeConfig = {
 Измените `src/services/api-client.ts`:
 
 ```typescript
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
-  || 'https://alabuga.star-vim.online/api/v1';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
+  || 'https://alabuga.star-vim.online/api/v1'
 ```
 
 ---

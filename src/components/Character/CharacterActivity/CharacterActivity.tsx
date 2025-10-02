@@ -55,8 +55,8 @@ const CharacterActivity: FCC<CharacterActivityProps> = ({ prop }) => {
     eventData,
   })
 
-  const [contentList]: Record<string, React.ReactNode>[] =
-    useContentTabsList(filter)
+  const [contentList]: Record<string, React.ReactNode>[]
+    = useContentTabsList(filter)
 
   return (
     <div ref={activitySectionRef}>

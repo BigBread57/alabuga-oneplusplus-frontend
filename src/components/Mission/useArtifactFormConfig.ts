@@ -67,6 +67,7 @@ export const useArtifactFormConfig = (artifactId?: number) => {
         placeholder: t('fields.color.placeholder'),
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [artifactId],
   )
 

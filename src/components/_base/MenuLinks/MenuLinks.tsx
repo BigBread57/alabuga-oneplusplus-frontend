@@ -9,8 +9,8 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import React, { useContext } from 'react'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
-import { useTour } from '@/components/Tour/useTour'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 
 // Определяем навигационные элементы с маршрутами
@@ -79,32 +79,34 @@ const MenuLinks: FCC = () => {
           return true
         }
         return (
-          link.roles &&
-          link?.roles?.includes(currentUser?.active_character_role)
+          link.roles
+          && link?.roles?.includes(currentUser?.active_character_role)
         )
       })
       .map((item) => {
         const itemRef = getMenuItemRef(item.href)
 
-        const labelContent = isVertical ? (
-          <Link
-            href={`/${locale}${item.href}`}
-            onClick={handleDrawerClose}
-            ref={itemRef}
-          >
-            {t(item.labelKey as any).toUpperCase()}
-          </Link>
-        ) : (
-          <Link href={`/${locale}${item.href}`} ref={itemRef}>
-            <Button
-              size={isTablet ? 'middle' : 'large'}
-              type='text'
-              icon={React.createElement(item.icon)}
-            >
-              {t(item.labelKey as any).toUpperCase()}
-            </Button>
-          </Link>
-        )
+        const labelContent = isVertical
+          ? (
+              <Link
+                href={`/${locale}${item.href}`}
+                onClick={handleDrawerClose}
+                ref={itemRef}
+              >
+                {t(item.labelKey as any).toUpperCase()}
+              </Link>
+            )
+          : (
+              <Link href={`/${locale}${item.href}`} ref={itemRef}>
+                <Button
+                  size={isTablet ? 'middle' : 'large'}
+                  type='text'
+                  icon={React.createElement(item.icon)}
+                >
+                  {t(item.labelKey as any).toUpperCase()}
+                </Button>
+              </Link>
+            )
 
         return {
           key: item.href,

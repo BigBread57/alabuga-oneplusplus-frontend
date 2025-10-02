@@ -50,6 +50,7 @@ export const useGameWorldStoryFormConfig = (gameWorldStoryId?: number) => {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [gameWorldStoryId],
   )
 

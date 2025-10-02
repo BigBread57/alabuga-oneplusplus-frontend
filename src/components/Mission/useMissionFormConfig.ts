@@ -160,6 +160,7 @@ export const useMissionFormConfig = (missionId?: number) => {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [missionId],
   )
 
