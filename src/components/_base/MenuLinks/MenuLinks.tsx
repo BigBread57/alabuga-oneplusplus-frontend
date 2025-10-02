@@ -10,8 +10,8 @@ import { useParams, usePathname } from 'next/navigation'
 import React, { useContext } from 'react'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { useTour } from '@/components/Tour/useTour'
-import { useScreens } from '@/hooks/useScreens'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { useScreens } from '@/hooks/useScreens'
 
 // Определяем навигационные элементы с маршрутами
 const navigationItems = [
