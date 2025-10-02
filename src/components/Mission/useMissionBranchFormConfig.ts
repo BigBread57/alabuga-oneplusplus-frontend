@@ -1,12 +1,19 @@
 import type { FormField } from '@/components/_base/AwesomeFormGenerator/AwesomeFormGenerator'
-import type { MissionBranchProps } from '@/models/MissionBranch' // Предполагаемая типизация
+import type { MissionBranchProps } from '@/models/MissionBranch'
 import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
 
 // Типизируем ключи полей на основе модели
 type MissionBranchFormFields = keyof Omit<
   MissionBranchProps,
-  'id' | 'uuid' | 'created_at' | 'updated_at' | 'deleted_at'
+  | 'id'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
+  | 'uuid'
+  | 'missions'
+  | 'icon_image'
+  | 'game_world_story'
 >
 
 // Хук для получения конфигурации полей формы ветки миссий
@@ -41,16 +48,25 @@ export const useMissionBranchFormConfig = (missionBranchId?: number) => {
         },
       },
       {
+        key: 'icon',
+        title: t('fields.icon.label'),
+        type: 'file',
+        is_required: false,
+        placeholder: t('fields.icon.placeholder'),
+        fileProps: {
+          maxCount: 1,
+          accept: '.jpg,.jpeg,.png,.svg,.ico,.webp',
+          maxSize: 10,
+          content_type_id: 2,
+          object_id: missionBranchId,
+        },
+      },
+      {
         key: 'color',
         title: t('fields.color.label'),
-        type: 'input',
+        type: 'color', // Изменено на 'color'
         is_required: false,
         placeholder: t('fields.color.placeholder'),
-        validation: {
-          min: 0,
-          max: 256,
-          message: tValidation('min_max_length', { min: 0, max: 256 }),
-        },
       },
       {
         key: 'is_active',
@@ -78,19 +94,6 @@ export const useMissionBranchFormConfig = (missionBranchId?: number) => {
         },
       },
       {
-        key: 'rank',
-        title: t('fields.rank.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/ranks',
-          qKey: 'ranks',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
         key: 'category',
         title: t('fields.category.label'),
         type: 'select',
@@ -114,33 +117,6 @@ export const useMissionBranchFormConfig = (missionBranchId?: number) => {
           valueKey: 'id',
           labelKey: 'name',
           multiple: false,
-        },
-      },
-      {
-        key: 'game_world',
-        title: t('fields.game_world.label'),
-        type: 'select',
-        is_required: true,
-        options: {
-          url: '/api/game-worlds',
-          qKey: 'game-worlds',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'icon',
-        title: t('fields.icon.label'),
-        type: 'file',
-        is_required: false,
-        placeholder: t('fields.icon.placeholder'),
-        fileProps: {
-          maxCount: 1,
-          accept: '.jpg,.jpeg,.png,.svg,.ico,.webp',
-          maxSize: 10, // 10MB для иконок веток миссий
-          content_type_id: 2, // ID типа контента для веток миссий
-          object_id: missionBranchId, // ID ветки миссии для связи с файлом
         },
       },
     ],

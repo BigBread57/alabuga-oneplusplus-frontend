@@ -1,7 +1,6 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import { Spin } from 'antd'
 import { debounce } from 'lodash'
 import { useTranslations } from 'next-intl'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
@@ -12,6 +11,7 @@ import { postDataGenerate } from '@/components/Graph/postDataGenerate'
 import useMessage from '@/hooks/useMessages'
 import { GameWorld } from '@/models/GameWorld'
 import { useExtraActionsGet, usePostExtraActions } from '@/services/base/hooks'
+import CardLoader from '../../_base/CardLoader/CardLoader'
 
 export const GRAPH_STORAGE_KEY = 'graph'
 const MODEL = GameWorld
@@ -22,22 +22,21 @@ const GraphCanvasWrapper: FCC = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false)
   const { currentUser } = useContext(CurrentUserContext)
   const { messageSuccess, messageError } = useMessage()
-
   const { data: response, isLoading }: any = useExtraActionsGet({
     qKey: 'graph-all-info',
     extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
     enabled: !!currentUser?.active_game_world,
   })
 
-  const { mutate: updateGraph, isLoading: isLoadingUpdate }: any
+  const { mutate: saveGraph, isPending: isLoadingUpdate }: any
     = usePostExtraActions({
       qKey: 'updateOrCreateAllEntitiesUrl',
       extraUrl: MODEL.updateOrCreateAllEntitiesUrl(
         currentUser?.active_game_world as number,
       ),
     })
-  const handleUpdateGraph = (graphData: Record<string, any>) => {
-    updateGraph(graphData, {
+  const handleSaveGraph = () => {
+    saveGraph(graphData, {
       onSuccess: () => {
         messageSuccess(t('graph_saved_successfully'))
       },
@@ -55,7 +54,7 @@ const GraphCanvasWrapper: FCC = () => {
     })
   }
 
-  const { mutate: generateNewLor, isLoading: isLoadingGenerate }: any
+  const { mutate: generateNewLor, isPending: isLoadingGenerate }: any
     = usePostExtraActions({
       qKey: 'generateNewLor',
       extraUrl: MODEL.generateUrl(currentUser?.active_game_world as number),
@@ -88,12 +87,11 @@ const GraphCanvasWrapper: FCC = () => {
       debounce((graphData: any) => {
         try {
           localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(graphData))
-          handleUpdateGraph(graphData)
         } catch (error) {
           console.error('Ошибка при сохранении в localStorage:', error)
         }
-      }, 5000),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, 1000),
+
     [],
   )
 
@@ -149,18 +147,17 @@ const GraphCanvasWrapper: FCC = () => {
     }
   }, [isLoading, response])
 
-  // Показываем спиннер при сохранении
-  if (isLoading || !isDataLoaded || isLoadingUpdate) {
-    return <Spin spinning size='large' />
-  }
-
   return (
-    <GraphCanvas
-      isLoadingGenerate={isLoadingGenerate}
-      data={graphData}
-      onChange={handleGraphChange}
-      onNewLoreClick={handleNewLoreClick}
-    />
+    <CardLoader isLoading={isLoading || !isDataLoaded}>
+      <GraphCanvas
+        isLoading={isLoading || !isDataLoaded}
+        isLoadingGenerate={isLoadingGenerate || isLoadingUpdate}
+        data={graphData}
+        onChange={handleGraphChange}
+        onNewLoreClick={handleNewLoreClick}
+        onSave={handleSaveGraph}
+      />
+    </CardLoader>
   )
 }
 

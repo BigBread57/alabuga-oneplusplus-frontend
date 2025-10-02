@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Col, Row } from 'antd'
 import { getTranslations } from 'next-intl/server'
 import { ActivityLogsCard } from '@/components/ActivityLog/ActivityLogsCard'
-import CharacterStatisticsCard from '@/components/Statistics/CharacterStatisticsCard/CharacterStatisticsCard'
+import { CharacterStatistics } from '@/components/Profile/CharacterStatistics'
 
 type JournalPageProps = {
   params: Promise<{ locale: string }>
@@ -40,7 +40,7 @@ export default async function JournalPage(_props: JournalPageProps) {
           height: 'calc(100vh - 130px)',
         }}
       >
-        <CharacterStatisticsCard />
+        <CharacterStatistics />
       </Col>
       <Col
         xs={24}

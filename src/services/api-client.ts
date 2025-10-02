@@ -5,11 +5,10 @@ import Qs from 'qs'
 const paramsSerializer = (params: any) => {
   return Qs.stringify(params, { indices: false })
 }
-
 const config = {
-  // baseURL: 'https://alabuga.star-vim.online/api/v1',
-  baseURL: 'http://localhost:8000/api/v1',
-  timeout: 60000,
+  baseURL: 'https://alabuga.star-vim.online/api/v1',
+  // baseURL: 'http://localhost:8000/api/v1',
+  timeout: 12000,
   withCredentials: true,
   paramsSerializer,
 }

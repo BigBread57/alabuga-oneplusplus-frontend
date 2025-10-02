@@ -132,10 +132,10 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   // Инициализация графа - КРИТИЧНО: минимальные зависимости
   useEffect(() => {
     if (
-      !containerRef.current ||
-      graphRef.current ||
-      containerSize.width === 0 ||
-      containerSize.height === 0
+      !containerRef.current
+      || graphRef.current
+      || containerSize.width === 0
+      || containerSize.height === 0
     ) {
       return
     }
@@ -220,8 +220,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           if (firstNode) {
             const entityType = firstNodeData?.type
             if (
-              entityType &&
-              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType
+              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               firstNode.attr(
                 'body/stroke',
@@ -241,7 +241,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       // Обычный клик - показываем информацию
       const nodeData = clickedNode.getData()
       const nodeAttrs = clickedNode.getAttrs()
-      const entityType = clickedNode.shape || 'unknown'
+      const entityType = clickedNode.shape as ENTITY_TYPES
 
       if (onNodeClickRef.current) {
         onNodeClickRef.current(nodeId, entityType, nodeData, nodeAttrs)
@@ -313,9 +313,9 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   // Обновление размеров графа при изменении контейнера
   useEffect(() => {
     if (
-      graphRef.current &&
-      containerSize.width > 0 &&
-      containerSize.height > 0
+      graphRef.current
+      && containerSize.width > 0
+      && containerSize.height > 0
     ) {
       graphRef.current.resize(containerSize.width, containerSize.height)
     }
@@ -388,8 +388,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           const entityType = nodeData?.type
 
           if (
-            entityType &&
-            ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+            entityType
+            && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
           ) {
             node.attr(
               'body/stroke',
@@ -420,8 +420,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             const entityType = nodeData?.type
 
             if (
-              entityType &&
-              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType
+              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               node.attr(
                 'body/stroke',
@@ -478,6 +478,13 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       node.updateData({
         ...currentData,
         ...newData,
+      })
+      node.updateAttrs({
+        title: { text: newData.name || currentData.name || '' },
+        description: {
+          text: newData.description || currentData.description || '',
+        },
+        body: { fill: newData.color || currentData.color },
       })
       // Обновляем визуальные атрибуты если есть title и description
       if (newData.name) {

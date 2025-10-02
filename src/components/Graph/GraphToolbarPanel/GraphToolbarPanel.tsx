@@ -5,29 +5,32 @@ import {
   BranchesOutlined, // MissionBranch
   CalendarOutlined, // Event
   ClearOutlined,
-  DeleteOutlined, // Добавили новую иконку
+  DeleteOutlined,
   FullscreenOutlined,
   GiftOutlined, // Artifact
   LinkOutlined, // Connect nodes
   PlusOutlined,
   RocketOutlined, // Mission
+  SaveOutlined, // Добавили иконку сохранения
   // Иконки для сущностей
   StarOutlined, // Rank
   TrophyOutlined, // Competency
   ZoomInOutlined,
   ZoomOutOutlined,
 } from '@ant-design/icons'
-import { Button, Divider, Dropdown, Space, Tooltip } from 'antd'
+import { Divider, Dropdown, Space } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 
+import { TooltipButton } from '@/components/_base/TooltipButton'
 import { ENTITY_COLORS } from '@/components/Graph/theme'
 import { ENTITY_TYPES } from '@/hooks/useGraph'
 import { useTheme } from '@/providers/ThemeProvider'
 
 interface EntityToolbarPanelProps {
   onClearGraph?: () => void
-  onDeleteSelected?: () => void // Добавили новый проп
+  onDeleteSelected?: () => void
+  onSave?: () => void // Добавили новый проп для сохранения
   isDeleteMode?: boolean
   onAddEntity: (entityType: ENTITY_TYPES) => void
 
@@ -45,6 +48,7 @@ interface EntityToolbarPanelProps {
 const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
   onClearGraph,
   onDeleteSelected,
+  onSave,
   onCenterContent,
   onFitContent,
   onZoomIn,
@@ -123,118 +127,119 @@ const EntityToolbarPanel: FCC<EntityToolbarPanelProps> = ({
             arrow
             trigger={['click']}
           >
-            <Button type='primary' icon={<PlusOutlined />} size='small'>
-              {t('add_entity', { fallback: 'Add Entity' })}
-            </Button>
+            <TooltipButton
+              type='primary'
+              icon={<PlusOutlined />}
+              size='small'
+              tooltip={t('add_entity', { fallback: 'Add Entity' })}
+            />
           </Dropdown>
 
           {/* Быстрые кнопки для популярных сущностей */}
-          <Tooltip title={t('entities.rank', { fallback: 'Add Rank' })}>
-            <Button
-              icon={<StarOutlined style={{ color: ENTITY_COLORS.rank }} />}
-              size='small'
-              onClick={() => onAddEntity(ENTITY_TYPES.RANK)}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('entities.rank', { fallback: 'Add Rank' })}
+            icon={<StarOutlined style={{ color: ENTITY_COLORS.rank }} />}
+            size='small'
+            onClick={() => onAddEntity(ENTITY_TYPES.RANK)}
+          />
 
-          <Tooltip title={t('entities.mission', { fallback: 'Add Mission' })}>
-            <Button
-              icon={<RocketOutlined style={{ color: ENTITY_COLORS.mission }} />}
-              size='small'
-              onClick={() => onAddEntity(ENTITY_TYPES.MISSION)}
-            />
-          </Tooltip>
-
-          <Tooltip title={t('entities.artifact', { fallback: 'Add Artifact' })}>
-            <Button
-              icon={<GiftOutlined style={{ color: ENTITY_COLORS.artifact }} />}
-              size='small'
-              onClick={() => onAddEntity(ENTITY_TYPES.ARTIFACT)}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('entities.mission', { fallback: 'Add Mission' })}
+            icon={<RocketOutlined style={{ color: ENTITY_COLORS.mission }} />}
+            size='small'
+            onClick={() => onAddEntity(ENTITY_TYPES.MISSION)}
+          />
+          <TooltipButton
+            tooltip={t('entities.artifact', { fallback: 'Add Artifact' })}
+            icon={<GiftOutlined style={{ color: ENTITY_COLORS.artifact }} />}
+            size='small'
+            onClick={() => onAddEntity(ENTITY_TYPES.ARTIFACT)}
+          />
         </Space>
 
         <Divider type='vertical' style={{ margin: '0 4px', height: '24px' }} />
 
         {/* Секция соединения узлов */}
         <Space size='small'>
-          <Tooltip
-            title={
+          <TooltipButton
+            tooltip={
               isConnectingMode
                 ? t('exit_connect_mode', { fallback: 'Exit Connect Mode' })
                 : t('connect_nodes', { fallback: 'Connect Nodes' })
             }
-          >
-            <Button
-              icon={<LinkOutlined />}
-              size='small'
-              type={isConnectingMode ? 'primary' : 'default'}
-              onClick={onToggleConnectingMode}
-              style={{
-                backgroundColor: isConnectingMode ? '#ff4d4f' : undefined,
-                borderColor: isConnectingMode ? '#ff4d4f' : undefined,
-              }}
-            />
-          </Tooltip>
+            icon={<LinkOutlined />}
+            size='small'
+            type={isConnectingMode ? 'primary' : 'default'}
+            onClick={onToggleConnectingMode}
+            style={{
+              backgroundColor: isConnectingMode ? '#ff4d4f' : undefined,
+              borderColor: isConnectingMode ? '#ff4d4f' : undefined,
+            }}
+          />
         </Space>
 
         <Divider type='vertical' style={{ margin: '0 4px', height: '24px' }} />
 
         {/* Секция управления видом */}
         <Space size='small'>
-          <Tooltip title={t('center', { fallback: 'Center' })}>
-            <Button
-              icon={<AimOutlined />}
-              size='small'
-              onClick={onCenterContent}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('center', { fallback: 'Center' })}
+            icon={<AimOutlined />}
+            size='small'
+            onClick={onCenterContent}
+          />
 
-          <Tooltip title={t('fit', { fallback: 'Fit' })}>
-            <Button
-              icon={<FullscreenOutlined />}
-              size='small'
-              onClick={onFitContent}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('fit', { fallback: 'Fit' })}
+            icon={<FullscreenOutlined />}
+            size='small'
+            onClick={onFitContent}
+          />
 
-          <Tooltip title={t('zoom_in', { fallback: 'Zoom In' })}>
-            <Button icon={<ZoomInOutlined />} size='small' onClick={onZoomIn} />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('zoom_in', { fallback: 'Zoom In' })}
+            icon={<ZoomInOutlined />}
+            size='small'
+            onClick={onZoomIn}
+          />
 
-          <Tooltip title={t('zoom_out', { fallback: 'Zoom Out' })}>
-            <Button
-              icon={<ZoomOutOutlined />}
-              size='small'
-              onClick={onZoomOut}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('zoom_out', { fallback: 'Zoom Out' })}
+            icon={<ZoomOutOutlined />}
+            size='small'
+            onClick={onZoomOut}
+          />
         </Space>
 
         <Divider type='vertical' style={{ margin: '0 4px', height: '24px' }} />
 
         {/* Секция действий */}
         <Space size='small'>
-          <Tooltip
-            title={t('delete_selected', { fallback: 'Delete Selected' })}
-          >
-            <Button
-              danger
-              type={isDeleteMode ? 'primary' : 'default'}
-              icon={<DeleteOutlined />}
-              size='small'
-              onClick={onDeleteSelected}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('save', { fallback: 'Save' })}
+            icon={<SaveOutlined />}
+            size='small'
+            color='geekblue'
+            variant='solid'
+            onClick={onSave}
+          />
 
-          <Tooltip title={t('clear_all', { fallback: 'Clear All' })}>
-            <Button
-              danger
-              icon={<ClearOutlined />}
-              size='small'
-              onClick={onClearGraph}
-            />
-          </Tooltip>
+          <TooltipButton
+            tooltip={t('delete_selected', { fallback: 'Delete Selected' })}
+            danger
+            type={isDeleteMode ? 'primary' : 'default'}
+            icon={<DeleteOutlined />}
+            size='small'
+            onClick={onDeleteSelected}
+          />
+
+          <TooltipButton
+            tooltip={t('clear_all', { fallback: 'Clear All' })}
+            danger
+            icon={<ClearOutlined />}
+            size='small'
+            onClick={onClearGraph}
+          />
         </Space>
       </Space>
     </div>

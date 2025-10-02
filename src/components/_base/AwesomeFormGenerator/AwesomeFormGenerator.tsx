@@ -1,5 +1,5 @@
 import type { FormInstance } from 'antd'
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
+import { Button, Checkbox, Col, ColorPicker, Form, Input, Row } from 'antd'
 import { useTranslations } from 'next-intl'
 import React, { useEffect } from 'react'
 import { FileUpload } from '@/components/_base/FileUpload'
@@ -15,6 +15,7 @@ type FieldType
     | 'number'
     | 'file'
     | 'datetime'
+    | 'color' // Добавляем новый тип
 
 export type FormField = {
   key: string
@@ -58,7 +59,7 @@ type AwesomeFormGeneratorProps = {
   layout?: 'horizontal' | 'vertical' | 'inline'
   labelCol?: { span: number }
   wrapperCol?: { span: number }
-  fileValues?: Record<string, any[]> // Для хранения загруженных файлов
+  fileValues?: Record<string, any[]>
 }
 
 const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
@@ -77,14 +78,12 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
   const t = useTranslations('Form')
   const [formInstance] = Form.useForm(form)
 
-  // Устанавливаем значения при изменении initialValues
   useEffect(() => {
     if (initialValues && Object.keys(initialValues).length > 0) {
       formInstance.setFieldsValue(initialValues)
     }
   }, [initialValues, formInstance])
 
-  // Сбрасываем форму при изменении полей или если initialValues стали пустыми
   useEffect(() => {
     if (!initialValues || Object.keys(initialValues).length === 0) {
       formInstance.resetFields()
@@ -92,13 +91,27 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
   }, [fields, initialValues, formInstance])
 
   const handleFinish = (values: Record<string, any>) => {
-    onFinish?.(values)
+    // Преобразуем ColorPicker значения в HEX строки
+    const processedValues = { ...values }
+
+    fields.forEach((field) => {
+      if (field.type === 'color' && processedValues[field.key]) {
+        // Если значение объект Color от ColorPicker, преобразуем в HEX
+        if (
+          typeof processedValues[field.key] === 'object'
+          && processedValues[field.key].toHexString
+        ) {
+          processedValues[field.key] = processedValues[field.key].toHexString()
+        }
+      }
+    })
+
+    onFinish?.(processedValues)
   }
 
   const getValidationRules = (field: FormField) => {
     const rules: any[] = []
 
-    // Обязательное поле
     if (field.is_required) {
       rules.push({
         required: true,
@@ -107,7 +120,6 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
       })
     }
 
-    // Валидация по типу
     switch (field.type) {
       case 'email':
         rules.push({
@@ -115,15 +127,8 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
           message: t('invalid_email'),
         })
         break
-      case 'number':
-        rules.push({
-          type: 'number',
-          message: t('invalid_number'),
-        })
-        break
     }
 
-    // Кастомная валидация
     if (field.validation) {
       if (field.validation.min !== undefined) {
         rules.push({
@@ -184,6 +189,19 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
           </Checkbox>
         )
 
+      case 'color':
+        return (
+          <ColorPicker
+            showText
+            disabled={loading}
+            format='hex'
+            onChange={(color) => {
+              // Автоматически обновляем значение в форме
+              formInstance.setFieldValue(field.key, color.toHexString())
+            }}
+          />
+        )
+
       case 'select':
         if (!field.options?.url || !field.options?.qKey) {
           console.warn(
@@ -209,14 +227,12 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
           <FileUpload
             fileList={fieldFiles}
             onChange={() => {
-              // При изменении файлов обновляем значения формы
               const currentValues = formInstance.getFieldsValue()
               const updatedValues = {
                 ...currentValues,
                 [field.key]: fieldFiles,
               }
 
-              // Вызываем callback для обновления состояния родительского компонента
               onValuesChange?.({ [field.key]: fieldFiles }, updatedValues)
             }}
             maxCount={field.fileProps?.maxCount || 10}

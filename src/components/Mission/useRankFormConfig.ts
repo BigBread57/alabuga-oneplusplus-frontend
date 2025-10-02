@@ -59,41 +59,10 @@ export const useRankFormConfig = (rankId?: number) => {
       {
         key: 'color',
         title: t('fields.color.label'),
-        type: 'input',
+        type: 'color',
         is_required: false,
         placeholder: t('fields.color.placeholder'),
-        validation: {
-          min: 0,
-          max: 256,
-          message: tValidation('min_max_length', { min: 0, max: 256 }),
-        },
       },
-      // {
-      //   key: 'parent',
-      //   title: t('fields.parent.label'),
-      //   type: 'select',
-      //   is_required: false,
-      //   options: {
-      //     url: '/api/ranks',
-      //     qKey: 'ranks',
-      //     valueKey: 'id',
-      //     labelKey: 'name',
-      //     multiple: false,
-      //   },
-      // },
-      // {
-      //   key: 'game_world',
-      //   title: t('fields.game_world.label'),
-      //   type: 'select',
-      //   is_required: true,
-      //   options: {
-      //     url: '/api/game-worlds',
-      //     qKey: 'game-worlds',
-      //     valueKey: 'id',
-      //     labelKey: 'name',
-      //     multiple: false,
-      //   },
-      // },
       {
         key: 'icon',
         title: t('fields.icon.label'),

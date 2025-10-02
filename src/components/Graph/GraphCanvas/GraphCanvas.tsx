@@ -4,7 +4,7 @@ import type { FCC } from 'src/types'
 import type { EntityData } from '@/components/Graph/GraphEntityCreationModal/GraphEntityCreationModal'
 import type { ENTITY_TYPES } from '@/hooks/useGraph'
 import { PlusOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Spin } from 'antd'
 import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 import { CardWrapper } from '@/components/_base/CardWrapper'
@@ -15,7 +15,8 @@ import { NodeInfoDrawer } from '@/components/Graph/NodeInfoDrawer'
 import { useGraph } from '@/hooks/useGraph'
 
 interface GraphCanvasProps {
-  data: any // Теперь обязательный prop
+  isLoading: boolean
+  data: any
   gridVisible?: boolean
   gridSize?: number
   enablePanning?: boolean
@@ -23,6 +24,7 @@ interface GraphCanvasProps {
   enableMousewheel?: boolean
   onChange?: (data: Record<string, any>) => void
   onNewLoreClick?: () => void
+  onSave?: () => void
 }
 
 const EMPTY_GRAPH = { cells: [] }
@@ -36,6 +38,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
   onChange,
   onNewLoreClick,
   isLoadingGenerate,
+  onSave,
+  isLoading,
 }) => {
   const t = useTranslations('Graph')
   const [drawerVisible, setDrawerVisible] = useState(false)
@@ -118,9 +122,9 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     clearGraph()
     localStorage.setItem(GRAPH_STORAGE_KEY, JSON.stringify(EMPTY_GRAPH))
   }
-
   return (
     <CardWrapper
+      loading={isLoading}
       title=''
       extra={
         <Button
@@ -140,7 +144,34 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
         },
       }}
     >
-      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      {isLoadingGenerate && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            pointerEvents: 'none',
+          }}
+        >
+          <Spin size='large' />
+        </div>
+      )}
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          opacity: isLoadingGenerate ? 0.5 : 1,
+          pointerEvents: isLoadingGenerate ? 'none' : 'auto',
+          transition: 'opacity 0.3s ease',
+        }}
+      >
         <EntityCreationModal
           visible={isShowModal}
           entityType={currentEntityType}
@@ -169,6 +200,7 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
             isConnectingMode={isConnectingMode}
             isDeleteMode={isDeleteMode}
             onDeleteSelected={toggleDeleteMode}
+            onSave={onSave}
           />
         )}
 
