@@ -64,7 +64,7 @@ export const useMissionBranchFormConfig = (missionBranchId?: number) => {
       {
         key: 'color',
         title: t('fields.color.label'),
-        type: 'color', // Изменено на 'color'
+        type: 'color',
         is_required: false,
         placeholder: t('fields.color.placeholder'),
       },
@@ -99,21 +99,8 @@ export const useMissionBranchFormConfig = (missionBranchId?: number) => {
         type: 'select',
         is_required: true,
         options: {
-          url: '/api/activity-categories',
+          url: '/game-world/mission-categories/list/',
           qKey: 'activity-categories',
-          valueKey: 'id',
-          labelKey: 'name',
-          multiple: false,
-        },
-      },
-      {
-        key: 'mentor',
-        title: t('fields.mentor.label'),
-        type: 'select',
-        is_required: false,
-        options: {
-          url: '/api/characters',
-          qKey: 'characters',
           valueKey: 'id',
           labelKey: 'name',
           multiple: false,
