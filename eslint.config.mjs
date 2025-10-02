@@ -20,7 +20,17 @@ export default antfu(
     formatters: {
       css: true,
     },
-    ignores: ['migrations/**/*'],
+    ignores: [
+      'migrations/**/*',
+      'node_modules/**/*',
+      'dist/**/*',
+      'build/**/*',
+      '.next/**/*',
+      'out/**/*',
+      'coverage/**/*',
+      '.turbo/**/*',
+      'README.md',
+    ],
   },
   jsxA11y.flatConfigs.recommended,
   ...tailwind.configs['flat/recommended'],
