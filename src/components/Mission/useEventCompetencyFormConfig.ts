@@ -23,7 +23,7 @@ export const useEventCompetencyFormConfig = () => {
         is_required: true,
         placeholder: t('fields.event.placeholder'),
         options: {
-          url: '/api/events',
+          url: '/game-world/events/list/',
           qKey: 'events',
           valueKey: 'id',
           labelKey: 'name',
@@ -37,7 +37,7 @@ export const useEventCompetencyFormConfig = () => {
         is_required: true,
         placeholder: t('fields.competency.placeholder'),
         options: {
-          url: '/api/competencies',
+          url: '/game-mechanics/competencies/list/',
           qKey: 'competencies',
           valueKey: 'id',
           labelKey: 'name',
