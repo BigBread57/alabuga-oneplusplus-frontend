@@ -7,10 +7,11 @@ import { Button, Drawer, Menu } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
+import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 
 // Определяем навигационные элементы с маршрутами
 const navigationItems = [
@@ -23,6 +24,7 @@ const navigationItems = [
 ]
 
 const MenuLinks: FCC = () => {
+  const { currentUser } = useContext(CurrentUserContext)
   const pathname = usePathname()
   const params = useParams()
   const locale = params.locale as string
@@ -71,37 +73,45 @@ const MenuLinks: FCC = () => {
   }
 
   const createMenuItems = (isVertical = false): MenuProps['items'] =>
-    navigationItems?.map((item) => {
-      const itemRef = getMenuItemRef(item.href)
+    navigationItems
+      ?.filter((link) => {
+        if (!link.roles) {
+          return true
+        }
+        return (
+          link.roles &&
+          link?.roles?.includes(currentUser?.active_character_role)
+        )
+      })
+      .map((item) => {
+        const itemRef = getMenuItemRef(item.href)
 
-      const labelContent = isVertical
-        ? (
-            <Link
-              href={`/${locale}${item.href}`}
-              onClick={handleDrawerClose}
-              ref={itemRef}
+        const labelContent = isVertical ? (
+          <Link
+            href={`/${locale}${item.href}`}
+            onClick={handleDrawerClose}
+            ref={itemRef}
+          >
+            {t(item.labelKey as any).toUpperCase()}
+          </Link>
+        ) : (
+          <Link href={`/${locale}${item.href}`} ref={itemRef}>
+            <Button
+              size={isTablet ? 'middle' : 'large'}
+              type='text'
+              icon={React.createElement(item.icon)}
             >
               {t(item.labelKey as any).toUpperCase()}
-            </Link>
-          )
-        : (
-            <Link href={`/${locale}${item.href}`} ref={itemRef}>
-              <Button
-                size={isTablet ? 'middle' : 'large'}
-                type='text'
-                icon={React.createElement(item.icon)}
-              >
-                {t(item.labelKey as any).toUpperCase()}
-              </Button>
-            </Link>
-          )
+            </Button>
+          </Link>
+        )
 
-      return {
-        key: item.href,
-        icon: isCompact && React.createElement(item.icon),
-        label: labelContent,
-      }
-    })
+        return {
+          key: item.href,
+          icon: isCompact && React.createElement(item.icon),
+          label: labelContent,
+        }
+      })
 
   // Определяем активный ключ на основе текущего пути
   const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/home'

@@ -16,7 +16,6 @@ const themeOptions: ThemeOption[] = [
   { key: 'light', icon: '🌞', labelKey: 'light' },
   { key: 'dark', icon: '🌙', labelKey: 'dark' },
   { key: 'blue', icon: '🔵', labelKey: 'blue' },
-  { key: 'green', icon: '🟢', labelKey: 'green' },
 ]
 
 type ThemeSwitcherProps = {

@@ -52,12 +52,3 @@ export const blueTheme: ThemeConfig = {
     boxShadow: `0 0px 4px ${Blue}`,
   },
 }
-
-export const greenTheme: ThemeConfig = {
-  token: {
-    colorPrimary: '#52c41a',
-    colorBgBase: '#f6ffed',
-    colorTextBase: '#135200',
-    boxShadow: '0 0px 4px #52c41a',
-  },
-}

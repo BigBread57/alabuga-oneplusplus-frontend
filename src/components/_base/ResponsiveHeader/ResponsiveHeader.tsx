@@ -18,7 +18,7 @@ type ResponsiveHeaderProps = {
 }
 
 export const ResponsiveHeader = ({
-  title = 'My App',
+  title = 'Ninja',
   showIndividualSwitchers = false,
 }: ResponsiveHeaderProps = {}) => {
   const { currentUser } = useContext(CurrentUserContext)

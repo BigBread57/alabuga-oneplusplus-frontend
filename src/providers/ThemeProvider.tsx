@@ -9,9 +9,9 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { blueTheme, darkTheme, greenTheme, lightTheme } from '@/libs/AntdThemes'
+import { blueTheme, darkTheme, lightTheme } from '@/libs/AntdThemes'
 
-type ThemeName = 'light' | 'dark' | 'blue' | 'green'
+type ThemeName = 'light' | 'dark' | 'blue'
 
 type ThemeContextType = {
   currentTheme: ThemeName
@@ -26,7 +26,6 @@ const themes: Record<ThemeName, ThemeConfig> = {
   light: lightTheme,
   dark: darkTheme,
   blue: blueTheme,
-  green: greenTheme,
 } as const
 
 const THEME_STORAGE_KEY = 'antd-theme'

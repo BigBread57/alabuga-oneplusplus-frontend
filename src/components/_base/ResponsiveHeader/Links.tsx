@@ -6,6 +6,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons'
+import { CharacterRole } from '@/models/Character'
 
 export interface LinkProps {
   labelKey: string | React.ReactNode
@@ -13,6 +14,7 @@ export interface LinkProps {
   isTab?: boolean
   isProfileTab?: boolean
   icon: string | FunctionComponent<object> | ComponentClass<object, any>
+  roles?: CharacterRole[]
 }
 
 export interface LinksKeys {
@@ -60,6 +62,13 @@ export const Links: LinksKeys = {
     labelKey: 'admin',
     href: '/admin/lor',
     isProfileTab: true,
+    roles: [
+      CharacterRole.HR,
+      CharacterRole.ORGANIZER,
+      CharacterRole.ADMIN,
+      CharacterRole.MANAGER,
+      CharacterRole.CONTENT_MANAGER,
+    ],
   },
 }
 

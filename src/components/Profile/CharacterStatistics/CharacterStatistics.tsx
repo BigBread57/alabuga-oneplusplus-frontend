@@ -56,7 +56,7 @@ const CharacterStatistics: FCC = () => {
               key='by_level'
               legendPosition='left'
               height={250}
-              data={response?.data?.missions.by_level}
+              data={response?.data?.missions?.by_level}
             />
           </Col>
           <Col xs={24} lg={12}>

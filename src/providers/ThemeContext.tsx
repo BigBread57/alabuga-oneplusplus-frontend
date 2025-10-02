@@ -3,7 +3,7 @@
 import type { ThemeConfig } from 'antd'
 import { createContext } from 'react'
 
-export type ThemeName = 'light' | 'dark' | 'blue' | 'green'
+export type ThemeName = 'light' | 'dark' | 'blue'
 
 type ThemeContextType = {
   currentTheme: ThemeName
