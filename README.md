@@ -11,6 +11,8 @@
 
 **Демо:** [https://alabuga.star-vim.online](https://alabuga.star-vim.online/ru/profile)
 
+**Backend репозиторий:** [GitHub](https://github.com/BigBread57/alabuga-oneplusplus-backend)
+
 ---
 
 ## ⚡ Быстрый старт
