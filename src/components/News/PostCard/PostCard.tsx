@@ -93,13 +93,13 @@ const PostCard: FCC<PostProps> = ({
           avatar={
             <Avatar
               src={
-                character.avatar
-                || 'https://api.dicebear.com/7.x/miniavs/svg?seed=1'
+                character.avatar ||
+                'https://api.dicebear.com/7.x/miniavs/svg?seed=1'
               }
             />
           }
           title={
-            <Space direction='horizontal'>
+            <Space direction='vertical'>
               {name}
               <Tag color={topic.color}>{topic.name}</Tag>
             </Space>
