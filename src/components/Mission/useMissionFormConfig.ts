@@ -119,9 +119,8 @@ export const useMissionFormConfig = (missionId?: number) => {
           message: tValidation('min_value', { min: 1 }),
         },
       },
-
       {
-        key: 'level',
+        key: 'level_id',
         title: t('fields.level.label'),
         type: 'select',
         is_required: false,
@@ -134,7 +133,7 @@ export const useMissionFormConfig = (missionId?: number) => {
         },
       },
       {
-        key: 'category',
+        key: 'category_id',
         title: t('fields.category.label'),
         type: 'select',
         is_required: false,
@@ -147,7 +146,7 @@ export const useMissionFormConfig = (missionId?: number) => {
         },
       },
       {
-        key: 'mentor',
+        key: 'mentor_id',
         title: t('fields.mentor.label'),
         type: 'select',
         is_required: false,

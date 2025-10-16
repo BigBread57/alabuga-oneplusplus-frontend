@@ -132,10 +132,10 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   // Инициализация графа - КРИТИЧНО: минимальные зависимости
   useEffect(() => {
     if (
-      !containerRef.current
-      || graphRef.current
-      || containerSize.width === 0
-      || containerSize.height === 0
+      !containerRef.current ||
+      graphRef.current ||
+      containerSize.width === 0 ||
+      containerSize.height === 0
     ) {
       return
     }
@@ -185,7 +185,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         graphRef.current.removeCell(nodeId)
         return
       }
-
       // Режим соединения - используем ref для актуального значения
       if (isConnectingModeRef.current) {
         if (!firstSelectedNodeRef.current) {
@@ -199,9 +198,14 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             firstSelectedNodeRef.current,
           )
           const firstNodeData = firstNode?.getData()
-          const sourceType = firstNodeData?.type
-          const targetType = clickedNode.getData()?.type
+          const sourceType =
+            // @ts-ignore
+            firstNodeData?.type || firstNode?.store?.data?.shape
+          const targetType =
+            // @ts-ignore
+            clickedNode.getData()?.type || clickedNode?.store?.data?.shape
 
+          console.log('sourceType, targetType', sourceType, targetType)
           // Создаем связь с правильными типами
           const newEdge = graphRef.current.addEdge({
             shape: 'edge',
@@ -220,8 +224,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           if (firstNode) {
             const entityType = firstNodeData?.type
             if (
-              entityType
-              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType &&
+              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               firstNode.attr(
                 'body/stroke',
@@ -313,9 +317,9 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   // Обновление размеров графа при изменении контейнера
   useEffect(() => {
     if (
-      graphRef.current
-      && containerSize.width > 0
-      && containerSize.height > 0
+      graphRef.current &&
+      containerSize.width > 0 &&
+      containerSize.height > 0
     ) {
       graphRef.current.resize(containerSize.width, containerSize.height)
     }
@@ -388,8 +392,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           const entityType = nodeData?.type
 
           if (
-            entityType
-            && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+            entityType &&
+            ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
           ) {
             node.attr(
               'body/stroke',
@@ -420,8 +424,8 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             const entityType = nodeData?.type
 
             if (
-              entityType
-              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType &&
+              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               node.attr(
                 'body/stroke',
@@ -454,7 +458,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           description: { text: data.description },
         },
         data: {
-          type: entityType,
+          // type: entityType,
           ...data,
         },
       })

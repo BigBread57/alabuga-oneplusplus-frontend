@@ -36,7 +36,10 @@ const GraphCanvasWrapper: FCC = () => {
       ),
     })
   const handleSaveGraph = () => {
-    saveGraph(graphData, {
+    const localData = localStorage.getItem(GRAPH_STORAGE_KEY)
+    const parsedData = JSON.parse(localData || '{}')
+
+    saveGraph(parsedData || graphData || { cells: [] }, {
       onSuccess: () => {
         messageSuccess(t('graph_saved_successfully'))
       },
