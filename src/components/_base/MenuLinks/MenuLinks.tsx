@@ -2,7 +2,6 @@
 
 import type { MenuProps } from 'antd'
 import type { FCC } from 'src/types'
-import { MenuOutlined } from '@ant-design/icons'
 import { Button, Drawer, Menu } from 'antd'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
@@ -12,6 +11,7 @@ import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
+import { EmojiIcon } from '@/components/_base/EmojiIcon'
 
 // Определяем навигационные элементы с маршрутами
 const navigationItems = [
@@ -79,34 +79,32 @@ const MenuLinks: FCC = () => {
           return true
         }
         return (
-          link.roles
-          && link?.roles?.includes(currentUser?.active_character_role)
+          link.roles &&
+          link?.roles?.includes(currentUser?.active_character_role)
         )
       })
       .map((item) => {
         const itemRef = getMenuItemRef(item.href)
 
-        const labelContent = isVertical
-          ? (
-              <Link
-                href={`/${locale}${item.href}`}
-                onClick={handleDrawerClose}
-                ref={itemRef}
-              >
-                {t(item.labelKey as any).toUpperCase()}
-              </Link>
-            )
-          : (
-              <Link href={`/${locale}${item.href}`} ref={itemRef}>
-                <Button
-                  size={isTablet ? 'middle' : 'large'}
-                  type='text'
-                  icon={React.createElement(item.icon)}
-                >
-                  {t(item.labelKey as any).toUpperCase()}
-                </Button>
-              </Link>
-            )
+        const labelContent = isVertical ? (
+          <Link
+            href={`/${locale}${item.href}`}
+            onClick={handleDrawerClose}
+            ref={itemRef}
+          >
+            {t(item.labelKey as any).toUpperCase()}
+          </Link>
+        ) : (
+          <Link href={`/${locale}${item.href}`} ref={itemRef}>
+            <Button
+              size={isTablet ? 'middle' : 'large'}
+              type='text'
+              icon={React.createElement(item.icon)}
+            >
+              {t(item.labelKey as any).toUpperCase()}
+            </Button>
+          </Link>
+        )
 
         return {
           key: item.href,
@@ -136,7 +134,7 @@ const MenuLinks: FCC = () => {
           <Button
             ref={menuButtonRef}
             type='text'
-            icon={<MenuOutlined />}
+            icon={<EmojiIcon>🧭</EmojiIcon>}
             onClick={handleDrawerToggle}
             size='large'
             aria-label={t('open_menu')}

@@ -1,11 +1,11 @@
 'use client'
 
-import { SettingOutlined } from '@ant-design/icons'
 import { Button, Divider, Drawer, Grid, Space, Typography } from 'antd'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import EmojiIcon from '../EmojiIcon/EmojiIcon'
 
 const { Title, Text } = Typography
 const { useBreakpoint } = Grid
@@ -15,6 +15,8 @@ type AppSettingsProps = {
   size?: 'small' | 'middle' | 'large'
   buttonVariant?: 'default' | 'text' | 'icon-only'
 }
+
+const SettingEmoji = () => <EmojiIcon size={16}>⚙️</EmojiIcon>
 
 export const AppSettings = ({
   placement = 'right',
@@ -42,7 +44,7 @@ export const AppSettings = ({
         <Button
           type='text'
           size={size}
-          icon={<SettingOutlined />}
+          icon={<SettingEmoji />}
           onClick={showDrawer}
           aria-label={t('aria_label')}
         />
@@ -54,7 +56,7 @@ export const AppSettings = ({
         <Button
           type='text'
           size={size}
-          icon={<SettingOutlined />}
+          icon={<SettingEmoji />}
           onClick={showDrawer}
         >
           {t('settings')}
@@ -63,7 +65,7 @@ export const AppSettings = ({
     }
 
     return (
-      <Button size={size} icon={<SettingOutlined />} onClick={showDrawer}>
+      <Button size={size} icon={<SettingEmoji />} onClick={showDrawer}>
         {t('settings')}
       </Button>
     )
@@ -76,7 +78,7 @@ export const AppSettings = ({
       <Drawer
         title={
           <Space>
-            <SettingOutlined />
+            <SettingEmoji />
             <span>{t('settings')}</span>
           </Space>
         }

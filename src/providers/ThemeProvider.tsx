@@ -29,7 +29,7 @@ const themes: Record<ThemeName, ThemeConfig> = {
 } as const
 
 const THEME_STORAGE_KEY = 'antd-theme'
-const DEFAULT_THEME: ThemeName = 'light'
+const DEFAULT_THEME: ThemeName = 'blue'
 
 // Безопасная функция для работы с localStorage
 const getStoredTheme = (): ThemeName | null => {

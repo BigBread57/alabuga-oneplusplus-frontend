@@ -3,7 +3,6 @@
 import type { CardWrapperProps } from '@/components/_base/CardWrapper/CardWrapper'
 import type { CharacterProps } from '@/models/Character'
 import type { GameWorldProps } from '@/models/GameWorld'
-import { QuestionIcon } from '@storybook/icons'
 import { Col, Divider, Row } from 'antd'
 import { useTranslations } from 'next-intl'
 import React from 'react'
@@ -15,6 +14,7 @@ import { ProfileRank } from '@/components/Profile/ProfileRank'
 import { ProfileTour } from '@/components/Tour/ProfileTour/ProfileTour'
 import { useProfileTour } from '@/components/Tour/ProfileTour/useProfileTour'
 import { useTour } from '@/components/Tour/useTour'
+import { EmojiIcon } from '@/components/_base/EmojiIcon'
 
 type ProfileCardProps = {
   userName: string
@@ -71,7 +71,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           tooltip={t('start_tour')}
           type='text'
           size='middle'
-          icon={<QuestionIcon size={20} />}
+          icon={<EmojiIcon size={20}>❓</EmojiIcon>}
           onClick={handleStartTour}
         />
       }

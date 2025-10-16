@@ -53,6 +53,47 @@ interface UseGraphReturn {
   isDeleteMode: boolean
 }
 
+// Функция для обработки JSON перед загрузкой
+const processJsonForLoading = (jsonData: any) => {
+  if (!jsonData) return jsonData
+
+  // Если данные приходят как строка, парсим
+  let parsed = jsonData
+  if (typeof jsonData === 'string') {
+    try {
+      parsed = JSON.parse(jsonData)
+    } catch (e) {
+      console.error('Error parsing JSON:', e)
+      return jsonData
+    }
+  }
+
+  const processed = { ...parsed }
+
+  if (processed.cells) {
+    processed.cells = processed.cells.map((cell: any) => {
+      const processedCell = { ...cell }
+
+      // Восстанавливаем shape из data.type для узлов
+      if (!processedCell.shape && processedCell.data?.type) {
+        processedCell.shape = processedCell.data.type
+      }
+
+      // Нормализуем source и target для ребер (если они объекты, конвертируем в строки)
+      if (processedCell.source && typeof processedCell.source === 'object') {
+        processedCell.source = processedCell.source.cell || processedCell.source
+      }
+      if (processedCell.target && typeof processedCell.target === 'object') {
+        processedCell.target = processedCell.target.cell || processedCell.target
+      }
+
+      return processedCell
+    })
+  }
+
+  return processed
+}
+
 export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const { themeConfig } = useTheme()
 
@@ -75,7 +116,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   const firstSelectedNodeRef = useRef<string | null>(null)
   const { updateEdgeColor, getTopLeftPosition } = useGraphFunc()
 
-  // Используем ref для актуальных значений
   const onNodeClickRef = useRef(onNodeClick)
   const isConnectingModeRef = useRef(isConnectingMode)
   const isDeleteModeRef = useRef(isDeleteMode)
@@ -92,7 +132,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     isDeleteModeRef.current = isDeleteMode
   }, [isDeleteMode])
 
-  // Мемоизируем конфиг регистрации для предотвращения пересоздания
   const registrationConfig = useMemo(
     () => ({
       gridVisible,
@@ -103,17 +142,13 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     [gridVisible, gridSize, enablePanning, enableMousewheel],
   )
 
-  // Обновление размеров контейнера
   const updateContainerSize = useCallback(() => {
     if (containerRef.current) {
       const { offsetWidth, offsetHeight } = containerRef.current
-
-      // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
       setContainerSize({ width: offsetWidth, height: offsetHeight })
     }
   }, [])
 
-  // Resize observer для контейнера
   useEffect(() => {
     updateContainerSize()
 
@@ -129,17 +164,16 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     registerEntityNodes()
   }, [])
 
-  // Инициализация графа - КРИТИЧНО: минимальные зависимости
   useEffect(() => {
     if (
-      !containerRef.current
-      || graphRef.current
-      || containerSize.width === 0
-      || containerSize.height === 0
+      !containerRef.current ||
+      graphRef.current ||
+      containerSize.width === 0 ||
+      containerSize.height === 0
     ) {
       return
     }
-    // Регистрируем узлы
+
     registerEntityNodesCall()
 
     const graph = new Graph({
@@ -162,12 +196,10 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       },
     })
 
-    // Обработчик для обновления цвета ребра при создании
     const handleEdgeConnected = ({ edge }: { edge: any }) => {
       updateEdgeColor(edge)
     }
 
-    // Обработчик клика - использует ref для актуальных значений
     const handleNodeClickEvent = ({ node }: { node: any }) => {
       const nodeId = node.id
 
@@ -180,21 +212,17 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         return
       }
 
-      // Режим удаления - проверяем ПЕРВЫМ
       if (isDeleteModeRef.current) {
         graphRef.current.removeCell(nodeId)
         return
       }
 
-      // Режим соединения - используем ref для актуального значения
       if (isConnectingModeRef.current) {
         if (!firstSelectedNodeRef.current) {
-          // Выбираем первый узел
           clickedNode.attr('body/stroke', '#009707')
           clickedNode.attr('body/strokeWidth', 5)
           firstSelectedNodeRef.current = nodeId
         } else if (firstSelectedNodeRef.current !== nodeId) {
-          // Получаем данные первого узла ДО создания связи
           const firstNode = graphRef.current.getCellById(
             firstSelectedNodeRef.current,
           )
@@ -202,7 +230,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
           const sourceType = firstNodeData?.type
           const targetType = clickedNode.getData()?.type
 
-          // Создаем связь с правильными типами
           const newEdge = graphRef.current.addEdge({
             shape: 'edge',
             source: firstSelectedNodeRef.current,
@@ -213,15 +240,13 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             },
           })
 
-          // Обновляем цвет новой связи
           updateEdgeColor(newEdge)
 
-          // Сбрасываем выделение первого узла
           if (firstNode) {
             const entityType = firstNodeData?.type
             if (
-              entityType
-              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType &&
+              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               firstNode.attr(
                 'body/stroke',
@@ -231,14 +256,12 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
             }
           }
 
-          // Выходим из режима соединения
           setIsConnectingMode(false)
           firstSelectedNodeRef.current = null
         }
         return
       }
 
-      // Обычный клик - показываем информацию
       const nodeData = clickedNode.getData()
       const nodeAttrs = clickedNode.getAttrs()
       const entityType = clickedNode.shape as ENTITY_TYPES
@@ -253,6 +276,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         graph.removeCell(edge.id)
       }
     }
+
     const handleGraphChange = () => {
       if (onGraphChange && graphRef.current) {
         const graphData = graphRef.current.toJSON()
@@ -260,7 +284,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       }
     }
 
-    // Подписываемся на все изменения
     graph.on('cell:added', handleGraphChange)
     graph.on('cell:removed', handleGraphChange)
     graph.on('cell:change:*', handleGraphChange)
@@ -270,22 +293,25 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
 
     graphRef.current = graph
 
-    // Загружаем данные если есть
     if (data) {
-      graph.fromJSON(data)
+      try {
+        // Обрабатываем JSON перед загрузкой
+        const processedData = processJsonForLoading(data)
+        graph.fromJSON(processedData)
 
-      // Обновляем цвета всех существующих ребер
-      graph.getEdges().forEach((edge) => {
-        updateEdgeColor(edge)
-      })
+        graph.getEdges().forEach((edge) => {
+          updateEdgeColor(edge)
+        })
 
-      graph.centerContent()
+        graph.centerContent()
+      } catch (error) {
+        console.error('Error loading graph data:', error)
+        // Продолжаем работу даже если загрузка данных не удалась
+      }
     }
 
-    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setIsReady(true)
 
-    // Cleanup
     return () => {
       if (graphRef.current) {
         graphRef.current.off('cell:added', handleGraphChange)
@@ -310,32 +336,34 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     updateEdgeColor,
   ])
 
-  // Обновление размеров графа при изменении контейнера
   useEffect(() => {
     if (
-      graphRef.current
-      && containerSize.width > 0
-      && containerSize.height > 0
+      graphRef.current &&
+      containerSize.width > 0 &&
+      containerSize.height > 0
     ) {
       graphRef.current.resize(containerSize.width, containerSize.height)
     }
   }, [containerSize.width, containerSize.height])
 
-  // Отдельный эффект для загрузки данных
   useEffect(() => {
     if (graphRef.current && data && isReady) {
-      graphRef.current.fromJSON(data)
+      try {
+        // Обрабатываем JSON перед загрузкой
+        const processedData = processJsonForLoading(data)
+        graphRef.current.fromJSON(processedData)
 
-      // Обновляем цвета всех существующих ребер
-      graphRef.current.getEdges().forEach((edge) => {
-        updateEdgeColor(edge)
-      })
+        graphRef.current.getEdges().forEach((edge) => {
+          updateEdgeColor(edge)
+        })
 
-      graphRef.current.centerContent()
+        graphRef.current.centerContent()
+      } catch (error) {
+        console.error('Error loading graph data:', error)
+      }
     }
   }, [data, isReady, updateEdgeColor])
 
-  // API методы
   const centerContent = useCallback(() => {
     graphRef.current?.centerContent()
   }, [])
@@ -376,20 +404,18 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     setIsConnectingMode((prev) => {
       const newMode = !prev
 
-      // Если включаем режим соединения, выключаем режим удаления
       if (newMode) {
         setIsDeleteMode(false)
       }
 
-      // Если выключаем режим соединения, сбрасываем все выделения
       if (prev && graphRef.current) {
         graphRef.current.getNodes().forEach((node) => {
           const nodeData = node.getData()
           const entityType = nodeData?.type
 
           if (
-            entityType
-            && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+            entityType &&
+            ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
           ) {
             node.attr(
               'body/stroke',
@@ -404,24 +430,23 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
     })
     firstSelectedNodeRef.current = null
   }, [])
+
   const toggleDeleteMode = useCallback(() => {
     setIsDeleteMode((prev) => {
       const newMode = !prev
 
-      // Если включаем режим удаления, выключаем режим соединения
       if (newMode) {
         setIsConnectingMode(false)
         firstSelectedNodeRef.current = null
 
-        // Сбрасываем выделения узлов
         if (graphRef.current) {
           graphRef.current.getNodes().forEach((node) => {
             const nodeData = node.getData()
             const entityType = nodeData?.type
 
             if (
-              entityType
-              && ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
+              entityType &&
+              ENTITY_COLORS[entityType as keyof typeof ENTITY_COLORS]
             ) {
               node.attr(
                 'body/stroke',
@@ -474,6 +499,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       if (!node) {
         return false
       }
+
       const currentData = node.getData() || {}
       node.updateData({
         ...currentData,
@@ -486,13 +512,14 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
         },
         body: { fill: newData.color || currentData.color },
       })
-      // Обновляем визуальные атрибуты если есть title и description
+
       if (newData.name) {
         node.attr('title/text', newData.name)
       }
       if (newData.description) {
         node.attr('description/text', newData.description)
       }
+
       return true
     },
     [],

@@ -28,8 +28,8 @@ const GraphCanvasWrapper: FCC = () => {
     enabled: !!currentUser?.active_game_world,
   })
 
-  const { mutate: saveGraph, isPending: isLoadingUpdate }: any
-    = usePostExtraActions({
+  const { mutate: saveGraph, isPending: isLoadingUpdate }: any =
+    usePostExtraActions({
       qKey: 'updateOrCreateAllEntitiesUrl',
       extraUrl: MODEL.updateOrCreateAllEntitiesUrl(
         currentUser?.active_game_world as number,
@@ -43,10 +43,10 @@ const GraphCanvasWrapper: FCC = () => {
       onError: (err: any) => {
         console.error('Ошибка сохранения графа:', err)
 
-        const errorMessage
-          = err?.response?.data?.errors?.[0]?.detail
-            || err?.response?.data?.detail
-            || err?.message
+        const errorMessage =
+          err?.response?.data?.errors?.[0]?.detail ||
+          err?.response?.data?.detail ||
+          err?.message
 
         messageError(t('error_saving_graph'))
         messageError(errorMessage)
@@ -54,8 +54,8 @@ const GraphCanvasWrapper: FCC = () => {
     })
   }
 
-  const { mutate: generateNewLor, isPending: isLoadingGenerate }: any
-    = usePostExtraActions({
+  const { mutate: generateNewLor, isPending: isLoadingGenerate }: any =
+    usePostExtraActions({
       qKey: 'generateNewLor',
       extraUrl: MODEL.generateUrl(currentUser?.active_game_world as number),
     })
@@ -72,10 +72,10 @@ const GraphCanvasWrapper: FCC = () => {
       onError: (err: any) => {
         console.error('Ошибка генерации нового лора:', err)
 
-        const errorMessage
-          = err?.response?.data?.errors?.[0]?.detail
-            || err?.response?.data?.detail
-            || err?.message
+        const errorMessage =
+          err?.response?.data?.errors?.[0]?.detail ||
+          err?.response?.data?.detail ||
+          err?.message
         messageError(t('error_generating_new_lore'))
         messageError(errorMessage)
       },
@@ -106,9 +106,9 @@ const GraphCanvasWrapper: FCC = () => {
       // FIXME: раскоментить когда бэкенд будет готов
       // Приоритет 1: Данные с сервера
       if (
-        response?.data
-        && response.data.cells
-        && response.data.cells.length > 0
+        response?.data &&
+        response.data.cells &&
+        response.data.cells.length > 0
       ) {
         // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
         setGraphData(response.data)

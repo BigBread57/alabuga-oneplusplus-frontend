@@ -1,12 +1,6 @@
 import type { ComponentClass, FunctionComponent } from 'react'
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
 import { CharacterRole } from '@/models/Character'
+import { EmojiIcon } from '@/components/_base/EmojiIcon'
 
 export interface LinkProps {
   labelKey: string | React.ReactNode
@@ -28,47 +22,47 @@ export interface LinksKeys {
 
 export const Links: LinksKeys = {
   JOURNAL: {
-    icon: BarChartOutlined,
+    icon: () => <EmojiIcon>🌌</EmojiIcon>,
     labelKey: 'journal',
     href: '/journal',
     isTab: true,
   },
   NEWS: {
-    icon: AppstoreOutlined,
+    icon: () => <EmojiIcon>🛸</EmojiIcon>,
     labelKey: 'news',
     href: '/news',
     isTab: true,
   },
   PROFILE: {
-    icon: UserOutlined,
+    icon: () => <EmojiIcon>🧑‍🚀</EmojiIcon>,
     labelKey: 'profile',
     href: '/profile',
     isTab: true,
   },
   RANK: {
-    icon: TeamOutlined,
+    icon: () => <EmojiIcon>⭐</EmojiIcon>,
     labelKey: 'rank',
     href: '/rank',
     isTab: true,
   },
   SHOP: {
-    icon: ShopOutlined,
+    icon: () => <EmojiIcon>🌠</EmojiIcon>,
     labelKey: 'shop',
     href: '/shop/showcase',
     isTab: true,
   },
   ADMIN: {
-    icon: TeamOutlined,
+    icon: () => <EmojiIcon>🔭</EmojiIcon>,
     labelKey: 'admin',
     href: '/admin/lor',
     isProfileTab: true,
-    roles: [
-      CharacterRole.HR,
-      CharacterRole.ORGANIZER,
-      CharacterRole.ADMIN,
-      CharacterRole.MANAGER,
-      CharacterRole.CONTENT_MANAGER,
-    ],
+    // roles: [
+    // CharacterRole.HR,
+    // CharacterRole.ORGANIZER,
+    // CharacterRole.ADMIN,
+    // CharacterRole.MANAGER,
+    // CharacterRole.CONTENT_MANAGER,
+    // ],
   },
 }
 

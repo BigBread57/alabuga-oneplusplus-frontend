@@ -1,5 +1,5 @@
 import type { UserProps } from '@/models'
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
+import { LogoutOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Dropdown, Row, Space, Typography } from 'antd'
 
 import { useTranslations } from 'next-intl'
@@ -7,6 +7,7 @@ import React, { useCallback } from 'react'
 
 import { useLogout } from '@/services/auth/hooks'
 import styles from './CurrentUser.module.scss'
+import { EmojiIcon } from '@/components/_base/EmojiIcon'
 
 const { Text } = Typography
 
@@ -17,18 +18,19 @@ type CurrentUserProps = {
 const UserName = ({ currentUser }: { currentUser: UserProps }) => {
   return (
     <Space direction='vertical'>
-      {currentUser?.first_name || currentUser?.last_name
-        ? (
-            <Text>
-              {currentUser?.first_name} {currentUser?.last_name}
-            </Text>
-          )
-        : null}
+      {currentUser?.first_name || currentUser?.last_name ? (
+        <Text>
+          {currentUser?.first_name} {currentUser?.last_name}
+        </Text>
+      ) : null}
 
       <Text>{currentUser?.email || currentUser?.username}</Text>
     </Space>
   )
 }
+
+// Компонент с эмодзи космонавта
+const UserEmoji = () => <EmojiIcon>👤</EmojiIcon>
 
 // Выносим DropdownRender на верхний уровень
 const DropdownRender = ({
@@ -99,7 +101,7 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
             <Button
               type='text'
               size='large'
-              icon={<UserOutlined />}
+              icon={<UserEmoji />}
               style={{
                 fontSize: 16,
               }}
