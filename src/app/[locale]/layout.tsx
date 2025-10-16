@@ -5,9 +5,6 @@ import { notFound } from 'next/navigation'
 import { QueryClientWrapper } from '@/components/_base/QueryClientWrapper'
 import { CurrentUserProvider } from '@/components/CurrentUserProvider'
 import { routing } from '@/libs/I18nRouting'
-import { AntdProvider } from '@/providers/antd'
-import { ThemeProvider } from '@/providers/ThemeProvider'
-import '@/styles/global.css'
 
 export const metadata: Metadata = {
   icons: [
@@ -51,21 +48,11 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale}>
-      <body
-        style={{
-          margin: 0,
-          padding: 0,
-          boxSizing: 'border-box',
-        }}
-      >
+      <body>
         <NextIntlClientProvider>
-          <ThemeProvider>
-            <AntdProvider>
-              <QueryClientWrapper>
-                <CurrentUserProvider>{props.children}</CurrentUserProvider>
-              </QueryClientWrapper>
-            </AntdProvider>
-          </ThemeProvider>
+          <QueryClientWrapper>
+            <CurrentUserProvider>{props.children}</CurrentUserProvider>
+          </QueryClientWrapper>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -93,8 +93,8 @@ const PostCard: FCC<PostProps> = ({
           avatar={
             <Avatar
               src={
-                character.avatar ||
-                'https://api.dicebear.com/7.x/miniavs/svg?seed=1'
+                character.avatar
+                || 'https://api.dicebear.com/7.x/miniavs/svg?seed=1'
               }
             />
           }

@@ -38,7 +38,7 @@ export const useRegister = <TData = any, TError = Error, TVariables = any>(
 }
 
 /**
- * Хук установки пароля пользовтеля
+ * Хук авторизации пользователя
  */
 export const useLogin = <
   TData = any,
@@ -47,12 +47,17 @@ export const useLogin = <
 >(
   options?: UseMutationOptions<TData, TError, TVariables>,
 ) => {
-  return useMutation<TData, TError, TVariables>({
+  const mutation = useMutation<TData, TError, TVariables>({
     mutationKey: ['login'],
     mutationFn: (credentials: TVariables): Promise<TData> =>
       AuthServices.login('login', credentials) as Promise<TData>,
     ...options,
   })
+
+  return {
+    ...mutation,
+    isLoading: mutation.isPending, // универсальный статус загрузки
+  }
 }
 /**
  * Хук разлогинивания пользователя

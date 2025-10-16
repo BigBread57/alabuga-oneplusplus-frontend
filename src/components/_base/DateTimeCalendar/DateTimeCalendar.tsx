@@ -1,9 +1,6 @@
-import { CalendarOutlined } from '@ant-design/icons'
-import { Space, Typography } from 'antd'
+import { Calendar } from 'lucide-react'
 import React from 'react'
 import { useDateTimePrettyStr } from '@/hooks/useDateTimePrettyStr'
-
-const { Text } = Typography
 
 interface DateTimeCalendarProps {
   text: string
@@ -17,12 +14,13 @@ const DateTimeCalendar: React.FC<DateTimeCalendarProps> = ({
   const { timeDateString } = useDateTimePrettyStr()
 
   return (
-    <Text>
-      <Space direction='horizontal'>
-        <CalendarOutlined /> <strong>{text}:</strong>
+    <div className='flex items-center gap-2'>
+      <Calendar size={16} className='flex-shrink-0 text-indigo-400' />
+      <span className='font-semibold text-gray-300'>{text}:</span>
+      <span className='text-gray-400'>
         {timeDateString(datetime as string)}
-      </Space>
-    </Text>
+      </span>
+    </div>
   )
 }
 

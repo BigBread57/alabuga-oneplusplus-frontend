@@ -56,10 +56,11 @@
   },
   "MenuLinks": {
     "profile": "Профиль",
-    "journal": "Журнал",
-    "shop": "Магазин",
+    "training_center": "Центр подготовки",
+    "journal": "Бортовой журнал",
+    "shop": "Складской модуль",
     "rank": "Рейтинг",
-    "news": "Новости",
+    "news": "Вести с орбиты",
     "open_menu": "Открыть меню",
     "navigation": "Навигация",
     "admin": "Админ",
@@ -160,7 +161,8 @@
     "missions_branches": "Ветки миссий"
   },
   "CurrentUser": {
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "loading": "Загрузка пользователя..."
   },
   "RegisterForm": {
     "create_account": "Создать аккаунт",

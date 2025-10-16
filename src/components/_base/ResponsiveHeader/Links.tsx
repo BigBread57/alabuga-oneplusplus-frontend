@@ -1,11 +1,12 @@
 import type { ComponentClass, FunctionComponent } from 'react'
 import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+  BarChart3,
+  Newspaper,
+  Rocket,
+  ShoppingCart,
+  Users,
+  UserStar,
+} from 'lucide-react'
 import { CharacterRole } from '@/models/Character'
 
 export interface LinkProps {
@@ -28,37 +29,37 @@ export interface LinksKeys {
 
 export const Links: LinksKeys = {
   JOURNAL: {
-    icon: BarChartOutlined,
+    icon: BarChart3,
     labelKey: 'journal',
     href: '/journal',
     isTab: true,
   },
   NEWS: {
-    icon: AppstoreOutlined,
+    icon: Newspaper,
     labelKey: 'news',
     href: '/news',
     isTab: true,
   },
   PROFILE: {
-    icon: UserOutlined,
-    labelKey: 'profile',
+    icon: Rocket,
+    labelKey: 'training_center',
     href: '/profile',
     isTab: true,
   },
   RANK: {
-    icon: TeamOutlined,
+    icon: Users,
     labelKey: 'rank',
     href: '/rank',
     isTab: true,
   },
   SHOP: {
-    icon: ShopOutlined,
+    icon: ShoppingCart,
     labelKey: 'shop',
     href: '/shop/showcase',
     isTab: true,
   },
   ADMIN: {
-    icon: TeamOutlined,
+    icon: UserStar,
     labelKey: 'admin',
     href: '/admin/lor',
     isProfileTab: true,

@@ -1,60 +1,40 @@
 'use client'
 
 import type { FCC } from 'src/types'
-import { Col, Row } from 'antd'
+import { motion } from 'framer-motion'
 import React from 'react'
-import { CharacterActivity } from '@/components/Character/CharacterActivity'
-import { ProfileCard } from '@/components/Profile/ProfileCard'
-import { Character } from '@/models/Character'
-import { useFetchExtraAction } from '@/services/base/hooks'
-
-const MODEL = Character
+import { CharacterActivityChanger } from '@/components/Character/CharacterActivityChanger'
+import { useScreens } from '@/hooks/useScreens'
+import CharacterActivityChangerMobile from '../../Character/CharacterActivityChangerMobile/CharacterActivityChangerMobile'
 
 const ProfilePage: FCC = () => {
-  const {
-    data,
-    isLoading,
-    refetch,
-  }: {
-    data: any
-    isLoading: boolean
-    refetch: () => void
-  } = useFetchExtraAction({
-    extraUrl: MODEL.actualForUserUrl(),
-    qKey: 'CharacterActualForUser',
-  })
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  }
+  const { isMobile, isTablet } = useScreens()
 
   return (
-    <>
-      <Row
-        style={{
-          height: '100%',
-        }}
-        gutter={[24, 24]}
-      >
-        <Col xs={24} sm={24} md={24} lg={8}>
-          <ProfileCard
-            isLoading={isLoading}
-            userName={data?.data?.user?.full_name || data?.data?.user?.username}
-            userAvatar={data?.data?.avatar}
-            character={data?.data}
-            gameWorld={data?.data?.game_world}
-            onUpdateAvatarSuccess={refetch}
-          />
-        </Col>
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={16}
-          style={{
-            height: 'calc(100vh - 130px)',
-          }}
-        >
-          <CharacterActivity />
-        </Col>
-      </Row>
-    </>
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      className='flex h-full w-full flex-col'
+    >
+      {/* Контейнер с автоматической прокруткой */}
+      {/* Внутренний контейнер с padding */}
+      {/* <CharacterActivity /> */}
+      {isMobile || isTablet
+        ? (
+            <CharacterActivityChangerMobile />
+          )
+        : (
+            <CharacterActivityChanger />
+          )}
+    </motion.div>
   )
 }
 

@@ -2,16 +2,12 @@
 
 import type { BaseModel } from '@/models'
 import type { FCC } from '@/types'
-import { Button, Col, Divider, Row, Spin, Typography } from 'antd'
-
+import { motion } from 'framer-motion'
+import { Loader } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React, { useMemo } from 'react'
 import { useApiOptions } from '@/hooks/useApiOptions'
-
 import { useInfinityFetchData } from '@/services/base/useInfinityFetchData'
-import styles from './FetchMoreItemsComponent.module.scss'
-
-const { Text } = Typography
 
 type FetchMoreItemsComponentProps = {
   baseURL?: string
@@ -89,7 +85,6 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   )
 
   if (isClearRender) {
-    // когда нужно просто подгрузить данные
     return renderItems({
       data: rawData,
       mergedOptionsIntoData: rData,
@@ -102,25 +97,39 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
   }
 
   return (
-    <>
-      {!isParentCounter
-        ? (
-            <Row gutter={40}>
-              <Col span={24} className={styles.dataLengthContainer}>
-                <Text strong>
-                  {isLoading ? t('loading') : `${t('found')} ${dataCount || 0}`}
-                </Text>
-                {lengthPostfixPlural}
-              </Col>
-            </Row>
-          )
-        : null}
+    <div className='w-full'>
+      {!isParentCounter && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className='mb-6 text-sm'
+        >
+          <span className='font-semibold text-gray-300'>
+            {isLoading ? t('loading') : `${t('found')} ${dataCount || 0}`}
+          </span>
+          {lengthPostfixPlural && (
+            <span className='ml-2 text-gray-400'>{lengthPostfixPlural}</span>
+          )}
+        </motion.div>
+      )}
+
       {extra?.({
         isLoading,
         isFetching,
         refetch,
       })}
-      <Spin spinning={isLoading} />
+
+      {isLoading && (
+        <div className='flex justify-center py-8'>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+          >
+            <Loader size={24} className='text-indigo-400' />
+          </motion.div>
+        </div>
+      )}
+
       {renderItems({
         data: rawData,
         mergedOptionsIntoData: rData,
@@ -130,26 +139,39 @@ const FetchMoreItemsComponent: FCC<FetchMoreItemsComponentProps> = ({
         isLoading,
         refetch,
       })}
-      {hasNextPage
-        ? (
-            <Row justify='center' className={styles.fetchMoreBtnWrapper}>
-              <Button
-                type='dashed'
-                danger
-                loading={isFetching}
-                onClick={fetchNextPage}
-              >
-                Показать еще
-              </Button>
-            </Row>
-          )
-        : null}
-      {!hasNextPage && dataCount
-        ? (
-            <Divider>{t('no_more_items')}</Divider>
-          )
-        : null}
-    </>
+
+      {hasNextPage && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className='mt-8 flex justify-center'
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            disabled={isFetching}
+            onClick={fetchNextPage}
+            className='rounded-lg border border-indigo-500/30 bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 px-6 py-2 font-semibold text-indigo-300 transition-all duration-300 hover:from-indigo-500/30 hover:to-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-50'
+          >
+            {isFetching ? 'Загрузка...' : 'Показать еще'}
+          </motion.button>
+        </motion.div>
+      )}
+
+      {!hasNextPage && dataCount && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className='my-8 flex items-center justify-center'
+        >
+          <div className='h-px flex-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent'></div>
+          <span className='px-4 text-sm text-gray-400'>
+            {t('no_more_items')}
+          </span>
+          <div className='h-px flex-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent'></div>
+        </motion.div>
+      )}
+    </div>
   )
 }
 

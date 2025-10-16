@@ -1,66 +1,179 @@
+'use client'
+
 import type { UserProps } from '@/models'
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Card, Col, Dropdown, Row, Space, Typography } from 'antd'
-
+import { AnimatePresence, motion } from 'framer-motion'
+import { Loader2, LogOut, User, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import React, { useCallback } from 'react'
-
+import React, { useCallback, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { Artifacts } from '@/components/Profile/Artifacts'
+import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
+import { ProfileRank } from '@/components/Profile/ProfileRank'
+import { Character } from '@/models/Character'
 import { useLogout } from '@/services/auth/hooks'
-import styles from './CurrentUser.module.scss'
-
-const { Text } = Typography
+import { useFetchExtraAction } from '@/services/base/hooks'
 
 type CurrentUserProps = {
   currentUser: UserProps
 }
 
-const UserName = ({ currentUser }: { currentUser: UserProps }) => {
-  return (
-    <Space direction='vertical'>
-      {currentUser?.first_name || currentUser?.last_name
-        ? (
-            <Text>
-              {currentUser?.first_name} {currentUser?.last_name}
-            </Text>
-          )
-        : null}
+const MODEL = Character
 
-      <Text>{currentUser?.email || currentUser?.username}</Text>
-    </Space>
-  )
-}
-
-// Выносим DropdownRender на верхний уровень
-const DropdownRender = ({
+const ModalContent = ({
   onLogout,
-  currentUser,
+  onClose,
 }: {
-  onLogout: (e: React.MouseEvent) => void
+  onLogout: () => void
   currentUser: UserProps
+  onClose: () => void
 }) => {
   const t = useTranslations('CurrentUser')
 
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.2 } },
+    exit: { opacity: 0, transition: { duration: 0.15 } },
+  }
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 30 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.25, ease: 'easeOut' },
+    },
+    exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2 } },
+  }
+
+  const {
+    data,
+    isLoading,
+    refetch,
+  }: {
+    data: any
+    isLoading: boolean
+    refetch: () => void
+  } = useFetchExtraAction({
+    extraUrl: MODEL.actualForUserUrl(),
+    qKey: 'CharacterActualForUser',
+  })
+
+  const isEmpty = !data?.data && !isLoading
+
   return (
-    <Card>
-      <Space direction='vertical' size='large'>
-        <UserName currentUser={currentUser} />
-        <Button
-          type='primary'
-          icon={<LogoutOutlined />}
-          onClick={(e) => {
-            e.stopPropagation()
-            onLogout(e)
-          }}
+    <AnimatePresence>
+      <motion.div
+        variants={backdropVariants}
+        initial='hidden'
+        animate='visible'
+        exit='exit'
+        onClick={onClose}
+        className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-4 backdrop-blur-sm'
+      >
+        <motion.div
+          variants={modalVariants}
+          initial='hidden'
+          animate='visible'
+          exit='exit'
+          onClick={(e) => e.stopPropagation()}
+          className='relative flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-indigo-500/20 bg-slate-900/90 shadow-2xl backdrop-blur-xl'
         >
-          {t('logout')}
-        </Button>
-      </Space>
-    </Card>
+          {/* Кнопка закрытия */}
+          <motion.button
+            onClick={onClose}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className='absolute top-3 right-3 z-10 p-1.5 text-gray-400 transition-colors hover:text-cyan-400'
+          >
+            <X size={18} />
+          </motion.button>
+
+          {/* Состояния загрузки */}
+          {isLoading || isEmpty ? (
+            <div className='flex flex-col items-center justify-center py-10'>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, rotate: 360 }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.2,
+                  ease: 'linear',
+                }}
+              >
+                <Loader2 size={36} className='text-cyan-400' />
+              </motion.div>
+              <p className='mt-4 text-sm text-gray-400'>{t('loading')}</p>
+            </div>
+          ) : (
+            <div className='flex h-full flex-col overflow-hidden'>
+              {/* Прокручиваемая область */}
+              <div className='flex-1 overflow-y-auto p-6'>
+                <div className='flex flex-col items-center gap-6'>
+                  <ProfilePhoto
+                    characterId={data?.data?.id}
+                    username={
+                      data?.data?.user?.full_name || data?.data?.user?.username
+                    }
+                    avatar={data?.data?.avatar}
+                    editable
+                    onSuccess={refetch}
+                  />
+                  <ProfileRank
+                    characterId={data?.data?.id}
+                    userName={
+                      data?.data?.user?.full_name || data?.data?.user?.username
+                    }
+                    userAvatar={data?.data?.avatar}
+                    rank={data?.data?.character_rank?.rank || null}
+                    nextRank={data?.data?.character_rank?.next_rank || null}
+                    currency={data?.data?.currency}
+                    gameWorld={data?.data?.game_world}
+                    email={data?.data?.user?.email || null}
+                    showProgress
+                    currentExperience={data?.data?.character_rank?.experience}
+                    onUpdateAvatarSuccess={refetch}
+                  />
+
+                  {/* Artifacts с прокруткой */}
+                  <div className='max-h-64 w-full rounded-lg border border-indigo-500/20 bg-slate-800/50 p-4'>
+                    <Artifacts />
+                  </div>
+                </div>
+              </div>
+
+              {/* Кнопка logout (фиксирована внизу) */}
+              <div className='flex-shrink-0 border-t border-indigo-500/20 bg-slate-900/90 p-6'>
+                <motion.button
+                  onClick={() => {
+                    onClose()
+                    onLogout()
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className='flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 px-4 py-2 font-medium text-white transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/50'
+                >
+                  <LogOut size={16} />
+                  {t('logout')}
+                </motion.button>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 
 export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const { mutate: logout }: any = useLogout()
+  const { mutate: logout } = useLogout() as any
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+    setIsMounted(true)
+  }, [])
 
   const handleLogout = useCallback(() => {
     logout(
@@ -73,41 +186,46 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
     )
   }, [logout])
 
-  // Мемоизируем dropdown render с правильными зависимостями
-  const dropdownRender = useCallback(
-    () => (
-      <>
-        <DropdownRender onLogout={handleLogout} currentUser={currentUser} />
-      </>
-    ),
-    [handleLogout, currentUser],
-  )
+  // Закрытие по ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const modalRoot =
+    typeof document !== 'undefined'
+      ? document.getElementById('modal-root')
+      : null
 
   return (
-    <Row>
-      <Col xs={24}>
-        <Dropdown
-          placement='bottom'
-          trigger={['click']}
-          popupRender={dropdownRender}
-        >
-          <Space
-            className={styles.spaceRow}
-            direction='horizontal'
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Button
-              type='text'
-              size='large'
-              icon={<UserOutlined />}
-              style={{
-                fontSize: 16,
-              }}
-            />
-          </Space>
-        </Dropdown>
-      </Col>
-    </Row>
+    <>
+      <motion.button
+        onClick={() => setIsOpen(true)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className='rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10'
+        aria-label='User profile'
+      >
+        <User size={24} />
+      </motion.button>
+
+      {isMounted &&
+        modalRoot &&
+        isOpen &&
+        createPortal(
+          <ModalContent
+            onLogout={handleLogout}
+            currentUser={currentUser}
+            onClose={() => setIsOpen(false)}
+          />,
+          modalRoot,
+        )}
+    </>
   )
 }
 

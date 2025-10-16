@@ -1,4 +1,276 @@
-@layer theme, base, clerk, components, utilities; /* Ensure Clerk is compatible with Tailwind CSS v4 */
-
 @import 'tailwindcss';
-/*@import 'antd/dist/reset.css'; !* Import Ant Design reset styles *!*/
+
+/* CSS переменные для темизации */
+:root {
+  --bg-cosmic: #0a0e27;
+  --bg-surface: #1e293b;
+  --border-color: #2d3748;
+
+  --neon-purple: #6366f1;
+  --neon-cyan: #00d9ff;
+  --neon-pink: #ec4899;
+  --neon-green: #00ff88;
+  --neon-blue: #0099ff;
+
+  /* Добавленные синие цвета */
+  --blue: #00aeef;
+  --dark-blue: #005dac;
+  --light-blue: #6acff6;
+  --deep-dark-blue: #283a97;
+}
+
+/* Базовые стили */
+* {
+  @apply antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-white overflow-x-hidden;
+  background: linear-gradient(135deg, var(--deep-dark-blue) 0%, var(--dark-blue) 50%, var(--bg-cosmic) 100%);
+  background-attachment: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+}
+
+/* Анимированный фон со звёздами */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.cosmic-bg {
+  @apply fixed inset-0 -z-10;
+  background: linear-gradient(135deg, var(--deep-dark-blue) 0%, var(--dark-blue) 50%, var(--bg-cosmic) 100%);
+}
+
+.cosmic-bg::before {
+  content: '';
+  @apply absolute inset-0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, var(--light-blue), rgba(106, 207, 246, 0)),
+    radial-gradient(2px 2px at 60% 70%, white, rgba(255, 255, 255, 0)),
+    radial-gradient(1px 1px at 50% 50%, var(--blue), rgba(0, 174, 239, 0)),
+    radial-gradient(1px 1px at 80% 10%, white, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 90% 60%, var(--light-blue), rgba(106, 207, 246, 0)),
+    radial-gradient(1px 1px at 30% 80%, var(--blue), rgba(0, 174, 239, 0)),
+    radial-gradient(1px 1px at 40% 40%, white, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 70% 20%, var(--light-blue), rgba(106, 207, 246, 0));
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  opacity: 0.5;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Неоновый текст */
+.neon-text {
+  @apply font-bold text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, var(--blue), var(--neon-pink), var(--neon-purple));
+  animation: shimmer 3s ease-in-out infinite;
+  background-size: 200% 200%;
+}
+
+.neon-text-blue {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, var(--blue), var(--light-blue));
+  text-shadow: 0 0 20px rgba(0, 174, 239, 0.5);
+}
+
+.neon-text-dark-blue {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, var(--dark-blue), var(--blue));
+  text-shadow: 0 0 20px rgba(0, 93, 172, 0.5);
+}
+
+.neon-text-purple {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, #6366f1, #a78bfa);
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.neon-text-cyan {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, var(--blue), var(--light-blue));
+  text-shadow: 0 0 20px rgba(0, 174, 239, 0.5);
+}
+
+.neon-text-pink {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(90deg, #ec4899, #f472b6);
+  text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+}
+
+/* Glassmorphism кнопки и карточки */
+.glass-button {
+  @apply px-6 py-3 rounded-lg backdrop-blur-xl;
+  background-color: rgba(0, 174, 239, 0.1);
+  border: 1px solid rgba(0, 174, 239, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-button:hover {
+  background-color: rgba(0, 174, 239, 0.2);
+  border-color: rgba(0, 174, 239, 0.6);
+  box-shadow:
+    0 0 20px rgba(0, 174, 239, 0.5),
+    0 0 40px rgba(0, 174, 239, 0.3);
+}
+
+.glass-card {
+  @apply backdrop-blur-xl rounded-xl p-6;
+  background-color: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(0, 174, 239, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 174, 239, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 174, 239, 0.2);
+}
+
+.glass-dark {
+  @apply backdrop-blur-xl rounded-2xl;
+  background-color: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(0, 174, 239, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Ссылки и интерактивные элементы */
+a {
+  @apply transition-colors duration-300;
+  color: var(--blue);
+}
+
+a:hover {
+  color: var(--light-blue);
+  text-shadow: 0 0 10px rgba(0, 174, 239, 0.5);
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 39, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--blue), var(--dark-blue));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--light-blue), var(--blue));
+  box-shadow: 0 0 10px rgba(0, 174, 239, 0.5);
+}
+
+/* Firefox скроллбар */
+* {
+  scrollbar-color: rgba(0, 174, 239, 0.5) rgba(10, 14, 39, 0.5);
+  scrollbar-width: thin;
+}
+
+/* Фокус для аксессибельности */
+:focus-visible {
+  @apply outline-none ring-2 ring-offset-2;
+  ring-color: var(--blue);
+  ring-offset-color: rgba(0, 174, 239, 0.1);
+}
+
+/* Input стили */
+input,
+textarea,
+select {
+  @apply text-white rounded-lg;
+  background-color: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(0, 174, 239, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  background-color: rgba(15, 23, 42, 0.8);
+  border-color: rgba(0, 174, 239, 0.8);
+  box-shadow: 0 0 20px rgba(0, 174, 239, 0.3);
+}
+
+/* Placeholder стили */
+::placeholder {
+  @apply text-gray-500;
+  opacity: 0.7;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(0, 174, 239, 0.4);
+  color: white;
+}
+
+/* Shimmer анимация */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Дополнительные классы для новых цветов */
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.bg-dark-blue {
+  background-color: var(--dark-blue);
+}
+
+.bg-light-blue {
+  background-color: var(--light-blue);
+}
+
+.bg-deep-dark-blue {
+  background-color: var(--deep-dark-blue);
+}
+
+.text-blue {
+  color: var(--blue);
+}
+
+.text-dark-blue {
+  color: var(--dark-blue);
+}
+
+.text-light-blue {
+  color: var(--light-blue);
+}
+
+.text-deep-dark-blue {
+  color: var(--deep-dark-blue);
+}
+
+.border-blue {
+  border-color: var(--blue);
+}
+
+.border-dark-blue {
+  border-color: var(--dark-blue);
+}
+
+.border-light-blue {
+  border-color: var(--light-blue);
+}
+
+.border-deep-dark-blue {
+  border-color: var(--deep-dark-blue);
+}

@@ -1,151 +1,216 @@
 'use client'
 
-import { SettingOutlined } from '@ant-design/icons'
-import { Button, Divider, Drawer, Grid, Space, Typography } from 'antd'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Settings, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
-import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 
-const { Title, Text } = Typography
-const { useBreakpoint } = Grid
-
-type AppSettingsProps = {
-  placement?: 'left' | 'right' | 'top' | 'bottom'
-  size?: 'small' | 'middle' | 'large'
-  buttonVariant?: 'default' | 'text' | 'icon-only'
-}
-
-export const AppSettings = ({
-  placement = 'right',
-  size = 'middle',
-  buttonVariant = 'icon-only',
-}: AppSettingsProps = {}) => {
-  const [open, setOpen] = useState(false)
-  const t = useTranslations('AppSettings')
-  const screens = useBreakpoint()
-
-  const isMobile = screens.xs && !screens.sm
-  const drawerWidth = isMobile ? '100%' : 400
-
-  const showDrawer = () => {
-    setOpen(true)
+const ModalContent = ({
+  isOpen,
+  onClose,
+  t,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  t: (key: string) => string
+}) => {
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.2 } },
+    exit: { opacity: 0, transition: { duration: 0.15 } },
   }
 
-  const onClose = () => {
-    setOpen(false)
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.25, ease: 'easeOut' },
+    },
+    exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2 } },
   }
 
-  const renderTriggerButton = () => {
-    if (buttonVariant === 'icon-only') {
-      return (
-        <Button
-          type='text'
-          size={size}
-          icon={<SettingOutlined />}
-          onClick={showDrawer}
-          aria-label={t('aria_label')}
-        />
-      )
-    }
-
-    if (buttonVariant === 'text') {
-      return (
-        <Button
-          type='text'
-          size={size}
-          icon={<SettingOutlined />}
-          onClick={showDrawer}
-        >
-          {t('settings')}
-        </Button>
-      )
-    }
-
-    return (
-      <Button size={size} icon={<SettingOutlined />} onClick={showDrawer}>
-        {t('settings')}
-      </Button>
-    )
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1, duration: 0.3 },
+    }),
   }
 
   return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={backdropVariants}
+          initial='hidden'
+          animate='visible'
+          exit='exit'
+          onClick={onClose}
+          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-4 backdrop-blur-sm'
+        >
+          <motion.div
+            variants={modalVariants}
+            initial='hidden'
+            animate='visible'
+            exit='exit'
+            onClick={(e) => e.stopPropagation()}
+            className='relative w-full max-w-md rounded-2xl border border-indigo-500/20 bg-slate-900/90 p-6 shadow-2xl backdrop-blur-xl'
+          >
+            {/* Кнопка закрытия */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onClose}
+              className='absolute top-4 right-4 p-1.5 text-gray-400 transition-colors duration-200 hover:text-cyan-400'
+            >
+              <X size={20} />
+            </motion.button>
+
+            {/* Заголовок */}
+            <div className='mb-6 flex items-center gap-3'>
+              <div className='rounded-lg bg-indigo-500/20 p-2'>
+                <Settings size={24} className='text-cyan-400' />
+              </div>
+              <h2 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-xl font-bold text-transparent'>
+                {t('settings')}
+              </h2>
+            </div>
+
+            {/* Контент */}
+            <div className='flex flex-col gap-6'>
+              {/* Секция темы */}
+              <motion.div
+                custom={0}
+                variants={sectionVariants}
+                initial='hidden'
+                animate='visible'
+              >
+                <div className='space-y-3'>
+                  <div>
+                    <h3 className='mb-1 text-sm font-semibold text-gray-200'>
+                      {t('appearance.title')}
+                    </h3>
+                    <p className='text-xs text-gray-400'>
+                      {t('appearance.description')}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className='h-px origin-left bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent'
+              />
+
+              {/* Секция языка */}
+              <motion.div
+                custom={1}
+                variants={sectionVariants}
+                initial='hidden'
+                animate='visible'
+              >
+                <div className='space-y-3'>
+                  <div>
+                    <h3 className='mb-1 text-sm font-semibold text-gray-200'>
+                      {t('language.title')}
+                    </h3>
+                    <p className='text-xs text-gray-400'>
+                      {t('language.description')}
+                    </p>
+                  </div>
+                  <div className='flex justify-center'>
+                    <LocaleSwitcher variant='default' size='middle' />
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.15, duration: 0.3 }}
+                className='h-px origin-left bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent'
+              />
+
+              {/* Прочие настройки */}
+              <motion.div
+                custom={2}
+                variants={sectionVariants}
+                initial='hidden'
+                animate='visible'
+              >
+                <div className='space-y-2'>
+                  <h3 className='text-sm font-semibold text-gray-200'>
+                    {t('other.title')}
+                  </h3>
+                  <p className='text-xs text-gray-400'>
+                    {t('other.more_settings_coming')}
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+export const AppSettings = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const t = useTranslations('AppSettings')
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+    setIsMounted(true)
+  }, [])
+
+  // Закрытие по ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const modalRoot
+    = typeof document !== 'undefined'
+      ? document.getElementById('modal-root')
+      : null
+
+  return (
     <>
-      {renderTriggerButton()}
-
-      <Drawer
-        title={
-          <Space>
-            <SettingOutlined />
-            <span>{t('settings')}</span>
-          </Space>
-        }
-        placement={isMobile ? 'bottom' : placement}
-        width={drawerWidth}
-        height={isMobile ? '50%' : undefined}
-        onClose={onClose}
-        open={open}
-        destroyOnHidden
-        styles={{
-          body: {
-            padding: '24px',
-          },
-        }}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsOpen(true)}
+        className='cursor-pointer rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10 focus:outline-none'
+        aria-label={t('aria_label')}
       >
-        <Space direction='vertical' size='large' style={{ width: '100%' }}>
-          {/* Секция темы */}
-          <div>
-            <Title level={5} style={{ margin: 0, marginBottom: '12px' }}>
-              {t('appearance.title')}
-            </Title>
-            <Text
-              type='secondary'
-              style={{
-                fontSize: '14px',
-                display: 'block',
-                marginBottom: '16px',
-              }}
-            >
-              {t('appearance.description')}
-            </Text>
-            <ThemeSwitcher variant='default' size='large' />
-          </div>
+        <Settings size={24} />
+      </motion.button>
 
-          <Divider style={{ margin: '16px 0' }} />
-
-          {/* Секция языка */}
-          <div>
-            <Title level={5} style={{ margin: 0, marginBottom: '12px' }}>
-              {t('language.title')}
-            </Title>
-            <Text
-              type='secondary'
-              style={{
-                fontSize: '14px',
-                display: 'block',
-                marginBottom: '16px',
-              }}
-            >
-              {t('language.description')}
-            </Text>
-            <LocaleSwitcher variant='default' size='large' />
-          </div>
-
-          {/* Дополнительные настройки */}
-          <Divider style={{ margin: '16px 0' }} />
-
-          <div>
-            <Title level={5} style={{ margin: 0, marginBottom: '12px' }}>
-              {t('other.title')}
-            </Title>
-            <Space direction='vertical' size='middle' style={{ width: '100%' }}>
-              <Text type='secondary' style={{ fontSize: '14px' }}>
-                {t('other.more_settings_coming')}
-              </Text>
-            </Space>
-          </div>
-        </Space>
-      </Drawer>
+      {/* Модалка через Portal */}
+      {isMounted
+        && modalRoot
+        && createPortal(
+          <ModalContent
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            t={t}
+          />,
+          modalRoot,
+        )}
     </>
   )
 }

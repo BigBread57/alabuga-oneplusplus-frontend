@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Layout } from 'antd'
 import { hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
@@ -46,17 +45,5 @@ export default async function RootLayout(props: {
 
   setRequestLocale(locale)
 
-  return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '16px',
-      }}
-    >
-      {props.children}
-    </Layout>
-  )
+  return props.children
 }

@@ -1,19 +1,18 @@
 'use client'
 
-import type { MenuProps } from 'antd'
 import type { FCC } from 'src/types'
-import { MenuOutlined } from '@ant-design/icons'
-import { Button, Drawer, Menu } from 'antd'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Links } from '@/components/_base/ResponsiveHeader/Links'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 
-// Определяем навигационные элементы с маршрутами
 const navigationItems = [
   Links.PROFILE,
   Links.JOURNAL,
@@ -23,6 +22,108 @@ const navigationItems = [
   Links.ADMIN,
 ]
 
+const MobileModal = ({
+  isOpen,
+  onClose,
+  filteredItems,
+  locale,
+  isActive,
+  t,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  filteredItems: typeof navigationItems
+  locale: string
+  isActive: (href: string) => boolean
+  t: (key: string) => string
+}) => {
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.05 },
+    }),
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            className='fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+
+          {/* Модалка */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+            className='fixed inset-0 z-[9999] flex items-center justify-center p-4'
+            onClick={onClose}
+          >
+            <motion.div
+              onClick={(e) => e.stopPropagation()}
+              className='w-full max-w-md rounded-2xl border border-indigo-500/30 bg-slate-900/90 p-6 shadow-2xl backdrop-blur-2xl'
+            >
+              {/* Header */}
+              <div className='mb-4 flex items-center justify-between'>
+                <h2 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-lg font-bold text-transparent'>
+                  {t('navigation')}
+                </h2>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={onClose}
+                  className='rounded-lg p-1 transition-colors hover:bg-indigo-500/10'
+                >
+                  <X size={20} className='text-cyan-400' />
+                </motion.button>
+              </div>
+
+              {/* Меню */}
+              <div className='grid grid-cols-2 gap-3'>
+                {filteredItems.map((item, i) => (
+                  <motion.div
+                    key={item.href}
+                    custom={i}
+                    variants={itemVariants}
+                    initial='hidden'
+                    animate='visible'
+                  >
+                    <Link
+                      href={`/${locale}${item.href}`}
+                      onClick={onClose}
+                      className={`flex flex-col items-center justify-center rounded-xl p-4 text-center transition-all duration-200 ${
+                        isActive(item.href)
+                          ? 'border border-cyan-400/50 bg-indigo-500/20 text-cyan-400'
+                          : 'border border-transparent text-gray-300 hover:bg-indigo-500/10 hover:text-cyan-400'
+                      }`}
+                    >
+                      <span className='mb-2 text-2xl'>
+                        {React.createElement(item.icon)}
+                      </span>
+                      <span className='text-xs font-medium uppercase'>
+                        {t(item.labelKey as any)}
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
 const MenuLinks: FCC = () => {
   const { currentUser } = useContext(CurrentUserContext)
   const pathname = usePathname()
@@ -30,153 +131,128 @@ const MenuLinks: FCC = () => {
   const locale = params.locale as string
   const t = useTranslations('MenuLinks')
   const { isMobile, isTablet } = useScreens()
-  const {
-    menuButtonRef,
-    profileRef,
-    journalRef,
-    shopRef,
-    rankRef,
-    newsRef,
-    adminRef,
-    isDrawerOpen,
-    setIsDrawerOpen,
-  } = useTour()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+    setIsMounted(true)
+  }, [])
+
+  // Закрытие по ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const { menuButtonRef } = useTour()
   const isCompact = isMobile || isTablet
 
-  const handleDrawerToggle = () => {
-    setIsDrawerOpen(!isDrawerOpen)
-  }
+  const handleModalClose = () => setIsModalOpen(false)
 
-  const handleDrawerClose = () => {
-    setIsDrawerOpen(false)
-  }
-
-  // Функция для получения рефа по ключу
-  const getMenuItemRef = (href: string): React.RefObject<HTMLAnchorElement> => {
-    switch (href) {
-      case Links.PROFILE.href:
-        return profileRef
-      case Links.JOURNAL.href:
-        return journalRef
-      case Links.SHOP.href:
-        return shopRef
-      case Links.RANK.href:
-        return rankRef
-      case Links.NEWS.href:
-        return newsRef
-      case Links.ADMIN.href:
-        return adminRef
-      default:
-        return { current: null }
+  const filteredItems = navigationItems.filter((link) => {
+    if (!link.roles) {
+      return true
     }
+    return link.roles?.includes(currentUser?.active_character_role)
+  })
+
+  const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/home'
+  const isActive = (href: string) => pathWithoutLocale === href
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.05 },
+    }),
   }
 
-  const createMenuItems = (isVertical = false): MenuProps['items'] =>
-    navigationItems
-      ?.filter((link) => {
-        if (!link.roles) {
-          return true
-        }
-        return (
-          link.roles
-          && link?.roles?.includes(currentUser?.active_character_role)
-        )
-      })
-      .map((item) => {
-        const itemRef = getMenuItemRef(item.href)
+  const modalRoot
+    = typeof document !== 'undefined'
+      ? document.getElementById('modal-root')
+      : null
 
-        const labelContent = isVertical
-          ? (
-              <Link
-                href={`/${locale}${item.href}`}
-                onClick={handleDrawerClose}
-                ref={itemRef}
-              >
-                {t(item.labelKey as any).toUpperCase()}
-              </Link>
-            )
-          : (
-              <Link href={`/${locale}${item.href}`} ref={itemRef}>
-                <Button
-                  size={isTablet ? 'middle' : 'large'}
-                  type='text'
-                  icon={React.createElement(item.icon)}
-                >
-                  {t(item.labelKey as any).toUpperCase()}
-                </Button>
-              </Link>
-            )
-
-        return {
-          key: item.href,
-          icon: isCompact && React.createElement(item.icon),
-          label: labelContent,
-        }
-      })
-
-  // Определяем активный ключ на основе текущего пути
-  const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/home'
-  const selectedKeys = [pathWithoutLocale]
-
-  // Мобильная версия с бургер-меню
+  // --- Мобильная версия с модалкой ---
   if (isCompact) {
     return (
       <>
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            justifyContent: 'flex-end',
-            minWidth: 0,
-            background: 'transparent',
-            border: 'none',
-          }}
+        {/* Кнопка меню */}
+        <motion.button
+          ref={menuButtonRef as any}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className='cursor-pointer rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10 md:hidden'
+          aria-label={t('open_menu')}
+          onClick={() => setIsModalOpen(!isModalOpen)}
         >
-          <Button
-            ref={menuButtonRef}
-            type='text'
-            icon={<MenuOutlined />}
-            onClick={handleDrawerToggle}
-            size='large'
-            aria-label={t('open_menu')}
-          />
+          {isModalOpen ? <X size={24} /> : <Menu size={24} />}
+        </motion.button>
 
-          <Drawer
-            title={t('navigation')}
-            placement='left'
-            onClose={handleDrawerClose}
-            open={isDrawerOpen}
-            width={isMobile ? '90%' : 300}
-          >
-            <Menu
-              mode='vertical'
-              selectedKeys={selectedKeys}
-              items={createMenuItems(true)}
-              style={{
-                border: 'none',
-                background: 'transparent',
-              }}
-            />
-          </Drawer>
-        </div>
+        {/* Модалка через Portal */}
+        {isMounted
+          && modalRoot
+          && createPortal(
+            <MobileModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              filteredItems={filteredItems}
+              locale={locale}
+              isActive={isActive}
+              t={t}
+            />,
+            modalRoot,
+          )}
       </>
     )
   }
 
-  // Десктопная версия
+  // --- Десктопная версия ---
   return (
-    <Menu
-      mode='horizontal'
-      selectedKeys={selectedKeys}
-      items={createMenuItems(false)}
-      style={{
-        flex: 1,
-        minWidth: 0,
-        background: 'transparent',
-        border: 'none',
-      }}
-    />
+    <motion.nav
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.1 }}
+      className='hidden items-center gap-2 md:flex'
+    >
+      {filteredItems.map((item, i) => (
+        <motion.div
+          key={item.href}
+          custom={i}
+          variants={itemVariants}
+          initial='hidden'
+          animate='visible'
+        >
+          <Link
+            href={`/${locale}${item.href}`}
+            className={`group relative flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-200 ${
+              isActive(item.href)
+                ? 'text-cyan-400'
+                : 'text-gray-300 hover:text-cyan-400'
+            }`}
+          >
+            <span className='flex-shrink-0 text-lg'>
+              {React.createElement(item.icon)}
+            </span>
+            <span className='hidden text-sm font-medium uppercase lg:inline'>
+              {t(item.labelKey as any)}
+            </span>
+            <motion.div
+              layoutId={isActive(item.href) ? 'activeLink' : undefined}
+              className='absolute right-4 bottom-0 left-4 h-0.5 bg-gradient-to-r from-cyan-400 to-indigo-400'
+              initial={false}
+              animate={isActive(item.href) ? { opacity: 1 } : { opacity: 0 }}
+            />
+          </Link>
+        </motion.div>
+      ))}
+    </motion.nav>
   )
 }
 
