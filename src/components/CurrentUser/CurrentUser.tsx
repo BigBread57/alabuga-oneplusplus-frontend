@@ -44,7 +44,7 @@ const ModalContent = ({
       transition: { duration: 0.25, ease: 'easeOut' },
     },
     exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2 } },
-  }
+  } as const
 
   const {
     data,

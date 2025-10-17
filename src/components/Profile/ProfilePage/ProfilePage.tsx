@@ -4,8 +4,8 @@ import type { FCC } from 'src/types'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { CharacterActivityChanger } from '@/components/Character/CharacterActivityChanger'
+import { CharacterActivityChangerMobile } from '@/components/Character/CharacterActivityChangerMobile'
 import { useScreens } from '@/hooks/useScreens'
-import CharacterActivityChangerMobile from '../../Character/CharacterActivityChangerMobile/CharacterActivityChangerMobile'
 
 const ProfilePage: FCC = () => {
   const containerVariants = {

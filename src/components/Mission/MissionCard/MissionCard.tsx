@@ -1,14 +1,12 @@
 'use client'
 import type { CharacterMissionProps } from '@/models/CharacterMission'
-import { EyeOutlined } from '@ant-design/icons'
-import { Button, Card, Space, Tag, Typography } from 'antd'
+import { motion } from 'framer-motion'
+import { Eye } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
 import { CharacterMissionDrawer } from '@/components/Character/CharacterMissionDrawer'
 import { useUrlDrawer } from '@/hooks/useUrlDrawer'
-
-const { Text, Title, Paragraph } = Typography
 
 interface MissionCardProps {
   data: CharacterMissionProps
@@ -22,22 +20,43 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
     itemId: data?.id,
   })
 
-  const getStatusColor = () => {
+  const getStatusStyles = () => {
     switch (data?.status) {
       case 'IN_PROGRESS':
-        return 'blue'
+        return {
+          tag: 'bg-blue-500/20 text-blue-300',
+          accent: 'from-blue-500/5 to-transparent',
+        }
       case 'COMPLETED':
-        return 'green'
+        return {
+          tag: 'bg-green-500/20 text-green-300',
+          accent: 'from-green-500/5 to-transparent',
+        }
       case 'NEED_IMPROVEMENT':
-        return 'orange'
+        return {
+          tag: 'bg-orange-500/20 text-orange-300',
+          accent: 'from-orange-500/5 to-transparent',
+        }
       case 'PENDING_REVIEW':
-        return 'purple'
+        return {
+          tag: 'bg-purple-500/20 text-purple-300',
+          accent: 'from-purple-500/5 to-transparent',
+        }
       case 'FAILED':
-        return 'red'
+        return {
+          tag: 'bg-red-500/20 text-red-300',
+          accent: 'from-red-500/5 to-transparent',
+        }
       default:
-        return 'default'
+        return {
+          tag: 'bg-indigo-500/20 text-indigo-300',
+          accent: 'from-indigo-500/5 to-transparent',
+        }
     }
   }
+
+  const statusStyles = getStatusStyles()
+
   const handleComplete = () => {
     handleCloseDrawer()
     onComplete?.()
@@ -45,60 +64,100 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
 
   return (
     <>
-      {/* Основная карточка */}
-      <Card hoverable onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
+      <motion.div
+        whileHover={{ x: 4 }}
+        transition={{ duration: 0.2 }}
+        onClick={handleOpenDrawer}
+        className='group cursor-pointer'
+      >
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-          }}
+          className={`rounded-xl bg-gradient-to-r px-6 py-4 md:px-8 ${statusStyles.accent} backdrop-blur-xs transition-all duration-300 hover:backdrop-blur-sm`}
         >
-          <div style={{ flex: 1 }}>
-            <Title level={5} style={{ color: data?.mission?.branch?.color }}>
-              {data?.mission?.name}
-            </Title>
-            <Paragraph ellipsis={{ rows: 2 }}>
-              {data?.mission?.description}
-            </Paragraph>
-            <Space wrap size='small' style={{ marginBottom: 8 }}>
-              <Tag color={getStatusColor()}>{data?.status_display_name}</Tag>
-              {data?.mission?.is_key_mission && (
-                <Tag color='gold'>{t('key_mission')}</Tag>
-              )}
-              <Tag color='blue'>
-                <>
-                  {t('level')} {data?.mission?.level}
-                </>
-              </Tag>
-            </Space>
-            <Space direction='vertical' size={4}>
-              <Text type='secondary' style={{ fontSize: '12px' }}>
-                <DateTimeCalendar
-                  text={t('start')}
-                  datetime={data?.start_datetime as string}
-                />
-              </Text>
-              <Text type='secondary' style={{ fontSize: '12px' }}>
-                <DateTimeCalendar
-                  text={t('end')}
-                  datetime={data?.end_datetime as string}
-                />
-              </Text>
-            </Space>
+          <div className='flex items-end justify-between gap-4'>
+            <div className='min-w-0 flex-1'>
+              {/* Название ветки и описание */}
+              <div className='mb-2'>
+                <div className='mb-2 flex items-center gap-2'>
+                  <div
+                    className='h-2 w-2 flex-shrink-0 rounded-full'
+                    style={{
+                      backgroundColor:
+                        data?.mission?.branch?.color || '#818cf8',
+                    }}
+                  ></div>
+                  <span
+                    className='text-xs font-medium'
+                    style={{
+                      color: data?.mission?.branch?.color || '#818cf8',
+                    }}
+                  >
+                    {data?.mission?.branch?.name}
+                  </span>
+                </div>
+                <h3
+                  className='mb-1 truncate text-base font-bold text-white'
+                  style={{ color: data?.mission?.branch?.color || 'white' }}
+                >
+                  {data?.mission?.name}
+                </h3>
+                <p className='line-clamp-2 text-sm text-gray-400'>
+                  {data?.mission?.description}
+                </p>
+              </div>
+
+              {/* Статусы и категория */}
+              <div className='mb-3 flex flex-wrap gap-2'>
+                <span
+                  className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${statusStyles.tag}`}
+                >
+                  {data?.status_display_name}
+                </span>
+                {data?.mission?.is_key_mission && (
+                  <span className='inline-flex rounded-full bg-yellow-500/20 px-2 py-1 text-xs font-semibold text-yellow-300'>
+                    {t('key_mission')}
+                  </span>
+                )}
+                <span className='inline-flex rounded-full bg-blue-500/20 px-2 py-1 text-xs font-semibold text-blue-300'>
+                  {t('level')} <>{data?.mission?.level}</>
+                </span>
+              </div>
+
+              {/* Временные данные */}
+              <div className='flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:gap-6'>
+                <div className='flex items-center gap-2'>
+                  <div className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'></div>
+                  <DateTimeCalendar
+                    text={t('start')}
+                    datetime={data?.start_datetime as string}
+                  />
+                </div>
+                <div className='flex items-center gap-2'>
+                  <div className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'></div>
+                  <DateTimeCalendar
+                    text={t('end')}
+                    datetime={data?.end_datetime as string}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Кнопка просмотра */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleOpenDrawer()
+              }}
+              className='hidden flex-shrink-0 rounded-lg bg-indigo-500/20 p-2 text-indigo-400 transition-colors hover:bg-indigo-500/30'
+              aria-label={t('view_details')}
+            >
+              <Eye size={18} />
+            </motion.button>
           </div>
-          <Button
-            type='text'
-            icon={<EyeOutlined />}
-            size='small'
-            onClick={(e) => {
-              e.stopPropagation()
-              handleOpenDrawer()
-            }}
-            aria-label={t('view_details')}
-          />
         </div>
-      </Card>
+      </motion.div>
+
       {/* Дровер с детальной информацией */}
       <CharacterMissionDrawer
         itemId={+data?.id}

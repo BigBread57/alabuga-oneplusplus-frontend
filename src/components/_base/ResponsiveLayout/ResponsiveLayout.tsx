@@ -6,10 +6,13 @@ import NET from 'vanta/dist/vanta.net.min.js'
 import { useScreens } from '@/hooks/useScreens'
 
 type ResponsiveLayoutProps = {
-  prop?: any
+  className?: string
 }
 
-const ResponsiveLayout: FCC<ResponsiveLayoutProps> = ({ children }) => {
+const ResponsiveLayout: FCC<ResponsiveLayoutProps> = ({
+  children,
+  className,
+}) => {
   const { isMobile, isTablet } = useScreens()
   const vantaRef = useRef<HTMLDivElement>(null)
 
@@ -51,17 +54,9 @@ const ResponsiveLayout: FCC<ResponsiveLayoutProps> = ({ children }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className={`relative min-h-screen ${containerPadding}`}
+      className={`relative min-h-screen ${containerPadding} ${className || ''}`}
     >
-      {/* Контент */}
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className='relative z-10'
-      >
-        {children}
-      </motion.div>
+      {children}
     </motion.div>
   )
 }

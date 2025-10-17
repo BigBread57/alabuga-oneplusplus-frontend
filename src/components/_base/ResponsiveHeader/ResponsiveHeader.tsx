@@ -4,9 +4,9 @@ import { motion } from 'framer-motion'
 import React, { useContext } from 'react'
 import { AppSettings } from '@/components/_base/AppSettings/AppSettings'
 import { MenuLinks } from '@/components/_base/MenuLinks'
+import { CurrentUser } from '@/components/CurrentUser'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useScreens } from '@/hooks/useScreens'
-import CurrentUser from '../../CurrentUser/CurrentUser'
 
 type ResponsiveHeaderProps = {
   title?: string | React.ReactNode
@@ -53,11 +53,11 @@ export const ResponsiveHeader = ({
       {/* Основной хедер */}
       <div className='border-b border-indigo-500/10 bg-slate-900/0 shadow-none backdrop-blur-xl transition-shadow duration-300 hover:shadow-lg'>
         {/* Контейнер */}
-        <div className='mx-auto max-w-full px-4 py-4 md:px-6 lg:px-8'>
+        <div className='mx-auto max-w-full px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8'>
           {/* Flex контейнер */}
-          <div className='flex items-center justify-between gap-4'>
+          <div className='flex items-center justify-between gap-2 sm:gap-4'>
             {/* Левая часть - Заголовок и меню */}
-            <div className='flex min-w-0 flex-1 items-center gap-4'>
+            <div className='flex min-w-0 flex-1 items-center gap-2 sm:gap-4'>
               {/* Логотип/Заголовок */}
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
@@ -86,7 +86,7 @@ export const ResponsiveHeader = ({
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className='flex flex-shrink-0 items-center gap-2 md:gap-4'
+              className='flex flex-shrink-0 items-center gap-1 sm:gap-2 md:gap-4'
             >
               {/* Индивидуальные переключатели на десктопе */}
               {showIndividualSwitchers && !isMobile && !isTablet && (

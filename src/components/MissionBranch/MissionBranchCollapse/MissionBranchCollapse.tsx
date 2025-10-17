@@ -1,15 +1,14 @@
 'use client'
 import type { CharacterMissionBranchProps } from '@/models/CharacterMissionBranch'
-import { Collapse, Space, Spin, Tag, Typography } from 'antd'
-import React from 'react'
+
+import { motion } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
+import React, { useState } from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { MissionCard } from '@/components/Mission/MissionCard'
 import { useFilter } from '@/hooks/useFilter'
 import { CharacterMission } from '@/models/CharacterMission'
-import { useTheme } from '@/providers/ThemeProvider'
 import { useFetchItems } from '@/services/base/hooks'
-
-const { Text } = Typography
 
 interface MissionBranchCollapseProps {
   data: CharacterMissionBranchProps
@@ -19,18 +18,30 @@ interface MissionBranchCollapseProps {
 
 const MODEL_MISSIONS = CharacterMission
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+}
+
 const MissionBranchCollapse: React.FC<MissionBranchCollapseProps> = ({
   data,
   externalFilter,
   onRefetch,
 }) => {
-  const { themeConfig } = useTheme()
   const [_, setFilter] = useFilter(externalFilter)
+  const [isExpanded, setIsExpanded] = useState(true)
 
   const handleSetFilter = () => {
     setFilter({ branch: data?.branch?.id })
   }
-  const { data: missionData, refetch: refetchItem } = useFetchItems({
+  const { data: missionData } = useFetchItems({
     model: MODEL_MISSIONS,
     filter: {
       limit: 1,
@@ -39,45 +50,79 @@ const MissionBranchCollapse: React.FC<MissionBranchCollapseProps> = ({
     },
     qKey: 'missionsCardCount',
   })
-
   const handleRefetch = () => {
-    refetchItem()
     onRefetch?.()
   }
-
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded)
+  }
   return (
-    <Collapse
-      style={{
-        boxShadow: themeConfig.token?.boxShadow,
-      }}
-      bordered={false}
-      accordion
-      items={[
-        {
-          key: data?.branch?.id,
-          label: (
-            <Space>
-              <Text strong>{data?.branch?.name}</Text>
-              <Tag>{missionData?.data?.count || <Spin spinning />}</Tag>
-            </Space>
-          ),
-          children: (
-            <FetchMoreItemsComponent
-              isParentCounter
-              model={MODEL_MISSIONS}
-              defFilters={externalFilter}
-              renderItems={({ data, refetch }) => (
-                <div
-                  style={{
-                    paddingRight: '8px',
-                  }}
-                >
-                  <Space
-                    direction='vertical'
-                    size='large'
-                    style={{ width: '100%' }}
-                  >
-                    {data?.map((item) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {/* Заголовок */}
+      <motion.div
+        whileHover={{ x: 4 }}
+        transition={{ duration: 0.2 }}
+        onClick={() => {
+          handleSetFilter()
+          toggleExpanded()
+        }}
+        className='group cursor-pointer'
+      >
+        <div className='rounded-xl bg-gradient-to-r from-indigo-500/5 to-transparent px-6 py-4 backdrop-blur-xs transition-all duration-300 hover:backdrop-blur-sm md:px-8'>
+          <div className='flex items-center justify-between gap-4'>
+            <div className='flex flex-1 items-center gap-3'>
+              <motion.div
+                animate={{ rotate: isExpanded ? 0 : -90 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronDown size={20} className='text-indigo-400' />
+              </motion.div>
+              <div className='flex items-center gap-2'>
+                <h3 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text font-bold text-transparent'>
+                  {data?.branch?.name}
+                </h3>
+                <span className='inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-indigo-500/50 bg-indigo-500/30 px-2 text-xs font-semibold text-indigo-300'>
+                  {missionData?.data?.count || 0}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Контент */}
+      <motion.div
+        animate={{
+          height: isExpanded ? 'auto' : 0,
+          opacity: isExpanded ? 1 : 0,
+          marginTop: isExpanded ? 16 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        className='overflow-hidden'
+      >
+        <motion.div
+          variants={containerVariants}
+          initial='hidden'
+          animate='visible'
+          className='flex flex-col gap-4'
+        >
+          <FetchMoreItemsComponent
+            isParentCounter
+            model={MODEL_MISSIONS}
+            defFilters={externalFilter}
+            renderItems={({ data, refetch }) => (
+              <motion.div
+                variants={containerVariants}
+                initial='hidden'
+                animate='visible'
+                className='flex flex-col gap-4'
+              >
+                {data && data.length > 0
+                  ? data?.map((item) => (
                       <MissionCard
                         data={item}
                         key={item.id}
@@ -86,16 +131,14 @@ const MissionBranchCollapse: React.FC<MissionBranchCollapseProps> = ({
                           handleRefetch()
                         }}
                       />
-                    ))}
-                  </Space>
-                </div>
-              )}
-            />
-          ),
-        },
-      ]}
-      onChange={handleSetFilter}
-    />
+                    ))
+                  : null}
+              </motion.div>
+            )}
+          />
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }
 

@@ -232,7 +232,9 @@
     "load_more": "Load More",
     "loading": "Loading...",
     "no_more_items": "No more items to load",
-    "found": "Found"
+    "found": "Found",
+    "empty_title": "No Data",
+    "empty_description": "There is no data to display."
   },
   "ShopItem": {
     "currency": "Currency",

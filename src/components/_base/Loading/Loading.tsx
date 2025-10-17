@@ -80,7 +80,7 @@ const ComponentLoading = () => {
           transition={{ delay: 0.4, duration: 0.5 }}
           className='mt-4 max-w-xs text-center text-sm text-gray-400'
         >
-          Инициализация компонента...
+          Пристегните ремни...
         </motion.p>
       </motion.div>
     </div>

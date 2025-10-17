@@ -139,7 +139,7 @@
   },
   "Loading": {
     "message": "Загрузка...",
-    "component_loading": "Компонент загружается..."
+    "component_loading": "Запускаем двигатели..."
   },
   "ProfileRank": {
     "required_experience": "Требуемый опыт",
@@ -259,7 +259,9 @@
     "load_more": "Загрузить больше",
     "loading": "Загрузка...",
     "no_more_items": "Больше нет",
-    "found": "Найдено"
+    "found": "Найдено",
+    "empty_title": "Нет данных",
+    "empty_description": "Похоже, здесь пока нет данных."
   },
   "ActivityLog": {
     "title": "Журнал активности",

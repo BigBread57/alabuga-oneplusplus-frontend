@@ -1,10 +1,10 @@
 'use client'
 import type { CharacterEventProps } from '@/models/CharacterEvent'
 import { motion } from 'framer-motion'
-import { Eye } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
+import { EventDrawer } from '@/components/Event/EventDrawer'
 import { useUrlDrawer } from '@/hooks/useUrlDrawer'
 
 interface EventCardProps {
@@ -122,31 +122,17 @@ const EventCard: React.FC<EventCardProps> = ({ data, onComplete }) => {
                 </div>
               </div>
             </div>
-
-            {/* Кнопка просмотра */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(e) => {
-                e.stopPropagation()
-                handleOpenDrawer()
-              }}
-              className='flex-shrink-0 rounded-lg bg-indigo-500/20 p-2 text-indigo-400 transition-colors hover:bg-indigo-500/30'
-              aria-label={t('view_details')}
-            >
-              <Eye size={18} />
-            </motion.button>
           </div>
         </div>
       </motion.div>
 
       {/* Дровер с детальной информацией */}
-      {/* <EventDrawer */}
-      {/*  itemId={+data.id} */}
-      {/*  open={isVisible} */}
-      {/*  onClose={handleCloseDrawer} */}
-      {/*  onComplete={handleComplete} */}
-      {/* /> */}
+      <EventDrawer
+        itemId={+data.id}
+        open={isVisible}
+        onClose={handleCloseDrawer}
+        onComplete={handleComplete}
+      />
     </>
   )
 }

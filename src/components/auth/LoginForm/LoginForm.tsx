@@ -172,7 +172,7 @@ export default function LoginForm({
         } else if (error?.data?.message) {
           setGeneralError(error.data.message)
         } else {
-          setGeneralError(t('error_unknown') || 'Ошибка при входе')
+          setGeneralError('Ошибка при входе')
         }
       },
     })
@@ -192,7 +192,7 @@ export default function LoginForm({
       <div className='pointer-events-none fixed inset-0 overflow-hidden'>
         {Array.from({ length: 12 }).map((_, i) => (
           <FlyingRocket
-            key={`flying-rocket-${new Date().getTime()}-${i}`}
+            key={`flying-rocket-${new Date().getTime()}`}
             delay={i * 0.3}
             startX={Math.random() * window.innerWidth}
             startY={Math.random() * window.innerHeight}
