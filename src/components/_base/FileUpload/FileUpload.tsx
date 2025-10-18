@@ -49,6 +49,10 @@ const FileUpload: FCC<FileUploadProps> = ({
       return
     }
 
+    if (!beforeUpload(file)) {
+      return
+    }
+
     setIsUploading(true)
     setUploadError(null)
 
@@ -105,10 +109,6 @@ const FileUpload: FCC<FileUploadProps> = ({
     }
 
     return true
-  }
-
-  if (!beforeUpload(file)) {
-    return
   }
 
   const canUpload = !disabled && fileList.length < maxCount && !isUploading
