@@ -55,7 +55,7 @@ const errorVariants = {
   exit: { opacity: 0, x: -10 },
 }
 
-// Компонент летающей ракеты, всегда летит вверх
+// Компонент летающей ракеты, оптимизированный
 const FlyingRocket = ({
   delay,
   startX,
@@ -83,9 +83,10 @@ const FlyingRocket = ({
         delay,
         ease: 'easeInOut',
         repeat: Infinity,
-        repeatDelay: Math.random() * 2 + 1,
+        repeatDelay: Math.random() * 5 + 3, // Увеличена пауза между повторениями
       }}
       className='pointer-events-none absolute'
+      style={{ willChange: 'transform, opacity' }} // Оптимизация производительности
     >
       <div className='flex flex-col items-center'>
         <Rocket
@@ -192,12 +193,12 @@ export default function LoginForm({
 
   return (
     <div className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4 py-8'>
-      {/* Летающие ракеты */}
+      {/* Летающие ракеты - уменьшено количество и увеличена пауза */}
       <div className='pointer-events-none fixed inset-0 overflow-hidden'>
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => (
           <FlyingRocket
-            key={`flying-rocket-${new Date().getTime()}`}
-            delay={i * 0.3}
+            key={`flying-rocket-${i}`}
+            delay={i * 1.5} // Увеличена задержка между началом каждой ракеты
             startX={Math.random() * window.innerWidth}
             startY={window.innerHeight + Math.random() * 100}
             duration={8 + Math.random() * 6}
@@ -430,19 +431,17 @@ export default function LoginForm({
               <div className='absolute inset-0 bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 opacity-100 transition-opacity group-hover:opacity-80' />
               <div className='absolute inset-0 bg-slate-900 opacity-0 transition-opacity group-hover:opacity-5' />
               <div className='relative flex items-center justify-center gap-2'>
-                {loginIsLoading
-                  ? (
-                      <>
-                        <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                        {t('sign_in') || 'Вход...'}
-                      </>
-                    )
-                  : (
-                      <>
-                        <LogIn size={18} />
-                        {t('sign_in')}
-                      </>
-                    )}
+                {loginIsLoading ? (
+                  <>
+                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                    {t('sign_in') || 'Вход...'}
+                  </>
+                ) : (
+                  <>
+                    <LogIn size={18} />
+                    {t('sign_in')}
+                  </>
+                )}
               </div>
             </motion.button>
           </form>
