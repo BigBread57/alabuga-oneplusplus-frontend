@@ -1,11 +1,7 @@
 'use client'
 
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
-} from '@ant-design/icons'
-import { Button, Card, Result, Space, Spin } from 'antd'
+import { motion } from 'framer-motion'
+import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -13,6 +9,31 @@ import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { useConfirmRegister } from '@/services/auth/hooks'
 
 type ConfirmStatus = 'loading' | 'success' | 'error'
+
+const containerVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5 },
+  },
+}
+
+const contentVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: 0.2 },
+  },
+}
+
+const spinnerVariants = {
+  animate: {
+    rotate: 360,
+    transition: { duration: 2, repeat: Infinity, ease: 'linear' },
+  },
+}
 
 export default function ConfirmRegister() {
   const t = useTranslations('ConfirmRegister')
@@ -22,7 +43,6 @@ export default function ConfirmRegister() {
   const { mutate: confirmRegister } = useConfirmRegister()
 
   useEffect(() => {
-    // Извлекаем email и token из query параметров
     const urlParams = new URLSearchParams(window.location.search)
     const email = urlParams.get('email')
     const token = urlParams.get('token')
@@ -54,31 +74,66 @@ export default function ConfirmRegister() {
     switch (status) {
       case 'loading':
         return (
-          <Result
-            icon={<Spin size='large' indicator={<LoadingOutlined spin />} />}
-            title={t('confirming_registration')}
-            subTitle={t('please_wait')}
-          />
+          <motion.div
+            variants={contentVariants}
+            className='flex flex-col items-center gap-4'
+          >
+            <motion.div variants={spinnerVariants} animate='animate'>
+              <Loader2 size={48} className='text-indigo-400' />
+            </motion.div>
+            <div>
+              <h2 className='text-xl font-bold text-cyan-400'>
+                {t('confirming_registration')}
+              </h2>
+              <p className='mt-2 text-sm text-indigo-300'>{t('please_wait')}</p>
+            </div>
+          </motion.div>
         )
 
       case 'success':
         return (
-          <Result
-            status='success'
-            icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-            title={t('registration_confirmed')}
-            subTitle={t('registration_success_message')}
-          />
+          <motion.div
+            variants={contentVariants}
+            className='flex flex-col items-center gap-4'
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            >
+              <CheckCircle size={48} className='text-emerald-400' />
+            </motion.div>
+            <div>
+              <h2 className='text-xl font-bold text-cyan-400'>
+                {t('registration_confirmed')}
+              </h2>
+              <p className='mt-2 text-sm text-indigo-300'>
+                {t('registration_success_message')}
+              </p>
+            </div>
+          </motion.div>
         )
 
       case 'error':
         return (
-          <Result
-            status='error'
-            icon={<CloseCircleOutlined style={{ color: '#ff4d4f' }} />}
-            title={t('confirmation_failed')}
-            subTitle={errorMessage}
-          />
+          <motion.div
+            variants={contentVariants}
+            className='flex flex-col items-center gap-4'
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            >
+              <AlertCircle size={48} className='text-red-400' />
+            </motion.div>
+            <div>
+              <h2 className='text-xl font-bold text-cyan-400'>
+                {t('confirmation_failed')}
+              </h2>
+              <p className='mt-2 text-sm text-indigo-300'>{errorMessage}</p>
+            </div>
+          </motion.div>
         )
 
       default:
@@ -87,38 +142,51 @@ export default function ConfirmRegister() {
   }
 
   return (
-    <Card
-      style={{
-        width: '100%',
-        maxWidth: '500px',
-        textAlign: 'center',
-      }}
-      styles={{
-        body: {
-          padding: '48px 32px',
-        },
-      }}
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      className='mx-auto my-20 w-full max-w-sm'
     >
-      <div
-        style={{
-          marginBottom: '32px',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <LogoSwitcher />
+      <div className='rounded-2xl border border-indigo-500/20 bg-gradient-to-b from-slate-900/80 to-slate-900 p-8 backdrop-blur-xl md:p-12'>
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className='mb-8 flex justify-center'
+        >
+          <LogoSwitcher width={200} />
+        </motion.div>
+
+        {/* Content */}
+        {renderContent()}
+
+        {/* Buttons */}
+        <motion.div
+          variants={contentVariants}
+          className='mt-8 flex flex-col gap-3'
+        >
+          <Link href='/'>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className='w-full rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-4 py-3 font-medium text-indigo-300 transition-colors hover:bg-indigo-500/20'
+            >
+              {t('go_to_home')}
+            </motion.button>
+          </Link>
+          <Link href='/sign-in'>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className='w-full rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-400 px-4 py-3 font-medium text-slate-900 transition-opacity hover:opacity-90'
+            >
+              {t('go_to_login')}
+            </motion.button>
+          </Link>
+        </motion.div>
       </div>
-      {renderContent()}
-      <Space direction='vertical'>
-        <Link href='/'>
-          <Button key='home'>{t('go_to_home')}</Button>
-        </Link>
-        <Link href='/sign-in'>
-          <Button type='primary' key='login'>
-            {t('go_to_login')}
-          </Button>
-        </Link>
-      </Space>
-    </Card>
+    </motion.div>
   )
 }

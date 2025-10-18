@@ -4,6 +4,7 @@ import {
   Newspaper,
   Rocket,
   ShoppingCart,
+  Sparkles,
   Users,
   UserStar,
 } from 'lucide-react'
@@ -25,6 +26,8 @@ export interface LinksKeys {
   RANK: LinkProps
   SHOP: LinkProps
   ADMIN: LinkProps
+  MISSION: LinkProps
+  EVENTS: LinkProps
 }
 
 export const Links: LinksKeys = {
@@ -44,6 +47,18 @@ export const Links: LinksKeys = {
     icon: Rocket,
     labelKey: 'training_center',
     href: '/profile',
+    isTab: true,
+  },
+  MISSION: {
+    icon: Rocket,
+    labelKey: 'missions',
+    href: '/missions',
+    isTab: true,
+  },
+  EVENTS: {
+    icon: Sparkles,
+    labelKey: 'events',
+    href: '/events',
     isTab: true,
   },
   RANK: {

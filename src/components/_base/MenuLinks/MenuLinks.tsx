@@ -14,12 +14,13 @@ import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 
 const navigationItems = [
-  Links.PROFILE,
+  Links.ADMIN,
+  Links.MISSION,
+  Links.EVENTS,
   Links.JOURNAL,
   Links.SHOP,
   Links.RANK,
   Links.NEWS,
-  Links.ADMIN,
 ]
 
 const MobileModal = ({

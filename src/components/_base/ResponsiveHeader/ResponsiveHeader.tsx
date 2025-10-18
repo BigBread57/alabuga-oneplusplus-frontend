@@ -7,6 +7,7 @@ import { MenuLinks } from '@/components/_base/MenuLinks'
 import { CurrentUser } from '@/components/CurrentUser'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
 import { useScreens } from '@/hooks/useScreens'
+import ActivityLogsCard from '../../ActivityLog/ActivityLogsCard/ActivityLogsCard'
 
 type ResponsiveHeaderProps = {
   title?: string | React.ReactNode
@@ -94,6 +95,7 @@ export const ResponsiveHeader = ({
                   {/* Можно добавить дополнительные переключатели */}
                 </div>
               )}
+              <ActivityLogsCard />
               {/* Текущий пользователь */}
               <CurrentUser currentUser={currentUser} />
               {/* Настройки */}

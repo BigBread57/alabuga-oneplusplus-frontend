@@ -43,6 +43,22 @@ const FileUpload: FCC<FileUploadProps> = ({
     extraUrl: MODEL.createUrl(),
   })
 
+  const beforeUpload = (file: File) => {
+    const isValidSize = file.size / 1024 / 1024 < maxSize
+    if (!isValidSize) {
+      setUploadError(t('file_too_large', { maxSize }))
+      return false
+    }
+
+    const isValidCount = fileList.length < maxCount
+    if (!isValidCount) {
+      setUploadError(t('max_files_exceeded', { maxCount }))
+      return false
+    }
+
+    return true
+  }
+
   const handleUpload = (files: FileList) => {
     const file = files[0]
     if (!file) {
@@ -93,22 +109,6 @@ const FileUpload: FCC<FileUploadProps> = ({
 
   const handleRemove = () => {
     onChange()
-  }
-
-  const beforeUpload = (file: File) => {
-    const isValidSize = file.size / 1024 / 1024 < maxSize
-    if (!isValidSize) {
-      setUploadError(t('file_too_large', { maxSize }))
-      return false
-    }
-
-    const isValidCount = fileList.length < maxCount
-    if (!isValidCount) {
-      setUploadError(t('max_files_exceeded', { maxCount }))
-      return false
-    }
-
-    return true
   }
 
   const canUpload = !disabled && fileList.length < maxCount && !isUploading

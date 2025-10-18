@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { QueryClientWrapper } from '@/components/_base/QueryClientWrapper'
 import { CurrentUserProvider } from '@/components/CurrentUserProvider'
 import { routing } from '@/libs/I18nRouting'
+import '@/styles/global.css'
 
 export const metadata: Metadata = {
   icons: [

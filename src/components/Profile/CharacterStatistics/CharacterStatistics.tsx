@@ -47,7 +47,7 @@ const CharacterStatistics: FCC = () => {
 
   return (
     <CardLoader isLoading={isLoading}>
-      <div className='mt-4 flex h-full w-full flex-col overflow-hidden rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-slate-900/50 to-slate-800/50'>
+      <div className='flex h-full w-full flex-col overflow-hidden rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-slate-900/50 to-slate-800/50'>
         {/* Content */}
         <div className='flex-1 overflow-y-auto'>
           <motion.div

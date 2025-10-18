@@ -27,7 +27,7 @@ const PieChartComponent: FCC<PieChartProps> = ({
   legendPosition = 'bottom',
   isAnimationActive = true,
 }) => {
-  const [dataInner, setData] = useState<Array<{ name: string; value: number }>>(
+  const [dataInner, setData] = useState<Array<{ name: string, value: number }>>(
     [],
   )
 

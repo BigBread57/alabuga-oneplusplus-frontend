@@ -3,7 +3,6 @@ import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Competence } from '@/components/Profile/Competence'
 import { CharacterCompetency } from '@/models/CharacterCompetence'
-import styles from './Competencies.module.scss'
 
 const MODEL = CharacterCompetency
 
@@ -14,9 +13,14 @@ export const CompetenceList: FCC = () => {
       defFilters={{}}
       isClearRender
       renderItems={({ data, isLoading }) => (
-        <div className={styles.container} data-testid='test-ArtifactsList'>
+        <div
+          className='flex gap-4 overflow-x-auto pb-2'
+          data-testid='test-CompetenceList'
+        >
           {data?.map((item) => (
-            <Competence isLoading={isLoading} key={item.id} data={item} />
+            <div key={item.id} className='flex-shrink-0'>
+              <Competence isLoading={isLoading} data={item} />
+            </div>
           ))}
         </div>
       )}

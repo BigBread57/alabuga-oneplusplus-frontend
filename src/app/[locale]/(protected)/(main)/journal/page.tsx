@@ -23,16 +23,14 @@ export async function generateMetadata(
 
 export default async function JournalPage(_props: JournalPageProps) {
   return (
-    <div className='flex h-full w-full flex-col gap-6 lg:flex-row'>
+    <div className='mt-4 flex h-full w-full flex-col gap-6 lg:flex-row'>
       {/* Character Statistics */}
       <div className='h-[calc(100vh-200px)] w-full overflow-hidden'>
         <CharacterStatistics />
       </div>
+      {/* <ActivityLogsCard /> */}
 
       {/* Activity Logs */}
-      {/* <div className='w-full lg:w-1/3 h-[calc(100vh-130px)] overflow-hidden'> */}
-      {/* <ActivityLogsCard /> */}
-      {/* </div> */}
     </div>
   )
 }

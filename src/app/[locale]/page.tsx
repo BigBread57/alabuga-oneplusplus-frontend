@@ -6,5 +6,5 @@ type IMainPageProps = {
 
 export default async function MainPage(props: IMainPageProps) {
   const { locale } = await props.params
-  redirect(`/${locale}/profile`)
+  redirect(`/${locale}/missions`)
 }

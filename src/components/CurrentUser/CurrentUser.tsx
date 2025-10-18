@@ -2,11 +2,12 @@
 
 import type { UserProps } from '@/models'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Loader2, LogOut, User, X } from 'lucide-react'
+import { Loader2, LogOut, Satellite, User, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React, { useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Artifacts } from '@/components/Profile/Artifacts'
+import { Competencies } from '@/components/Profile/Competencies'
 import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
 import { ProfileRank } from '@/components/Profile/ProfileRank'
 import { Character } from '@/models/Character'
@@ -27,7 +28,7 @@ const ModalContent = ({
   currentUser: UserProps
   onClose: () => void
 }) => {
-  const t = useTranslations('CurrentUser')
+  const t = useTranslations('ProfileCard')
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -69,7 +70,7 @@ const ModalContent = ({
         animate='visible'
         exit='exit'
         onClick={onClose}
-        className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-4 backdrop-blur-sm'
+        className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-1 backdrop-blur-sm'
       >
         <motion.div
           variants={modalVariants}
@@ -106,10 +107,10 @@ const ModalContent = ({
               <p className='mt-4 text-sm text-gray-400'>{t('loading')}</p>
             </div>
           ) : (
-            <div className='flex h-full flex-col overflow-hidden'>
+            <div className='flex h-full flex-col overflow-hidden px-2 pt-10 md:px-4'>
               {/* Прокручиваемая область */}
-              <div className='flex-1 overflow-y-auto p-6'>
-                <div className='flex flex-col items-center gap-6'>
+              <div className='w-full flex-1 overflow-y-auto px-2 py-6'>
+                <div className='flex w-full flex-col items-center gap-6'>
                   <ProfilePhoto
                     characterId={data?.data?.id}
                     username={
@@ -119,25 +120,39 @@ const ModalContent = ({
                     editable
                     onSuccess={refetch}
                   />
-                  <ProfileRank
-                    characterId={data?.data?.id}
-                    userName={
-                      data?.data?.user?.full_name || data?.data?.user?.username
-                    }
-                    userAvatar={data?.data?.avatar}
-                    rank={data?.data?.character_rank?.rank || null}
-                    nextRank={data?.data?.character_rank?.next_rank || null}
-                    currency={data?.data?.currency}
-                    gameWorld={data?.data?.game_world}
-                    email={data?.data?.user?.email || null}
-                    showProgress
-                    currentExperience={data?.data?.character_rank?.experience}
-                    onUpdateAvatarSuccess={refetch}
-                  />
-
+                  <div className='w-full'>
+                    <ProfileRank
+                      characterId={data?.data?.id}
+                      userName={
+                        data?.data?.user?.full_name
+                        || data?.data?.user?.username
+                      }
+                      rank={data?.data?.character_rank?.rank || null}
+                      nextRank={data?.data?.character_rank?.next_rank || null}
+                      currency={data?.data?.currency}
+                      gameWorld={data?.data?.game_world}
+                      email={data?.data?.user?.email || null}
+                      showProgress
+                      currentExperience={data?.data?.character_rank?.experience}
+                      onUpdateAvatarSuccess={refetch}
+                    />
+                  </div>
                   {/* Artifacts с прокруткой */}
                   <div className='max-h-64 w-full rounded-lg border border-indigo-500/20 bg-slate-800/50 p-4'>
+                    <p className='text-xs tracking-wider text-gray-500 uppercase'>
+                      {t('artifacts')}
+                    </p>
                     <Artifacts />
+                  </div>
+                  {/* Artifacts с прокруткой */}
+                  <div className='max-h-64 w-full rounded-lg border border-indigo-500/20 bg-slate-800/50 p-4'>
+                    {/* Секция компетенций */}
+                    <motion.div className='w-full'>
+                      <p className='text-xs tracking-wider text-gray-500 uppercase'>
+                        {t('competencies')}
+                      </p>
+                      <Competencies />
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -208,10 +223,21 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
         onClick={() => setIsOpen(true)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className='rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10'
+        className='relative rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10'
         aria-label='User profile'
       >
         <User size={24} />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          className='absolute inset-0 flex items-center justify-center'
+        >
+          <Satellite
+            size={12}
+            className='absolute text-yellow-400'
+            style={{ top: '-1px', right: '-1px' }}
+          />
+        </motion.div>
       </motion.button>
 
       {isMounted

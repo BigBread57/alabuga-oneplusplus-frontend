@@ -93,7 +93,7 @@ const FlyingRocket = ({
           style={{
             rotate: '-45deg',
           }}
-          size={28}
+          size={50}
           className='text-indigo-400 drop-shadow-lg'
         />
         <div className='h-10 w-1 bg-gradient-to-b from-orange-400 to-red-500 opacity-60 blur-sm' />
@@ -105,7 +105,7 @@ const FlyingRocket = ({
 export default function LoginForm({
   onGoogleLogin,
   onSuccess,
-  redirectPath = '/profile',
+  redirectPath = '/',
 }: LoginFormProps = {}) {
   const t = useTranslations('LoginForm')
   const [email, setEmail] = useState('')
@@ -197,6 +197,7 @@ export default function LoginForm({
       <div className='pointer-events-none fixed inset-0 overflow-hidden'>
         {Array.from({ length: 4 }).map((_, i) => (
           <FlyingRocket
+            // eslint-disable-next-line react/no-array-index-key
             key={`flying-rocket-${i}`}
             delay={i * 1.5} // Увеличена задержка между началом каждой ракеты
             startX={Math.random() * window.innerWidth}
@@ -431,19 +432,60 @@ export default function LoginForm({
               <div className='absolute inset-0 bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 opacity-100 transition-opacity group-hover:opacity-80' />
               <div className='absolute inset-0 bg-slate-900 opacity-0 transition-opacity group-hover:opacity-5' />
               <div className='relative flex items-center justify-center gap-2'>
-                {loginIsLoading ? (
-                  <>
-                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                    {t('sign_in') || 'Вход...'}
-                  </>
-                ) : (
-                  <>
-                    <LogIn size={18} />
-                    {t('sign_in')}
-                  </>
-                )}
+                {loginIsLoading
+                  ? (
+                      <>
+                        <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                        {t('sign_in') || 'Вход...'}
+                      </>
+                    )
+                  : (
+                      <>
+                        <LogIn size={18} />
+                        {t('sign_in')}
+                      </>
+                    )}
               </div>
             </motion.button>
+            {/* Демо-кнопки */}
+            <motion.div
+              variants={itemVariants}
+              className='mt-1 flex flex-col gap-3 sm:flex-row'
+            >
+              <button
+                type='button'
+                onClick={() => {
+                  setEmail('hr@example.com')
+                  setPassword('hrpass123')
+                  setTimeout(() => {
+                    const form = document.querySelector('form')
+                    form?.dispatchEvent(
+                      new Event('submit', { cancelable: true, bubbles: true }),
+                    )
+                  }, 100)
+                }}
+                className='w-full rounded-lg border border-indigo-400/30 px-1 py-2 text-sm font-medium text-indigo-300 transition-all duration-300 hover:border-indigo-400/60 hover:bg-indigo-400/10'
+              >
+                Демо HR
+              </button>
+
+              <button
+                type='button'
+                onClick={() => {
+                  setEmail('user@example.com')
+                  setPassword('userpass123')
+                  setTimeout(() => {
+                    const form = document.querySelector('form')
+                    form?.dispatchEvent(
+                      new Event('submit', { cancelable: true, bubbles: true }),
+                    )
+                  }, 100)
+                }}
+                className='w-full rounded-lg border border-cyan-400/30 px-1 py-2 text-sm font-medium text-cyan-300 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-400/10'
+              >
+                Демо Кандидат
+              </button>
+            </motion.div>
           </form>
 
           {/* Разделитель */}

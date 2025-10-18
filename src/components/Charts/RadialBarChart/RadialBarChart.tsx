@@ -1,120 +1,103 @@
-import type { FCC } from 'src/types'
-import { RadialBar } from '@ant-design/plots'
+import type { FCC } from '@/types'
 import React from 'react'
-import styles from './RadialBarChart.module.scss' // создайте соответствующий CSS модуль
+import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
 
 type DataItem = {
   name: string
-  star: number
+  star?: number
+  value?: number
+  fill?: string
 }
 
-interface RadialBarChartProps {
-  data: DataItem[]
-  xField?: string
-  yField?: string
-  radius?: number
-  innerRadius?: number
-  width?: number
+interface PieChartComponentProps {
+  data?: DataItem[]
   height?: number
-  size?: 'small' | 'medium' | 'large'
   autoFit?: boolean
-  showLegend?: boolean
-  markBackgroundOpacity?: number
-  maxValue?: number
-  styleRadius?: number
-  tooltipItems?: string[]
-  axisY?: boolean
+  isAnimationActive?: boolean
 }
 
-const RadialBarChart: FCC<RadialBarChartProps> = ({
+const RadialBarChartComponent: FCC<PieChartComponentProps> = ({
   data,
-  xField = 'name',
-  yField = 'star',
-  radius = 1,
-  innerRadius = 0.2,
-  width,
-  height,
-  size = 'medium',
+  height = 400,
   autoFit = true,
-  showLegend = false,
-  markBackgroundOpacity = 0.25,
-  maxValue = 12000,
-  styleRadius = 180,
-  tooltipItems,
-  axisY = false,
+  isAnimationActive = true,
 }) => {
-  // Определяем размеры в зависимости от пропса size
-  const getSizeConfig = () => {
-    // Если autoFit включен, не задаем фиксированные размеры
-    if (autoFit) {
-      return { autoFit: true }
-    }
-
-    if (width && height) {
-      return { width, height }
-    }
-
-    switch (size) {
-      case 'small':
-        return { width: 300, height: 300 }
-      case 'large':
-        return { width: 600, height: 600 }
-      case 'medium':
-      default:
-        return { width: 400, height: 400 }
-    }
+  if (!data || data.length === 0) {
+    return (
+      <div className='flex h-full items-center justify-center text-gray-400'>
+        <p>Нет данных</p>
+      </div>
+    )
   }
 
-  const sizeConfig = getSizeConfig()
+  const colors = [
+    '#06b6d4',
+    '#0ea5e9',
+    '#3b82f6',
+    '#6366f1',
+    '#8b5cf6',
+    '#a855f7',
+    '#d946ef',
+    '#ec4899',
+    '#f43f5e',
+    '#f97316',
+  ]
 
-  const config = {
-    data,
-    xField,
-    yField,
-    radius,
-    innerRadius,
-    ...sizeConfig,
-    tooltip: {
-      items: tooltipItems || ['star'],
-    },
-    legend: showLegend,
-    axis: {
-      y: axisY,
-    },
-    markBackground: {
-      opacity: markBackgroundOpacity,
-    },
-    scale: {
-      y: {
-        domain: [0, maxValue],
-      },
-    },
-    style: {
-      radius: styleRadius,
-      fill: ({ star }: { star: number }) => {
-        if (star > 10000) {
-          return '#6349ec'
-        } else if (star > 1000) {
-          return '#ff9300'
-        }
-        return '#ff93a7'
-      },
-    },
-    // Дополнительные настройки для взаимодействия
-    interaction: {
-      tooltip: {
-        shared: true,
-      },
-    },
+  // Преобразуем данные
+  const chartData = data.map((item, index) => ({
+    name: item.name,
+    value: item.value ?? item.star ?? 0,
+    fill: item.fill ?? colors[index % colors.length],
+  }))
+
+  const customTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className='rounded-lg border border-indigo-500/20 bg-slate-900/95 p-3 backdrop-blur-sm'>
+          <p className='text-xs font-medium text-cyan-300'>{payload[0].name}</p>
+          <p className='text-sm font-semibold text-cyan-200'>
+            {payload[0].value}
+          </p>
+        </div>
+      )
+    }
+    return null
   }
 
   return (
-    <div className={styles.container} data-testid='test-RadialBarChart'>
-      <RadialBar {...config} />
+    <div
+      style={{
+        width: '100%',
+        height: autoFit ? height : 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <PieChart
+        style={{ width: '100%', maxWidth: '500px', aspectRatio: 1 }}
+        responsive
+      >
+        <Pie
+          data={chartData}
+          innerRadius='80%'
+          outerRadius='100%'
+          cornerRadius='50%'
+          paddingAngle={5}
+          dataKey='value'
+          isAnimationActive={isAnimationActive}
+        >
+          {chartData?.map((entry) => (
+            <Cell key={`cell-${entry?.name}`} fill={entry.fill} />
+          ))}
+        </Pie>
+        <Tooltip content={customTooltip} />
+        <Legend />
+      </PieChart>
     </div>
   )
 }
 
-RadialBarChart.displayName = 'RadialBarChart'
+RadialBarChartComponent.displayName = 'RadialBarChartComponent'
 
-export default RadialBarChart
+export default RadialBarChartComponent

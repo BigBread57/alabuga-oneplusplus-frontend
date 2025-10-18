@@ -54,6 +54,8 @@
     "select_language": "Select language"
   },
   "MenuLinks": {
+    "missions": "Missions",
+    "events": "Events",
     "profile": "Profile",
     "training_center": "Training center",
     "journal": "Journal",
@@ -89,7 +91,9 @@
     "experience": "Experience",
     "competencies": "Competencies",
     "artifacts": "Artifacts",
-    "profile": "Profile"
+    "profile": "Profile",
+    "logout": "Logout",
+    "loading": "Loading user data..."
   },
   "JournalPage": {
     "meta_title": "Journal",
@@ -237,6 +241,7 @@
     "empty_description": "There is no data to display."
   },
   "ShopItem": {
+    "processing": "Processing...",
     "currency": "Currency",
     "shop_items": "Shop Items",
     "view_details": "View Details",
@@ -273,7 +278,8 @@
     "title": "Activity log",
     "all": "All",
     "read_all": "Read all",
-    "new": "New"
+    "new": "New",
+    "no_data": "No activity yet"
   },
   "MissionStatus": {
     "all": "All",
@@ -342,7 +348,9 @@
     "locked": "Locked",
     "from": "from",
     "level": "level",
-    "received": "received"
+    "received": "received",
+    "experience": "experience",
+    "description": "Description"
   },
   "FileUpload": {
     "upload_text": "Click or drag file to upload",
@@ -455,7 +463,9 @@
   "Select": {
     "placeholder": "Select an option",
     "no_data": "No data",
-    "error": "Error loading data"
+    "error": "Error loading data",
+    "search": "Search...",
+    "selected": "selected"
   },
   "MissionForm": {
     "title": "Mission Form",
@@ -615,7 +625,8 @@
     "confirmed": "Confirmed",
     "sent": "Sent",
     "pending": "Pending",
-    "delivered": "Delivered"
+    "delivered": "Delivered",
+    "no_data": "No purchases found"
   },
   "ProfileTour": {
     "welcome_title": "Welcome to your Profile!",

@@ -4,6 +4,7 @@ import type { FCC } from 'src/types'
 import type { GameWorldProps } from '@/models/GameWorld'
 import type { RankProps } from '@/models/Rank'
 import { motion } from 'framer-motion'
+import { Coins, TrendingUp } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import React from 'react'
@@ -12,7 +13,6 @@ type ProfileRankProps = {
   currency?: number
   characterId?: string | number
   userName: string
-  userAvatar: string | undefined
   rank: RankProps
   gameWorld?: GameWorldProps
   currentExperience?: number
@@ -46,18 +46,18 @@ const ProfileRank: FCC<ProfileRankProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
         delayChildren: 0.1,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
+    hidden: { opacity: 0, y: 8 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4 },
+      transition: { duration: 0.3 },
     },
   }
 
@@ -69,116 +69,93 @@ const ProfileRank: FCC<ProfileRankProps> = ({
       className={className}
       data-testid='test-ProfileRank'
     >
-      {/* Профиль пользователя */}
+      {/* Avatar + Currency */}
       <motion.div
         variants={itemVariants}
-        className='mb-8 flex gap-6 border-b border-indigo-500/10 pb-8'
+        className='mb-6 flex flex-col items-center gap-2'
       >
-        {/* Информация персонажа */}
-        <div className='flex-1 space-y-4'>
-          {/* Имя */}
-          <motion.div variants={itemVariants}>
-            <h2 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-2xl font-bold text-transparent md:text-2xl'>
-              {userName}
-            </h2>
-            {email
-              ? (
-                  <div className='flex flex-col gap-1 text-center'>
-                    <p className='text-sm text-gray-400'>{email}</p>
-                  </div>
-                )
-              : null}
-          </motion.div>
+        {/* Currency */}
+        <motion.div
+          variants={itemVariants}
+          className='flex items-center gap-1.5'
+        >
+          <div className='flex flex-col items-center gap-0'>
+            <p className='text-xs tracking-wide text-gray-500 uppercase'>
+              {gameWorld?.currency_name || 'Currency'}
+            </p>
+            <div className='flex items-center gap-1'>
+              <Coins size={14} className='text-yellow-400' />
 
-          {/* Ранг */}
-          <motion.div
-            variants={itemVariants}
-            className='flex items-center gap-4'
-          >
-            <div className='flex-1'>
-              <div className='mb-2 flex items-center gap-3'>
-                <h3
-                  className='text-xl font-semibold'
-                  style={{ color: rank?.color || '#00d9ff' }}
-                >
-                  {rank?.name}
-                </h3>
-                {rank?.icon && (
-                  <div className='relative h-10 w-10 overflow-hidden rounded-lg border border-indigo-500/20 bg-indigo-500/10'>
-                    <Image
-                      src={rank.icon}
-                      alt={rank.name}
-                      fill
-                      className='object-cover'
-                    />
-                  </div>
-                )}
-              </div>
-              {rank?.description && (
-                <p className='text-sm text-gray-400'>{rank.description}</p>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Статистика */}
-          <motion.div
-            variants={itemVariants}
-            className='grid grid-cols-2 gap-4'
-          >
-            <div className='rounded-lg border border-indigo-500/20 bg-indigo-500/10 p-3'>
-              <p className='mb-1 text-xs text-gray-400'>
-                {t('required_experience')}
-              </p>
-              <p className='text-lg font-semibold text-cyan-400'>
-                {rank?.required_experience?.toLocaleString()}
-              </p>
-            </div>
-
-            <div className='rounded-lg border border-indigo-500/20 bg-indigo-500/10 p-3'>
-              <p className='mb-1 text-xs text-gray-400'>
-                {gameWorld?.currency_name?.toUpperCase()}
-              </p>
-              <p className='text-lg font-semibold text-cyan-400'>
+              <p className='text-sm font-semibold text-cyan-400'>
                 {currency?.toLocaleString()}
               </p>
             </div>
-          </motion.div>
-        </div>
-      </motion.div>
-      {/* Мир игры */}
-      <motion.div
-        variants={itemVariants}
-        className='mb-8  flex  gap-6 border-b border-indigo-500/10 pb-8'
-      >
-        {gameWorld && (
-          <motion.div
-            variants={itemVariants}
-            className='rounded-lg border border-indigo-500/20 bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 p-4'
-          >
-            <p className='mb-2 text-xs tracking-wider text-gray-400 uppercase'>
-              {t('game_world')}
-            </p>
-            <p className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-lg font-semibold text-transparent'>
-              {gameWorld?.name}
-            </p>
-          </motion.div>
-        )}
+          </div>
+        </motion.div>
       </motion.div>
 
-      {/* Опыт и прогресс */}
-      <motion.div variants={itemVariants} className='space-y-6'>
-        {/* Текущий опыт */}
+      {/* User Info: Name, Email, Rank */}
+      <motion.div variants={itemVariants} className='mb-6 space-y-3'>
+        {/* Name & Email */}
+        <div className='space-y-1 text-center'>
+          <h1 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-2xl font-bold text-transparent'>
+            {userName}
+          </h1>
+          {email && <p className='text-xs text-gray-500'>{email}</p>}
+        </div>
+
+        {/* Rank Badge */}
+        <div className='flex items-center gap-2'>
+          {rank?.icon && (
+            <div className='relative h-8 w-8 overflow-hidden rounded-lg border border-indigo-500/20 bg-indigo-500/10'>
+              <Image
+                src={rank.icon}
+                alt={rank.name}
+                fill
+                className='object-cover'
+              />
+            </div>
+          )}
+          <div
+            className='w-full rounded-lg border px-3 py-2 backdrop-blur-sm'
+            style={{
+              backgroundColor: `${rank?.color || '#00d9ff'}10`,
+              borderColor: `${rank?.color || '#00d9ff'}30`,
+            }}
+          >
+            <h3
+              className='text-sm font-semibold'
+              style={{ color: rank?.color || '#00d9ff' }}
+            >
+              {rank?.name}
+            </h3>
+            {rank?.description && (
+              <p className='mt-0.5 text-xs text-gray-500'>{rank.description}</p>
+            )}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Progress Section - Full Width */}
+      <motion.div
+        variants={itemVariants}
+        className='mb-4 space-y-4 rounded-lg border border-indigo-500/20 bg-gradient-to-br from-indigo-500/5 to-cyan-500/5 p-4'
+      >
+        {/* Current Experience */}
         {currentExperience > 0 && (
-          <motion.div variants={itemVariants} className='space-y-2'>
+          <div className='space-y-1.5'>
             <div className='flex items-center justify-between'>
-              <span className='text-sm font-medium text-gray-300'>
-                {t('current_experience')}
-              </span>
-              <span className='text-sm font-semibold text-cyan-400'>
+              <div className='flex items-center gap-2'>
+                <TrendingUp size={14} className='text-cyan-400' />
+                <span className='text-xs font-medium tracking-wide text-gray-400 uppercase'>
+                  {t('current_experience')}
+                </span>
+              </div>
+              <span className='text-xs font-semibold text-cyan-400'>
                 {currentExperience?.toLocaleString()}
               </span>
             </div>
-            <div className='h-2 w-full overflow-hidden rounded-full border border-indigo-500/10 bg-slate-800/50'>
+            <div className='h-1.5 w-full overflow-hidden rounded-full border border-indigo-500/10 bg-slate-800/50'>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${Math.min(progressPercent, 100)}%` }}
@@ -186,39 +163,41 @@ const ProfileRank: FCC<ProfileRankProps> = ({
                 className='h-full rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500'
               />
             </div>
-          </motion.div>
+          </div>
         )}
 
-        {/* Прогресс к следующему рангу */}
+        {/* Divider */}
+        {currentExperience > 0 && nextRank && (
+          <div className='h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent' />
+        )}
+
+        {/* Next Rank Progress */}
         {nextRank && (
-          <motion.div variants={itemVariants} className='space-y-3'>
+          <div className='space-y-2'>
             <div className='flex items-center justify-between'>
-              <span className='text-sm font-medium text-gray-300'>
+              <span className='text-xs font-medium tracking-wide text-gray-400 uppercase'>
                 {t('progress_to_next_rank')}
               </span>
-              <div className='flex items-center gap-2'>
-                <span
-                  className='rounded-full px-3 py-1 text-xs font-semibold text-white'
-                  style={{
-                    backgroundColor: `${nextRank?.color || '#6366f1'}20`,
-                    border: `1px solid ${nextRank?.color || '#6366f1'}60`,
-                    color: nextRank?.color || '#6366f1',
-                  }}
-                >
-                  {nextRank?.name}
-                </span>
-              </div>
+              <span
+                className='rounded-full px-2.5 py-0.5 text-xs font-semibold'
+                style={{
+                  backgroundColor: `${nextRank?.color || '#6366f1'}15`,
+                  border: `1px solid ${nextRank?.color || '#6366f1'}40`,
+                  color: nextRank?.color || '#6366f1',
+                }}
+              >
+                {nextRank?.name}
+              </span>
             </div>
 
-            <div className='mb-2 space-y-1'>
-              <div className='h-3 w-full overflow-hidden rounded-full border border-indigo-500/10 bg-slate-800/50'>
+            <div className='space-y-1'>
+              <div className='h-2 w-full overflow-hidden rounded-full border border-indigo-500/10 bg-slate-800/50'>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${Math.min(progressPercent, 100)}%` }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                   className='relative h-full rounded-full bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400'
                 >
-                  {/* Shine effect */}
                   <motion.div
                     animate={{ x: ['100%', '-100%'] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -226,16 +205,41 @@ const ProfileRank: FCC<ProfileRankProps> = ({
                   />
                 </motion.div>
               </div>
-              <div className='flex justify-between text-xs text-gray-400'>
+              <div className='flex justify-between text-xs text-gray-500'>
                 <span>{progressPercent.toFixed(1)}%</span>
                 <span>
                   {experienceToNext?.toLocaleString()} {t('experience_left')}
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
+
+        {/* Required Experience */}
+        <div className='rounded-lg border border-indigo-500/30 bg-indigo-500/20 p-2.5'>
+          <p className='text-xs tracking-wide text-gray-500 uppercase'>
+            {t('required_experience')}
+          </p>
+          <p className='mt-0.5 text-sm font-semibold text-cyan-400'>
+            {rank?.required_experience?.toLocaleString()}
+          </p>
+        </div>
       </motion.div>
+
+      {/* Game World Footer */}
+      {gameWorld && (
+        <motion.div
+          variants={itemVariants}
+          className='rounded-lg border border-indigo-500/20 bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 p-3'
+        >
+          <p className='text-xs tracking-wider text-gray-500 uppercase'>
+            {t('game_world')}
+          </p>
+          <p className='mt-1 bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-base font-semibold text-transparent'>
+            {gameWorld?.name}
+          </p>
+        </motion.div>
+      )}
     </motion.div>
   )
 }
