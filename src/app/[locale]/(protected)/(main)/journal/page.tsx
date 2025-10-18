@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import { Col, Row } from 'antd'
 import { getTranslations } from 'next-intl/server'
-import { ActivityLogsCard } from '@/components/ActivityLog/ActivityLogsCard'
 import { CharacterStatistics } from '@/components/Profile/CharacterStatistics'
 
 type JournalPageProps = {
@@ -25,34 +23,16 @@ export async function generateMetadata(
 
 export default async function JournalPage(_props: JournalPageProps) {
   return (
-    <Row
-      style={{
-        height: '100%',
-      }}
-      gutter={[24, 24]}
-    >
-      <Col
-        xs={24}
-        sm={24}
-        md={24}
-        lg={16}
-        style={{
-          height: 'calc(100vh - 130px)',
-        }}
-      >
+    <div className='flex h-full w-full flex-col gap-6 lg:flex-row'>
+      {/* Character Statistics */}
+      <div className='h-[calc(100vh-200px)] w-full overflow-hidden'>
         <CharacterStatistics />
-      </Col>
-      <Col
-        xs={24}
-        sm={24}
-        md={24}
-        lg={8}
-        style={{
-          height: 'calc(100vh - 130px)',
-        }}
-      >
-        <ActivityLogsCard />
-      </Col>
-    </Row>
+      </div>
+
+      {/* Activity Logs */}
+      {/* <div className='w-full lg:w-1/3 h-[calc(100vh-130px)] overflow-hidden'> */}
+      {/* <ActivityLogsCard /> */}
+      {/* </div> */}
+    </div>
   )
 }

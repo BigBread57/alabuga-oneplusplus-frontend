@@ -427,6 +427,10 @@
     "select_topic": "Выберите тему"
   },
   "Statistics": {
+    "by_level": "По уровню",
+    "by_status": "По статусу",
+    "by_category": "По категории",
+    "by_game_world": "По игровому миру",
     "title": "Статистика",
     "artifacts": "Артефакты",
     "competencies": "Компетенции",

@@ -55,7 +55,7 @@ const errorVariants = {
   exit: { opacity: 0, x: -10 },
 }
 
-// Компонент летающей ракеты
+// Компонент летающей ракеты, всегда летит вверх
 const FlyingRocket = ({
   delay,
   startX,
@@ -67,30 +67,34 @@ const FlyingRocket = ({
   startY: number
   duration: number
 }) => {
-  const randomEndX = Math.random() * window.innerWidth
-  const randomEndY = Math.random() * window.innerHeight
-  const randomRotation = Math.random() * 360
+  const endY = -100
+  const randomOffsetX = (Math.random() - 0.5) * 200
 
   return (
     <motion.div
-      initial={{ x: startX, y: startY, opacity: 1, rotate: 0 }}
+      initial={{ x: startX, y: startY, opacity: 1 }}
       animate={{
-        x: randomEndX,
-        y: randomEndY,
+        x: startX + randomOffsetX,
+        y: endY,
         opacity: 0,
-        rotate: randomRotation,
       }}
       transition={{
         duration,
         delay,
         ease: 'easeInOut',
         repeat: Infinity,
-        repeatDelay: Math.random() * 2,
+        repeatDelay: Math.random() * 2 + 1,
       }}
       className='pointer-events-none absolute'
     >
       <div className='flex flex-col items-center'>
-        <Rocket size={28} className='text-indigo-400 drop-shadow-lg' />
+        <Rocket
+          style={{
+            rotate: '-45deg',
+          }}
+          size={28}
+          className='text-indigo-400 drop-shadow-lg'
+        />
         <div className='h-10 w-1 bg-gradient-to-b from-orange-400 to-red-500 opacity-60 blur-sm' />
       </div>
     </motion.div>
@@ -195,8 +199,8 @@ export default function LoginForm({
             key={`flying-rocket-${new Date().getTime()}`}
             delay={i * 0.3}
             startX={Math.random() * window.innerWidth}
-            startY={Math.random() * window.innerHeight}
-            duration={12 + Math.random() * 8}
+            startY={window.innerHeight + Math.random() * 100}
+            duration={8 + Math.random() * 6}
           />
         ))}
       </div>
@@ -426,17 +430,19 @@ export default function LoginForm({
               <div className='absolute inset-0 bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 opacity-100 transition-opacity group-hover:opacity-80' />
               <div className='absolute inset-0 bg-slate-900 opacity-0 transition-opacity group-hover:opacity-5' />
               <div className='relative flex items-center justify-center gap-2'>
-                {loginIsLoading ? (
-                  <>
-                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                    {t('sign_in') || 'Вход...'}
-                  </>
-                ) : (
-                  <>
-                    <LogIn size={18} />
-                    {t('sign_in')}
-                  </>
-                )}
+                {loginIsLoading
+                  ? (
+                      <>
+                        <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                        {t('sign_in') || 'Вход...'}
+                      </>
+                    )
+                  : (
+                      <>
+                        <LogIn size={18} />
+                        {t('sign_in')}
+                      </>
+                    )}
               </div>
             </motion.button>
           </form>

@@ -1,7 +1,15 @@
 'use client'
 import type { CharacterMissionProps } from '@/models/CharacterMission'
 import { motion } from 'framer-motion'
-import { Eye } from 'lucide-react'
+import {
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  Eye,
+  Rocket,
+  Star,
+  XCircle,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { DateTimeCalendar } from '@/components/_base/DateTimeCalendar'
@@ -26,36 +34,49 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
         return {
           tag: 'bg-blue-500/20 text-blue-300',
           accent: 'from-blue-500/5 to-transparent',
+          icon: Rocket,
+          iconColor: 'text-blue-400',
         }
       case 'COMPLETED':
         return {
           tag: 'bg-green-500/20 text-green-300',
           accent: 'from-green-500/5 to-transparent',
+          icon: CheckCircle2,
+          iconColor: 'text-green-400',
         }
       case 'NEED_IMPROVEMENT':
         return {
           tag: 'bg-orange-500/20 text-orange-300',
           accent: 'from-orange-500/5 to-transparent',
+          icon: AlertCircle,
+          iconColor: 'text-orange-400',
         }
       case 'PENDING_REVIEW':
         return {
           tag: 'bg-purple-500/20 text-purple-300',
           accent: 'from-purple-500/5 to-transparent',
+          icon: Clock,
+          iconColor: 'text-purple-400',
         }
       case 'FAILED':
         return {
           tag: 'bg-red-500/20 text-red-300',
           accent: 'from-red-500/5 to-transparent',
+          icon: XCircle,
+          iconColor: 'text-red-400',
         }
       default:
         return {
           tag: 'bg-indigo-500/20 text-indigo-300',
           accent: 'from-indigo-500/5 to-transparent',
+          icon: Star,
+          iconColor: 'text-indigo-400',
         }
     }
   }
 
   const statusStyles = getStatusStyles()
+  const StatusIcon = statusStyles.icon
 
   const handleComplete = () => {
     handleCloseDrawer()
@@ -71,9 +92,27 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
         className='group cursor-pointer'
       >
         <div
-          className={`rounded-xl bg-gradient-to-r px-6 py-4 md:px-8 ${statusStyles.accent} backdrop-blur-xs transition-all duration-300 hover:backdrop-blur-sm`}
+          className={`rounded-xl bg-gradient-to-r px-4 py-4 md:px-4 ${statusStyles.accent} backdrop-blur-xs transition-all duration-300 hover:backdrop-blur-sm`}
         >
-          <div className='flex items-end justify-between gap-4'>
+          <div className='flex items-start justify-between gap-4'>
+            {/* Иконка статуса */}
+            <motion.div
+              variants={{
+                animate: {
+                  x: [0, 0, 0],
+                  y: [0, -4, 0],
+                  transition: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  },
+                },
+              }}
+              animate='animate'
+            >
+              <StatusIcon size={24} className={statusStyles.iconColor} />
+            </motion.div>
+
             <div className='min-w-0 flex-1'>
               {/* Название ветки и описание */}
               <div className='mb-2'>
@@ -84,7 +123,8 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
                       backgroundColor:
                         data?.mission?.branch?.color || '#818cf8',
                     }}
-                  ></div>
+                  >
+                  </div>
                   <span
                     className='text-xs font-medium'
                     style={{
@@ -125,14 +165,32 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
               {/* Временные данные */}
               <div className='flex flex-col gap-2 text-xs text-gray-400 sm:flex-row sm:gap-6'>
                 <div className='flex items-center gap-2'>
-                  <div className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'></div>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
+                    className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'
+                  >
+                  </motion.div>
                   <DateTimeCalendar
                     text={t('start')}
                     datetime={data?.start_datetime as string}
                   />
                 </div>
                 <div className='flex items-center gap-2'>
-                  <div className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'></div>
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
+                    className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'
+                  >
+                  </motion.div>
                   <DateTimeCalendar
                     text={t('end')}
                     datetime={data?.end_datetime as string}

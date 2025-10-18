@@ -260,6 +260,7 @@ export const useExtraActionsGet = <TData = any>({
   qKey,
   extraUrl,
   options,
+  enabled = true,
 }: {
   qKey: string
   extraUrl: string
@@ -267,6 +268,7 @@ export const useExtraActionsGet = <TData = any>({
   enabled?: boolean
 }) => {
   return useQuery({
+    enabled,
     queryKey: [qKey] as QueryKey,
     queryFn: () => BaseServices.fetchExtra(extraUrl),
     ...options,

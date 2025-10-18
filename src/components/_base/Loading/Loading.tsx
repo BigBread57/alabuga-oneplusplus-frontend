@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Rocket } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { DotsLoader } from '@/components/_base/DotsLoader'
 
 const ComponentLoading = () => {
   const t = useTranslations('Loading')
@@ -55,21 +56,7 @@ const ComponentLoading = () => {
 
           {/* Анимированные точки */}
           <div className='flex h-8 items-center justify-center gap-2'>
-            <motion.div
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-              className='h-2 w-2 rounded-full bg-cyan-400'
-            />
-            <motion.div
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-              className='h-2 w-2 rounded-full bg-pink-400'
-            />
-            <motion.div
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
-              className='h-2 w-2 rounded-full bg-indigo-400'
-            />
+            <DotsLoader />
           </div>
         </motion.div>
 

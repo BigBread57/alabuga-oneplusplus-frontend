@@ -197,8 +197,8 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  const modalRoot =
-    typeof document !== 'undefined'
+  const modalRoot
+    = typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 
@@ -214,10 +214,10 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <User size={24} />
       </motion.button>
 
-      {isMounted &&
-        modalRoot &&
-        isOpen &&
-        createPortal(
+      {isMounted
+        && modalRoot
+        && isOpen
+        && createPortal(
           <ModalContent
             onLogout={handleLogout}
             currentUser={currentUser}

@@ -24,9 +24,6 @@ const ProfilePage: FCC = () => {
       animate='visible'
       className='flex h-full w-full flex-col'
     >
-      {/* Контейнер с автоматической прокруткой */}
-      {/* Внутренний контейнер с padding */}
-      {/* <CharacterActivity /> */}
       {isMobile || isTablet
         ? (
             <CharacterActivityChangerMobile />

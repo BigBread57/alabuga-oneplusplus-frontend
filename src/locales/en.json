@@ -433,6 +433,11 @@
     "select_topic": "Select a topic"
   },
   "Statistics": {
+    "by_level": "By Level",
+    "by_status": "By Status",
+    "by_category": "By Category",
+    "by_rank": "By Rank",
+    "by_game_world": "By Game World",
     "title": "Statistics",
     "artifacts": "Artifacts",
     "competencies": "Competencies",
