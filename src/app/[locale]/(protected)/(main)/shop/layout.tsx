@@ -39,7 +39,7 @@ const navItems = [
     label: 'menu_purchases',
     icon: ShoppingCart,
   },
-]
+] as const
 
 export default function Layout(props: ShopPageProps) {
   const params = useParams()
