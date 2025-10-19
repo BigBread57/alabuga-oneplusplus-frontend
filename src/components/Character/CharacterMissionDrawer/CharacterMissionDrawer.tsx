@@ -182,7 +182,7 @@ const CharacterMissionModal: FCC<CharacterMissionDrawerProps> = ({
             <div
               className='h-[100dvh] w-full overflow-hidden rounded-t-3xl border-0 border-indigo-500/20 bg-slate-900/95 shadow-2xl backdrop-blur-xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl md:border'
               role='dialog'
-              tabIndex={-1}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className='sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-indigo-500/20 bg-slate-900/95 p-4 backdrop-blur-xl md:p-6'>

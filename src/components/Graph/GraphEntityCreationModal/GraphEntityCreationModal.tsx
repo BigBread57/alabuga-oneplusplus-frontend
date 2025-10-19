@@ -33,6 +33,14 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     setIsMounted(true)
   }, [])
 
+  const getDefaultTitle = (type: ENTITY_TYPES | null): string => {
+    if (!type) {
+      return ''
+    }
+    const entityLabel = getEntityLabel(type)
+    return `${entityLabel} ${Date.now().toString().slice(-4)}`
+  }
+
   useEffect(() => {
     if (visible && entityType) {
       setFormData({
@@ -59,14 +67,6 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     // eslint-disable-next-line ts/ban-ts-comment
     // @ts-expect-error
     return t(`entities.${type}`, { fallback: type })
-  }
-
-  const getDefaultTitle = (type: ENTITY_TYPES | null): string => {
-    if (!type) {
-      return ''
-    }
-    const entityLabel = getEntityLabel(type)
-    return `${entityLabel} ${Date.now().toString().slice(-4)}`
   }
 
   const getDefaultDescription = (type: ENTITY_TYPES | null): string => {
@@ -165,8 +165,8 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     exit: { opacity: 0 },
   }
 
-  const modalRoot
-    = typeof document !== 'undefined'
+  const modalRoot =
+    typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 

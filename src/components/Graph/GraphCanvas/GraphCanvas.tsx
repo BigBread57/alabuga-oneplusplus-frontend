@@ -57,8 +57,8 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
     any
   > | null>(null)
   const [isShowModal, setIsShowModal] = useState(false)
-  const [currentEntityType, setCurrentEntityType] =
-    useState<ENTITY_TYPES | null>(null)
+  const [currentEntityType, setCurrentEntityType]
+    = useState<ENTITY_TYPES | null>(null)
 
   const handleShowModal = (entityType: ENTITY_TYPES) => {
     setIsShowModal(true)
@@ -163,26 +163,28 @@ const GraphCanvas: FCC<GraphCanvasProps> = ({
             whileTap={{ scale: 0.98 }}
             className='flex items-center justify-center gap-2 rounded-lg border border-indigo-500/30 bg-indigo-500/20 px-4 py-1 text-sm font-medium text-indigo-300 transition-all hover:bg-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-50'
           >
-            {isLoadingGenerate ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    ease: 'linear',
-                  }}
-                >
-                  <Plus size={16} />
-                </motion.div>
-                <span>{t('generating')}</span>
-              </>
-            ) : (
-              <>
-                <Plus size={16} />
-                <span>{t('create_new_lor')}</span>
-              </>
-            )}
+            {isLoadingGenerate
+              ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                    >
+                      <Plus size={16} />
+                    </motion.div>
+                    <span>{t('generating')}</span>
+                  </>
+                )
+              : (
+                  <>
+                    <Plus size={16} />
+                    <span>{t('create_new_lor')}</span>
+                  </>
+                )}
           </motion.button>
         )}
       </div>

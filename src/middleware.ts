@@ -34,6 +34,8 @@ const protectedRoutes = [
   '/:locale/admin',
   '/admin/missions',
   '/:locale/admin/missions',
+  '/admin/events',
+  '/:locale/admin/events',
   '/admin/lor',
   '/:locale/admin/lor',
   '/admin/statistics',

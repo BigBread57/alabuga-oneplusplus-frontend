@@ -617,6 +617,7 @@
   "AdminMenu": {
     "lor": "LOR",
     "missions": "Missions",
+    "events": "Events",
     "statistics": "Statistics",
     "shop": "Shop"
   },
@@ -627,7 +628,8 @@
     "sent": "Sent",
     "pending": "Pending",
     "delivered": "Delivered",
-    "no_data": "No purchases found"
+    "no_data": "No purchases found",
+    "cancelled": "Cancelled"
   },
   "ProfileTour": {
     "welcome_title": "Welcome to your Profile!",

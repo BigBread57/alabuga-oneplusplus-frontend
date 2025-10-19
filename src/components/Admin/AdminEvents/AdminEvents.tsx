@@ -2,17 +2,17 @@
 
 import type { FCC } from 'src/types'
 import { motion } from 'framer-motion'
-import { Inbox } from 'lucide-react'
+import { Flame, Zap } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import { MissionStatusFilter } from '@/components/Character/MissionStatusFilter'
-import { MissionCard } from '@/components/Mission/MissionCard'
+import { EventCard } from '@/components/Event/EventCard'
 import { useFilter } from '@/hooks/useFilter'
+import { CharacterEventForInspector } from '@/models/CharacterEventForInspector'
 import { CharacterMissionStatus } from '@/models/CharacterMission'
-import { CharacterMissionForInspector } from '@/models/CharacterMissionForInspector'
 import { useFetchItems } from '@/services/base/hooks'
 
-const MODEL_CHARACTER_MISSIONS = CharacterMissionForInspector
+const MODEL_EVENTS = CharacterEventForInspector
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,26 +35,37 @@ const sectionVariants = {
   },
 }
 
-const AdminMissions: FCC = () => {
+const rotateVariants = {
+  animate: {
+    rotate: 360,
+    transition: {
+      duration: 8,
+      repeat: Infinity,
+      ease: 'linear',
+    },
+  },
+}
+
+const AdminEvents: FCC = () => {
   const t = useTranslations('Mission')
 
   const [filter, handleSetFilter] = useFilter({
     status: CharacterMissionStatus.IN_PROGRESS,
   })
 
-  const { data: missionData, refetch: refetchMissions } = useFetchItems({
-    model: MODEL_CHARACTER_MISSIONS,
+  const { data: eventData, refetch: refetchEvents } = useFetchItems({
+    model: MODEL_EVENTS,
     filter: {
       status: filter.status,
     },
-    qKey: 'characterMissionsAdmin',
+    qKey: 'characterEventsAdmin',
   })
 
-  const missionsList = missionData?.data?.results || []
-  const missionCount = missionData?.data?.count || 0
+  const eventsList = eventData?.data?.results || []
+  const eventCount = eventData?.data?.count || 0
 
-  const handleMissionComplete = () => {
-    refetchMissions()
+  const handleEventComplete = () => {
+    refetchEvents()
   }
 
   return (
@@ -69,6 +80,15 @@ const AdminMissions: FCC = () => {
         variants={sectionVariants}
         className='mb-6 flex items-center justify-between rounded-2xl border border-indigo-500/20 bg-gradient-to-r from-indigo-500/5 to-transparent p-4 backdrop-blur-xs'
       >
+        <div className='flex items-center gap-2'>
+          <div className='rounded-lg bg-indigo-500/20 p-1.5'>
+            <Zap size={18} className='text-indigo-400' />
+          </div>
+          <h2 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-sm font-bold text-transparent md:text-base'>
+            {t('events')}
+          </h2>
+        </div>
+
         <MissionStatusFilter
           value={filter.status}
           onChange={(status) => {
@@ -85,17 +105,17 @@ const AdminMissions: FCC = () => {
         <div className='flex items-center justify-between gap-2 border-b border-indigo-500/10 bg-gradient-to-r from-indigo-500/5 to-transparent px-6 py-4'>
           <div className='flex items-center gap-2'>
             <div className='rounded-lg bg-indigo-500/20 p-1.5'>
-              <Inbox size={18} className='text-indigo-400' />
+              <Flame size={18} className='text-indigo-400' />
             </div>
             <h3 className='bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-sm font-bold text-transparent md:text-base'>
-              {t('missions')}
+              {t('events')}
             </h3>
             <span className='inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-indigo-500/50 bg-indigo-500/30 px-1.5 text-xs font-semibold text-indigo-300'>
-              {missionCount}
+              {eventCount}
             </span>
           </div>
-          <motion.div>
-            <Inbox size={18} className='text-indigo-400' />
+          <motion.div variants={rotateVariants} animate='animate'>
+            <Flame size={18} className='text-indigo-400' />
           </motion.div>
         </div>
 
@@ -104,21 +124,13 @@ const AdminMissions: FCC = () => {
           style={{ maxHeight: '70vh' }}
         >
           <div className='flex flex-col gap-4'>
-            {missionsList.length > 0
-              ? (
-                  missionsList.map((item: any) => (
-                    <MissionCard
-                      data={item}
-                      key={item.id}
-                      onComplete={handleMissionComplete}
-                    />
-                  ))
-                )
-              : (
-                  <div className='flex items-center justify-center p-8 text-indigo-300/60'>
-                    {t('no_missions')}
-                  </div>
-                )}
+            {eventsList?.map((item: any) => (
+              <EventCard
+                data={item}
+                key={item.id}
+                onComplete={handleEventComplete}
+              />
+            ))}
           </div>
         </div>
       </motion.div>
@@ -126,6 +138,6 @@ const AdminMissions: FCC = () => {
   )
 }
 
-AdminMissions.displayName = 'AdminMissions'
+AdminEvents.displayName = 'AdminEvents'
 
-export default AdminMissions
+export default AdminEvents

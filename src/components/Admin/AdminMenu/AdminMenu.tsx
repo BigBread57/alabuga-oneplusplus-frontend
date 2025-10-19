@@ -6,6 +6,7 @@ import {
   BarChart3,
   Compass,
   Globe,
+  Rocket,
   ShoppingCart,
   Trophy,
   X,
@@ -36,6 +37,9 @@ const AdminMenu: FCC = () => {
     if (pathname.includes('missions')) {
       return 'missions'
     }
+    if (pathname.includes('events')) {
+      return 'events'
+    }
     if (pathname.includes('lor')) {
       return 'lor'
     }
@@ -59,9 +63,15 @@ const AdminMenu: FCC = () => {
     },
     {
       key: 'missions',
-      icon: <Trophy size={18} />,
+      icon: <Rocket size={18} />,
       label: t('missions'),
       href: 'missions',
+    },
+    {
+      key: 'events',
+      icon: <Trophy size={18} />,
+      label: t('events'),
+      href: 'events',
     },
     {
       key: 'statistics',
@@ -148,9 +158,6 @@ const AdminMenu: FCC = () => {
                   <motion.div key={item.key} variants={itemVariants}>
                     <Link href={item.href}>
                       <motion.button
-                        whileHover={{
-                          backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        }}
                         onClick={() => setIsModalOpen(false)}
                         className={`w-full rounded-lg px-4 py-3 text-left transition-colors ${
                           selectedKey === item.key
@@ -204,7 +211,6 @@ const AdminMenu: FCC = () => {
           <motion.div key={item.key} variants={itemVariants}>
             <Link href={item.href}>
               <motion.button
-                whileHover={{ backgroundColor: 'rgba(99, 102, 241, 0.1)' }}
                 className={`w-full rounded-lg px-4 py-3 text-left transition-colors ${
                   selectedKey === item.key
                     ? 'bg-indigo-500/30 text-indigo-300'

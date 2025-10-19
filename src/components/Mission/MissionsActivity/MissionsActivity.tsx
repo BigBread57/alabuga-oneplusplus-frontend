@@ -100,12 +100,17 @@ const MissionsActivity: FCC<MissionsActivityProps> = () => {
         className='mb-4 flex flex-col items-center justify-center gap-3 p-2 sm:flex-row'
         data-testid='test-MissionsActivity'
       >
-        <MissionStatusFilter
-          value={filter.status}
-          onChange={(status) => {
-            handleSetFilter({ status })
-          }}
-        />
+        <motion.div
+          variants={sectionVariants}
+          className=' flex items-center justify-between rounded-2xl border border-indigo-500/20 bg-gradient-to-r from-indigo-500/5 to-transparent p-4 backdrop-blur-xs'
+        >
+          <MissionStatusFilter
+            value={filter.status}
+            onChange={(status) => {
+              handleSetFilter({ status })
+            }}
+          />
+        </motion.div>
       </motion.div>
 
       <motion.div

@@ -62,7 +62,6 @@ export const ResponsiveHeader = ({
   } = useProfileTour()
 
   const handleCustomStepChange = (current: number) => {
-    console.log('Current Step:', current)
     if (current === 0) {
       currentUserRef.current.close()
     }
