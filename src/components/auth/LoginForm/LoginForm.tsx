@@ -484,7 +484,7 @@ export default function LoginForm({
                 }}
                 className='w-full rounded-lg border border-cyan-400/30 px-1 py-2 text-sm font-medium text-cyan-300 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-400/10'
               >
-                Демо Кандидат
+                Демо работник
               </button>
             </motion.div>
           </form>
