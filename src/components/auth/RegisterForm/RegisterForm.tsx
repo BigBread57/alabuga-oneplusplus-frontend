@@ -14,7 +14,6 @@ import {
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useState } from 'react'
-import { ThemeSwitcher } from '@/components/_base/ThemeSwitcher/ThemeSwitcher'
 import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { useRegister } from '@/services/auth/hooks'
@@ -325,7 +324,6 @@ export default function RegisterForm({
               variants={itemVariants}
               className='flex items-center justify-center gap-4 border-t border-indigo-500/10 pt-6'
             >
-              <ThemeSwitcher />
               <LocaleSwitcher variant='compact' />
             </motion.div>
           </div>
