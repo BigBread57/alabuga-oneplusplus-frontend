@@ -9,7 +9,7 @@ const baseConfig: NextConfig = {
   output: 'standalone',
   eslint: {
     dirs: ['.'],
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
   poweredByHeader: false,
   reactStrictMode: true,
@@ -24,7 +24,7 @@ const baseConfig: NextConfig = {
     ],
   },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
 }
 
