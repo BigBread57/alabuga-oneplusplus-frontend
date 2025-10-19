@@ -13,7 +13,7 @@ export interface ShopItemCategoryProps extends BaseModelProps {
 enum ShopItemCategoryUrl {
   SHOP_ITEM_CATEGORY = '/shop/item-category',
   SHOP_ITEM_CATEGORIES = '/shop/item-categories',
-  SHOP_ITEM_CATEGORIES_LIST = '/shop/item-categories/list',
+  SHOP_ITEM_CATEGORIES_LIST = '/shop/item-categories',
 }
 
 export class ShopItemCategory extends BaseModel {
