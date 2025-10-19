@@ -43,13 +43,14 @@ const NodeInfoModal: FC<NodeInfoModalProps> = ({
   const { formFields: eventFormFields } = useEventFormConfig()
   const { formFields: artifactFormFields } = useArtifactFormConfig()
   const { formFields: GameWorldStoryFormFields } = useGameWorldStoryFormConfig()
-  const { formFields: eventCompetencyFormFields }
-    = useEventCompetencyFormConfig()
-  const { formFields: missionCompetencyFormFields }
-    = useMissionCompetencyFormConfig()
+  const { formFields: eventCompetencyFormFields } =
+    useEventCompetencyFormConfig()
+  const { formFields: missionCompetencyFormFields } =
+    useMissionCompetencyFormConfig()
   const { formFields: missionBranchFormFields } = useMissionBranchFormConfig()
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setIsMounted(true)
   }, [])
 
@@ -125,7 +126,7 @@ const NodeInfoModal: FC<NodeInfoModalProps> = ({
       y: '100%',
       transition: { duration: 0.2 },
     },
-  }
+  } as const
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -133,8 +134,8 @@ const NodeInfoModal: FC<NodeInfoModalProps> = ({
     exit: { opacity: 0 },
   }
 
-  const modalRoot
-    = typeof document !== 'undefined'
+  const modalRoot =
+    typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 

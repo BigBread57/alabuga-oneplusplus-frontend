@@ -41,15 +41,19 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
     return `${entityLabel} ${Date.now().toString().slice(-4)}`
   }
 
-  useEffect(() => {
-    if (visible && entityType) {
-      setFormData({
-        name: getDefaultTitle(entityType),
-        description: getDefaultDescription(entityType),
-      })
-      setErrors({})
-    }
-  }, [visible, entityType])
+  useEffect(
+    () => {
+      if (visible && entityType) {
+        setFormData({
+          name: getDefaultTitle(entityType),
+          description: getDefaultDescription(entityType),
+        })
+        setErrors({})
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [visible, entityType],
+  )
 
   useEffect(() => {
     if (visible) {
@@ -157,7 +161,7 @@ const EntityCreationModal: FCC<EntityCreationModalProps> = ({
       y: '100%',
       transition: { duration: 0.2 },
     },
-  }
+  } as const
 
   const backdropVariants = {
     hidden: { opacity: 0 },

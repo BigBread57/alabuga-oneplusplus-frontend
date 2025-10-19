@@ -148,6 +148,7 @@ const StatusCell: React.FC<{
 
         <div className='flex gap-2'>
           <button
+            type='button'
             onClick={handleStatusUpdate}
             className='flex items-center gap-1 rounded-lg bg-gradient-to-r from-green-500 to-green-600 px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90'
           >
@@ -155,6 +156,7 @@ const StatusCell: React.FC<{
             Сохранить
           </button>
           <button
+            type='button'
             onClick={handleCancel}
             className='flex items-center gap-1 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20'
           >

@@ -73,6 +73,7 @@ const SimpleSelect: React.FC<SimpleSelectProps> = ({
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const newSelected = Array.from(e.target.selectedOptions, (opt) => {
         const val = opt.value
+        // eslint-disable-next-line unicorn/prefer-number-properties
         return isNaN(Number(val)) ? val : Number(val)
       })
 

@@ -57,6 +57,7 @@ export const MessageProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <MessageContext.Provider
+      // eslint-disable-next-line react/no-unstable-context-value
       value={{ messages, messageSuccess, messageError, removeMessage }}
     >
       {children}
@@ -64,6 +65,7 @@ export const MessageProvider: React.FC<{ children: React.ReactNode }> = ({
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMessage = () => {
   const context = useContext(MessageContext)
   if (!context) {

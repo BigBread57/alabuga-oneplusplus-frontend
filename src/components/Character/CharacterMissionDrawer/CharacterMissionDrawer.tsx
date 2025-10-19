@@ -134,7 +134,7 @@ const CharacterMissionModal: FCC<CharacterMissionDrawerProps> = ({
       y: '100%',
       transition: { duration: 0.2 },
     },
-  }
+  } as const
 
   const backdropVariants = {
     hidden: { opacity: 0 },

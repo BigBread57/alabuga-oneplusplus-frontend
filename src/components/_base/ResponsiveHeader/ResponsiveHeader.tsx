@@ -33,7 +33,7 @@ export const ResponsiveHeader = ({
       y: 0,
       transition: { duration: 0.5, ease: 'easeOut' },
     },
-  }
+  } as const
 
   const menuVariants = {
     hidden: { opacity: 0, height: 0 },
@@ -72,10 +72,12 @@ export const ResponsiveHeader = ({
       currentUserRef.current.close()
     }
     if ((isMobile || isTablet) && current === 7) {
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-ignore
       menuLinksRef && menuLinksRef?.current?.closeMenu()
     }
     if ((isMobile || isTablet) && current === 8) {
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-ignore
       menuLinksRef && menuLinksRef?.current?.openMenu()
     }
