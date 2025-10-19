@@ -36,7 +36,7 @@ export function ThemeSwitcher({
     setTheme(key as any)
   }
 
-  const menuItems: MenuProps['items'] = themeOptions.map((theme) => ({
+  const menuItems: MenuProps['items'] = themeOptions?.map((theme) => ({
     key: theme.key,
     label: (
       <Space>

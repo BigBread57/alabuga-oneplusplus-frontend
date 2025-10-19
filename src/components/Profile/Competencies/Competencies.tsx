@@ -2,11 +2,13 @@ import type { FCC } from 'src/types'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Competence } from '@/components/Profile/Competence'
+import { useTour } from '@/components/Tour/useTour'
 import { CharacterCompetency } from '@/models/CharacterCompetence'
 
 const MODEL = CharacterCompetency
 
 export const CompetenceList: FCC = () => {
+  const { competenciesSectionRef } = useTour()
   return (
     <FetchMoreItemsComponent
       model={MODEL}
@@ -18,7 +20,11 @@ export const CompetenceList: FCC = () => {
           data-testid='test-CompetenceList'
         >
           {data?.map((item) => (
-            <div key={item.id} className='flex-shrink-0'>
+            <div
+              key={item.id}
+              ref={competenciesSectionRef}
+              className='flex-shrink-0'
+            >
               <Competence isLoading={isLoading} data={item} />
             </div>
           ))}

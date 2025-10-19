@@ -50,7 +50,7 @@ const rocketVariants = {
 const MODEL_EVENTS = CharacterEvent
 
 const CharacterActivityChanger: FCC<CharacterActivityChangerProps> = () => {
-  const { statusFilterRef, activitySectionRef, activityTabsRef } = useTour()
+  const { statusFilterRef } = useTour()
 
   const [filter, handleSetFilter] = useFilter({
     status: CharacterMissionStatus.IN_PROGRESS,

@@ -211,7 +211,7 @@ const FileUpload: FCC<FileUploadProps> = ({
           </p>
 
           <div className='space-y-1.5'>
-            {fileList.map((file) => (
+            {fileList?.map((file) => (
               <motion.div
                 key={`${file.id}`}
                 initial={{ opacity: 0, x: -10 }}

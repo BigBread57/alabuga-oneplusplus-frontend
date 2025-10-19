@@ -1,11 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import React, { useContext } from 'react'
+import { HelpCircle } from 'lucide-react'
+import React, { useContext, useRef } from 'react'
 import { AppSettings } from '@/components/_base/AppSettings/AppSettings'
 import { MenuLinks } from '@/components/_base/MenuLinks'
-import { CurrentUser } from '@/components/CurrentUser'
+import CurrentUserComponent from '@/components/CurrentUser/CurrentUser'
 import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUserContext'
+import { ProfileTour } from '@/components/Tour/ProfileTour/ProfileTour'
+import { useProfileTour } from '@/components/Tour/ProfileTour/useProfileTour'
+import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 import ActivityLogsCard from '../../ActivityLog/ActivityLogsCard/ActivityLogsCard'
 
@@ -20,6 +24,7 @@ export const ResponsiveHeader = ({
 }: ResponsiveHeaderProps = {}) => {
   const { currentUser } = useContext(CurrentUserContext)
   const { isMobile, isTablet } = useScreens()
+  const currentUserRef = useRef<any>(null)
 
   const headerVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -44,6 +49,36 @@ export const ResponsiveHeader = ({
     },
   }
 
+  const { steps, menuLinksRef } = useTour()
+
+  const {
+    isModalOpen,
+    tourOpen,
+    currentStep,
+    handleStartTour,
+    handleSkipTour,
+    handleCloseTour,
+    handleStepChange,
+  } = useProfileTour()
+
+  const handleCustomStepChange = (current: number) => {
+    if (current === 1) {
+      currentUserRef.current.open()
+    }
+    if (current === 4) {
+      currentUserRef.current.close()
+    }
+    if ((isMobile || isTablet) && current === 8) {
+      menuLinksRef && menuLinksRef?.current?.openMenu()
+    }
+    // Дополнительная логика при смене шага, если необходимо
+    handleStepChange(current)
+  }
+
+  const handelRunTour = () => {
+    handleStartTour()
+  }
+
   return (
     <motion.header
       variants={headerVariants}
@@ -51,6 +86,17 @@ export const ResponsiveHeader = ({
       animate='visible'
       className='sticky top-0 z-40 w-full'
     >
+      {/* Тур */}
+      <ProfileTour
+        isModalOpen={isModalOpen}
+        tourOpen={tourOpen}
+        steps={steps}
+        currentStep={currentStep}
+        onStartTour={handelRunTour}
+        onSkipTour={handleSkipTour}
+        onCloseTour={handleCloseTour}
+        onStepChange={handleCustomStepChange}
+      />
       {/* Основной хедер */}
       <div className='border-b border-indigo-500/10 bg-slate-900/0 shadow-none backdrop-blur-xl transition-shadow duration-300 hover:shadow-lg'>
         {/* Контейнер */}
@@ -95,9 +141,21 @@ export const ResponsiveHeader = ({
                   {/* Можно добавить дополнительные переключатели */}
                 </div>
               )}
+              {/* Кнопка тура */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handelRunTour}
+                className='relative rounded-lg p-2 text-cyan-400 transition-colors duration-200 hover:bg-indigo-500/10'
+              >
+                <HelpCircle size={24} />
+              </motion.button>
               <ActivityLogsCard />
               {/* Текущий пользователь */}
-              <CurrentUser currentUser={currentUser} />
+              <CurrentUserComponent
+                ref={currentUserRef}
+                currentUser={currentUser}
+              />
               {/* Настройки */}
               <AppSettings />
               {/* Мобильное меню кнопка */}
@@ -109,7 +167,7 @@ export const ResponsiveHeader = ({
                   exit='exit'
                   className='overflow-hidden'
                 >
-                  <MenuLinks />
+                  <MenuLinks ref={menuLinksRef as any} />
                 </motion.div>
               )}
             </motion.div>

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 import { CharacterMissionStatus } from '@/models/CharacterMission'
 
@@ -142,6 +143,7 @@ const MissionStatusFilter: FCC<MissionStatusFilterProps> = ({
       transition: { duration: 0.15 },
     },
   }
+  const { statusFilterRef } = useTour()
 
   // Десктопная версия - Radio группа с иконками
   if (!isMobile && !isTablet) {
@@ -151,7 +153,7 @@ const MissionStatusFilter: FCC<MissionStatusFilterProps> = ({
         animate={{ opacity: 1, y: 0 }}
         className={`flex flex-wrap gap-2 ${direction === 'vertical' ? 'flex-col' : ''}`}
       >
-        {options.map((option) => {
+        {options?.map((option) => {
           const IconComponent = option.icon
           return (
             <motion.button
@@ -181,6 +183,7 @@ const MissionStatusFilter: FCC<MissionStatusFilterProps> = ({
     <div ref={dropdownRef} className='relative w-full'>
       {/* Trigger кнопка */}
       <motion.button
+        ref={statusFilterRef}
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -235,7 +238,7 @@ const MissionStatusFilter: FCC<MissionStatusFilterProps> = ({
               <div className='my-1 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent' />
 
               {/* Остальные опции */}
-              {options.map((option, index) => {
+              {options?.map((option, index) => {
                 const IconComponent = option.icon
                 return (
                   <motion.button

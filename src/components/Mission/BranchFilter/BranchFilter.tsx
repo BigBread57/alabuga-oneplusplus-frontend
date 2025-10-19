@@ -2,6 +2,7 @@ import type { FCC } from 'src/types'
 import { motion } from 'framer-motion'
 import { Split, Telescope, X } from 'lucide-react'
 import React, { useState } from 'react'
+import { useTour } from '@/components/Tour/useTour'
 import { useScreens } from '@/hooks/useScreens'
 
 interface BranchFilterProps {
@@ -11,10 +12,12 @@ interface BranchFilterProps {
 }
 
 const BranchFilter: FCC<BranchFilterProps> = ({
-  branches = [],
+  branches,
   filter,
   onSelectBranch,
 }) => {
+  const { branchesCardRef } = useTour()
+
   const { isMobile, isTablet } = useScreens()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -26,7 +29,11 @@ const BranchFilter: FCC<BranchFilterProps> = ({
   // Мобильная версия - Модальное окно
   if (isMobile || isTablet) {
     return (
-      <div className='w-full' data-testid='test-BranchFilter'>
+      <div
+        ref={branchesCardRef as any}
+        className='w-full'
+        data-testid='test-BranchFilter'
+      >
         <motion.button
           onClick={() => setIsModalOpen(true)}
           whileHover={{ scale: 1.02 }}
@@ -58,6 +65,7 @@ const BranchFilter: FCC<BranchFilterProps> = ({
                   Ветки миссий
                 </h3>
                 <button
+                  type='button'
                   onClick={() => setIsModalOpen(false)}
                   className='text-indigo-400 transition-colors hover:text-indigo-300'
                 >

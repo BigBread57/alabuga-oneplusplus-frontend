@@ -105,7 +105,7 @@ export const LocaleSwitcher = ({
               exit='exit'
               className='absolute right-0 mt-2 min-w-[140px] rounded-lg border border-indigo-500/20 bg-slate-900/80 shadow-2xl backdrop-blur-xl'
             >
-              {routing.locales.map((localeCode, i) => {
+              {routing.locales?.map((localeCode, i) => {
                 const option = localeOptions.find(
                   (opt) => opt.value === localeCode,
                 )
@@ -172,7 +172,7 @@ export const LocaleSwitcher = ({
             exit='exit'
             className='absolute right-0 mt-2 min-w-[180px] overflow-hidden rounded-lg border border-indigo-500/20 bg-slate-900/80 shadow-2xl backdrop-blur-xl'
           >
-            {routing.locales.map((localeCode, i) => {
+            {routing.locales?.map((localeCode, i) => {
               const option = localeOptions.find(
                 (opt) => opt.value === localeCode,
               )

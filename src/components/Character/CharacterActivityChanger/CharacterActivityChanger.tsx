@@ -65,7 +65,7 @@ const MODEL_EVENTS = CharacterEvent
 const MODEL_CHARACTER_MISSION_BRANCHES = CharacterMission
 
 const CharacterActivityChanger: FCC<CharacterActivityChangerProps> = () => {
-  const { statusFilterRef, activitySectionRef, activityTabsRef } = useTour()
+  const { statusFilterRef } = useTour()
 
   const [filter, handleSetFilter] = useFilter({
     status: CharacterMissionStatus.IN_PROGRESS,

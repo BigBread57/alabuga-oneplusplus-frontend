@@ -513,7 +513,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       return node?.getData() || null
     }
 
-    return graphRef.current.getNodes().map((node) => ({
+    return graphRef.current.getNodes()?.map((node) => ({
       id: node.id,
       ...node.getData(),
     }))

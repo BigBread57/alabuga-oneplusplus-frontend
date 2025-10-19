@@ -10,6 +10,7 @@ import { Artifacts } from '@/components/Profile/Artifacts'
 import { Competencies } from '@/components/Profile/Competencies'
 import { ProfilePhoto } from '@/components/Profile/ProfilePhoto'
 import { ProfileRank } from '@/components/Profile/ProfileRank'
+import { useTour } from '@/components/Tour/useTour'
 import { Character } from '@/models/Character'
 import { useLogout } from '@/services/auth/hooks'
 import { useFetchExtraAction } from '@/services/base/hooks'
@@ -29,7 +30,7 @@ const ModalContent = ({
   onClose: () => void
 }) => {
   const t = useTranslations('ProfileCard')
-
+  const { profileSectionRef } = useTour()
   const backdropVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.2 } },
@@ -111,31 +112,39 @@ const ModalContent = ({
               {/* Прокручиваемая область */}
               <div className='w-full flex-1 overflow-y-auto px-2 py-6'>
                 <div className='flex w-full flex-col items-center gap-6'>
-                  <ProfilePhoto
-                    characterId={data?.data?.id}
-                    username={
-                      data?.data?.user?.full_name || data?.data?.user?.username
-                    }
-                    avatar={data?.data?.avatar}
-                    editable
-                    onSuccess={refetch}
-                  />
-                  <div className='w-full'>
-                    <ProfileRank
+                  <div
+                    className='gap-6 flex w-full flex-col items-center'
+                    ref={profileSectionRef}
+                  >
+                    <ProfilePhoto
                       characterId={data?.data?.id}
-                      userName={
-                        data?.data?.user?.full_name
-                        || data?.data?.user?.username
+                      username={
+                        data?.data?.user?.full_name ||
+                        data?.data?.user?.username
                       }
-                      rank={data?.data?.character_rank?.rank || null}
-                      nextRank={data?.data?.character_rank?.next_rank || null}
-                      currency={data?.data?.currency}
-                      gameWorld={data?.data?.game_world}
-                      email={data?.data?.user?.email || null}
-                      showProgress
-                      currentExperience={data?.data?.character_rank?.experience}
-                      onUpdateAvatarSuccess={refetch}
+                      avatar={data?.data?.avatar}
+                      editable
+                      onSuccess={refetch}
                     />
+                    <div className='w-full'>
+                      <ProfileRank
+                        characterId={data?.data?.id}
+                        userName={
+                          data?.data?.user?.full_name ||
+                          data?.data?.user?.username
+                        }
+                        rank={data?.data?.character_rank?.rank || null}
+                        nextRank={data?.data?.character_rank?.next_rank || null}
+                        currency={data?.data?.currency}
+                        gameWorld={data?.data?.game_world}
+                        email={data?.data?.user?.email || null}
+                        showProgress
+                        currentExperience={
+                          data?.data?.character_rank?.experience
+                        }
+                        onUpdateAvatarSuccess={refetch}
+                      />
+                    </div>
                   </div>
                   {/* Artifacts с прокруткой */}
                   <div className='max-h-64 w-full rounded-lg border border-indigo-500/20 bg-slate-800/50 p-4'>
@@ -180,11 +189,19 @@ const ModalContent = ({
   )
 }
 
-export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
+export interface CurrentUserHandle {
+  open: () => void
+  close: () => void
+}
+
+const CurrentUserComponent = React.forwardRef<
+  CurrentUserHandle,
+  CurrentUserProps
+>(({ currentUser }, ref) => {
   const { mutate: logout } = useLogout() as any
   const [isOpen, setIsOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-
+  const { currentUserRef } = useTour()
   useEffect(() => {
     // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
     setIsMounted(true)
@@ -212,14 +229,25 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  const modalRoot
-    = typeof document !== 'undefined'
+  // Expose методы через ref
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      open: () => setIsOpen(true),
+      close: () => setIsOpen(false),
+    }),
+    [],
+  )
+
+  const modalRoot =
+    typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 
   return (
     <>
       <motion.button
+        ref={currentUserRef as any}
         onClick={() => setIsOpen(true)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -240,10 +268,10 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
         </motion.div>
       </motion.button>
 
-      {isMounted
-        && modalRoot
-        && isOpen
-        && createPortal(
+      {isMounted &&
+        modalRoot &&
+        isOpen &&
+        createPortal(
           <ModalContent
             onLogout={handleLogout}
             currentUser={currentUser}
@@ -253,8 +281,8 @@ export const CurrentUser: React.FC<CurrentUserProps> = ({ currentUser }) => {
         )}
     </>
   )
-}
+})
 
-CurrentUser.displayName = 'CurrentUser'
+CurrentUserComponent.displayName = 'CurrentUser'
 
-export default CurrentUser
+export default CurrentUserComponent

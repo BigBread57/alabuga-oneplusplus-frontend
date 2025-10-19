@@ -262,7 +262,7 @@ const AwesomeFormGenerator: React.FC<AwesomeFormGeneratorProps> = ({
       disabled={loading}
     >
       <Row gutter={[16, 0]}>
-        {fields.map((field) => (
+        {fields?.map((field) => (
           <Col xs={24} key={field.key}>
             <Form.Item
               name={field.key}

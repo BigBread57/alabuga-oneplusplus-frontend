@@ -64,7 +64,7 @@ const Select: React.FC<SelectProps> = ({
       return []
     }
 
-    return items.map((item: any) => ({
+    return items?.map((item: any) => ({
       value: item[valueKey],
       label: item[labelKey],
       ...item,
@@ -248,7 +248,7 @@ const Select: React.FC<SelectProps> = ({
                       </div>
                     )
                   : (
-                      filteredOptions.map((option, index) => (
+                      filteredOptions?.map((option, index) => (
                         <motion.button
                           key={option.value}
                           onClick={() => handleSelect(option.value)}

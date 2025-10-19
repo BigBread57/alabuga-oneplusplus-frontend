@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { Artifact } from '@/components/Profile/Artifact'
+import { useTour } from '@/components/Tour/useTour'
 import { CharacterArtifact } from '@/models/CharacterArtifacts'
 
 const MODEL = CharacterArtifact
@@ -21,7 +22,7 @@ const ArtifactsList: FCC = () => {
       },
     },
   }
-
+  const { artifactsSectionRef } = useTour()
   const emptyStateVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -82,7 +83,10 @@ const ArtifactsList: FCC = () => {
                   </motion.div>
                 )
               : (
-                  <div className='flex w-full overflow-x-auto'>
+                  <div
+                    ref={artifactsSectionRef}
+                    className='flex w-full overflow-x-auto'
+                  >
                     {data?.map((item) => (
                       <Artifact key={item?.id} {...item?.artifact} />
                     ))}

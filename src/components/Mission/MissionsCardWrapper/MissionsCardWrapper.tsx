@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { MissionCard } from '@/components/Mission/MissionCard'
+import { useTour } from '@/components/Tour/useTour'
 import { CharacterMission } from '@/models/CharacterMission'
 
 interface MissionsCardWrapperProps {
@@ -25,8 +26,11 @@ const containerVariants = {
 }
 
 const MissionsCardWrapper: FCC<MissionsCardWrapperProps> = ({ filters }) => {
+  const { missionsCardRef } = useTour()
+
   return (
     <motion.div
+      ref={missionsCardRef}
       variants={containerVariants}
       initial='hidden'
       animate='visible'

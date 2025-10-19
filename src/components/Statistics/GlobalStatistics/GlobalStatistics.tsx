@@ -116,7 +116,7 @@ const GlobalStatistics: FCC = () => {
         {/* Вкладки */}
         <div className='overflow-x-auto border-b border-indigo-500/10 bg-slate-900/50 p-4'>
           <div className='flex flex-nowrap gap-2'>
-            {tabConfig.map((tab, index) => {
+            {tabConfig?.map((tab, index) => {
               const Icon = tab.icon
               return (
                 <motion.button
@@ -182,7 +182,7 @@ const GlobalStatistics: FCC = () => {
               <table className='w-full border-collapse'>
                 <tbody>
                   <AnimatePresence>
-                    {tableData.map((item: any, index: number) => (
+                    {tableData?.map((item: any, index: number) => (
                       <motion.tr
                         key={`${item.character_name}-${item?.id}`}
                         variants={rowVariants}
@@ -207,7 +207,7 @@ const GlobalStatistics: FCC = () => {
                                     : index + 1}
                             </div>
                             <span className='text-white'>
-                              {item[currentTab?.placeKey!] ?? '-'}
+                              {item?.[currentTab?.placeKey!] || '-'}
                             </span>
                           </div>
                         </td>
@@ -222,7 +222,7 @@ const GlobalStatistics: FCC = () => {
                         {/* Количество */}
                         <td className='px-6 py-4'>
                           <span className='font-semibold text-cyan-300'>
-                            {item[currentTab?.numberKey!] ?? '-'}
+                            {item?.[currentTab?.numberKey!] || '-'}
                           </span>
                         </td>
                       </motion.tr>

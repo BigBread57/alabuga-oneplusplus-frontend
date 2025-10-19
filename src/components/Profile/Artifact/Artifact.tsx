@@ -236,7 +236,7 @@ const Artifact: FCC<ArtifactProps> = ({
                   </h3>
 
                   <div className='space-y-4'>
-                    {game_world_stories.map((story, index) => (
+                    {game_world_stories?.map((story, index) => (
                       <motion.div
                         key={story.id}
                         initial={{ opacity: 0, y: 10 }}

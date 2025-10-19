@@ -195,7 +195,7 @@ export default function LoginForm({
     <div className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4 py-8'>
       {/* Летающие ракеты - уменьшено количество и увеличена пауза */}
       <div className='pointer-events-none fixed inset-0 overflow-hidden'>
-        {Array.from({ length: 4 }).map((_, i) => (
+        {Array.from({ length: 4 })?.map((_, i) => (
           <FlyingRocket
             // eslint-disable-next-line react/no-array-index-key
             key={`flying-rocket-${i}`}

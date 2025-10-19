@@ -55,7 +55,12 @@ const MODEL_CHARACTER_MISSIONS = CharacterMission
 const MODEL_CHARACTER_MISSIONS_BRANCH = CharacterMissionBranch
 
 const MissionsActivity: FCC<MissionsActivityProps> = () => {
-  const { statusFilterRef, activitySectionRef, activityTabsRef } = useTour()
+  const {
+    statusFilterRef,
+    activitySectionRef,
+    branchesCardRef,
+    missionsCardRef,
+  } = useTour()
 
   const [filter, handleSetFilter] = useFilter({
     status: CharacterMissionStatus.IN_PROGRESS,
@@ -104,6 +109,7 @@ const MissionsActivity: FCC<MissionsActivityProps> = () => {
       </motion.div>
 
       <motion.div
+        ref={activitySectionRef}
         variants={containerVariants}
         initial='hidden'
         animate='visible'
@@ -112,6 +118,7 @@ const MissionsActivity: FCC<MissionsActivityProps> = () => {
       >
         {/* Левая часть - Фильтр веток */}
         <motion.div
+          ref={branchesCardRef}
           variants={sectionVariants}
           className='flex flex-col overflow-hidden rounded-2xl border border-indigo-500/20 bg-transparent backdrop-blur-xs lg:col-span-1'
         >
@@ -137,7 +144,7 @@ const MissionsActivity: FCC<MissionsActivityProps> = () => {
 
         {/* Правая часть - Миссии */}
         <motion.div
-          ref={activityTabsRef}
+          ref={missionsCardRef as any}
           variants={sectionVariants}
           className='flex flex-col overflow-hidden rounded-2xl border border-indigo-500/20 bg-transparent backdrop-blur-xs lg:col-span-3'
         >

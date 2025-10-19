@@ -44,7 +44,7 @@ const RadialBarChartComponent: FCC<PieChartComponentProps> = ({
   ]
 
   // Преобразуем данные
-  const chartData = data.map((item, index) => ({
+  const chartData = data?.map((item, index) => ({
     name: item.name,
     value: item.value ?? item.star ?? 0,
     fill: item.fill ?? colors[index % colors.length],

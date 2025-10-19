@@ -60,7 +60,7 @@ export default function Layout(props: ShopPageProps) {
       >
         {/* Кнопки навигации */}
         <div className='flex flex-wrap items-center justify-center gap-2 p-2 md:justify-start md:p-4'>
-          {navItems.map((item) => {
+          {navItems?.map((item) => {
             const Icon = item.icon
             const isActive = getIsActive(item.href)
 

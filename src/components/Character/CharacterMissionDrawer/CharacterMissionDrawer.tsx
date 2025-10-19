@@ -182,6 +182,13 @@ const CharacterMissionModal: FCC<CharacterMissionDrawerProps> = ({
             <div
               className='h-[100dvh] w-full overflow-hidden rounded-t-3xl border-0 border-indigo-500/20 bg-slate-900/95 shadow-2xl backdrop-blur-xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl md:border'
               onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation()
+                }
+              }}
+              role='dialog'
+              tabIndex={-1}
             >
               {/* Header */}
               <div className='sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-indigo-500/20 bg-slate-900/95 p-4 backdrop-blur-xl md:p-6'>
@@ -247,7 +254,7 @@ const CharacterMissionModal: FCC<CharacterMissionDrawerProps> = ({
                                   {t('related_stories')}
                                 </h3>
                                 <div className='space-y-1.5 md:space-y-2'>
-                                  {response?.data?.mission?.game_world_stories.map(
+                                  {response?.data?.mission?.game_world_stories?.map(
                                     (story: GameWorldStoryProps) => (
                                       <div
                                         key={story.id}
