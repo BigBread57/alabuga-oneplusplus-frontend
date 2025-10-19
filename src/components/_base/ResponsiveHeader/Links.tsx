@@ -1,12 +1,12 @@
 import type { ComponentClass, FunctionComponent } from 'react'
 import {
   BarChart3,
+  MonitorCog,
   Newspaper,
   Rocket,
   ShoppingCart,
   Sparkles,
   Users,
-  UserStar,
 } from 'lucide-react'
 import { CharacterRole } from '@/models/Character'
 
@@ -74,7 +74,7 @@ export const Links: LinksKeys = {
     isTab: true,
   },
   ADMIN: {
-    icon: UserStar,
+    icon: MonitorCog,
     labelKey: 'admin',
     href: '/control-center/statistics',
     isProfileTab: true,
