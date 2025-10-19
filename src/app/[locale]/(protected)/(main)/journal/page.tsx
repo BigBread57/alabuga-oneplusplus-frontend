@@ -28,9 +28,6 @@ export default async function JournalPage(_props: JournalPageProps) {
       <div className='h-[calc(100vh-200px)] w-full overflow-hidden'>
         <CharacterStatistics />
       </div>
-      {/* <ActivityLogsCard /> */}
-
-      {/* Activity Logs */}
     </div>
   )
 }
