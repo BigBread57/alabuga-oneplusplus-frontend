@@ -76,7 +76,7 @@ export const Links: LinksKeys = {
   ADMIN: {
     icon: UserStar,
     labelKey: 'admin',
-    href: '/admin/lor',
+    href: '/control-center/statistics',
     isProfileTab: true,
     roles: [
       CharacterRole.HR,
