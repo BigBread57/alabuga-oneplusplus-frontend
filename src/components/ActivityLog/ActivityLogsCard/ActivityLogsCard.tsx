@@ -8,10 +8,10 @@ import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { FetchMoreItemsComponent } from '@/components/_base/FetchMoreItemsComponent'
 import { useFilter } from '@/hooks/useFilter'
-import useMessage from '@/hooks/useMessages'
 import { ActivityLog } from '@/models/ActivityLog'
 import { useExtraActionsGet, useExtraActionsPut } from '@/services/base/hooks'
 import JournalItem from '../JournalItem/JournalItem'
+import { useMessage } from '@/providers/MessageProvider'
 
 const MODEL = ActivityLog
 
@@ -65,7 +65,7 @@ const ActivityLogsCard: FCC = () => {
   const tabsItems = [
     { key: 'all', label: t('all') },
     ...(contentTypesData?.data?.results?.map(
-      (type: { id: number, name: string }) => ({
+      (type: { id: number; name: string }) => ({
         key: type.id,
         label: type.name,
       }),
@@ -174,28 +174,26 @@ const ActivityLogsCard: FCC = () => {
                           : 'border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 hover:border-cyan-400/60 hover:from-cyan-500/30 hover:to-blue-500/30'
                       }`}
                     >
-                      {isLoadingReadAll
-                        ? (
-                            <>
-                              <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{
-                                  duration: 1,
-                                  repeat: Infinity,
-                                  ease: 'linear',
-                                }}
-                              >
-                                <Clock size={16} />
-                              </motion.div>
-                              {t('read_all')}
-                            </>
-                          )
-                        : (
-                            <>
-                              <CheckCheck size={16} />
-                              {t('read_all')}
-                            </>
-                          )}
+                      {isLoadingReadAll ? (
+                        <>
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: 'linear',
+                            }}
+                          >
+                            <Clock size={16} />
+                          </motion.div>
+                          {t('read_all')}
+                        </>
+                      ) : (
+                        <>
+                          <CheckCheck size={16} />
+                          {t('read_all')}
+                        </>
+                      )}
                     </motion.button>
                   </div>
                 )}
@@ -208,47 +206,45 @@ const ActivityLogsCard: FCC = () => {
                         animate={{ opacity: 1 }}
                       >
                         <AnimatePresence>
-                          {data && data.length > 0
-                            ? (
-                                <>
-                                  {(() => {
-                                    const unread = data.filter(
-                                      (item) => !item.is_read,
-                                    ).length
-                                    if (unreadCount !== unread) {
-                                      setUnreadCount(unread)
-                                    }
-                                  })()}
-                                  {data?.map((item, index) => (
-                                    <motion.div
-                                      key={item.id}
-                                      initial={{ opacity: 0, y: 10 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: -10 }}
-                                      transition={{ delay: index * 0.05 }}
-                                      className='mb-4'
-                                    >
-                                      <JournalItem
-                                        is_read={item.is_read}
-                                        itemId={item.id}
-                                        text={item.text}
-                                        created_at={item.created_at}
-                                      />
-                                    </motion.div>
-                                  ))}
-                                </>
-                              )
-                            : (
+                          {data && data.length > 0 ? (
+                            <>
+                              {(() => {
+                                const unread = data.filter(
+                                  (item) => !item.is_read,
+                                ).length
+                                if (unreadCount !== unread) {
+                                  setUnreadCount(unread)
+                                }
+                              })()}
+                              {data?.map((item, index) => (
                                 <motion.div
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  className='flex h-48 items-center justify-center rounded-lg border border-indigo-500/10 bg-indigo-500/5'
+                                  key={item.id}
+                                  initial={{ opacity: 0, y: 10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  transition={{ delay: index * 0.05 }}
+                                  className='mb-4'
                                 >
-                                  <p className='text-center text-gray-400'>
-                                    {t('no_data') || 'No activity logs'}
-                                  </p>
+                                  <JournalItem
+                                    is_read={item.is_read}
+                                    itemId={item.id}
+                                    text={item.text}
+                                    created_at={item.created_at}
+                                  />
                                 </motion.div>
-                              )}
+                              ))}
+                            </>
+                          ) : (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className='flex h-48 items-center justify-center rounded-lg border border-indigo-500/10 bg-indigo-500/5'
+                            >
+                              <p className='text-center text-gray-400'>
+                                {t('no_data') || 'No activity logs'}
+                              </p>
+                            </motion.div>
+                          )}
                         </AnimatePresence>
                       </motion.div>
                     </div>

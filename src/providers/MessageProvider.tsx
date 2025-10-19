@@ -32,7 +32,7 @@ export const MessageProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const timer = setTimeout(() => {
       setMessages((prev) => prev.filter((msg) => msg.id !== id))
-    }, 3000)
+    }, 4000)
 
     return () => clearTimeout(timer)
   }, [])

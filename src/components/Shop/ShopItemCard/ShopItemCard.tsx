@@ -6,9 +6,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Eye, ShoppingCart, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React, { useMemo, useState } from 'react'
-import useMessage from '@/hooks/useMessages'
 import { CharacterPurchase } from '@/models/CharacterPurchase'
 import { useCreateItem } from '@/services/base/hooks'
+import { useMessage } from '@/providers/MessageProvider'
 
 type ShopItemProps = {
   id: number
