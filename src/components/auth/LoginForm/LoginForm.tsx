@@ -203,7 +203,7 @@ export default function LoginForm({
             // eslint-disable-next-line react/no-array-index-key
             key={`flying-rocket-${i}`}
             delay={i * 1.5} // Увеличена задержка между началом каждой ракеты
-            startX={Math.random() * window.innerWidth}
+            startX={Math.random() * window?.innerWidth}
             startY={window.innerHeight + Math.random() * 100}
             duration={8 + Math.random() * 6}
           />
@@ -435,19 +435,17 @@ export default function LoginForm({
               <div className='absolute inset-0 bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 opacity-100 transition-opacity group-hover:opacity-80' />
               <div className='absolute inset-0 bg-slate-900 opacity-0 transition-opacity group-hover:opacity-5' />
               <div className='relative flex items-center justify-center gap-2'>
-                {loginIsLoading
-                  ? (
-                      <>
-                        <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                        {t('sign_in') || 'Вход...'}
-                      </>
-                    )
-                  : (
-                      <>
-                        <LogIn size={18} />
-                        {t('sign_in')}
-                      </>
-                    )}
+                {loginIsLoading ? (
+                  <>
+                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                    {t('sign_in') || 'Вход...'}
+                  </>
+                ) : (
+                  <>
+                    <LogIn size={18} />
+                    {t('sign_in')}
+                  </>
+                )}
               </div>
             </motion.button>
             {/* Демо-кнопки */}
