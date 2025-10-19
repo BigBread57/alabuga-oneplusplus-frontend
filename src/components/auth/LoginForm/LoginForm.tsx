@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { AlertCircle, Lock, LogIn, Mail, Rocket } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { CharacterRole } from '@/models/Character'
@@ -84,10 +84,10 @@ const FlyingRocket = ({
         delay,
         ease: 'easeInOut',
         repeat: Infinity,
-        repeatDelay: Math.random() * 5 + 3, // Увеличена пауза между повторениями
+        repeatDelay: Math.random() * 5 + 3,
       }}
       className='pointer-events-none absolute'
-      style={{ willChange: 'transform, opacity' }} // Оптимизация производительности
+      style={{ willChange: 'transform, opacity' }}
     >
       <div className='flex flex-col items-center'>
         <Rocket
@@ -116,6 +116,12 @@ export default function LoginForm({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [generalError, setGeneralError] = useState<string>('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Гидратация - рендерим анимации только на клиенте
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const { mutate: login, isLoading: loginIsLoading } = useLogin() as any
 
@@ -196,19 +202,20 @@ export default function LoginForm({
 
   return (
     <div className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4 py-8'>
-      {/* Летающие ракеты - уменьшено количество и увеличена пауза */}
-      <div className='pointer-events-none fixed inset-0 overflow-hidden'>
-        {Array.from({ length: 4 })?.map((_, i) => (
-          <FlyingRocket
-            // eslint-disable-next-line react/no-array-index-key
-            key={`flying-rocket-${i}`}
-            delay={i * 1.5} // Увеличена задержка между началом каждой ракеты
-            startX={Math.random() * window?.innerWidth}
-            startY={window.innerHeight + Math.random() * 100}
-            duration={8 + Math.random() * 6}
-          />
-        ))}
-      </div>
+      {/* Летающие ракеты - рендерим только на клиенте */}
+      {isMounted && (
+        <div className='pointer-events-none fixed inset-0 overflow-hidden'>
+          {Array.from({ length: 4 })?.map((_, i) => (
+            <FlyingRocket
+              key={`flying-rocket-${i}`}
+              delay={i * 1.5}
+              startX={Math.random() * window.innerWidth}
+              startY={window.innerHeight + Math.random() * 100}
+              duration={8 + Math.random() * 6}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Фоновые эффекты */}
       <div className='fixed inset-0 -z-10 overflow-hidden'>
@@ -248,7 +255,7 @@ export default function LoginForm({
                 className='mt-0.5 flex-shrink-0 text-red-400'
               />
               <div>
-                <p className='text-sm font-medium text-red-300'>'Ошибка'</p>
+                <p className='text-sm font-medium text-red-300'>Ошибка</p>
                 <p className='mt-1 text-sm text-red-200/80'>{generalError}</p>
               </div>
             </motion.div>
@@ -435,21 +442,20 @@ export default function LoginForm({
               <div className='absolute inset-0 bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 opacity-100 transition-opacity group-hover:opacity-80' />
               <div className='absolute inset-0 bg-slate-900 opacity-0 transition-opacity group-hover:opacity-5' />
               <div className='relative flex items-center justify-center gap-2'>
-                {loginIsLoading
-                  ? (
-                      <>
-                        <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                        {t('sign_in') || 'Вход...'}
-                      </>
-                    )
-                  : (
-                      <>
-                        <LogIn size={18} />
-                        {t('sign_in')}
-                      </>
-                    )}
+                {loginIsLoading ? (
+                  <>
+                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+                    {t('sign_in') || 'Вход...'}
+                  </>
+                ) : (
+                  <>
+                    <LogIn size={18} />
+                    {t('sign_in')}
+                  </>
+                )}
               </div>
             </motion.button>
+
             {/* Демо-кнопки */}
             <motion.div
               variants={itemVariants}
