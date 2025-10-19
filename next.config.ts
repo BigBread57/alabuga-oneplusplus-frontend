@@ -21,6 +21,7 @@ const baseConfig: NextConfig = {
       new URL('https://picsum.photos/**'),
       new URL('https://dummyimage.com/**'),
       new URL('http://localhost:8000/**'),
+      new URL('http://alabuga.star-vim.online/media/**'),
     ],
   },
   typescript: {
