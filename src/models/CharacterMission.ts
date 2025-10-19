@@ -1,6 +1,7 @@
 import type { BaseModelProps } from './Base'
 import type { MissionProps } from '@/models/Mission'
 import { BaseModel } from './Base'
+import { CharacterProps } from '@/models/Character'
 
 // Enum для статуса миссии
 export enum CharacterMissionStatus {
@@ -28,15 +29,16 @@ export interface CharacterMissionProps extends BaseModelProps {
   end_datetime: string | null
   content_type_id: number
   result: string
+  character: CharacterProps
 }
 
 // Альтернативный вариант с union type вместо enum
-export type CharacterMissionStatusType
-  = | 'IN_PROGRESS'
-    | 'COMPLETED'
-    | 'NEED_IMPROVEMENT'
-    | 'PENDING_REVIEW'
-    | 'FAILED'
+export type CharacterMissionStatusType =
+  | 'IN_PROGRESS'
+  | 'COMPLETED'
+  | 'NEED_IMPROVEMENT'
+  | 'PENDING_REVIEW'
+  | 'FAILED'
 
 enum MissionUrl {
   MISSION = '/user/character-mission',

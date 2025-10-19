@@ -170,8 +170,8 @@ export interface MenuLinksHandle {
   toggleMenu: () => void
 }
 
-const MenuLinksComponent: FCC & React.ForwardRefExoticComponent<any>
-  = React.forwardRef<MenuLinksHandle>((_, ref) => {
+const MenuLinksComponent: FCC & React.ForwardRefExoticComponent<any> =
+  React.forwardRef<MenuLinksHandle>((_, ref) => {
     const { currentUser } = useContext(CurrentUserContext)
     const pathname = usePathname()
     const params = useParams()
@@ -234,7 +234,7 @@ const MenuLinksComponent: FCC & React.ForwardRefExoticComponent<any>
 
     const handleModalClose = () => setIsModalOpen(false)
 
-    const filteredItems = navigationItems.filter((link) => {
+    const filteredItems = navigationItems?.filter((link) => {
       if (!link.roles) {
         return true
       }
@@ -253,8 +253,8 @@ const MenuLinksComponent: FCC & React.ForwardRefExoticComponent<any>
       }),
     }
 
-    const modalRoot
-      = typeof document !== 'undefined'
+    const modalRoot =
+      typeof document !== 'undefined'
         ? document.getElementById('modal-root')
         : null
 
@@ -275,9 +275,9 @@ const MenuLinksComponent: FCC & React.ForwardRefExoticComponent<any>
           </motion.button>
 
           {/* Модалка через Portal */}
-          {isMounted
-            && modalRoot
-            && createPortal(
+          {isMounted &&
+            modalRoot &&
+            createPortal(
               <MobileModal
                 isOpen={isModalOpen}
                 onClose={handleModalClose}

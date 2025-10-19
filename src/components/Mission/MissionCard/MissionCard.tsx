@@ -27,7 +27,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
     paramName: 'mission',
     itemId: data?.id,
   })
-
+  console.log('data', data?.character?.user?.full_name)
   const getStatusStyles = () => {
     switch (data?.status) {
       case 'IN_PROGRESS':
@@ -114,6 +114,11 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
             </motion.div>
 
             <div className='min-w-0 flex-1'>
+              {/* Имя персонажа и ветка */}
+              <div className='mb-1  font-medium text-gray-500'>
+                {data?.character?.user?.full_name}
+              </div>
+
               {/* Название ветки и описание */}
               <div className='mb-2'>
                 <div className='mb-2 flex items-center gap-2'>
@@ -123,8 +128,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
                       backgroundColor:
                         data?.mission?.branch?.color || '#818cf8',
                     }}
-                  >
-                  </div>
+                  ></div>
                   <span
                     className='text-xs font-medium'
                     style={{
@@ -173,8 +177,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
                       ease: 'linear',
                     }}
                     className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'
-                  >
-                  </motion.div>
+                  ></motion.div>
                   <DateTimeCalendar
                     text={t('start')}
                     datetime={data?.start_datetime as string}
@@ -189,8 +192,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ data, onComplete }) => {
                       ease: 'linear',
                     }}
                     className='h-1 w-1 flex-shrink-0 rounded-full bg-indigo-400'
-                  >
-                  </motion.div>
+                  ></motion.div>
                   <DateTimeCalendar
                     text={t('end')}
                     datetime={data?.end_datetime as string}

@@ -137,7 +137,7 @@ const AdminMenu: FCC = () => {
               className='w-full max-w-sm rounded-xl border border-indigo-500/20 bg-slate-900 p-6'
             >
               <div className='mb-4 flex items-center justify-between'>
-                <h3 className='text-lg font-bold text-cyan-400'>Админ меню</h3>
+                <h3 className='text-lg font-bold text-cyan-400'>Навигация</h3>
                 <button
                   type='button'
                   onClick={() => setIsModalOpen(false)}
