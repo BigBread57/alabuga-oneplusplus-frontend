@@ -9,6 +9,7 @@ const baseConfig: NextConfig = {
   output: 'standalone',
   eslint: {
     dirs: ['.'],
+    ignoreDuringBuilds: false,
   },
   poweredByHeader: false,
   reactStrictMode: true,
@@ -21,6 +22,9 @@ const baseConfig: NextConfig = {
       new URL('https://dummyimage.com/**'),
       new URL('http://localhost:8000/**'),
     ],
+  },
+  typescript: {
+    ignoreBuildErrors: false,
   },
 }
 
