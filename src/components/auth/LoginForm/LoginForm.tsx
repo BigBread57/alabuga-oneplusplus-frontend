@@ -164,7 +164,7 @@ export default function LoginForm({
         setTimeout(() => {
           onSuccess?.(data)
           if (data?.data?.active_character_role === CharacterRole.HR) {
-            redirectPath = '/admin/lor'
+            redirectPath = '/admin/statistics'
           }
           window.location.href = redirectPath
         }, 1500)

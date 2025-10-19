@@ -5,7 +5,6 @@ import type { CharacterPurchaseProps } from '@/models/CharacterPurchase'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Eye, ShoppingCart, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import Image from 'next/image'
 import React, { useMemo, useState } from 'react'
 import useMessage from '@/hooks/useMessages'
 import { CharacterPurchase } from '@/models/CharacterPurchase'
@@ -115,7 +114,7 @@ const ShopItemCard: FCC<ShopItemProps> = ({
         if (Array.isArray(error?.response?.data?.errors)) {
           const errors = error?.response?.data?.errors
           errors.forEach(
-            (err: { code: string, detail: string, attr: string | null }) => {
+            (err: { code: string; detail: string; attr: string | null }) => {
               messageError(err.detail || t('purchase_error'))
             },
           )
@@ -150,25 +149,23 @@ const ShopItemCard: FCC<ShopItemProps> = ({
         <div
           className={`relative h-40 w-full overflow-hidden bg-gradient-to-b ${randomGradient}`}
         >
-          {image
-            ? (
-                <Image
-                  src={image}
-                  alt={name}
-                  width={400}
-                  height={300}
-                  className='h-full w-full object-cover transition-transform duration-500 hover:scale-110'
-                />
-              )
-            : (
-                <div className='flex h-full w-full items-center justify-center'>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                    className='h-16 w-16 rounded-full border-4 border-white/20 border-t-white/60'
-                  />
-                </div>
-              )}
+          {image ? (
+            <img
+              src={image}
+              alt={name}
+              width={400}
+              height={300}
+              className='h-full w-full object-cover transition-transform duration-500 hover:scale-110'
+            />
+          ) : (
+            <div className='flex h-full w-full items-center justify-center'>
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                className='h-16 w-16 rounded-full border-4 border-white/20 border-t-white/60'
+              />
+            </div>
+          )}
 
           {!is_active && (
             <div className='absolute inset-0 flex items-center justify-center bg-black/50'>
@@ -289,27 +286,23 @@ const ShopItemCard: FCC<ShopItemProps> = ({
                   <div
                     className={`h-64 w-full flex-shrink-0 rounded-lg bg-gradient-to-b md:w-64 ${randomGradient} flex items-center justify-center`}
                   >
-                    {image
-                      ? (
-                          <Image
-                            src={image}
-                            alt={name}
-                            width={400}
-                            height={300}
-                            className='h-full w-full rounded-lg object-cover'
-                          />
-                        )
-                      : (
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 20,
-                              repeat: Infinity,
-                              ease: 'linear',
-                            }}
-                            className='h-24 w-24 rounded-full border-4 border-white/20 border-t-white/60'
-                          />
-                        )}
+                    {image ? (
+                      <img
+                        src={image}
+                        alt={name}
+                        className='h-full w-full rounded-lg object-cover'
+                      />
+                    ) : (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 20,
+                          repeat: Infinity,
+                          ease: 'linear',
+                        }}
+                        className='h-24 w-24 rounded-full border-4 border-white/20 border-t-white/60'
+                      />
+                    )}
                   </div>
 
                   {/* Информация */}
@@ -477,7 +470,10 @@ const ShopItemCard: FCC<ShopItemProps> = ({
                       max={number > 0 ? number : undefined}
                       value={quantity}
                       onChange={(e) =>
-                        setQuantity(Math.max(1, Number.parseInt(e.target.value) || 1))}
+                        setQuantity(
+                          Math.max(1, Number.parseInt(e.target.value) || 1),
+                        )
+                      }
                       className='flex-1 rounded-lg border border-indigo-500/20 bg-slate-800/50 px-4 py-2 text-center text-gray-300 transition-colors outline-none focus:border-cyan-400/60'
                     />
 
@@ -489,7 +485,8 @@ const ShopItemCard: FCC<ShopItemProps> = ({
                           number > 0
                             ? Math.min(number, quantity + 1)
                             : quantity + 1,
-                        )}
+                        )
+                      }
                       className='flex h-10 w-10 items-center justify-center rounded-lg border border-indigo-500/30 text-indigo-300 hover:border-indigo-500/60 hover:bg-indigo-500/10'
                     >
                       +
@@ -545,28 +542,26 @@ const ShopItemCard: FCC<ShopItemProps> = ({
                       : 'border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 hover:border-cyan-400/60'
                   }`}
                 >
-                  {isPending
-                    ? (
-                        <>
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 1,
-                              repeat: Infinity,
-                              ease: 'linear',
-                            }}
-                          >
-                            <ShoppingCart size={18} />
-                          </motion.div>
-                          {t('processing')}
-                        </>
-                      )
-                    : (
-                        <>
-                          <Check size={18} />
-                          {t('confirm_purchase')}
-                        </>
-                      )}
+                  {isPending ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: 'linear',
+                        }}
+                      >
+                        <ShoppingCart size={18} />
+                      </motion.div>
+                      {t('processing')}
+                    </>
+                  ) : (
+                    <>
+                      <Check size={18} />
+                      {t('confirm_purchase')}
+                    </>
+                  )}
                 </motion.button>
               </div>
             </motion.div>

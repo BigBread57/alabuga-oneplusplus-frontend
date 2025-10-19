@@ -56,6 +56,12 @@ const AdminMenu: FCC = () => {
 
   const menuItems = [
     {
+      key: 'statistics',
+      icon: <BarChart3 size={18} />,
+      label: t('statistics'),
+      href: 'statistics',
+    },
+    {
       key: 'lor',
       icon: <Globe size={18} />,
       label: t('lor'),
@@ -72,12 +78,6 @@ const AdminMenu: FCC = () => {
       icon: <Trophy size={18} />,
       label: t('events'),
       href: 'events',
-    },
-    {
-      key: 'statistics',
-      icon: <BarChart3 size={18} />,
-      label: t('statistics'),
-      href: 'statistics',
     },
     {
       key: 'shop',
