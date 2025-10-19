@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { LogoSwitcher } from '@/components/_icons/logo/LogoSwitcher'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { CharacterRole } from '@/models/Character'
 import { useLogin } from '@/services/auth/hooks'
 
 type LoginFormProps = {
@@ -152,12 +153,14 @@ export default function LoginForm({
 
     login(values, {
       onSuccess: (
-        data: Record<'data', Record<'is_need_add_info', boolean>>,
+        data: Record<'data', Record<'active_character_role', CharacterRole>>,
       ) => {
         setIsAuthenticated(true)
-
         setTimeout(() => {
           onSuccess?.(data)
+          if (data?.data?.active_character_role === CharacterRole.HR) {
+            redirectPath = '/admin/lor'
+          }
           window.location.href = redirectPath
         }, 1500)
       },

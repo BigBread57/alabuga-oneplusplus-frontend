@@ -181,12 +181,6 @@ const CharacterMissionModal: FCC<CharacterMissionDrawerProps> = ({
           >
             <div
               className='h-[100dvh] w-full overflow-hidden rounded-t-3xl border-0 border-indigo-500/20 bg-slate-900/95 shadow-2xl backdrop-blur-xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl md:border'
-              onClick={(e) => e.stopPropagation()}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.stopPropagation()
-                }
-              }}
               role='dialog'
               tabIndex={-1}
             >

@@ -370,6 +370,7 @@
     "meta_description": "Administrative tools and settings"
   },
   "Graph": {
+    "lor": "LOR",
     "loading": "Loading...",
     "save": "Save",
     "error_generating_new_lore": "Error generating new LOR",
@@ -453,7 +454,7 @@
     "events": "Events",
     "grouping_character_by_ranks": "Grouping character by ranks",
     "number_of_character_who_closed_the_mission_branch": "Number of character who closed the mission_branch",
-    "number_of_character_who_closed_the_mission": "Number of character who closed the mission",
+    "number_of_character_who_closed_the_mission": "Percent of character who closed the mission",
     "completed_or_failed_character_missions": "Completed or failed character missions",
     "character_number": "Character number",
     "character_name": "Character name",

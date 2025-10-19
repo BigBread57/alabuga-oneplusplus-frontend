@@ -1,5 +1,5 @@
 'use client'
-import type { BarProps, FCC } from 'src/types'
+import type { FCC } from 'src/types'
 import React, { useMemo } from 'react'
 import {
   Bar,
@@ -18,10 +18,11 @@ type DataItem = {
   [key: string]: any
 }
 
-interface CustomBarChartProps {
+interface HorizontalBarChartProps {
   data: DataItem[] | { type: string, value: string }[] | undefined
   xField?: string
   yField?: string
+  name?: string
   width?: number
   height?: number
   size?: 'small' | 'medium' | 'large'
@@ -29,31 +30,7 @@ interface CustomBarChartProps {
   sortReverse?: boolean
   colors?: string[]
   appendPadding?: number[]
-  customShape?: boolean
   formatter?: (value: any, name: string, props: any) => string[]
-}
-
-// Кастомная форма бара (волнистая форма)
-const getWavyPath = (x: number, y: number, width: number, height: number) => {
-  const waveHeight = 8
-  return `M${x},${y + height}
-    Q${x + width / 4},${y + height - waveHeight} ${x + width / 2},${y + height}
-    T${x + width},${y + height}
-    L${x + width},${y}
-    L${x},${y}
-    Z`
-}
-
-const WavyBar = (props: BarProps) => {
-  const { fill, x, y, width, height } = props
-
-  return (
-    <path
-      d={getWavyPath(Number(x), Number(y), Number(width), Number(height))}
-      stroke='none'
-      fill={fill}
-    />
-  )
 }
 
 // Цветовая палитра (индиго + циан градиенты)
@@ -68,16 +45,15 @@ const colorPalette = [
   '#d946ef', // fuchsia-500
 ]
 
-const BarChart: FCC<CustomBarChartProps> = ({
+const HorizontalBarChart: FCC<HorizontalBarChartProps> = ({
   data,
-  xField = 'letter',
-  yField = 'frequency',
+  xField = 'frequency',
+  yField = 'letter',
   height = 300,
   autoFit = true,
   sortReverse = true,
   colors = colorPalette,
   appendPadding = [20, 20, 20, 20],
-  customShape = true,
   formatter,
 }) => {
   // Сортируем данные если нужно
@@ -87,13 +63,13 @@ const BarChart: FCC<CustomBarChartProps> = ({
     }
 
     const sorted = [...data].sort((a, b) => {
-      const aVal = Number(a[yField]) || 0
-      const bVal = Number(b[yField]) || 0
+      const aVal = Number(a[xField]) || 0
+      const bVal = Number(b[xField]) || 0
       return sortReverse ? bVal - aVal : aVal - bVal
     })
 
     return sorted
-  }, [data, yField, sortReverse])
+  }, [data, xField, sortReverse])
 
   if (!sortedData || sortedData.length === 0) {
     return (
@@ -106,23 +82,30 @@ const BarChart: FCC<CustomBarChartProps> = ({
     )
   }
 
+  // Динамическая высота в зависимости от количества элементов
+  const calculatedHeight = Math.max(height, sortedData.length * 40 + 60)
+
   return (
     <div
       className='w-full'
       style={{
         height: autoFit ? 'auto' : height,
-        minHeight: autoFit ? height : 'auto',
+        minHeight: autoFit ? calculatedHeight : height,
       }}
-      data-testid='test-BarChart'
+      data-testid='test-HorizontalBarChart'
     >
-      <ResponsiveContainer width='100%' height={autoFit ? height : '100%'}>
+      <ResponsiveContainer
+        width='100%'
+        height={autoFit ? calculatedHeight : '100%'}
+      >
         <RechartsBarChart
           data={sortedData}
+          layout='vertical'
           margin={{
             top: appendPadding[0],
             right: appendPadding[1],
-            left: appendPadding[2],
-            bottom: appendPadding[3],
+            bottom: appendPadding[2],
+            left: appendPadding[3],
           }}
         >
           <defs>
@@ -130,11 +113,11 @@ const BarChart: FCC<CustomBarChartProps> = ({
             {colors.map((color, idx) => (
               <linearGradient
                 key={`gradient-${idx}`}
-                id={`gradient-${idx}`}
+                id={`gradient-horizontal-${idx}`}
                 x1='0'
                 y1='0'
-                x2='0'
-                y2='1'
+                x2='1'
+                y2='0'
               >
                 <stop offset='5%' stopColor={color} stopOpacity={0.9} />
                 <stop offset='95%' stopColor={color} stopOpacity={0.3} />
@@ -145,12 +128,12 @@ const BarChart: FCC<CustomBarChartProps> = ({
           <CartesianGrid
             strokeDasharray='3 3'
             stroke='rgba(99, 102, 241, 0.15)'
-            vertical={false}
+            vertical={true}
             horizontalPoints={[]}
           />
 
           <XAxis
-            dataKey={xField}
+            type='number'
             stroke='rgba(148, 163, 184, 0.4)'
             style={{
               fontSize: '12px',
@@ -160,12 +143,15 @@ const BarChart: FCC<CustomBarChartProps> = ({
           />
 
           <YAxis
+            dataKey={yField}
+            type='category'
             stroke='rgba(148, 163, 184, 0.4)'
             style={{
               fontSize: '12px',
               fontWeight: 500,
             }}
             tick={{ fill: 'rgba(148, 163, 184, 0.6)' }}
+            width={150}
           />
 
           <Tooltip
@@ -191,30 +177,18 @@ const BarChart: FCC<CustomBarChartProps> = ({
             formatter={formatter}
           />
 
-          {/* <Legend */}
-          {/*  wrapperStyle={{ */}
-          {/*    paddingTop: '20px', */}
-          {/*    color: 'rgba(148, 163, 184, 0.7)', */}
-          {/*  }} */}
-          {/*  iconType='square' */}
-          {/*  contentStyle={{ */}
-          {/*    color: 'rgba(148, 163, 184, 0.7)', */}
-          {/*    fontSize: '12px', */}
-          {/*  }} */}
-          {/* /> */}
-
           <Bar
-            dataKey={yField}
-            radius={[12, 12, 0, 0]}
+            dataKey={xField}
+            name=''
+            radius={[0, 12, 12, 0]}
             isAnimationActive={true}
             animationDuration={800}
             animationEasing='ease-in-out'
-            shape={customShape ? WavyBar : undefined}
           >
             {sortedData.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={`url(#gradient-${index % colors.length})`}
+                fill={`url(#gradient-horizontal-${index % colors.length})`}
               />
             ))}
           </Bar>
@@ -224,6 +198,7 @@ const BarChart: FCC<CustomBarChartProps> = ({
   )
 }
 
-BarChart.displayName = 'BarChart'
+HorizontalBarChart.displayName = 'HorizontalBarChart'
 
-export default BarChart
+export default HorizontalBarChart
+export type { HorizontalBarChartProps }

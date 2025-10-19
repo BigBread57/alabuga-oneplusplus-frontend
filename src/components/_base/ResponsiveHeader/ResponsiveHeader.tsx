@@ -62,13 +62,22 @@ export const ResponsiveHeader = ({
   } = useProfileTour()
 
   const handleCustomStepChange = (current: number) => {
+    console.log('Current Step:', current)
+    if (current === 0) {
+      currentUserRef.current.close()
+    }
     if (current === 1) {
       currentUserRef.current.open()
     }
     if (current === 4) {
       currentUserRef.current.close()
     }
+    if ((isMobile || isTablet) && current === 7) {
+      // @ts-ignore
+      menuLinksRef && menuLinksRef?.current?.closeMenu()
+    }
     if ((isMobile || isTablet) && current === 8) {
+      // @ts-ignore
       menuLinksRef && menuLinksRef?.current?.openMenu()
     }
     // Дополнительная логика при смене шага, если необходимо

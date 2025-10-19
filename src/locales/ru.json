@@ -364,6 +364,7 @@
     "meta_description": "Страница администратора"
   },
   "Graph": {
+    "lor": "ЛОР",
     "loading": "Загружаем ЛОР...",
     "save": "Сохранить ЛОР",
     "error_generating_new_lore": "Ошибка при генерации нового ЛОР",
@@ -446,7 +447,7 @@
     "events": "События",
     "grouping_character_by_ranks": "Группировка персонажей по рангам",
     "number_of_character_who_closed_the_mission_branch": "Количество персонажей, закрывших ветки миссий",
-    "number_of_character_who_closed_the_mission": "Количество персонажей, закрывших миссии",
+    "number_of_character_who_closed_the_mission": "Процент персонажей, закрывших миссии",
     "completed_or_failed_character_missions": "Выполненные и проваленные миссии по дням",
     "character_number": "Количество",
     "character_name": "Имя",

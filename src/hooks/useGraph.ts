@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { registerEntityNodes } from '@/components/Graph/registerNodes'
 import { ENTITY_COLORS } from '@/components/Graph/theme'
 import { useGraphFunc } from '@/components/Graph/useGraphFunc'
-import { useTheme } from '@/providers/ThemeProvider'
 
 interface UseGraphOptions {
   data?: any
@@ -54,8 +53,6 @@ interface UseGraphReturn {
 }
 
 export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
-  const { themeConfig } = useTheme()
-
   const {
     data,
     gridVisible = true,
@@ -147,7 +144,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
       width: containerSize.width,
       height: containerSize.height,
       background: {
-        color: themeConfig?.token?.colorBgBase || '#ffffff',
+        color: 'transparent',
       },
       grid: {
         size: registrationConfig.gridSize,
@@ -277,7 +274,7 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
 
     // Загружаем данные если есть
     if (data) {
-      graph.fromJSON(data)
+      graph?.fromJSON(data)
 
       // Обновляем цвета всех существующих ребер
       graph.getEdges().forEach((edge) => {
@@ -309,7 +306,6 @@ export const useGraph = (options: UseGraphOptions = {}): UseGraphReturn => {
   }, [
     containerSize.width,
     containerSize.height,
-    themeConfig?.token?.colorBgBase,
     registrationConfig,
     registerEntityNodes,
     updateEdgeColor,

@@ -8,8 +8,8 @@ import { CurrentUserContext } from '@/components/CurrentUserProvider/CurrentUser
 import { GraphCanvas } from '@/components/Graph/GraphCanvas'
 import { fakeData } from '@/components/Graph/GraphCanvas/fake_data'
 import { postDataGenerate } from '@/components/Graph/postDataGenerate'
-import useMessage from '@/hooks/useMessages'
 import { GameWorld } from '@/models/GameWorld'
+import { useMessage } from '@/providers/MessageProvider'
 import { useExtraActionsGet, usePostExtraActions } from '@/services/base/hooks'
 import CardLoader from '../../_base/CardLoader/CardLoader'
 
@@ -22,7 +22,7 @@ const GraphCanvasWrapper: FCC = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false)
   const { currentUser } = useContext(CurrentUserContext)
   const { messageSuccess, messageError } = useMessage()
-  const { data: response, isLoading }: any = useExtraActionsGet({
+  const { data: response, isPending: isLoading }: any = useExtraActionsGet({
     qKey: 'graph-all-info',
     extraUrl: MODEL.allInfoUrl(currentUser?.active_game_world as number),
     enabled: !!currentUser?.active_game_world,

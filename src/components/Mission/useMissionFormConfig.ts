@@ -154,7 +154,7 @@ export const useMissionFormConfig = (missionId?: number) => {
           url: '/user/characters/list/',
           qKey: 'mentors',
           valueKey: 'id',
-          labelKey: 'full_name',
+          labelKey: 'user.full_name',
           multiple: false,
         },
       },

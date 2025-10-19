@@ -74,7 +74,7 @@ const Select: React.FC<SelectProps> = ({
   // Фильтруем опции по поисковому запросу
   const filteredOptions = React.useMemo(() => {
     return options.filter((option) =>
-      option.label.toLowerCase().includes(searchTerm.toLowerCase()),
+      option?.label?.toLowerCase().includes(searchTerm.toLowerCase()),
     )
   }, [options, searchTerm])
 
