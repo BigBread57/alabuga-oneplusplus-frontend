@@ -101,7 +101,7 @@ const CharacterPurchaseTable: FCC = () => {
           className='w-full flex-shrink-0 md:w-auto'
         >
           <Select
-            url={`${SHOP_ITEM_CATEGORY_MODEL.url()}?limit=1000&offset=0`}
+            url={`${SHOP_ITEM_CATEGORY_MODEL.url()}/list?limit=1000&offset=0`}
             qKey='users-select'
             placeholder={t('select_shop_item_category')}
             valueKey='id'
@@ -159,8 +159,8 @@ const CharacterPurchaseTable: FCC = () => {
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-semibold text-gray-400'>
                         Цена (
-                        {currentUser?.active_game_world_currency_name
-                          ?? 'валюта'}
+                        {currentUser?.active_game_world_currency_name ??
+                          'валюта'}
                         )
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-semibold text-gray-400'>
@@ -171,8 +171,8 @@ const CharacterPurchaseTable: FCC = () => {
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-semibold text-gray-400'>
                         Итого (
-                        {currentUser?.active_game_world_currency_name
-                          ?? 'валюта'}
+                        {currentUser?.active_game_world_currency_name ??
+                          'валюта'}
                         )
                       </th>
                       <th className='px-6 py-3 text-left text-xs font-semibold text-gray-400'>
@@ -208,23 +208,21 @@ const CharacterPurchaseTable: FCC = () => {
                                     }
                               }
                             >
-                              {item.shop_item?.image
-                                ? (
-                                    <Image
-                                      src={item.shop_item.image}
-                                      alt={item.shop_item?.name ?? 'Товар'}
-                                      fill
-                                      className='object-cover'
-                                    />
-                                  )
-                                : (
-                                    <div className='flex h-full w-full items-center justify-center'>
-                                      <span className='text-xs font-semibold text-cyan-400'>
-                                        {item.shop_item?.name?.[0]?.toUpperCase()
-                                          ?? '?'}
-                                      </span>
-                                    </div>
-                                  )}
+                              {item.shop_item?.image ? (
+                                <Image
+                                  src={item.shop_item.image}
+                                  alt={item.shop_item?.name ?? 'Товар'}
+                                  fill
+                                  className='object-cover'
+                                />
+                              ) : (
+                                <div className='flex h-full w-full items-center justify-center'>
+                                  <span className='text-xs font-semibold text-cyan-400'>
+                                    {item.shop_item?.name?.[0]?.toUpperCase() ??
+                                      '?'}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </td>
 
@@ -282,8 +280,8 @@ const CharacterPurchaseTable: FCC = () => {
                               className={`inline-flex rounded-lg border px-3 py-1 text-xs font-medium ${
                                 statusConfig[
                                   item.status as keyof typeof statusConfig
-                                ]?.color
-                                ?? 'border-gray-500/30 bg-gray-500/20 text-gray-300'
+                                ]?.color ??
+                                'border-gray-500/30 bg-gray-500/20 text-gray-300'
                               }`}
                             >
                               {statusConfig[

@@ -64,7 +64,7 @@ const ShopItemsCard: FCC = () => {
           className='w-full flex-shrink-0 md:w-auto'
         >
           <Select
-            url={`${SHOP_ITEM_CATEGORY_MODEL.url()}?limit=1000&offset=0`}
+            url={`${SHOP_ITEM_CATEGORY_MODEL.url()}/list?limit=1000&offset=0`}
             qKey='users-select'
             placeholder={t('select_shop_item_category')}
             valueKey='id'
