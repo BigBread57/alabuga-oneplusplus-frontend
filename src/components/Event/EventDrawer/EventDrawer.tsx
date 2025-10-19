@@ -15,6 +15,7 @@ import { CharacterRole } from '@/models/Character'
 import { CharacterEvent } from '@/models/CharacterEvent'
 import { CharacterEventForInspector } from '@/models/CharacterEventForInspector'
 import { useExtraActionsPut, useFetchOneItem } from '@/services/base/hooks'
+import { useMessage } from '@/providers/MessageProvider'
 
 interface EventModalProps {
   itemId?: number
@@ -40,6 +41,7 @@ const EventModal: FCC<EventModalProps> = ({
   })
   const [isMounted, setIsMounted] = useState(false)
   const { currentUser } = useContext(CurrentUserContext)
+  const { messageSuccess, messageError } = useMessage()
 
   const {
     data: response,
@@ -67,8 +69,12 @@ const EventModal: FCC<EventModalProps> = ({
       ],
       {
         onSuccess: () => {
+          messageSuccess('Успешно обновлено')
           refetch()
           onComplete?.()
+        },
+        onError: () => {
+          messageError('Ошибка при обновлении')
         },
       },
     )
@@ -84,8 +90,12 @@ const EventModal: FCC<EventModalProps> = ({
       ],
       {
         onSuccess: () => {
+          messageSuccess('Успешно обновлено')
           refetch()
           onComplete?.()
+        },
+        onError: () => {
+          messageError('Ошибка при обновлении')
         },
       },
     )
@@ -112,8 +122,8 @@ const EventModal: FCC<EventModalProps> = ({
 
   const canSubmitResult = () => {
     return (
-      response?.data?.status === 'IN_PROGRESS'
-      || response?.data?.status === 'NEED_IMPROVEMENT'
+      response?.data?.status === 'IN_PROGRESS' ||
+      response?.data?.status === 'NEED_IMPROVEMENT'
     )
   }
 
@@ -133,7 +143,7 @@ const EventModal: FCC<EventModalProps> = ({
       y: '100%',
       transition: { duration: 0.2 },
     },
-  }
+  } as const
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -152,8 +162,8 @@ const EventModal: FCC<EventModalProps> = ({
     }
   }, [open])
 
-  const modalRoot
-    = typeof document !== 'undefined'
+  const modalRoot =
+    typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 
@@ -237,35 +247,33 @@ const EventModal: FCC<EventModalProps> = ({
                       </div>
 
                       {/* Связанные истории */}
-                      {response?.data?.event?.game_world_stories
-                        && response?.data?.event?.game_world_stories.length > 0
-                        ? (
-                            <>
-                              <div className='h-px bg-indigo-500/20' />
-                              <div>
-                                <h3 className='mb-2 text-base font-semibold text-white md:mb-3 md:text-lg'>
-                                  {t('related_stories')}
-                                </h3>
-                                <div className='space-y-1.5 md:space-y-2'>
-                                  {response?.data?.event?.game_world_stories.map(
-                                    (story: GameWorldStoryProps) => (
-                                      <div
-                                        key={story.id}
-                                        className='flex items-start gap-2 text-sm text-gray-300 md:text-base'
-                                      >
-                                        <ChevronRight
-                                          size={16}
-                                          className='mt-0.5 flex-shrink-0 text-indigo-400'
-                                        />
-                                        <span>{story.text || story.id}</span>
-                                      </div>
-                                    ),
-                                  )}
-                                </div>
-                              </div>
-                            </>
-                          )
-                        : null}
+                      {response?.data?.event?.game_world_stories &&
+                      response?.data?.event?.game_world_stories.length > 0 ? (
+                        <>
+                          <div className='h-px bg-indigo-500/20' />
+                          <div>
+                            <h3 className='mb-2 text-base font-semibold text-white md:mb-3 md:text-lg'>
+                              {t('related_stories')}
+                            </h3>
+                            <div className='space-y-1.5 md:space-y-2'>
+                              {response?.data?.event?.game_world_stories.map(
+                                (story: GameWorldStoryProps) => (
+                                  <div
+                                    key={story.id}
+                                    className='flex items-start gap-2 text-sm text-gray-300 md:text-base'
+                                  >
+                                    <ChevronRight
+                                      size={16}
+                                      className='mt-0.5 flex-shrink-0 text-indigo-400'
+                                    />
+                                    <span>{story.text || story.id}</span>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      ) : null}
 
                       <div className='h-px bg-indigo-500/20' />
 
@@ -386,7 +394,8 @@ const EventModal: FCC<EventModalProps> = ({
                                   setUserFormData({
                                     ...userFormData,
                                     result: e.target.value,
-                                  })}
+                                  })
+                                }
                                 disabled={!canSubmitResult()}
                                 maxLength={1000}
                                 rows={4}
@@ -434,10 +443,10 @@ const EventModal: FCC<EventModalProps> = ({
                                 type='submit'
                                 className='w-full rounded-lg bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-indigo-500/50 md:py-3 md:text-base'
                               >
-                                {response?.data?.status === 'IN_PROGRESS'
-                                  && t('to_pending_review')}
-                                {response?.data?.status
-                                  === 'NEED_IMPROVEMENT' && t('resubmit')}
+                                {response?.data?.status === 'IN_PROGRESS' &&
+                                  t('to_pending_review')}
+                                {response?.data?.status ===
+                                  'NEED_IMPROVEMENT' && t('resubmit')}
                               </motion.button>
                             )}
                           </div>
@@ -461,24 +470,24 @@ const EventModal: FCC<EventModalProps> = ({
                               </p>
                             </div>
 
-                            {response?.data?.multimedia
-                              && response?.data?.multimedia.length > 0 && (
-                              <div>
-                                <label className='mb-1.5 block text-xs font-medium text-gray-300 md:mb-2 md:text-sm'>
-                                  {t('attachments')}
-                                </label>
-                                <FileUpload
-                                  fileList={response?.data?.multimedia}
-                                  object_id={itemId as number}
-                                  content_type_id={
-                                    response?.data?.content_type_id as number
-                                  }
-                                  maxSize={10}
-                                  disabled={true}
-                                  onChange={handleFileChange}
-                                />
-                              </div>
-                            )}
+                            {response?.data?.multimedia &&
+                              response?.data?.multimedia.length > 0 && (
+                                <div>
+                                  <label className='mb-1.5 block text-xs font-medium text-gray-300 md:mb-2 md:text-sm'>
+                                    {t('attachments')}
+                                  </label>
+                                  <FileUpload
+                                    fileList={response?.data?.multimedia}
+                                    object_id={itemId as number}
+                                    content_type_id={
+                                      response?.data?.content_type_id as number
+                                    }
+                                    maxSize={10}
+                                    disabled={true}
+                                    onChange={handleFileChange}
+                                  />
+                                </div>
+                              )}
 
                             <div className='h-px bg-indigo-500/20' />
 
@@ -492,7 +501,8 @@ const EventModal: FCC<EventModalProps> = ({
                                   setHrFormData({
                                     ...hrFormData,
                                     inspector_comment: e.target.value,
-                                  })}
+                                  })
+                                }
                                 maxLength={500}
                                 rows={3}
                                 placeholder={t('inspector_comment_placeholder')}
@@ -513,7 +523,8 @@ const EventModal: FCC<EventModalProps> = ({
                                   setHrFormData({
                                     ...hrFormData,
                                     status: e.target.value,
-                                  })}
+                                  })
+                                }
                                 className='w-full rounded-lg border border-indigo-500/20 bg-slate-800/50 px-3 py-2 text-sm text-white focus:border-indigo-500/50 focus:outline-none'
                               >
                                 <option value='PENDING_REVIEW'>
