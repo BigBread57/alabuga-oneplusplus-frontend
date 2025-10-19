@@ -258,7 +258,7 @@ export default function RegisterForm({
   }
 
   // Success экран
-  if (isSuccess) {
+  if (!isSuccess) {
     return (
       <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4 py-8'>
         <div className='fixed inset-0 -z-10 overflow-hidden'>
@@ -275,7 +275,7 @@ export default function RegisterForm({
           <div className='rounded-2xl border border-indigo-500/20 bg-slate-900/60 p-8 shadow-2xl backdrop-blur-xl md:p-10'>
             {/* Логотип */}
             <motion.div variants={itemVariants} className='flex justify-center'>
-              <LogoSwitcher width={10} height={220} />
+              <LogoSwitcher width={200} />
             </motion.div>
 
             {/* Success иконка */}
