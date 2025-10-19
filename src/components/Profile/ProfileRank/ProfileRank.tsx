@@ -16,7 +16,7 @@ type ProfileRankProps = {
   rank: RankProps
   gameWorld?: GameWorldProps
   currentExperience?: number
-  nextRank?: RankProps | null
+  nextRank: RankProps | null
   showProgress?: boolean
   className?: string
   email?: string
@@ -35,9 +35,10 @@ const ProfileRank: FCC<ProfileRankProps> = ({
 }) => {
   const t = useTranslations('ProfileRank')
 
-  const progressPercent = currentExperience / (rank?.required_experience / 100)
+  const progressPercent =
+    currentExperience / ((nextRank?.required_experience || 0) / 100)
   const experienceToNext = nextRank
-    ? (rank.required_experience || 0) - currentExperience
+    ? (nextRank?.required_experience || 0) - currentExperience
     : 0
 
   const containerVariants = {
@@ -221,7 +222,7 @@ const ProfileRank: FCC<ProfileRankProps> = ({
             {t('required_experience')}
           </p>
           <p className='mt-0.5 text-sm font-semibold text-cyan-400'>
-            {rank?.required_experience?.toLocaleString()}
+            {nextRank?.required_experience?.toLocaleString()}
           </p>
         </div>
       </motion.div>

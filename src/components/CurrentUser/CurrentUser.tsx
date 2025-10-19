@@ -62,7 +62,7 @@ const ModalContent = ({
   })
 
   const isEmpty = !data?.data && !isLoading
-
+  console.log('CurrentUser Modal data:', data)
   return (
     <AnimatePresence>
       <motion.div
@@ -119,8 +119,8 @@ const ModalContent = ({
                     <ProfilePhoto
                       characterId={data?.data?.id}
                       username={
-                        data?.data?.user?.full_name
-                        || data?.data?.user?.username
+                        data?.data?.user?.full_name ||
+                        data?.data?.user?.username
                       }
                       avatar={data?.data?.avatar}
                       editable
@@ -130,8 +130,8 @@ const ModalContent = ({
                       <ProfileRank
                         characterId={data?.data?.id}
                         userName={
-                          data?.data?.user?.full_name
-                          || data?.data?.user?.username
+                          data?.data?.user?.full_name ||
+                          data?.data?.user?.username
                         }
                         rank={data?.data?.character_rank?.rank || null}
                         nextRank={data?.data?.character_rank?.next_rank || null}
@@ -239,8 +239,8 @@ const CurrentUserComponent = React.forwardRef<
     [],
   )
 
-  const modalRoot
-    = typeof document !== 'undefined'
+  const modalRoot =
+    typeof document !== 'undefined'
       ? document.getElementById('modal-root')
       : null
 
@@ -268,10 +268,10 @@ const CurrentUserComponent = React.forwardRef<
         </motion.div>
       </motion.button>
 
-      {isMounted
-        && modalRoot
-        && isOpen
-        && createPortal(
+      {isMounted &&
+        modalRoot &&
+        isOpen &&
+        createPortal(
           <ModalContent
             onLogout={handleLogout}
             currentUser={currentUser}
